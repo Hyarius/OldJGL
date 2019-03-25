@@ -34,7 +34,7 @@ CFLAGS=		-std=c++11 -g -fsanitize=address
 
 IFLAGS =	$(foreach dir, $(INC_DIR), -I$(dir)) $(foreach dir, $(shell find ~/.brew/include -type d), -I$(dir))
 
-LFLAGS = 	-L ~/.brew/lib $(foreach lib, $(LIB), -l$(lib) ) $(FRAMEWORK)
+LFLAGS = 	-L ~/.brew/lib $(foreach lib, $(LIB), -l$(lib) ) $(FRAMEWORK) -L .. -lgraphical_library
 
 CC=			g++
 
