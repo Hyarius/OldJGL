@@ -1,5 +1,15 @@
 #include "template.h"
 
+ifstream				open_file(string path)
+{
+	ifstream myfile;
+	myfile.open(p_path);
+	if (myfile.fail())
+		printf("can't open such file : %s\n", p_path.c_str());
+
+	return (myfile);
+}
+
 string					get_str(ifstream *myfile)
 {
     string line;

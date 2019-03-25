@@ -39,6 +39,8 @@ void charge_log_file(string program_name)
 
 void write_in_log(string msg)
 {
+	if (log_file.fail())
+		return ;
 	static string text;
 	text += (text.size() == 0 ? "[" + to_string(line) + "] - " + msg : msg);
 	if (msg.find('\n') != string::npos)

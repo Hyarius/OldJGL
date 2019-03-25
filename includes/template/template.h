@@ -32,6 +32,7 @@ vector<t_vect> 		calc_line_2d(t_vect start, t_vect end);
 void				set_lang_text(string path);
 string				*get_text(string key);
 
+ifstream			open_file(string path);
 string				get_str(ifstream *myfile);
 vector<string>		get_strsplit(ifstream *myfile, const string c, int size);
 void				write_on_file(string path, string text);
