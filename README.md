@@ -41,31 +41,39 @@ You can find in includes/template/text_define.h some define for the draw text fu
 - font style : BOLD, NORMAL, etc ect
 
 ### - Structure
-- t_color : describ a rgba color. Can be created by double (from 0.0 to 1.0) or by int (from 0 to 255)
+- t_color :
+...describ a rgba color. Can be created by double (from 0.0 to 1.0) or by int (from 0 to 255)
 
-- t_vect : describ a 2D point in plane, by a x and y value (in double). Can be create by int or double. Given with operator +, -, * , /, <, >, == and !=
+- t_vect :
+...describ a 2D point in plane, by a x and y value (in double). Can be create by int or double. Given with operator +, -, * , /, <, >, == and !=
 
-- t_vertex : describ a 3D point in space, by a x, y and z value (in double). Can be created by int or double
+- t_vertex :
+...describ a 3D point in space, by a x, y and z value (in double). Can be created by int or double
 
-- t_point : describ a point on the screen, by a x and y value for coordinates, and rgba for pixel color. Can be create by double
+- t_point :
+...describ a point on the screen, by a x and y value for coordinates, and rgba for pixel color. Can be create by double
 
-- t_image : create an image (textured or plain color), give it to your graphical card and handle it for you
+- t_image :
+...create an image (textured or plain color), give it to your graphical card and handle it for you
 Can be create by a path to an image, a SDL_Surface, or a t_color for plain color (See t_image chapter for more informations)
 
-- t_angle : describ an 3D angle, by a x, y and z rotation
+- t_angle :
+...describ an 3D angle, by a x, y and z rotation
 
-- matrice : describ a matrice (See matrice chapter for more informations)
+- matrice :
+...describ a matrice (See matrice chapter for more informations)
 
-- t_tileset : create an image, cuted into multiple square, send it to your graphica card and handle it for you
-Can be created by a path to an image and the number of square on the x and y axis that this image contain (See t_tileset chapter for more information)
+- t_tileset :
+...create an image, cuted into multiple square, send it to your graphica card and handle it for you
+...Can be created by a path to an image and the number of square on the x and y axis that this image contain (See t_tileset chapter for more information)
 
 
 ### - SCREEN HANDLER
  - void window_initialisation(string program_name) :
-  Create a window, named [program_name], of SCREEN_WEIGHT / SCREEN_HEIGHT pixel, on center of your screen, and setting up everything for you.
+  ...Create a window, named [program_name], of SCREEN_WEIGHT / SCREEN_HEIGHT pixel, on center of your screen, and setting up everything for you.
 
  - void prepare_screen(void | t_color color) :
-  Clear your screen, and set it to RGB(0.1, 0.1, 0.1, 1.0) or [color]
+  ...Clear your screen, and set it to RGB(0.1, 0.1, 0.1, 1.0) or [color]
 
  - void render_screen(void | bool value) :
   Actualize your screen.
