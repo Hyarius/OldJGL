@@ -22,5 +22,5 @@ Do a make, and it will give you a libgraphic_library.a
 
 To compile with my lib, add the following command to your compile instruction :
 ```
-$(foreach dir, [Path to includes inside my library], -I$(dir) ) $(foreach dir, $(shell find ~/.brew/include -type d), -I$(dir) ) -L ~/.brew/lib -L [Path to the library.a location] -lgraphical_library -lsdl2 -lsdl2_image -lsdl2_mixer -lsdl2_ttf -lGLEW -lGL
+$(foreach dir, [Path to includes inside my library], -I$(dir) ) $(foreach dir, $(shell find ~/.brew/include -type d), -I$(dir) ) -L ~/.brew/lib -L [Path to the library.a location] -lgraphical_library -lsdl2 -lsdl2_image -lsdl2_mixer -lsdl2_ttf -framework OpenGL
 ```
