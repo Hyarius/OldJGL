@@ -3,9 +3,9 @@
 ifstream				open_file(string path)
 {
 	ifstream myfile;
-	myfile.open(p_path);
+	myfile.open(path);
 	if (myfile.fail())
-		printf("can't open such file : %s\n", p_path.c_str());
+		printf("can't open such file : %s\n", path.c_str());
 
 	return (myfile);
 }
