@@ -10,6 +10,10 @@ OBJ_DIR	=	obj
 
 vpath %.cpp $(foreach dir, $(SRC_DIR), $(dir):)
 
+SRC = 		$(foreach dir, $(SRC_DIR), $(foreach file, $(wildcard $(dir)/*.cpp), $(notdir $(file))))
+
+OBJ=		$(addprefix $(OBJ_DIR)/, $(SRC:%.cpp=%.o))
+
 LIB_DWN =	sdl2 sdl2_image sdl2_mixer sdl2_ttf
 LIB =	SDL2 SDL2_image SDL2_mixer SDL2_ttf
 
