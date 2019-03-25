@@ -10,13 +10,6 @@ OBJ_DIR	=	obj
 
 vpath %.cpp $(foreach dir, $(SRC_DIR), $(dir):)
 
-UNAME_S := $(shell uname -s)
-ifeq ($(UNAME_S),Linux)
-	DWL = sudo apt-get install
-else
-	DWL = brew
-endif
-
 SRC = 		$(foreach dir, $(SRC_DIR), $(foreach file, $(wildcard $(dir)/*.cpp), $(notdir $(file))))
 
 OBJ=		$(addprefix $(OBJ_DIR)/, $(SRC:%.cpp=%.o))
@@ -24,6 +17,15 @@ OBJ=		$(addprefix $(OBJ_DIR)/, $(SRC:%.cpp=%.o))
 LIB_DWN =	sdl2 sdl2_image sdl2_mixer sdl2_ttf
 LIB =	SDL2 SDL2_image SDL2_mixer SDL2_ttf
 
+UNAME_S := $(shell uname -s)
+ifeq ($(UNAME_S),Linux)
+	DWL = sudo apt-get install
+	LIB += GLEW GL
+	LIB_DWN += glew build-essential libgl1-mesa-dev
+else
+	DWL = brew
+	FRAMEWORK = -framework OpenGL
+endif
 ##
 ##		COMPILER FLAGS
 ##
@@ -32,7 +34,7 @@ CFLAGS=		-std=c++11 -g -fsanitize=address
 
 IFLAGS =	$(foreach dir, $(INC_DIR), -I$(dir)) $(foreach dir, $(shell find ~/.brew/include -type d), -I$(dir))
 
-LFLAGS = 	-L ~/.brew/lib $(foreach lib, $(LIB), -l$(lib) ) -framework OpenGL
+LFLAGS = 	-L ~/.brew/lib $(foreach lib, $(LIB), -l$(lib) ) $(FRAMEWORK)
 
 CC=			g++
 
