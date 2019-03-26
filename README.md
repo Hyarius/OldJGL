@@ -1,4 +1,4 @@
-# --- MY HANDMADE GRAPHICAL/GUI LIBRARY ---
+# High level graphical library - working with SDL2 and opengl
 
 Library created using SDL2 and OpenGL, with custom functions to draw shapes, texture, text and gui-elements on screen.
 
@@ -6,24 +6,13 @@ Library created using SDL2 and OpenGL, with custom functions to draw shapes, tex
 ### Linux
 Be sure to have sudo apt-get installed and available to you.
 
-git clone this repo where you want to install my lib.
-Do a make, and it will give you a libgraphic_library.a
-
-To compile with my lib, add the following command to your compile instructions :
-```
-$(foreach dir, [Path to includes inside my library], -I$(dir) ) -lgraphical_library -lsdl2 -lsdl2_image -lsdl2_mixer -lsdl2_ttf -lGLEW -lGL
-```
-
 ### MacOS
 Be sure to have brew installed and available to you.
 
+
 git clone this repo where you want to install my lib.
 Do a make, and it will give you a libgraphic_library.a
 
-To compile with my lib, add the following command to your compile instructions :
-```
-$(foreach dir, [Path to includes inside my library], -I$(dir) ) $(foreach dir, $(shell find ~/.brew/include -type d), -I$(dir) ) -L ~/.brew/lib -L [Path to the library.a location] -lgraphical_library -lsdl2 -lsdl2_image -lsdl2_mixer -lsdl2_ttf -framework OpenGL
-```
 
 ## Content
 
@@ -91,9 +80,9 @@ Accept a path to an image and the number of square on the x and y axis that this
  Actualize your screen, if [show_fps] is true, draw your fps on the top-left corner of your screen.
 
  ### Draw shape
- - void draw_rectangle(t_vect tl, t_vect tr, t_vect dl, t_vect dr, t_color c) :
+ - void draw_rectangle(t_vect top_left, t_vect top_right, t_vect down_left, t_vect down_right, t_color c) :
 
- Draw a quadrilateral shape of [c] color with it's corner at [tl - dr] coordinates on screen.
+ Draw a quadrilateral shape of [c] color with it's corner at [top_left - down_right] coordinates on screen.
 
  - void draw_rectangle(t_vect coord, t_vect size, t_color c)
 
