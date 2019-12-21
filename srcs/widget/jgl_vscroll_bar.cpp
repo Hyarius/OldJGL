@@ -31,13 +31,13 @@ c_vscroll_bar::c_vscroll_bar(c_widget *p_parent) : c_widget(p_parent)
 	scroll_bar->activate();
 
 	up_button = new c_button(up_widget, this, this);
-	up_button->text().set_text("^");
+	up_button->set_text("^");
 	up_button->set_repeat(true);
 	up_button->set_timer_delta(3);
 	up_button->activate();
 
 	down_button = new c_button(down_widget, this, this);
-	down_button->text().set_text("v");
+	down_button->set_text("v");
 	down_button->set_repeat(true);
 	down_button->set_timer_delta(3);
 	down_button->activate();
