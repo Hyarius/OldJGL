@@ -58,6 +58,28 @@ public:
 	text_color 	color(){return (_label.color());}
 	text_style 	style(){return (_label.style());}
 
+	void 		set_hour_selected(bool p_selected){_hour.set_selected(p_selected);}
+	void 		set_hour_precision(int p_precision){_hour.set_precision(p_precision);}
+	void 		set_hour_text(string p_text){_hour.set_text(p_text);}
+	void 		set_hour_value(float p_value){_hour.set_value(p_value);}
+	void 		set_hour_cursor(int p_cursor){_hour.set_cursor(p_cursor);}
+	bool		hour_selected(){return (_hour.selected());}
+	int			hour_precision(){return (_hour.precision());}
+	float 		hour_value(){return (_hour.value());}
+	string 		hour_text(){return (_hour.text());}
+	int 		hour_cursor(){return (_hour.cursor());}
+
+	void 		set_minute_selected(bool p_selected){_minute.set_selected(p_selected);}
+	void 		set_minute_precision(int p_precision){_minute.set_precision(p_precision);}
+	void 		set_minute_text(string p_text){_minute.set_text(p_text);}
+	void 		set_minute_value(float p_value){_minute.set_value(p_value);}
+	void 		set_minute_cursor(int p_cursor){_minute.set_cursor(p_cursor);}
+	bool		minute_selected(){return (_minute.selected());}
+	int			minute_precision(){return (_minute.precision());}
+	float 		minute_value(){return (_minute.value());}
+	string 		minute_text(){return (_minute.text());}
+	int 		minute_cursor(){return (_minute.cursor());}
+
 	void set_selected(bool p_selected){_selected = p_selected;}
 	void set_box(w_box_component new_box){_box = new_box;}
 	void set_label(w_text_component new_label){_label = new_label;}

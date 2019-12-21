@@ -15,12 +15,6 @@ w_text_entry_component::w_text_entry_component(c_widget *p_owner, string p_text)
 	_style = text_style::normal;
 }
 
-void w_text_entry_component::set_text(string new_text)
-{
-	_text = new_text;
-	_cursor = new_text.size();
-	calc_text_to_draw();
-}
 
 void w_text_entry_component::move_cursor(int delta)
 {

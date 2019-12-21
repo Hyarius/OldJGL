@@ -34,9 +34,13 @@ public:
 	Color back(){return (_box.back());}
 	Color front(){return (_box.front());}
 
-	void select(){_select = true;_entry.set_selected(true);}
-	void unselect(){_select = false;_entry.set_selected(false);}
-	bool selected(){return (_select);}
+	void		set_text(string p_text){_entry.set_text(p_text);}
+	void 		set_selected(bool p_selected){_entry.set_selected(p_selected);}
+	bool		selected(){return (_entry.selected());}
+	int 		cursor(){return (_entry.cursor());}
+
+	void select(){_entry.set_selected(true);}
+	void unselect(){_entry.set_selected(false);}
 
 	void set_geometry_imp(Vector2 p_anchor, Vector2 p_area);
 	void move(Vector2 delta);

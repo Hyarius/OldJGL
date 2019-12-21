@@ -41,6 +41,18 @@ public:
 	text_color 	color(){return (_label.color());}
 	text_style 	style(){return (_label.style());}
 
+		//Setter
+	void set_state(bool p_state){_check.set_state(p_state);}
+	void set_check_border(int p_border){_check.set_border(p_border);}
+	void set_check_back(Color p_back){_check.set_back(p_back);}
+	void set_check_front(Color p_front){_check.set_front(p_front);}
+	void set_check_check(Color p_check){_check.set_check(p_check);}
+	bool state(){return (_check.state());}
+	int check_border(){return (_check.border());}
+	Color check_back(){return (_check.back());}
+	Color check_front(){return (_check.front());}
+	Color check_check(){return (_check.check());}
+
 	void move(Vector2 delta);
 
 	void set_geometry_imp(Vector2 p_anchor, Vector2 p_area);

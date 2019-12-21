@@ -18,8 +18,6 @@ public:
 	c_value_entry(float p_value = 0.001f, c_widget *p_parent = nullptr);
 	~c_value_entry();
 
-	float value(){return (_entry.value());}
-
 	w_box_component &box(){return (_box);}
 	w_value_entry_component &entry(){return (_entry);}
 
@@ -33,9 +31,19 @@ public:
 	Color back(){return (_box.back());}
 	Color front(){return (_box.front());}
 
-	void select(){_select = true;_entry.set_selected(true);}
-	void unselect(){_select = false;_entry.set_selected(false);}
-	bool selected(){return (_select);}
+	void 		set_selected(bool p_selected){_entry.set_selected(p_selected);}
+	void 		set_precision(int p_precision){_entry.set_precision(p_precision);}
+	void 		set_text(string p_text){_entry.set_text(p_text);}
+	void 		set_value(float p_value){_entry.set_value(p_value);}
+	void 		set_cursor(int p_cursor){_entry.set_cursor(p_cursor);}
+	bool		selected(){return (_entry.selected());}
+	int			precision(){return (_entry.precision());}
+	float 		value(){return (_entry.value());}
+	string 		text(){return (_entry.text());}
+	int 		cursor(){return (_entry.cursor());}
+
+	void select(){_entry.set_selected(true);}
+	void unselect(){_entry.set_selected(false);}
 
 	void set_geometry_imp(Vector2 p_anchor, Vector2 p_area);
 	void move(Vector2 delta);
