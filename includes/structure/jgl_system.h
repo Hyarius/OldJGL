@@ -31,4 +31,6 @@ typedef struct s_keyboard
 	void reset_key(int scan_code);
 }t_keyboard;
 
+ostream& operator<<(ostream& os, t_mouse& value);
+
 #endif

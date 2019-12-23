@@ -17,3 +17,21 @@ ostream& operator<<(ostream& os, const Vector3& value)
 	os << "(" << to_string(value.x) << " / " << to_string(value.y) << " / " << to_string(value.z) << ")";
 	return os;
 }
+
+ostream& operator<<(ostream& os, t_mouse& mouse)
+{
+	string left = (mouse.get_button(mouse_button::left) == mouse_state::up ? "Up" : (mouse.get_button(mouse_button::left) == mouse_state::down ? "Down" : "Null" ));
+	string middle = (mouse.get_button(mouse_button::middle) == mouse_state::up ? "Up" : (mouse.get_button(mouse_button::middle) == mouse_state::down ? "Down" : "Null" ));
+	string right = (mouse.get_button(mouse_button::right) == mouse_state::up ? "Up" : (mouse.get_button(mouse_button::right) == mouse_state::down ? "Down" : "Null" ));
+	os << "Left : " << left << "\n" << "Middle : " << middle << "\n" << "Right : " << right;
+	return os;
+}
+
+ostream& operator<<(ostream& os, t_mouse *mouse)
+{
+	string left = (mouse->get_button(mouse_button::left) == mouse_state::up ? "Up" : (mouse->get_button(mouse_button::left) == mouse_state::down ? "Down" : "Null" ));
+	string middle = (mouse->get_button(mouse_button::middle) == mouse_state::up ? "Up" : (mouse->get_button(mouse_button::middle) == mouse_state::down ? "Down" : "Null" ));
+	string right = (mouse->get_button(mouse_button::right) == mouse_state::up ? "Up" : (mouse->get_button(mouse_button::right) == mouse_state::down ? "Down" : "Null" ));
+	os << "Left : " << left << "\n" << "Middle : " << middle << "\n" << "Right : " << right;
+	return os;
+}

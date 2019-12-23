@@ -16,8 +16,6 @@ void w_box_component::render(c_viewport *viewport)
 	if (_owner == nullptr)
 		return ;
 
-			fill_rectangle(_back + _delta, _anchor , _area, viewport);
-			fill_rectangle(_front + _delta, _anchor + _border, _area - _border * 2, viewport);
 	if (_tileset != nullptr && _tileset->size() == Vector2(3, 3))
 	{
 		float corner_size = (_area.x < _area.y ? _area.x : _area.y) / 2;
