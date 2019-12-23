@@ -42,6 +42,16 @@ public:
 	string 		text(){return (_entry.text());}
 	int 		cursor(){return (_entry.cursor());}
 
+	void 		set_align(alignment p_align){_entry.set_align(p_align);}
+	void 		set_size(int p_size){_entry.set_size(p_size);}
+	void 		set_color(text_color p_color){_entry.set_color(p_color);}
+	void 		set_style(text_style p_style){_entry.set_style(p_style);}
+
+	alignment 	align(){return (_entry.align());}
+	int 		size(){return (_entry.size());}
+	text_color 	color(){return (_entry.color());}
+	text_style 	style(){return (_entry.style());}
+
 	void select(){_entry.set_selected(true);}
 	void unselect(){_entry.set_selected(false);}
 
