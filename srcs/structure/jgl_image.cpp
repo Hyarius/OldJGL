@@ -11,21 +11,7 @@ c_image::c_image(string path)
 
 	_size = Vector2(_surface->w, _surface->h);
 
-	_texture = SDL_CreateTexture(g_application->renderer(), SDL_PIXELFORMAT_RGBA8888,
-		SDL_TEXTUREACCESS_TARGET, _size.x, _size.y);
-
-	SDL_SetTextureBlendMode(_texture, SDL_BLENDMODE_BLEND);
-
-	if (_texture == nullptr)
-		get_sdl_error();
-
-	SDL_SetRenderTarget(g_application->renderer(), _texture);
-
-	SDL_Texture *tmp_texture = SDL_CreateTextureFromSurface(g_application->renderer(), _surface);
-
-	SDL_RenderCopy(g_application->renderer(), tmp_texture, NULL, NULL);
-
-	SDL_SetRenderTarget(g_application->renderer(), NULL);
+	_texture = SDL_CreateTextureFromSurface(g_application->renderer(), _surface);
 }
 
 c_image::c_image(size_t width, size_t height, Color p_color)
@@ -57,25 +43,7 @@ c_image::c_image(SDL_Surface *p_surface)
 
 	_size = Vector2(_surface->w, _surface->h);
 
-	_texture = SDL_CreateTexture(g_application->renderer(), SDL_PIXELFORMAT_RGBA8888,
-		SDL_TEXTUREACCESS_TARGET, _size.x, _size.y);
-
-	SDL_SetTextureBlendMode(_texture, SDL_BLENDMODE_BLEND);
-
-	if (_texture == nullptr)
-		get_sdl_error();
-
-	SDL_SetRenderTarget(g_application->renderer(), _texture);
-
-	SDL_SetRenderDrawColor(g_application->renderer(), 255, 255, 255, 0);
-
-	SDL_Rect rect = { 0, 0, _surface->w, _surface->h};
-	SDL_RenderFillRect(g_application->renderer(), &rect);
-
-	SDL_Texture *tmp_texture = SDL_CreateTextureFromSurface(g_application->renderer(), _surface);
-	SDL_RenderCopyEx(g_application->renderer(), tmp_texture, NULL, NULL, 0, NULL, SDL_FLIP_NONE);
-
-	SDL_SetRenderTarget(g_application->renderer(), NULL);
+	_texture = SDL_CreateTextureFromSurface(g_application->renderer(), _surface);
 }
 
 void c_image::active()

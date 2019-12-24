@@ -46,7 +46,7 @@ TTF_Font *get_font(int size)
 		error_exit(1, "Can't load a font of size < 2");
 
 	if (font.size() <= size)
-		font.resize(size + 1);
+		font.resize(size + 2);
 
 	if (font[size] == nullptr)
 	{
@@ -64,13 +64,13 @@ c_image				*get_char(char c, int size, text_color color, text_style type)
 		return (nullptr);
 
 	if (char_list.size() <= (size_t)size)
-		char_list.resize((size_t)size + 1);
+		char_list.resize((size_t)size + 2);
 	if (char_list[size].size() <= (size_t)type)
-		char_list[size].resize((size_t)type + 1);
+		char_list[size].resize((size_t)type + 2);
 	if (char_list[size][(size_t)type].size() <= (size_t)color)
-		char_list[size][(size_t)type].resize((size_t)color + 1);
+		char_list[size][(size_t)type].resize((size_t)color + 2);
 	if (char_list[size][(size_t)type][(size_t)color].size() <= (size_t)c)
-		char_list[size][(size_t)type][(size_t)color].resize(c + 1);
+		char_list[size][(size_t)type][(size_t)color].resize(c + 2);
 	if (char_list[size][(size_t)type][(size_t)color][c] == nullptr)
 	{
 		SDL_Texture* old_target = SDL_GetRenderTarget(g_application->renderer());
