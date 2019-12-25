@@ -1,11 +1,6 @@
 #ifndef JGL_SYSTEM_H
 #define JGL_SYSTEM_H
 
-#include "jgl_includes.h"
-#include "jgl_vector.h"
-#include "jgl_color.h"
-#include "jgl_enum.h"
-
 typedef struct s_mouse
 {
 	Vector2 old_pos;

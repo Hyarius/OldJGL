@@ -1,8 +1,8 @@
 #ifndef JGL_HOUR_ENTRY_H
 #define JGL_HOUR_ENTRY_H
 
-#include "jgl_widgets.h"
-#include "jgl_widget_component.h"
+#include "widget_component/jgl_widget_component.h"
+
 
 class c_hour_entry : public c_widget
 {

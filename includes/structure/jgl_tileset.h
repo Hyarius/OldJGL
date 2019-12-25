@@ -1,9 +1,6 @@
 #ifndef JGL_TILESET_H
 #define JGL_TILESET_H
 
-#include "jgl_includes.h"
-#include "jgl_image.h"
-
 using namespace std;
 
 class c_tileset

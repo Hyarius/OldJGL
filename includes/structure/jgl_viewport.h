@@ -1,11 +1,6 @@
 #ifndef JGL_VIEWPORT_H
 #define JGL_VIEWPORT_H
 
-#include "jgl_includes.h"
-#include "jgl_vector.h"
-#include "jgl_color.h"
-#include "jgl_system.h"
-
 class c_viewport
 {
 private:

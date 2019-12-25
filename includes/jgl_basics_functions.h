@@ -3,8 +3,6 @@
 
 #include "jgl_includes.h"
 
-#include "jgl_vector.h"
-
 using namespace std;
 
 void check_sdl_error(const char *file, int line);

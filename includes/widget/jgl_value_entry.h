@@ -1,8 +1,8 @@
 #ifndef JGL_VALUE_ENTRY
 #define JGL_VALUE_ENTRY
 
-#include "jgl_widgets.h"
-#include "jgl_widget_component.h"
+#include "widget_component/jgl_widget_component.h"
+
 
 class c_value_entry : public c_widget
 {

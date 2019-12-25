@@ -1,9 +1,6 @@
 #ifndef C_WIDGETS_H
 #define C_WIDGETS_H
 
-#include "jgl_viewport.h"
-#include "jgl_widget_component.h"
-
 typedef 			void(*Funct)(Data);
 
 using namespace std;

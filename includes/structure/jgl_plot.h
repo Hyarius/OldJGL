@@ -1,3 +1,6 @@
+#ifndef JGL_PLOT_H
+#define JGL_PLOT_H
+
 #include "jgl_includes.h"
 
 struct Plot_data
@@ -127,3 +130,5 @@ public:
 	void set_ordinate_precision(int p_precision){ordinate().precision = p_precision;}
 
 };
+
+#endif

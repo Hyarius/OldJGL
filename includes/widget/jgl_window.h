@@ -1,8 +1,6 @@
 #ifndef C_WINDOW_H
 #define C_WINDOW_H
 
-#include "jgl_widgets.h"
-
 using namespace std;
 
 class c_window : public c_widget

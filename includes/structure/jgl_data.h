@@ -1,8 +1,6 @@
 #ifndef JGL_DATA_H
 #define JGL_DATA_H
 
-#include "jgl_includes.h"
-
 using namespace std;
 
 struct Data

@@ -1,5 +1,7 @@
 #include "jgl.h"
 
+string font_path;
+
 vector<TTF_Font *>font;
 
 size_t tmp_index = 0;
@@ -33,6 +35,11 @@ SDL_Color color_tab[NB_COLOR] = {
 	{130, 0, 130, 255}
 };
 
+void init_text(string path)
+{
+	font_path = path;
+}
+
 SDL_Color			get_color(int i)
 {
 	if (i < 0 || i >= NB_COLOR)
@@ -50,7 +57,7 @@ TTF_Font *get_font(int size)
 
 	if (font[size] == nullptr)
 	{
-		font[size] = TTF_OpenFont(FONT_PATH, size);
+		font[size] = TTF_OpenFont(font_path.c_str(), size);
 		if (font[size] == nullptr)
 			error_exit(1, "Can't load a font");
 	}
