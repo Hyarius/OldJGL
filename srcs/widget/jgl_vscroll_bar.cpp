@@ -50,6 +50,15 @@ c_vscroll_bar::~c_vscroll_bar()
 
 bool c_vscroll_bar::handle_mouse()
 {
+	if (parent() != nullptr && parent()->is_pointed(g_mouse->pos))
+	{
+		if (g_mouse->wheel > 0)
+			for (int i = 0; i < 3; i++)
+				up_widget(this);
+		if (g_mouse->wheel < 0)
+			for (int i = 0; i < 3; i++)
+				down_widget(this);
+	}
 	return (false);
 }
 
