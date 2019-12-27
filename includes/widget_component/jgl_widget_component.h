@@ -115,7 +115,7 @@ public:
 	Color front(){return (_front);}
 	Color check(){return (_check);}
 
-	bool check(Vector2 point, Vector2 viewport_anchor);
+	bool check(Vector2 point);
 
 	void render(c_viewport *viewport = nullptr);
 

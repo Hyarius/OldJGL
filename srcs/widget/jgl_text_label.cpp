@@ -6,6 +6,8 @@ c_text_label::c_text_label(string p_text, c_widget *p_parent) : c_widget(p_paren
 	_box.set_back(Color(0, 0, 0, 0));
 	_box.set_front(Color(0, 0, 0, 0));
 	_label = w_text_component(this, p_text);
+
+	set_geometry(-1, -1);
 }
 
 c_text_label::~c_text_label()

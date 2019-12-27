@@ -58,7 +58,7 @@ void c_widget::set_parent(c_widget *p_parent)
 
 bool c_widget::handle_event()
 {
-	if (is_active() == false)
+	if (is_active() == false || area() == -1)
 		return (false);
 
 	for (int i = _childrens.size() - 1; i >= 0; i--)
@@ -109,7 +109,6 @@ void c_widget::update_children()
 	if (is_active() == false)
 		return ;
 
-	//cout << "Here" << endl;
 	update();
 
 	for (size_t i = 0; i < _childrens.size(); i++)

@@ -8,6 +8,8 @@ c_text_entry::c_text_entry(string p_text, c_widget *p_parent) : c_widget(p_paren
 	_select = false;
 	_next_input = 0;
 	_input_delay = 100;
+
+	set_geometry(-1, -1);
 }
 
 c_text_entry::~c_text_entry()

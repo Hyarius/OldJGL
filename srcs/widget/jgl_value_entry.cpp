@@ -8,6 +8,8 @@ c_value_entry::c_value_entry(float p_value, c_widget *p_parent) : c_widget(p_par
 	_select = false;
 	_next_input = 0;
 	_input_delay = 150;
+
+	set_geometry(-1, -1);
 }
 
 c_value_entry::~c_value_entry()

@@ -41,6 +41,8 @@ c_vscroll_bar::c_vscroll_bar(c_widget *p_parent) : c_widget(p_parent)
 	down_button->set_repeat(true);
 	down_button->set_timer_delta(3);
 	down_button->activate();
+
+	set_geometry(-1, -1);
 }
 
 c_vscroll_bar::~c_vscroll_bar()

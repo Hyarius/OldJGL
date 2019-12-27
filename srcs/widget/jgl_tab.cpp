@@ -29,7 +29,7 @@ static void active_tab(Data p_data)
 	}
 }
 
-c_tab::c_tab(c_widget *p_parent)
+c_tab::c_tab(c_widget *p_parent) : c_widget(p_parent)
 {
 	tab_area = new c_frame(this);
 	button_area = new c_frame(this);
@@ -42,6 +42,8 @@ c_tab::c_tab(c_widget *p_parent)
 
 	add_tab("Tab 1");
 	add_tab("Tab 2");
+
+	set_geometry(-1, -1);
 }
 
 void c_tab::add_tab(string p_name, int index)

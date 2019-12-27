@@ -11,6 +11,8 @@ c_hour_entry::c_hour_entry(float p_hour, float p_minute, c_widget *p_parent) : c
 	_selected = false;
 	_next_input = 0;
 	_input_delay = 100;
+
+	set_geometry(-1, -1);
 }
 
 c_hour_entry::~c_hour_entry()
@@ -60,7 +62,7 @@ void c_hour_entry::render()
 {
 	if (is_active() == false)
 		return ;
-		
+
 	_box.render(_viewport);
 	_label.render(_viewport);
 

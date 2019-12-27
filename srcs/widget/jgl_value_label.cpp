@@ -4,6 +4,8 @@ c_value_label::c_value_label(float p_value, c_widget *p_parent) : c_widget(p_par
 {
 	_box = w_box_component(this);
 	_label = w_value_component(this, p_value);
+
+	set_geometry(-1, -1);
 }
 
 c_value_label::~c_value_label()

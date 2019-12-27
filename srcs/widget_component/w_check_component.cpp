@@ -12,12 +12,12 @@ w_check_component::w_check_component(c_widget *p_owner, bool p_state) :
 	_state = p_state;
 }
 
-bool w_check_component::check(Vector2 point, Vector2 viewport_anchor)
+bool w_check_component::check(Vector2 point)
 {
 	Vector2 pos1;
 	Vector2 pos2;
 
-	pos1 = viewport_anchor + _anchor;
+	pos1 = _anchor;
 	pos2 = pos1 + _area;
 
 	if (point.x < pos1.x || point.x > pos2.x || point.y < pos1.y || point.y > pos2.y)

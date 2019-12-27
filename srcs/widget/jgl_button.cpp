@@ -12,6 +12,8 @@ c_button::c_button(Funct p_funct, Data p_data, c_widget *p_parent) : c_widget(p_
 	_box = w_box_component(this);
 	_label = w_text_component(this, "Click me !");
 	_label.set_align(alignment::centred);
+
+	set_geometry(-1, -1);
 }
 
 c_button::~c_button()

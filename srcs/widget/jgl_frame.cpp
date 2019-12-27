@@ -3,6 +3,8 @@
 c_frame::c_frame(c_widget *p_parent) : c_widget(p_parent)
 {
 	_box = w_box_component(this);
+
+	set_geometry(-1, -1);
 }
 
 c_frame::~c_frame()

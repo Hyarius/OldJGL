@@ -26,6 +26,7 @@
 #include "jgl_text_entry.h"
 #include "jgl_value_entry.h"
 #include "jgl_check_box.h"
+#include "jgl_check_entry.h"
 #include "jgl_hour_entry.h"
 #include "jgl_tab.h"
 #include "jgl_vscrollable_bar.h"
