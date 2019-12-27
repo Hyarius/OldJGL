@@ -1,6 +1,9 @@
 #ifndef JGL_VSCROLLABLE_BAR_H
 #define JGL_VSCROLLABLE_BAR_H
 
+#include "jgl_widgets.h"
+#include "jgl_widget_component.h"
+
 class c_vscroll_bar : public c_widget
 {
 private:

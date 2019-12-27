@@ -1,6 +1,11 @@
 #ifndef JGL_SYSTEM_H
 #define JGL_SYSTEM_H
 
+#include "jgl_includes.h"
+#include "jgl_vector.h"
+#include "jgl_color.h"
+#include "jgl_enum.h"
+
 typedef struct s_mouse
 {
 	Vector2 old_pos;
@@ -25,7 +30,5 @@ typedef struct s_keyboard
 	int get_key(int scan_code);
 	void reset_key(int scan_code);
 }t_keyboard;
-
-ostream& operator<<(ostream& os, t_mouse& value);
 
 #endif

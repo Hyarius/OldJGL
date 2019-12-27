@@ -3,6 +3,8 @@
 
 #include "jgl_includes.h"
 
+#include "jgl_vector.h"
+
 using namespace std;
 
 void check_sdl_error(const char *file, int line);
@@ -52,6 +54,15 @@ K find_key(map<K, V> &src_map, V &value)
 		it++;
 	}
 	return (it->first);
+}
+
+template<typename K, typename V>
+bool map_contain(map<K, V> &src_map, K &value)
+{
+	for (auto it = src_map.begin(); it != src_map.end(); it++)
+		if (it->first == value)
+			return (true);
+	return (false);
 }
 
 #endif

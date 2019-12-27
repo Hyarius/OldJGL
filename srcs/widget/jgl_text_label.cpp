@@ -15,7 +15,9 @@ c_text_label::~c_text_label()
 
 void c_text_label::move(Vector2 delta)
 {
-
+	_box.set_anchor(_box.anchor() + delta);
+	_label.set_anchor(_label.anchor() + delta);
+	_viewport->set_anchor(anchor() + delta);
 }
 
 void c_text_label::set_geometry_imp(Vector2 p_anchor, Vector2 p_area)

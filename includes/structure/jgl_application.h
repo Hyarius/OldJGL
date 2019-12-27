@@ -1,6 +1,10 @@
 #ifndef JGL_APPLICATION_H
 #define JGL_APPLICATION_H
 
+#include "jgl_includes.h"
+#include "jgl_vector.h"
+#include "jgl_color.h"
+
 class c_application
 {
 private:

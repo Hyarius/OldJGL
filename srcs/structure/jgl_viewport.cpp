@@ -34,19 +34,19 @@ void c_viewport::use()
 	if (_area.x <= 0 || _area.y <= 0)
 		return ;
 
+	reset();
 	SDL_Rect rect = {
 			static_cast<int>(_anchor.x), static_cast<int>(_anchor.y),
 			static_cast<int>(_area.x), static_cast<int>(_area.y)
 		};
 
-	SDL_RenderGetViewport(_renderer, &_old_viewport);
 	SDL_RenderSetViewport(_renderer, &rect);
 	set_active(true);
 }
 
-void c_viewport::unuse()
+void c_viewport::reset()
 {
-	SDL_RenderSetViewport(_renderer, &_old_viewport);
+	SDL_RenderSetViewport(_renderer, nullptr);
 }
 
 void c_viewport::set_Color(Color Color)

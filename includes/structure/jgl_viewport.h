@@ -1,6 +1,11 @@
 #ifndef JGL_VIEWPORT_H
 #define JGL_VIEWPORT_H
 
+#include "jgl_includes.h"
+#include "jgl_vector.h"
+#include "jgl_color.h"
+#include "jgl_system.h"
+
 class c_viewport
 {
 private:
@@ -29,7 +34,7 @@ public:
 	void set_background(Color p_color = Color(50, 50, 50)){_background = p_color;}
 
 	void use();
-	void unuse();
+	void reset();
 
 	void set_Color(Color Color);
 

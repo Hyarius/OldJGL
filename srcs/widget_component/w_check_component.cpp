@@ -30,7 +30,7 @@ void w_check_component::render(c_viewport *viewport)
 	Vector2 pos_1;
 	Vector2 pos_2;
 
-	fill_rectangle(_back, _anchor , _area, viewport);
+	fill_rectangle(_back, _anchor, _area, viewport);
 	fill_rectangle(_front, _anchor + _border, _area - _border * 2, viewport);
 	if (_state == true)
 		fill_rectangle(_check, _anchor + _border * 2, _area - _border * 4, viewport);

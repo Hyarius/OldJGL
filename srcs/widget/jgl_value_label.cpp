@@ -13,7 +13,9 @@ c_value_label::~c_value_label()
 
 void c_value_label::move(Vector2 delta)
 {
-
+	_box.set_anchor(_box.anchor() + delta);
+	_label.set_anchor(_label.anchor() + delta);
+	_viewport->set_anchor(anchor() + delta);
 }
 
 void c_value_label::set_geometry_imp(Vector2 p_anchor, Vector2 p_area)

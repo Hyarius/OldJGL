@@ -1,6 +1,9 @@
 #ifndef JGL_GEOMETRY_H
 #define JGL_GEOMETRY_H
 
+#include "jgl_vector.h"
+#include "jgl_viewport.h"
+
 using namespace std;
 
 struct	Poly_side

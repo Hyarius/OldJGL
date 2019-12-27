@@ -1,4 +1,5 @@
 #include "jgl.h"
+#include <typeinfo>
 
 using namespace std;
 

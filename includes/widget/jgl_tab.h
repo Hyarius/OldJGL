@@ -1,8 +1,8 @@
 #ifndef JGL_TAB_H
 #define JGL_TAB_H
 
-#include "widget_component/jgl_widget_component.h"
-
+#include "jgl_widgets.h"
+#include "jgl_widget_component.h"
 
 class c_tab : public c_widget
 {

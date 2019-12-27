@@ -1,8 +1,8 @@
 #ifndef JGL_TEXT_ENTRY
 #define JGL_TEXT_ENTRY
 
-#include "widget_component/jgl_widget_component.h"
-
+#include "jgl_widgets.h"
+#include "jgl_widget_component.h"
 
 class c_text_entry : public c_widget
 {

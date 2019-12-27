@@ -8,13 +8,13 @@ ostream& operator<<(ostream& os, const Color& value)
 
 ostream& operator<<(ostream& os, const Vector2& value)
 {
-	os << "(" << to_string(value.x) << " / " << to_string(value.y) << ")";
+	os << "(" << ftoa(value.x, 3) << " / " << ftoa(value.y, 3) << ")";
 	return os;
 }
 
 ostream& operator<<(ostream& os, const Vector3& value)
 {
-	os << "(" << to_string(value.x) << " / " << to_string(value.y) << " / " << to_string(value.z) << ")";
+	os << "(" << ftoa(value.x, 3) << " / " << ftoa(value.y, 3) << " / " << ftoa(value.z, 3) << ")";
 	return os;
 }
 

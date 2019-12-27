@@ -1,7 +1,8 @@
 #ifndef JGL_CHECK_BOX_H
 #define JGL_CHECK_BOX_H
 
-#include "widget_component/jgl_widget_component.h"
+#include "jgl_widgets.h"
+#include "jgl_widget_component.h"
 
 class c_check_box : public c_widget
 {

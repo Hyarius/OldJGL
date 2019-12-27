@@ -51,8 +51,3 @@ mouse_state			s_mouse::get_button(mouse_button type)
 	//button[value] = static_cast<int>(mouse_state::null);
 	return (result);
 }
-
-ostream& operator<<(ostream& os, const t_mouse& value)
-{
-	
-}

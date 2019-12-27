@@ -12,7 +12,8 @@ c_frame::~c_frame()
 
 void c_frame::move(Vector2 delta)
 {
-
+	_box.set_anchor(_box.anchor() + delta);
+	_viewport->set_anchor(anchor() + delta);
 }
 
 void c_frame::set_geometry_imp(Vector2 p_anchor, Vector2 p_area)
@@ -24,6 +25,9 @@ void c_frame::set_geometry_imp(Vector2 p_anchor, Vector2 p_area)
 
 void c_frame::render()
 {
+	if (is_active() == false)
+		return ;
+
 	_box.render(_viewport);
 }
 

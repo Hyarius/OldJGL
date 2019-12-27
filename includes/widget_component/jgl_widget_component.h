@@ -14,11 +14,11 @@ public:
 
 	~w_component();
 
-	void 		set_anchor(Vector2 p_anchor){_anchor = p_anchor + owner_anchor();}
+	void 		set_anchor(Vector2 p_anchor){_anchor = p_anchor;}
 	void 		set_area(Vector2 p_area){_area = p_area;}
 	void 		resize(Vector2 p_anchor, Vector2 p_area)
 					{set_anchor(p_anchor);set_area(p_area);}
-	Vector2 	anchor(){return (_anchor - owner_anchor());}
+	Vector2 	anchor(){return (_anchor);}
 	Vector2 	area(){return (_area);}
 	Vector2		owner_anchor();
 

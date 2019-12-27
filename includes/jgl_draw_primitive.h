@@ -1,6 +1,11 @@
 #ifndef JGL_DRAW_PRIMITIVE_H
 #define JGL_DRAW_PRIMITIVE_H
 
+#include "jgl_includes.h"
+#include "jgl_vector.h"
+#include "jgl_color.h"
+#include "jgl_system.h"
+
 using namespace std;
 
 void draw_point(Color p_color, Vector2 center, int width = 1, c_viewport *viewport = nullptr);

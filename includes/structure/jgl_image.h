@@ -1,6 +1,12 @@
 #ifndef JGL_IMAGE_H
 #define JGL_IMAGE_H
 
+#include "jgl_includes.h"
+#include "jgl_basics_functions.h"
+#include "jgl_vector.h"
+#include "jgl_color.h"
+#include "jgl_system.h"
+
 class				c_image
 {
 private:

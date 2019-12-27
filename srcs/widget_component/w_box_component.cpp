@@ -86,7 +86,7 @@ void w_box_component::render(c_viewport *viewport)
 	}
 	else
 	{
-		fill_rectangle(_back + _delta, _anchor , _area, viewport);
+		fill_rectangle(_back + _delta, _anchor, _area, viewport);
 		fill_rectangle(_front + _delta, _anchor + _border, _area - _border * 2, viewport);
 	}
 }
