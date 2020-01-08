@@ -61,8 +61,8 @@ void c_plot::initialize()
 
 void c_plot::draw()
 {
-	draw_line(Color(0, 0, 0), _origin, _pos_right, 2);
-	draw_line(Color(0, 0, 0), _origin, _pos_up, 2);
+	draw_line(_origin, _pos_right, 2, Color(0, 0, 0));
+	draw_line(_origin, _pos_up, 2, Color(0, 0, 0));
 	draw_absciss();
 	draw_ordinate();
 
@@ -89,7 +89,7 @@ void c_plot::draw_plot_point(Vector2 point, Color color)
 	float delta_x = point.x - absciss().min;
 	float delta_y = point.y - ordinate().min;
 
-	draw_point(color, _origin + _absciss_unit * delta_x + _ordinate_unit * delta_y, _point_size);
+	draw_point(_origin + _absciss_unit * delta_x + _ordinate_unit * delta_y, _point_size, color);
 }
 
 void c_plot::draw_plot_line(Vector2 point_a, Vector2 point_b, Color color)
@@ -97,7 +97,7 @@ void c_plot::draw_plot_line(Vector2 point_a, Vector2 point_b, Color color)
 	Vector2 tmp_a = _origin + _absciss_unit * (point_a.x - absciss().min) + _ordinate_unit * (point_a.y - ordinate().min);
 	Vector2 tmp_b = _origin + _absciss_unit * (point_b.x - absciss().min) + _ordinate_unit * (point_b.y - ordinate().min);
 
-	draw_line(color, tmp_a, tmp_b, _line_size);
+	draw_line(tmp_a, tmp_b, _line_size, color);
 }
 
 void c_plot::draw_absciss_point(float value)
@@ -106,7 +106,7 @@ void c_plot::draw_absciss_point(float value)
 	if (absciss().funct != nullptr)
 		text = absciss().funct(value);
 	float delta = value - absciss().min;
-	draw_point(Color(0, 0, 0), _origin + _absciss_unit * delta, 5);
+	draw_point(_origin + _absciss_unit * delta, 5, Color(0, 0, 0));
 	draw_centred_text(text, _origin + _absciss_unit * delta + Vector2(0.0f, _margin.y / 2));
 }
 
@@ -121,7 +121,7 @@ void c_plot::draw_ordinate_point(float value)
 {
 	string text = ftoa(value, ordinate().precision);
 	float delta = value - ordinate().min;
-	draw_point(Color(0, 0, 0), _origin + _ordinate_unit * delta, 5);
+	draw_point(_origin + _ordinate_unit * delta, 5, Color(0, 0, 0));
 	draw_centred_text(text, _origin + _ordinate_unit * delta - Vector2(_margin.x / 2, 0.0f));
 }
 

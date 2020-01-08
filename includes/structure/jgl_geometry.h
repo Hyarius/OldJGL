@@ -6,6 +6,51 @@
 
 using namespace std;
 
+struct Uv
+{
+	float u;
+	float v;
+
+	Uv(float p_u, float p_v){u = p_u; v = p_v;}
+};
+
+struct Pixel
+{
+	float x;
+	float y;
+	float z;
+
+	Pixel(int p_value);
+	Pixel(Vector2 p_value);
+	Pixel(float p_value = -1);
+	Pixel(float p_x, float p_y, float p_z = -1);
+	Pixel(int p_x, int p_y, int p_z = -1);
+
+	Pixel& operator = (int p_value);
+	Pixel& operator = (float  p_value);
+	Pixel& operator = (Vector2 p_value);
+
+	Pixel operator + (const Pixel& delta);
+	Pixel operator - (const Pixel& delta);
+	Pixel operator * (const Pixel& delta);
+	Pixel operator / (const Pixel& delta);
+	void operator += (const Pixel& delta);
+	void operator -= (const Pixel& delta);
+	void operator *= (const Pixel& delta);
+	void operator /= (const Pixel& delta);
+	bool operator == (const Pixel& delta) const;
+	bool operator != (const Pixel& delta) const;
+	bool operator < (const Pixel& other) const;
+	bool operator > (const Pixel& other) const;
+	float *decompose();
+	float distance(Pixel &point);
+	Pixel normalize();
+	Pixel cross(Pixel &other);
+	float dot(Pixel &other);
+	string str();
+	Pixel floor();
+};
+
 struct	Poly_side
 {
 	size_t index_vertices[2];

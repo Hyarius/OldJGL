@@ -20,93 +20,111 @@ vector<Vector2> calc_point(int width)
 	return (result);
 }
 
-void draw_line(Color p_color, Vector2 p1, Vector2 p2, int width, c_viewport *viewport)
+void draw_line(Pixel p1, Pixel p2, int width, Color p_color, c_viewport *viewport)
 {
 	if (viewport == nullptr)
 		viewport = g_application->central_widget()->viewport();
 
-	viewport->set_Color(p_color);
-
 	vector<Vector2> to_draw = calc_point(width);
 	Vector2 actual;
+	Color colors[2];
+	Pixel pixels[2];
 
+	colors[0] = p_color;
+	colors[1] = p_color;
 	for (size_t i = 0; i < to_draw.size(); i++)
 	{
-		SDL_RenderDrawLine(viewport->renderer(),
-			to_draw[i].x + p1.x, to_draw[i].y + p1.y,
-			to_draw[i].x + p2.x, to_draw[i].y + p2.y);
+
+		pixels[0] = convert_screen_to_opengl(Vector2(to_draw[i].x + p1.x, to_draw[i].y + p1.y));
+		pixels[1] = convert_screen_to_opengl(Vector2(to_draw[i].x + p2.x, to_draw[i].y + p2.y));
+		draw_line_color(pixels, colors, 1);
 	}
 
 }
 
-void draw_point(Color p_color, Vector2 center, int width, c_viewport *viewport)
+void draw_point(Pixel center, int width, Color p_color, c_viewport *viewport)
 {
 	if (viewport == nullptr)
 		viewport = g_application->central_widget()->viewport();
 
-	viewport->set_Color(p_color);
-
-	Vector2 tmp_center = 0;
-	Vector2 actual;
+	Pixel tmp_center = 0;
+	Pixel actual;
 
 	for (actual.x = -width / 2; actual.x <= width / 2 || actual.x == 0; actual.x++)
 	{
 		for (actual.y = -width / 2; actual.y <= width / 2 || actual.y == 0; actual.y++)
 		{
 			if (tmp_center.distance(actual) < width / 2.0f)
-				SDL_RenderDrawPoint(viewport->renderer(), actual.x + center.x, actual.y + center.y);
+				draw_pixel_color(Pixel(actual.x + center.x, actual.y + center.y), p_color);
 		}
 	}
 }
 
-void draw_rectangle(Color Color, Vector2 pos, Vector2 size, c_viewport *viewport)
+void draw_rectangle(Pixel p_tl, Pixel p_tr, Pixel p_dl, Pixel p_dr, Color p_color, c_viewport *viewport)
 {
 	if (viewport == nullptr)
 		viewport = g_application->central_widget()->viewport();
 
-	viewport->set_Color(Color);
+		Pixel points[] = {
+			convert_screen_to_opengl(p_tl),
+			convert_screen_to_opengl(p_tr),
+			convert_screen_to_opengl(p_dl),
+			convert_screen_to_opengl(p_dl),
+			convert_screen_to_opengl(p_dr),
+			convert_screen_to_opengl(p_tr)
+		};
+		Color colors[] = {
+			p_color,
+			p_color,
+			p_color,
+			p_color,
+			p_color,
+			p_color
+		};
 
-	SDL_Rect rect = {
-		static_cast<int>(pos.x), static_cast<int>(pos.y),
-		static_cast<int>(size.x), static_cast<int>(size.y)};
-	SDL_RenderDrawRect(viewport->renderer(), &rect);
+	draw_triangle_color(points, colors);
+	draw_triangle_color(&(points[3]), &(colors[3]));
 }
 
-void fill_rectangle(Color Color, Vector2 pos, Vector2 size, c_viewport *viewport)
+void fill_rectangle(Pixel p_tl, Pixel p_tr, Pixel p_dl, Pixel p_dr, Color p_color, c_viewport *viewport)
 {
-	if (viewport == nullptr)
-		viewport = g_application->central_widget()->viewport();
+	Pixel points[] = {
+		convert_screen_to_opengl(p_tl),
+		convert_screen_to_opengl(p_tr),
+		convert_screen_to_opengl(p_dl),
+		convert_screen_to_opengl(p_dl),
+		convert_screen_to_opengl(p_dr),
+		convert_screen_to_opengl(p_tr)
+	};
+	Color colors[] = {
+		p_color,
+		p_color,
+		p_color,
+		p_color,
+		p_color,
+		p_color
+	};
 
-	viewport->set_Color(Color);
-
-	SDL_Rect rect = {
-		static_cast<int>(pos.x), static_cast<int>(pos.y),
-		static_cast<int>(size.x), static_cast<int>(size.y)};
-	SDL_RenderFillRect(viewport->renderer(), &rect);
+	fill_triangle_color(points, colors);
+	fill_triangle_color(&(points[3]), &(colors[3]));
 }
 
-void draw_centred_rectangle(Color Color, Vector2 pos, Vector2 size, c_viewport *viewport)
+void draw_rectangle(Pixel pos, Pixel size, Color p_color, c_viewport *viewport)
 {
-	if (viewport == nullptr)
-		viewport = g_application->central_widget()->viewport();
-
-	viewport->set_Color(Color);
-
-	SDL_Rect rect = {
-		static_cast<int>(pos.x - size.x / 2), static_cast<int>(pos.y - size.y / 2),
-		static_cast<int>(size.x), static_cast<int>(size.y)};
-	SDL_RenderDrawRect(viewport->renderer(), &rect);
+	draw_rectangle(Pixel(pos.x, pos.y), Pixel(pos.x + size.x, pos.y), Pixel(pos.x, pos.y + size.y), Pixel(pos.x + size.x, pos.y + size.y), p_color, viewport);
 }
 
-void fill_centred_rectangle(Color Color, Vector2 pos, Vector2 size, c_viewport *viewport)
+void fill_rectangle(Pixel pos, Pixel size, Color p_color, c_viewport *viewport)
 {
-	if (viewport == nullptr)
-		viewport = g_application->central_widget()->viewport();
+	fill_rectangle(Pixel(pos.x, pos.y), Pixel(pos.x + size.x, pos.y), Pixel(pos.x, pos.y + size.y), Pixel(pos.x + size.x, pos.y + size.y), p_color, viewport);
+}
 
-	viewport->set_Color(Color);
+void fill_centred_rectangle(Pixel p_coord, Pixel p_size, Color p_color, c_viewport *viewport)
+{
+	fill_rectangle(p_coord - p_size / 2, p_size, p_color, viewport);
+}
 
-	SDL_Rect rect = {
-		static_cast<int>(pos.x - size.x / 2), static_cast<int>(pos.y - size.y / 2),
-		static_cast<int>(size.x), static_cast<int>(size.y)};
-	SDL_RenderFillRect(viewport->renderer(), &rect);
+void draw_centred_rectangle(Pixel p_coord, Pixel p_size, Color p_color, c_viewport *viewport)
+{
+	draw_rectangle(p_coord - p_size / 2, p_size, p_color, viewport);
 }

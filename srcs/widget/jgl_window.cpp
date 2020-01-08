@@ -16,7 +16,7 @@ void c_window::set_color(Color p_color)
 
 void c_window::render()
 {
-	fill_rectangle(back, 0, _viewport->area(), _viewport);
+	fill_rectangle(0, _viewport->area(), back, _viewport);
 }
 
 bool c_window::handle_keyboard()

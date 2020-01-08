@@ -17,7 +17,7 @@ void Polygon2D::draw(Color p_color, c_viewport *viewport, float scale, int width
 		pos1 = (_points[_sides[i].index_vertices[0]] * scale) + _pos;
 		pos2 = (_points[_sides[i].index_vertices[1]] * scale) + _pos;
 
-		draw_line(p_color, pos1, pos2, width, viewport);
+		draw_line(pos1, pos2, width, p_color, viewport);
 	}
 }
 

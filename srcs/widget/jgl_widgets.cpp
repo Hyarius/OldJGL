@@ -94,7 +94,7 @@ void c_widget::render_children()
 	if (parent() != nullptr)
 		parent()->viewport()->use();
 	else
-		SDL_RenderSetViewport(g_application->renderer(), nullptr);
+		g_application->viewport()->reset();
 
 	render();
 

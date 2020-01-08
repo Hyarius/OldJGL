@@ -30,7 +30,7 @@ c_image::c_image(size_t width, size_t height, Color p_color)
 
 	SDL_SetRenderTarget(g_application->renderer(), _texture);
 
-	fill_rectangle(p_color, 0, _size);
+	fill_rectangle(0, _size, p_color);
 
 	SDL_SetRenderTarget(g_application->renderer(), NULL);
 }

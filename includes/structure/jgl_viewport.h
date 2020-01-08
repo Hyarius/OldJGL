@@ -10,6 +10,7 @@ class c_viewport
 {
 private:
 	SDL_Renderer *_renderer;
+	SDL_GLContext _context;
 	Color _background;
 
 	bool _active;

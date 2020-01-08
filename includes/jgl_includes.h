@@ -27,7 +27,13 @@
 #include <sys/types.h>
 #include <sys/stat.h>
 #include <SDL.h>
-
+#ifdef __APPLE__
+#	include <OpenGL/gl3.h>
+#	include <OpenGL/gl3ext.h>
+#elif defined _WIN32
+#	include <glew.h>
+#	include <SDL_opengl.h>
+#endif
 #include <SDL_image.h>
 #include <SDL_ttf.h>
 #include <SDL_mixer.h>
