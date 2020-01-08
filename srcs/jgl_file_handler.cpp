@@ -68,14 +68,14 @@ vector<string>		list_files(string path, string extension)
 	while ((dirent_ptr = readdir(dir)) != NULL)
 	{
 		string tmp = dirent_ptr->d_name;
-		brut_files.push_back(string(tmp));
+		brut_files.insert(brut_files.end(), tmp);
 	}
 	while (i < brut_files.size())
 	{
 		if (brut_files[i].find(extension.c_str(), 0, extension.size()) != string::npos)
 		{
 			test = strsplit(brut_files[i], extension)[0];
-			files.push_back(string(test));
+			files.insert(files.end(), test);
 		}
 		i++;
 	}

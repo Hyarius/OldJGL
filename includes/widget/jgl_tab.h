@@ -19,8 +19,12 @@ public:
 	vector<c_frame *> tabs(){return (_tabs);}
 	vector<c_button *> buttons(){return (_buttons);}
 
-	void add_tab(string p_name, int index = -1);
+	c_frame *add_tab(string p_name, int index = -1);
+	void reset_size();
+	void reset_tab();
 	void reset_button();
+
+	int border(){return (tab_area->border());}
 
 	void set_tab_name(size_t index, string new_name)
 			{_buttons[index]->set_text(new_name);}

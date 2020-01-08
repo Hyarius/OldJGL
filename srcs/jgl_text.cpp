@@ -147,7 +147,6 @@ int				calc_text_len(string text, int size)
 	{
 		image = get_char(text[i], size);
 		delta += image->size().x;
-
 		i++;
 	}
 	return (delta);

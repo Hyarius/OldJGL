@@ -1,5 +1,4 @@
 #include "jgl.h"
-#include <typeinfo>
 
 using namespace std;
 
@@ -10,12 +9,13 @@ vector<string>		strsplit(string input, string delim)
 	int 			start = 0;
 	int 			end = 0;
 
+	tab = vector<string>();
 	while (end != -1)
 	{
 		end = input.find(delim, start);
 		word = input.substr(start, end - start);
 		if (word.size() > 0)
-			tab.push_back(string(word));
+			tab.insert(tab.end(), word);
 		start = end + delim.size();
 	}
 	return (tab);
@@ -410,5 +410,5 @@ vector<Vector2> 		calc_line_2d(float x1, float y1, float x2, float y2)
 
 int generate_nbr(int min, int max)
 {
-	return(rand() % max + min);
+	return((rand() % (max - min)) + min);
 }

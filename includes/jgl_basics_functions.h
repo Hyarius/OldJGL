@@ -57,7 +57,7 @@ K find_key(map<K, V> &src_map, V &value)
 }
 
 template<typename K, typename V>
-bool map_contain(map<K, V> &src_map, K &value)
+bool map_contain(map<K, V> &src_map, K value)
 {
 	for (auto it = src_map.begin(); it != src_map.end(); it++)
 		if (it->first == value)

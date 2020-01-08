@@ -6,6 +6,7 @@ NAME=		libjgl.a
 
 ##List every folder where he will find header
 INC_DIR = 	$(shell find includes -type d)
+INC_DIR +=	$(shell find ~/.brew/include -type d)
 ##List every folder where he will find source file
 SRC_DIR = 	$(shell find srcs -type d)
 ##List every folder where he will find lib file
@@ -21,7 +22,6 @@ DWL =		brew
 
 ##List every .c found inside SRC_DIR
 SRC = 		$(foreach dir, $(SRC_DIR), $(foreach file, $(wildcard $(dir)/*.cpp), $(notdir $(file))))
-INC = 		$(foreach dir, $(INC_DIR), $(foreach file, $(wildcard $(dir)/*.h), $(addprefix $(INC_DIR)/, $(notdir $(file)))))
 
 ##Transform and place every .o from SRC
 OBJ=		$(addprefix $(OBJ_DIR)/, $(SRC:%.cpp=%.o))
@@ -39,7 +39,7 @@ LIB =		SDL2 SDL2_image SDL2_mixer SDL2_ttf
 CFLAGS=		-O3 -flto -std=c++11
 
 ##Create the flags to includes every .h needed by this program
-IFLAGS =	$(foreach dir, $(INC_DIR), -I$(dir)) $(foreach dir, $(shell find ~/.brew/include -type d), -I$(dir))
+IFLAGS =	$(foreach dir, $(INC_DIR), -I$(dir))
 
 ##Create the flags to link every libraries needed by this program (-L and -l)
 LFLAGS = 	$(foreach dir, $(LIB_DIR), -L $(dir) ) $(foreach lib, $(LIB), -l$(lib) ) -framework OpenGL
