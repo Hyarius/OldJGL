@@ -17,22 +17,22 @@ c_application::c_application(string name, Vector2 p_size, Color p_color)
 	srand(time(NULL));
 	TTF_Init();
 
-	_win_size = p_size;
+	_size = p_size;
 	if (p_size.x <= 1 && p_size.y <= 1)
 	{
 		SDL_DisplayMode current;
 		SDL_GetDesktopDisplayMode(0, &current);
 		if (p_size == Vector2())
-			_win_size = Vector2(current.w * 0.8f, current.h * 0.8f);
+			_size = Vector2(current.w * 0.8f, current.h * 0.8f);
 		else
-			_win_size = Vector2(current.w * p_size.x, current.h * p_size.y);
+			_size = Vector2(current.w * p_size.x, current.h * p_size.y);
 	}
 
 	string tmp = string(name.begin(), name.end());
 
 	_window = SDL_CreateWindow(tmp.c_str(),
 		SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED,
-		static_cast<int>(_win_size.x), static_cast<int>(_win_size.y), 0);
+		static_cast<int>(_size.x), static_cast<int>(_size.y), 0);
 
 	_context = SDL_GL_CreateContext(_window);
 	//_renderer = SDL_CreateRenderer(_window, -1, SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC);
@@ -67,20 +67,20 @@ c_application::c_application(string name, Vector2 p_size, Color p_color)
 
 	glBindVertexArray(_vertex_array);
 	glBindBuffer(GL_ARRAY_BUFFER, _vertex_buffer);
-	glBufferData(GL_ARRAY_BUFFER, sizeof(GLfloat) * _win_size.x * _win_size.y \
+	glBufferData(GL_ARRAY_BUFFER, sizeof(GLfloat) * _size.x * _size.y \
 										* 3, NULL, GL_STATIC_DRAW);
 	glBindBuffer(GL_ARRAY_BUFFER, _color_buffer);
-	glBufferData(GL_ARRAY_BUFFER, sizeof(GLfloat) * _win_size.x * _win_size.y \
+	glBufferData(GL_ARRAY_BUFFER, sizeof(GLfloat) * _size.x * _size.y \
 										* 4, NULL, GL_DYNAMIC_DRAW);
 	glBindBuffer(GL_ARRAY_BUFFER, _texture_buffer);
-	glBufferData(GL_ARRAY_BUFFER, sizeof(GLfloat) * _win_size.x * _win_size.y \
+	glBufferData(GL_ARRAY_BUFFER, sizeof(GLfloat) * _size.x * _size.y \
 										* 4, NULL, GL_DYNAMIC_DRAW);
 	glBindBuffer(GL_ARRAY_BUFFER, _alpha_buffer);
-	glBufferData(GL_ARRAY_BUFFER, sizeof(GLfloat) * _win_size.x * _win_size.y \
+	glBufferData(GL_ARRAY_BUFFER, sizeof(GLfloat) * _size.x * _size.y \
 										* 4, NULL, GL_DYNAMIC_DRAW);
 
-	g_mouse = new t_mouse();
-	g_keyboard = new t_keyboard();
+	g_mouse = new Mouse();
+	g_keyboard = new Keyboard();
 
 	if (g_application == nullptr)
 		select();
@@ -90,10 +90,9 @@ c_application::c_application(string name, Vector2 p_size, Color p_color)
 	_central_widget = nullptr;
 
 	_central_widget = new c_window();
-	_central_widget->set_geometry(Vector2(0, 0), _win_size);
+	_central_widget->set_geometry(Vector2(0, 0), _size);
 	_central_widget->set_color(p_color);
 	_central_widget->activate();
-
 
 	SDL_StartTextInput();
 
@@ -101,41 +100,16 @@ c_application::c_application(string name, Vector2 p_size, Color p_color)
 
 void c_application::resize(Vector2 p_size)
 {
-	_win_size = p_size;
+	_size = p_size;
 
-	SDL_SetWindowSize(_window, static_cast<int>(_win_size.x), static_cast<int>(_win_size.y));
-	_central_widget->set_geometry(Vector2(0, 0), _win_size);
+	SDL_SetWindowSize(_window, static_cast<int>(_size.x), static_cast<int>(_size.y));
+	_central_widget->set_geometry(Vector2(0, 0), _size);
 	SDL_SetWindowPosition(_window, SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED);
-}
-
-SDL_Window *c_application::window()
-{
-	return (_window);
-}
-
-SDL_Renderer *c_application::renderer()
-{
-	return (_renderer);
-}
-
-SDL_Event *c_application::event()
-{
-	return (&_event);
-}
-
-c_window *c_application::central_widget()
-{
-	return (_central_widget);
 }
 
 void c_application::set_background(Color p_color)
 {
 	_central_widget->set_color(p_color);
-}
-
-Vector2 &c_application::size()
-{
-	return (_win_size);
 }
 
 void c_application::select()
@@ -156,15 +130,15 @@ void c_application::render()
 
 void c_application::quit()
 {
-	play = false;
+	_play = false;
 }
 
 int c_application::run()
 {
 	int ret;
-	play = true;
+	_play = true;
 
-	while (play == true)
+	while (_play == true)
 	{
 		clear();
 

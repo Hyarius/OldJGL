@@ -76,7 +76,7 @@ void w_box_component::render(c_viewport *viewport)
 					tmp_size = h_middle_size;
 				}
 
-				_tileset->draw(sprite, pos, tmp_size, viewport);
+				_tileset->draw(sprite, pos, tmp_size, 1, viewport);
 				pos.x += tmp_size.x;
 			}
 			pos.y += (j == 0 || j == nb_sub_y + 1 ? corner_size : v_middle_size.y);

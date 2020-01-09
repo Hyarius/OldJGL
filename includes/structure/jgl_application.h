@@ -14,67 +14,47 @@ class c_application
 {
 private:
 	SDL_Window *_window;
-	SDL_Renderer *_renderer;
 	SDL_GLContext _context;
 	c_viewport *_viewport;
-	Vector2 _win_size;
-
+	Vector2 _size;
 	GLuint _program_color;
 	GLuint _program_sprite;
-
 	GLuint _vertex_array;
-
 	GLuint _vertex_buffer;
 	GLuint _color_buffer;
 	GLuint _texture_buffer;
 	GLuint _alpha_buffer;
-
 	GLuint _textureID;
-
 	class c_window *_central_widget;
-	bool play;
+	bool _play;
 	SDL_Event _event;
 
 public:
 	c_application(string name, Vector2 p_size = Vector2(), Color p_color = Color(50, 50, 50));
 
-	SDL_Window *window();
-
-	SDL_Renderer *renderer();
-	SDL_GLContext &context(){return (_context);}
-
+	SDL_Window *window(){return (_window);}
+	SDL_GLContext *context(){return (&_context);}
+	c_viewport *viewport(){return (_viewport);}
+	Vector2 size(){return (_size);}
 	GLuint program_color(){return (_program_color);}
 	GLuint program_sprite(){return (_program_sprite);}
-
 	GLuint vertex_array(){return (_vertex_array);}
-
 	GLuint vertex_buffer(){return (_vertex_buffer);}
 	GLuint color_buffer(){return (_color_buffer);}
 	GLuint texture_buffer(){return (_texture_buffer);}
 	GLuint alpha_buffer(){return (_alpha_buffer);}
-
 	GLuint textureID(){return (_textureID);}
+	class c_window *central_widget(){return (_central_widget);}
+	bool play(){return (_play);}
+	SDL_Event *event(){return (&_event);}
 
-	SDL_Event *event();
-
-	c_viewport *viewport(){return (_viewport);}
-
+	void set_font_path(string p_font_path);
 	void quit();
-
-	class c_window *central_widget();
-
 	void set_background(Color p_color = Color(50, 50, 50));
-
 	void resize(Vector2 p_size);
-
-	Vector2 &size();
-
 	void select();
-
 	void clear();
-
 	void render();
-
 	int run();
 };
 

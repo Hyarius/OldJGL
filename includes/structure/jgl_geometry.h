@@ -2,7 +2,6 @@
 #define JGL_GEOMETRY_H
 
 #include "jgl_vector.h"
-#include "jgl_viewport.h"
 
 using namespace std;
 
@@ -11,7 +10,21 @@ struct Uv
 	float u;
 	float v;
 
-	Uv(float p_u, float p_v){u = p_u; v = p_v;}
+	Uv() : u(0), v(0){}
+	Uv(float p_u, float p_v) : u(p_u), v(p_v){}
+	Uv(Vector2 pos) : u(pos.x), v(pos.y){}
+};
+
+struct Rect
+{
+	float x;
+	float y;
+	float w;
+	float h;
+
+	Rect() : x(0), y(0), w(1), h(1){}
+	Rect(float p_x, float p_y, float p_w, float p_h) : x(p_x), y(p_y), w(p_w), h(p_h){}
+	Rect(Vector2 pos, Vector2 size) : x(pos.x), y(pos.y), w(size.x), h(size.y){}
 };
 
 struct Pixel
@@ -75,7 +88,7 @@ private:
 public:
 	Polygon2D(Vector2 p_pos = 0);
 
-	void draw(Color p_color, c_viewport *viewport = nullptr, float scale = 1.0f, int width = 1);
+	void draw(Color p_color, class c_viewport *viewport = nullptr, float scale = 1.0f, int width = 1);
 
 	bool contact(Polygon2D &other, float scale = 1);
 	bool is_pointed(Vector2 point, float scale = 1);

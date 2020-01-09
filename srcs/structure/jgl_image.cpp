@@ -1,88 +1,86 @@
 #include "jgl.h"
 
-c_image::c_image() : _surface(nullptr), _texture(nullptr) {}
+c_image::c_image() : _surface(nullptr), _texture_id(0) {}
+
+void c_image::upload_texture()
+{
+	if (_surface->format->BytesPerPixel == 3)
+	{
+		_internal_format = GL_RGB;
+		if (_surface->format->Rmask == 0xff)
+			_format = GL_RGB;
+		else
+			_format = GL_BGR;
+	}
+	else if (_surface->format->BytesPerPixel == 4)
+	{
+		_internal_format = GL_RGBA;
+		if (_surface->format->Rmask == 0xff)
+			_format = GL_RGBA;
+		else
+			_format = GL_BGRA;
+	}
+
+	glGenTextures(1, &_texture_id);
+	glBindTexture(GL_TEXTURE_2D, _texture_id);
+
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+
+	glTexImage2D(GL_TEXTURE_2D, 0, _internal_format, _surface->w,
+				_surface->h, 0, _format,
+				GL_UNSIGNED_BYTE, _surface->pixels);
+
+	glBindTexture(GL_TEXTURE_2D, 0);
+}
 
 c_image::c_image(string path)
 {
 	_surface = IMG_Load(path.c_str());
-
-	if (_surface == nullptr)
-		get_sdl_error();
-
 	_size = Vector2(_surface->w, _surface->h);
+	if (_surface == NULL)
+		error_exit(1, "Can't load " + path + " file");
 
-	_texture = SDL_CreateTextureFromSurface(g_application->renderer(), _surface);
+	upload_texture();
 }
 
 c_image::c_image(size_t width, size_t height, Color p_color)
 {
-	_surface = nullptr;
+	_surface = create_surface_color(p_color);
+	_size = Vector2(static_cast<int>(width), static_cast<int>(height));
+	if (_surface == NULL)
+		error_exit(1, "Can't create a surface of color " + to_string((int)(p_color.r * 255)) + "/" + to_string((int)(p_color.g * 255)) + "/" + to_string((int)(p_color.b * 255)) + "/" + to_string((int)(p_color.a * 255)));
 
-	_texture = SDL_CreateTexture(g_application->renderer(), SDL_PIXELFORMAT_RGBA8888,
-		SDL_TEXTUREACCESS_TARGET, width, height);
-
-	SDL_SetTextureBlendMode(_texture, SDL_BLENDMODE_BLEND);
-
-	if (_texture == nullptr)
-		get_sdl_error();
-
-	_size = Vector2((int)width, (int)height);
-
-	SDL_SetRenderTarget(g_application->renderer(), _texture);
-
-	fill_rectangle(0, _size, p_color);
-
-	SDL_SetRenderTarget(g_application->renderer(), NULL);
+	upload_texture();
 }
 
 c_image::c_image(SDL_Surface *p_surface)
 {
 	_surface = p_surface;
-	if (_surface == nullptr)
-		error_exit(1, "Surface send in c_image = NUL");
-
 	_size = Vector2(_surface->w, _surface->h);
+	if (_surface == NULL)
+		error_exit(1, "bouh");
 
-	_texture = SDL_CreateTextureFromSurface(g_application->renderer(), _surface);
-}
-
-void c_image::active()
-{
-	SDL_SetRenderTarget(g_application->renderer(), _texture);
-}
-
-void c_image::unactive()
-{
-	SDL_SetRenderTarget(g_application->renderer(), NULL);
+	upload_texture();
 }
 
 void c_image::save(string file_path)
 {
-	SDL_Texture* old_target = SDL_GetRenderTarget(g_application->renderer());
-    SDL_SetRenderTarget(g_application->renderer(), _texture);
-    int width, height;
-    SDL_QueryTexture(_texture, NULL, NULL, &width, &height);
-    SDL_Surface* tmp_surface = SDL_CreateRGBSurface(0, width, height, 32, 0, 0, 0, 0);
-    SDL_RenderReadPixels(g_application->renderer(), NULL, tmp_surface->format->format, tmp_surface->pixels, tmp_surface->pitch);
-    IMG_SavePNG(tmp_surface, file_path.c_str());
-    SDL_FreeSurface(tmp_surface);
-    SDL_SetRenderTarget(g_application->renderer(), old_target);
+	// https://www.codeproject.com/Questions/655714/How-to-write-openGl-offscreen-data-in-to-JPG-image
 }
 
-void c_image::draw(Vector2 pos, Vector2 size, c_viewport *viewport)
+void c_image::draw(Vector2 p_pos, Vector2 p_size, c_viewport *viewport)
 {
-	if (viewport == nullptr)
-		viewport = g_application->central_widget()->viewport();
-
-	SDL_Rect dest = {
-			static_cast<int>(pos.x), static_cast<int>(pos.y),
-			static_cast<int>(size.x), static_cast<int>(size.y)
-		};
-	SDL_RenderCopyEx(viewport->renderer(), _texture, NULL, &dest, 0, NULL, SDL_FLIP_NONE);
+	if (_surface != NULL)
+	{
+		glBindTexture(GL_TEXTURE_2D, _texture_id);
+		draw_image(p_pos, p_size);
+	}
+	else
+	{
+		draw_rectangle(p_pos, p_size, Color(0.2f, 0.2f, 0.2f));
+		draw_rectangle(p_pos + 4, p_size - 8, Color(0.4f, 0.4f, 0.4f));
+	}
 }
-
-SDL_Surface *c_image::surface(){ return (_surface); }
-
-SDL_Texture	*c_image::texture(){ return (_texture); }
-
-Vector2 &c_image::size(){ return (_size); }

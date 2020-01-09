@@ -1,5 +1,7 @@
 #include "jgl.h"
 
+string font_path = "";
+
 vector<TTF_Font *>font;
 
 size_t tmp_index = 0;
@@ -33,6 +35,17 @@ SDL_Color color_tab[NB_COLOR] = {
 	{130, 0, 130, 255}
 };
 
+void c_application::set_font_path(string p_font_path)
+{
+	font_path = p_font_path;
+	font.clear();
+	tmp_index = 0;
+	for (size_t i = 0; i < char_list.size(); i++)
+		for (size_t j = 0; j < char_list[i].size(); j++)
+			for (size_t k = 0; k < char_list[i][j].size(); k++)
+				char_list[i][j][k].clear();
+}
+
 SDL_Color			get_color(int i)
 {
 	if (i < 0 || i >= NB_COLOR)
@@ -44,13 +57,15 @@ TTF_Font *get_font(int size)
 {
 	if (size < 2)
 		error_exit(1, "Can't load a font of size < 2");
+	if (font_path == "")
+		error_exit(1, "Can't load a font : no font file given");
 
 	if (font.size() <= size)
 		font.resize(size + 2);
 
 	if (font[size] == nullptr)
 	{
-		font[size] = TTF_OpenFont(FONT_PATH, size);
+		font[size] = TTF_OpenFont(font_path.c_str(), size);
 		if (font[size] == nullptr)
 			error_exit(1, "Can't load a font");
 	}
@@ -58,8 +73,10 @@ TTF_Font *get_font(int size)
 	return (font[size]);
 }
 
-c_image				*get_char(char c, int size, text_color color, text_style type)
+c_image				*get_char(char c, int size, int outline, text_color color, text_style type)
 {
+	string text;
+
 	if (size <= 0)
 		return (nullptr);
 
@@ -73,30 +90,25 @@ c_image				*get_char(char c, int size, text_color color, text_style type)
 		char_list[size][(size_t)type][(size_t)color].resize(c + 2);
 	if (char_list[size][(size_t)type][(size_t)color][c] == nullptr)
 	{
-		SDL_Texture* old_target = SDL_GetRenderTarget(g_application->renderer());
-	    SDL_SetRenderTarget(g_application->renderer(), NULL);
-
 		TTF_Font *tmp = get_font((size_t)size);
 		//
-		TTF_SetFontStyle(tmp, (size_t)type);
+		TTF_SetFontStyle(tmp, static_cast<int>(type));
+		TTF_SetFontOutline(tmp, outline);
 		//
-		char text[2];
-		text[0] = c;
-		text[1] = '\0';
+		text = c + '\0';
 
-		SDL_Surface *surface = TTF_RenderText_Blended(tmp, text, get_color((size_t)color));
+		SDL_Surface *surface = TTF_RenderText_Blended(tmp, text.c_str(), get_color((size_t)color));
 		if (surface != nullptr)
 			char_list[size][(size_t)type][(size_t)color][c] = new c_image(surface);
 		else
 			error_exit(1, "Error while creating the char " + string (1, c));
 
 		TTF_SetFontStyle(tmp, static_cast<int>(text_style::normal));
-	    SDL_SetRenderTarget(g_application->renderer(), old_target);
 	}
 	return (char_list[size][(size_t)type][(size_t)color][c]);
 }
 
-int				draw_text(string text, Vector2 coord, int size, text_color color, text_style type, c_viewport *viewport)
+int				draw_text(string text, Vector2 coord, int size, int outline, text_color color, text_style type, c_viewport *viewport)
 {
 	c_image			*image;
 	size_t			i = 0;
@@ -112,7 +124,7 @@ int				draw_text(string text, Vector2 coord, int size, text_color color, text_st
 	while (i < text.length())
 	{
 		rel_coord = Vector2(coord.x + delta, coord.y);
-		image = get_char(text[i], size, color, type);
+		image = get_char(text[i], size, outline, color, type);
 		image->draw(rel_coord, image->size(), viewport);
 		delta += image->size().x;
 
@@ -152,7 +164,7 @@ int				calc_text_len(string text, int size)
 	return (delta);
 }
 
-int				draw_centred_text(string text, Vector2 coord, int size, text_color color, text_style type, c_viewport *viewport)
+int				draw_centred_text(string text, Vector2 coord, int size, int outline, text_color color, text_style type, c_viewport *viewport)
 {
 	if (viewport == nullptr)
 		viewport = g_application->central_widget()->viewport();
@@ -161,7 +173,7 @@ int				draw_centred_text(string text, Vector2 coord, int size, text_color color,
 		return 0;
 
 	int x = calc_text_len(text, size);
-	int y = get_char('M', size, color, type)->size().y;
+	int y = get_char('M', size, 0, color, type)->size().y;
 
-	return (draw_text(text, Vector2(coord.x - x / 2, coord.y - y / 2), size, color, type, viewport));
+	return (draw_text(text, Vector2(coord.x - x / 2, coord.y - y / 2), size, outline, color, type, viewport));
 }

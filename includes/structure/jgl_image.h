@@ -10,25 +10,27 @@
 class				c_image
 {
 private:
-	SDL_Surface	*_surface;
-	SDL_Texture	*_texture;
+	SDL_Surface *_surface;
 	Vector2 _size;
+	GLenum _format;
+	GLint _internal_format;
+	GLuint _texture_id;
 
 public:
 	c_image();
 	c_image(string path);
 	c_image(size_t width, size_t height, Color p_color);
-	c_image(SDL_Surface *p__surface);
+	c_image(SDL_Surface *p_surface);
 
-	void draw(Vector2 pos, Vector2 size, c_viewport *viewport = nullptr);
-
-	void active();
-	void unactive();
+	void draw(Vector2 p_pos, Vector2 p_size, c_viewport *viewport = nullptr);
+	void upload_texture();
 	void save(string file_path);
 
-	SDL_Surface *surface();
-	SDL_Texture	*texture();
-	Vector2 &size();
+	SDL_Surface *surface(){return (_surface);}
+	Vector2 size(){return (_size);}
+	GLenum format(){return (_format);}
+	GLint internal_format(){return (_internal_format);}
+	GLuint texture_id(){return (_texture_id);}
 
 };
 

@@ -19,6 +19,7 @@ public:
 
 	// - box redirection function
 	void set_tileset(c_tileset *p_tileset){_box.set_tileset(p_tileset);}
+	void set_tileset(string path){_box.set_tileset(new c_tileset(path, 3));}
 	void set_back(Color p_back){_box.set_back(p_back);}
 	void set_front(Color p_front){_box.set_front(p_front);}
 	void set_border(int p_border){_box.set_border(p_border);}

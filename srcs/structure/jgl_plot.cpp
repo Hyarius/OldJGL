@@ -127,8 +127,8 @@ void c_plot::draw_ordinate_point(float value)
 
 void c_plot::save(string path)
 {
-	_plot->active();
-	draw();
-	_plot->save(path);
-	_plot->unactive();
+	// _plot->active();
+	// draw();
+	// _plot->save(path);
+	// _plot->unactive();
 }

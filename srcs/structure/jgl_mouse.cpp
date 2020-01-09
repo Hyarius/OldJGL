@@ -1,8 +1,8 @@
 #include "jgl.h"
 
-t_mouse *g_mouse;
+Mouse *g_mouse;
 
-s_mouse::s_mouse()
+Mouse::Mouse()
 {
 	old_pos = Vector2();
 	pos = Vector2();
@@ -13,7 +13,7 @@ s_mouse::s_mouse()
 	button[MOUSE_MIDDLE] = MOUSE_NULL;
 }
 
-void		s_mouse::actualize_mouse(SDL_Event *event)
+void		Mouse::actualize_mouse(SDL_Event *event)
 {
 	int x, y;
 	Uint32 mousestate;
@@ -44,7 +44,7 @@ void		s_mouse::actualize_mouse(SDL_Event *event)
 		motion = false;
 }
 
-mouse_state			s_mouse::get_button(mouse_button type)
+mouse_state			Mouse::get_button(mouse_button type)
 {
 	int value = static_cast<int>(type);
 	mouse_state result = static_cast<mouse_state>(button[value]);

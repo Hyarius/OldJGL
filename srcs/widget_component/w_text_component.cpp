@@ -35,5 +35,5 @@ void w_text_component::render(c_viewport *viewport)
 		pos.x = _area.x - calc_text_len(_text, _size) / 2.0f;
 		pos.y = _area.y / 2.0f;
 	}
-	draw_centred_text(_text, pos + _anchor, _size, _color, _style, viewport);
+	draw_centred_text(_text, pos + _anchor, _size, 0, _color, _style, viewport);
 }

@@ -82,8 +82,7 @@ void draw_rectangle(Pixel p_tl, Pixel p_tr, Pixel p_dl, Pixel p_dr, Color p_colo
 			p_color
 		};
 
-	draw_triangle_color(points, colors);
-	draw_triangle_color(&(points[3]), &(colors[3]));
+	draw_triangle_color(points, colors, 2);
 }
 
 void fill_rectangle(Pixel p_tl, Pixel p_tr, Pixel p_dl, Pixel p_dr, Color p_color, c_viewport *viewport)
@@ -105,8 +104,7 @@ void fill_rectangle(Pixel p_tl, Pixel p_tr, Pixel p_dl, Pixel p_dr, Color p_colo
 		p_color
 	};
 
-	fill_triangle_color(points, colors);
-	fill_triangle_color(&(points[3]), &(colors[3]));
+	fill_triangle_color(points, colors, 2);
 }
 
 void draw_rectangle(Pixel pos, Pixel size, Color p_color, c_viewport *viewport)

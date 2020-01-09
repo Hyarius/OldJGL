@@ -18,7 +18,7 @@ ostream& operator<<(ostream& os, const Vector3& value)
 	return os;
 }
 
-ostream& operator<<(ostream& os, t_mouse& mouse)
+ostream& operator<<(ostream& os, Mouse& mouse)
 {
 	string left = (mouse.get_button(mouse_button::left) == mouse_state::up ? "Up" : (mouse.get_button(mouse_button::left) == mouse_state::down ? "Down" : "Null" ));
 	string middle = (mouse.get_button(mouse_button::middle) == mouse_state::up ? "Up" : (mouse.get_button(mouse_button::middle) == mouse_state::down ? "Down" : "Null" ));
@@ -27,7 +27,7 @@ ostream& operator<<(ostream& os, t_mouse& mouse)
 	return os;
 }
 
-ostream& operator<<(ostream& os, t_mouse *mouse)
+ostream& operator<<(ostream& os, Mouse *mouse)
 {
 	string left = (mouse->get_button(mouse_button::left) == mouse_state::up ? "Up" : (mouse->get_button(mouse_button::left) == mouse_state::down ? "Down" : "Null" ));
 	string middle = (mouse->get_button(mouse_button::middle) == mouse_state::up ? "Up" : (mouse->get_button(mouse_button::middle) == mouse_state::down ? "Down" : "Null" ));

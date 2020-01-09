@@ -6,7 +6,7 @@
 #include "jgl_color.h"
 #include "jgl_enum.h"
 
-typedef struct s_mouse
+struct Mouse
 {
 	Vector2 old_pos;
 	Vector2 pos;
@@ -15,20 +15,19 @@ typedef struct s_mouse
 	int button[MOUSE_BUTTON];
 	bool motion;
 
-	s_mouse();
+	Mouse();
 	void actualize_mouse(SDL_Event *event = nullptr);
 	mouse_state get_button(mouse_button type);
+};
 
-}t_mouse;
-
-typedef struct s_keyboard
+struct Keyboard
 {
 	char clicked;
 	const Uint8	*state;
 
-	s_keyboard();
+	Keyboard();
 	int get_key(int scan_code);
 	void reset_key(int scan_code);
-}t_keyboard;
+};
 
 #endif
