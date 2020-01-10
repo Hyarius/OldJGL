@@ -415,12 +415,14 @@ int generate_nbr(int min, int max)
 
 Pixel				convert_screen_to_opengl(Vector2 source)
 {
-	return (Pixel(source.x / (g_application->size().x / 2.0f) - 1.0f, -(source.y / (g_application->size().y / 2.0f) - 1.0f)));
+	return (convert_screen_to_opengl(Pixel(source)));
 }
 
 Pixel				convert_screen_to_opengl(Pixel source)
 {
-	return (Pixel(source.x / (g_application->size().x / 2.0f) - 1.0f, -(source.y / (g_application->size().y / 2.0f) - 1.0f)));
+	float x = (source.x) / (g_application->active_viewport()->area().x / 2.0f) - 1.0f;
+	float y = -((source.y) / (g_application->active_viewport()->area().y / 2.0f) - 1.0f);
+	return (Pixel(x, y, 0.0f));
 }
 
 SDL_Surface			*create_surface_color(Color p_color)

@@ -27,13 +27,22 @@ void c_tileset::draw(int id, Vector2 pos, Vector2 size, float p_alpha, c_viewpor
 {
 	glBindTexture(GL_TEXTURE_2D, _image.texture_id());
 
+	Vector2 value[] = {
+		pos + Vector2(0.0f, 0.0f),
+		pos + Vector2(size.x, 0.0f),
+		pos + Vector2(0.0f, size.y),
+		pos + Vector2(0.0f, size.y),
+		pos + Vector2(size.x, size.y),
+		pos + Vector2(size.x, 0.0f)
+	};
+
 	Pixel points[] = {
-		convert_screen_to_opengl(pos + Vector2(0.0f, 0.0f)),
-		convert_screen_to_opengl(pos + Vector2(size.x, 0.0f)),
-		convert_screen_to_opengl(pos + Vector2(0.0f, size.y)),
-		convert_screen_to_opengl(pos + Vector2(0.0f, size.y)),
-		convert_screen_to_opengl(pos + size),
-		convert_screen_to_opengl(pos + Vector2(size.x, 0.0f))
+		convert_screen_to_opengl(value[0]),
+		convert_screen_to_opengl(value[1]),
+		convert_screen_to_opengl(value[2]),
+		convert_screen_to_opengl(value[3]),
+		convert_screen_to_opengl(value[4]),
+		convert_screen_to_opengl(value[5])
 	};
 
 	int			i;
@@ -66,8 +75,5 @@ void c_tileset::draw(int id, Vector2 pos, Vector2 size, float p_alpha, c_viewpor
 
 void c_tileset::draw_centred(int id, Vector2 pos, Vector2 size, float p_alpha, c_viewport *viewport)
 {
-	// if (viewport == nullptr)
-	// 	viewport = g_application->viewport();
-
 	draw(id, pos - size / 2, size, p_alpha, viewport);
 }

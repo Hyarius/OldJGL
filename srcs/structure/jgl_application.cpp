@@ -86,6 +86,8 @@ c_application::c_application(string name, Vector2 p_size, Color p_color)
 		select();
 
 	_viewport = new c_viewport();
+	_viewport->resize(Vector2(0, 0), _size);
+	_active_viewport = _viewport;
 
 	_central_widget = nullptr;
 
@@ -93,6 +95,8 @@ c_application::c_application(string name, Vector2 p_size, Color p_color)
 	_central_widget->set_geometry(Vector2(0, 0), _size);
 	_central_widget->set_color(p_color);
 	_central_widget->activate();
+
+	//_viewport->use();
 
 	SDL_StartTextInput();
 

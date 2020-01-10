@@ -64,6 +64,8 @@ struct Pixel
 	Pixel floor();
 };
 
+ostream& operator<<(ostream& os, const Pixel& value);
+
 struct	Poly_side
 {
 	size_t index_vertices[2];

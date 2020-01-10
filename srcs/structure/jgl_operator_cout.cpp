@@ -11,6 +11,11 @@ ostream& operator<<(ostream& os, const Vector2& value)
 	os << "(" << ftoa(value.x, 3) << " / " << ftoa(value.y, 3) << ")";
 	return os;
 }
+ostream& operator<<(ostream& os, const Pixel& value)
+{
+	os << "(" << ftoa(value.x, 3) << " / " << ftoa(value.y, 3) << " / " << ftoa(value.z, 3) << ")";
+	return os;
+}
 
 ostream& operator<<(ostream& os, const Vector3& value)
 {

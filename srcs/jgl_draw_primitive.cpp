@@ -18,7 +18,7 @@ vector<Vector2> calc_point(int width)
 	}
 
 	return (result);
-}
+} 
 
 void draw_line(Pixel p1, Pixel p2, int width, Color p_color, c_viewport *viewport)
 {

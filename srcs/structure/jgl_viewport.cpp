@@ -31,25 +31,14 @@ void c_viewport::resize(Vector2 p_anchor, Vector2 p_area)
 
 void c_viewport::use()
 {
-// 	if (_area.x <= 0 || _area.y <= 0)
-// 		return ;
-//
-// 	reset();
-// 	//SDL_Rect rect = {
-// //
-// 	//	};
-//
-// 	glViewport(static_cast<GLint>(_anchor.x), static_cast<GLint>(_anchor.y),
-// 	static_cast<GLsizei>(_area.x), static_cast<GLsizei>(_area.y));
-// 	//SDL_RenderSetViewport(_renderer, &rect);
-// 	set_active(true);
+	g_application->set_active_viewport(this);
+	glViewport(static_cast<int>(_anchor.x), static_cast<int>(g_application->size().y - _anchor.y - _area.y),
+	static_cast<int>(_area.x), static_cast<int>(_area.y));
 }
 
 void c_viewport::reset()
 {
-	// glViewport(static_cast<GLint>(0), static_cast<GLint>(0),
-	// static_cast<GLsizei>(g_application->size().x), static_cast<GLsizei>(g_application->size().y));
-	//SDL_RenderSetViewport(_renderer, nullptr);
+	g_application->reset_viewport();
 }
 
 void c_viewport::set_Color(Color p_color)
@@ -62,5 +51,5 @@ void c_viewport::clear()
 {
 	// use();
 	// set_Color(_background);
-	// glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+	//glClear(GL_DEPTH_BUFFER_BIT);
 }

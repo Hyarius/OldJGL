@@ -8,7 +8,7 @@ Pixel::Pixel(int p_value) :
 
 Pixel::Pixel(Vector2 p_value) :
 	x(static_cast<float>(p_value.x)), y(static_cast<float>(p_value.y)),
-	z(static_cast<float>(-1.0f)){}
+	z(static_cast<float>(0.0f)){}
 
 Pixel::Pixel(float p_value) :
 	x(p_value), y(p_value), z(p_value){}

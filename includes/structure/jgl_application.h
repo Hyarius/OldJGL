@@ -4,6 +4,7 @@
 #include "jgl_includes.h"
 #include "jgl_vector.h"
 #include "jgl_color.h"
+#include "jgl_viewport.h"
 
 extern string color_shader_vert;
 extern string color_shader_frag;
@@ -16,6 +17,7 @@ private:
 	SDL_Window *_window;
 	SDL_GLContext _context;
 	c_viewport *_viewport;
+	c_viewport *_active_viewport;
 	Vector2 _size;
 	GLuint _program_color;
 	GLuint _program_sprite;
@@ -35,6 +37,7 @@ public:
 	SDL_Window *window(){return (_window);}
 	SDL_GLContext *context(){return (&_context);}
 	c_viewport *viewport(){return (_viewport);}
+	c_viewport *active_viewport(){return (_active_viewport);}
 	Vector2 size(){return (_size);}
 	GLuint program_color(){return (_program_color);}
 	GLuint program_sprite(){return (_program_sprite);}
@@ -48,6 +51,8 @@ public:
 	bool play(){return (_play);}
 	SDL_Event *event(){return (&_event);}
 
+	void set_active_viewport(class c_viewport *p_active_viewport){if (p_active_viewport == nullptr)_active_viewport = _viewport;_active_viewport = p_active_viewport;}
+	void reset_viewport(){_active_viewport = _viewport;_viewport->use();}
 	void set_font_path(string p_font_path);
 	void quit();
 	void set_background(Color p_color = Color(50, 50, 50));
