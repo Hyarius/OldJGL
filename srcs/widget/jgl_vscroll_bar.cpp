@@ -71,6 +71,7 @@ void c_vscroll_bar::move(Vector2 delta)
 
 void c_vscroll_bar::set_geometry_imp(Vector2 p_anchor, Vector2 p_area)
 {
+	//viewport()->resize(p_anchor, p_area);
 	Vector2 button_size = Vector2(p_area.x, p_area.x);
 	Vector2 scroll_size = Vector2(p_area.x, p_area.y - button_size.y * 2);
 	Vector2 anchor[3] = {

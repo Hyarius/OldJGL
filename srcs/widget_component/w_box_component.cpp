@@ -79,7 +79,7 @@ void w_box_component::render(c_viewport *viewport)
 		fill_rectangle(_anchor, _area, _back + _delta, viewport);
 		fill_rectangle(_anchor + _border, _area - _border * 2, _front + _delta, viewport);
 	}
-	if (_image != nullptr)
+	if (_image != nullptr && _sprite != -1)
 	{
 		_image->draw(_sprite, _anchor, _area, 1.0f, viewport);
 		fill_rectangle(_anchor, _area, _delta, viewport);

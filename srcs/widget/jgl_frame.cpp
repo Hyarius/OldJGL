@@ -20,7 +20,7 @@ void c_frame::move(Vector2 delta)
 
 void c_frame::set_geometry_imp(Vector2 p_anchor, Vector2 p_area)
 {
-	viewport()->set_viewport(viewport()->anchor() + border(), viewport()->area() - border() * 2);
+	//viewport()->resize(p_anchor + _box.border(), p_area - _box.border() * 2);
 	_box.set_area(p_area);
 	_box.set_anchor(p_anchor);
 }

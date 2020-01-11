@@ -30,10 +30,11 @@ void c_button::move(Vector2 delta)
 
 void c_button::set_geometry_imp(Vector2 p_anchor, Vector2 p_area)
 {
+	//viewport()->resize(p_anchor, p_area);
 	_box.set_area(p_area);
 	_box.set_anchor(p_anchor);
-	_label.set_area(p_area - _box.border() * 4);
-	_label.set_anchor(p_anchor + _box.border() * 2);
+	_label.set_area(p_area - _box.border() * 2);
+	_label.set_anchor(p_anchor + _box.border());
 	_label.calc_text_size(_label.area());
 }
 

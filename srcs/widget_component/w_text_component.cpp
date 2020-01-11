@@ -14,7 +14,9 @@ w_text_component::w_text_component(c_widget *p_owner, string p_text) :
 
 void w_text_component::resize(Vector2 p_anchor, Vector2 p_area)
 {
-	set_anchor(p_anchor);set_area(p_area);calc_text_size(_area);
+	set_anchor(p_anchor);
+	set_area(p_area);
+	calc_text_size(_area);
 }
 
 void w_text_component::render(c_viewport *viewport)
