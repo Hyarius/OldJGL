@@ -64,7 +64,7 @@ struct Pixel
 	Pixel floor();
 };
 
-ostream& operator<<(ostream& os, const Pixel& value);
+ostream& operator<<(ostream& os, Pixel value);
 
 struct	Poly_side
 {

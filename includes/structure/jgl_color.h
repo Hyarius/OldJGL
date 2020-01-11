@@ -20,6 +20,6 @@ struct Color
 
 };
 
-ostream& operator<<(ostream& os, const Color& value);
+ostream& operator<<(ostream& os, Color value);
 
 #endif

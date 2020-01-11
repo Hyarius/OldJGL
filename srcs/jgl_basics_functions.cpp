@@ -107,45 +107,12 @@ string intToStr(int x, int d)
 // Converts a floating point number to string.
 string ftoa(float n, int afterpoint)
 {
-	string result;
-	int to_go;
+	ostringstream out;
 
-	if (n == 0)
-		return ("0");
-
-	if (n < 0)
-	{
-		result.append("-");
-		n = -n;
-	}
-
-    int ipart = (int)n;
-
-    float fpart = n - (float)ipart;
-
-    // convert integer part to string
-    result.append(intToStr(ipart, 0));
-
-	to_go = (afterpoint == -1 ? 3 : afterpoint);
-    // check for display option after point
-    if (to_go != 0 && fpart != 0.0f)
-    {
-        result.append(".");  // add dot
-
-        fpart = fpart * pow(10, to_go);
-
-        string tmp = intToStr((int)fpart, to_go);
-
-		if (afterpoint != -1)
-			while (tmp.size() < afterpoint)
-				tmp.append("0");
-
-		result.append(tmp);
-    }
-
-
-
-	return (result);
+	if (n > 0 || n < -1)
+		afterpoint += 2;
+    out << setprecision(afterpoint) << n;
+    return out.str();
 }
 
 bool string_is_numeric(string text)
@@ -448,4 +415,14 @@ SDL_Surface			*create_surface_color(Color p_color)
 		(Uint8)(p_color.b * 255), (Uint8)(p_color.a * 255)));
 
 	return (surface);
+}
+
+float				degree_to_radius(float angle)
+{
+	return ((angle * M_PI) / 180.0f);
+}
+
+float				radius_to_degree(float radian)
+{
+	return ((radian * 180.0f) / M_PI);
 }

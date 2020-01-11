@@ -3,6 +3,44 @@
 
 using namespace std;
 
+struct Vector4
+{
+	float x;
+	float y;
+	float z;
+	float w;
+
+	Vector4(int p_value);
+	Vector4(float p_value = -1);
+	Vector4(float p_x, float p_y, float p_z, float p_w);
+	Vector4(int p_x, int p_y, int p_z, int p_w);
+
+	Vector4& operator = (int p_value);
+	Vector4& operator = (float  p_value);
+
+	Vector4 operator + (const Vector4& delta);
+	Vector4 operator - (const Vector4& delta);
+	Vector4 operator * (const Vector4& delta);
+	Vector4 operator / (const Vector4& delta);
+	void operator += (const Vector4& delta);
+	void operator -= (const Vector4& delta);
+	void operator *= (const Vector4& delta);
+	void operator /= (const Vector4& delta);
+	bool operator == (const Vector4& delta) const;
+	bool operator != (const Vector4& delta) const;
+	bool operator < (const Vector4& other) const;
+	bool operator > (const Vector4& other) const;
+	float *decompose();
+	float distance(Vector4 &point);
+	Vector4 normalize();
+	Vector4 cross(Vector4 &other);
+	float dot(Vector4 &other);
+	string str();
+	Vector4 floor();
+};
+
+typedef Vector4 Vector3w;
+
 struct Vector3
 {
 	float x;
@@ -72,8 +110,10 @@ struct Vector2
 	Vector2 floor();
 };
 
-ostream& operator<<(ostream& os, const Vector2& value);
+ostream& operator<<(ostream& os, Vector2 value);
 
-ostream& operator<<(ostream& os, const Vector3& value);
+ostream& operator<<(ostream& os, Vector3 value);
+
+ostream& operator<<(ostream& os, Vector4 value);
 
 #endif

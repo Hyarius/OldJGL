@@ -3,4 +3,8 @@
 
 #define get_sdl_error() 	check_sdl_error(__FILE__, __LINE__)
 
+#ifndef M_PI
+   #define M_PI 3.14159265358979323846f
+#endif
+
 #endif
