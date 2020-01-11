@@ -18,19 +18,11 @@ void w_box_component::render(c_viewport *viewport)
 
 	if (_tileset != nullptr && _tileset->size() == Vector2(3, 3))
 	{
-		float corner_size = (_area.x < _area.y ? _area.x : _area.y) / 2;
-		if (corner_size < 16)
-			corner_size = 16;
+		float corner_size = (_corner_size == -1 ? 32.0f : _corner_size);
 		if (corner_size * 2 > _area.x || corner_size * 2 > _area.y)
 			corner_size = (_area.x < _area.y ? _area.x : _area.y) / 2;
-		if (corner_size > 36)
-			corner_size = 36;
 		int nb_sub_x = ceil((_area.x - corner_size * 2) / corner_size);
 		int nb_sub_y = ceil((_area.y - corner_size * 2) / corner_size);
-		if (nb_sub_x < 0)
-			nb_sub_x = 0;
-		if (nb_sub_y < 0)
-			nb_sub_y = 0;
 		Vector2 h_middle_size = Vector2((_area.x - corner_size * 2) / (nb_sub_x == 0 ? 1 : nb_sub_x), corner_size);
 		Vector2 v_middle_size = Vector2(corner_size, (_area.y - corner_size * 2) / (nb_sub_y == 0 ? 1 : nb_sub_y));
 		Vector2 c_middle_size = Vector2(h_middle_size.x, v_middle_size.y);
@@ -79,13 +71,17 @@ void w_box_component::render(c_viewport *viewport)
 				pos.x += tmp_size.x;
 			}
 			pos.y += (j == 0 || j == nb_sub_y + 1 ? corner_size : v_middle_size.y);
-			// if (nb_sub_y <= 0)
-			// 	pos.y = _anchor.x + _area.y - 30;
 		}
+		fill_rectangle(_anchor, _area, _delta, viewport);
 	}
 	else
 	{
 		fill_rectangle(_anchor, _area, _back + _delta, viewport);
 		fill_rectangle(_anchor + _border, _area - _border * 2, _front + _delta, viewport);
+	}
+	if (_image != nullptr)
+	{
+		_image->draw(_sprite, _anchor, _area, 1.0f, viewport);
+		fill_rectangle(_anchor, _area, _delta, viewport);
 	}
 }

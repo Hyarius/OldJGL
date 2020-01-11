@@ -32,6 +32,7 @@ void c_viewport::resize(Vector2 p_anchor, Vector2 p_area)
 void c_viewport::use()
 {
 	g_application->set_active_viewport(this);
+	glClear(GL_DEPTH_BUFFER_BIT);
 	glViewport(static_cast<int>(_anchor.x), static_cast<int>(g_application->size().y - _anchor.y - _area.y),
 	static_cast<int>(_area.x), static_cast<int>(_area.y));
 }

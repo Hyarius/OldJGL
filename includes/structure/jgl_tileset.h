@@ -9,16 +9,17 @@ using namespace std;
 class c_tileset
 {
 private:
-	c_image _image;
+	c_image *_image;
 	Vector2 _size;
 	Vector2 _unit;
 	vector<Vector2> _sprites;
 
 public:
 	c_tileset(){}
-	c_tileset(string path, Vector2 p_size = Vector2(0, 0));
+	c_tileset(c_image *p_image, Vector2 p_size = 1);
+	c_tileset(string path, Vector2 p_size = 0);
 
-	c_image *image(){return (&_image);}
+	c_image *image(){return (_image);}
 	Vector2 size(){return (_size);}
 	Vector2 unit(){return (_unit);}
 	vector<Vector2> &sprites(){return (_sprites);}

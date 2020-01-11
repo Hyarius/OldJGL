@@ -39,9 +39,9 @@ void c_image::upload_texture()
 c_image::c_image(string path)
 {
 	_surface = IMG_Load(path.c_str());
-	_size = Vector2(_surface->w, _surface->h);
 	if (_surface == NULL)
 		error_exit(1, "Can't load " + path + " file");
+	_size = Vector2(_surface->w, _surface->h);
 
 	upload_texture();
 }
@@ -49,19 +49,19 @@ c_image::c_image(string path)
 c_image::c_image(size_t width, size_t height, Color p_color)
 {
 	_surface = create_surface_color(p_color);
-	_size = Vector2(static_cast<int>(width), static_cast<int>(height));
 	if (_surface == NULL)
 		error_exit(1, "Can't create a surface of color " + to_string((int)(p_color.r * 255)) + "/" + to_string((int)(p_color.g * 255)) + "/" + to_string((int)(p_color.b * 255)) + "/" + to_string((int)(p_color.a * 255)));
 
+	_size = Vector2(static_cast<int>(width), static_cast<int>(height));
 	upload_texture();
 }
 
 c_image::c_image(SDL_Surface *p_surface)
 {
 	_surface = p_surface;
-	_size = Vector2(_surface->w, _surface->h);
 	if (_surface == NULL)
 		error_exit(1, "bouh");
+	_size = Vector2(_surface->w, _surface->h);
 
 	upload_texture();
 }

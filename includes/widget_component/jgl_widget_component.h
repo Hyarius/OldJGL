@@ -31,6 +31,11 @@ class w_graphical_component
 {
 protected:
 	c_tileset *_tileset;
+	size_t _corner_size;
+
+	c_tileset *_image;
+	int _sprite;
+
 	Color _back;
 	Color _front;
 	int _border;
@@ -39,13 +44,19 @@ public:
 	w_graphical_component();
 
 	void set_tileset(c_tileset *p_tileset){_tileset = p_tileset;}
+	void set_image(c_tileset *p_image){_image = p_image;}
 	void set_back(Color p_back){_back = p_back;}
 	void set_front(Color p_front){_front = p_front;}
 	void set_border(int p_border){_border = p_border;}
+	void set_sprite(int p_sprite){_sprite = p_sprite;}
+	void set_corner_size(size_t p_corner_size){_corner_size = p_corner_size;}
 
 		//Getter
 	c_tileset *tileset(){return (_tileset);}
+	c_tileset *image(){return (_image);}
 	int border(){return (_border);}
+	int sprite(){return (_sprite);}
+	size_t corner_size(){return (_corner_size);}
 	Color back(){return (_back);}
 	Color front(){return (_front);}
 };
