@@ -426,3 +426,21 @@ float				radius_to_degree(float radian)
 {
 	return ((radian * 180.0f) / M_PI);
 }
+
+float clamp_float(float min, float value, float max)
+{
+	if (value < min)
+		return (min);
+	if (value > max)
+		return (max);
+	return (value);
+}
+
+int clamp_int(int min, int value, int max)
+{
+	if (value < min)
+		return (min);
+	if (value > max)
+		return (max);
+	return (value);
+}

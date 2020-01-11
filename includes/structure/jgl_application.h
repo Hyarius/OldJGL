@@ -10,6 +10,10 @@ extern string color_shader_vert;
 extern string color_shader_frag;
 extern string texture_shader_vert;
 extern string texture_shader_frag;
+extern string color_model_shader_vert;
+extern string color_model_shader_frag;
+extern string texture_model_shader_vert;
+extern string texture_model_shader_frag;
 
 class c_application
 {
@@ -19,14 +23,25 @@ private:
 	c_viewport *_viewport;
 	c_viewport *_active_viewport;
 	Vector2 _size;
+
 	GLuint _program_color;
 	GLuint _program_sprite;
+	GLuint _program_color_model;
+	GLuint _program_sprite_model;
+
 	GLuint _vertex_array;
+
 	GLuint _vertex_buffer;
 	GLuint _color_buffer;
 	GLuint _texture_buffer;
 	GLuint _alpha_buffer;
+
+	GLuint _matrix_colorID;
+	GLuint _matrix_textureID;
+	
+	GLuint _texture_textureID;
 	GLuint _textureID;
+
 	class c_window *_central_widget;
 	bool _play;
 	SDL_Event _event;

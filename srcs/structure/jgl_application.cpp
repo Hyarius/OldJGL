@@ -51,6 +51,11 @@ c_application::c_application(string name, Vector2 p_size, Color p_color)
 
 	_program_color = load_shaders(color_shader_vert, color_shader_frag);
 	_program_sprite = load_shaders(texture_shader_vert, texture_shader_frag);
+	_program_color_model = load_shaders(color_model_shader_vert, color_model_shader_frag);
+	_program_sprite_model = load_shaders(texture_model_shader_vert, texture_model_shader_frag);
+
+	_matrix_colorID = glGetUniformLocation(_program_color_model, "MVP");
+	_matrix_textureID = glGetUniformLocation(_program_sprite_model, "MVP");
 
 	glGenTextures(1, &_textureID);
 	glBindTexture(GL_TEXTURE_2D, _textureID);

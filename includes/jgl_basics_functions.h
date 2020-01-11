@@ -64,10 +64,11 @@ bool map_contain(map<K, V> &src_map, K value)
 			return (true);
 	return (false);
 }
-Pixel				convert_screen_to_opengl(Vector2 source);
-Pixel				convert_screen_to_opengl(Pixel source);
-SDL_Surface			*create_surface_color(Color p_color);
-float				degree_to_radius(float angle);
-float				radius_to_degree(float radian);
-
+Pixel convert_screen_to_opengl(Vector2 source);
+Pixel convert_screen_to_opengl(Pixel source);
+SDL_Surface *create_surface_color(Color p_color);
+float degree_to_radius(float angle);
+float radius_to_degree(float radian);
+float clamp_float(float min, float value, float max);
+int clamp_int(int min, int value, int max);
 #endif

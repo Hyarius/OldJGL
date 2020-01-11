@@ -12,6 +12,14 @@ Matrix::Matrix(
 	value[2][0] = d0;			value[2][1] = d1;				value[2][2] = d2;				value[3][3] = d3;
 }
 
+Matrix::Matrix()
+{
+	value[0][0] = 1;			value[0][1] = 0;				value[0][2] = 0;				value[0][3] = 0;
+	value[1][0] = 0;			value[1][1] = 1;				value[1][2] = 0;				value[1][3] = 0;
+	value[2][0] = 0;			value[2][1] = 0;				value[2][2] = 1;				value[2][3] = 0;
+	value[2][0] = 0;			value[2][1] = 0;				value[2][2] = 0;				value[3][3] = 1;
+}
+
 Matrix::Matrix(X_ROTATE, float angle)
 {
 	float		radian = degree_to_radius(angle);
