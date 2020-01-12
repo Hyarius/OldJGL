@@ -23,11 +23,11 @@ void c_window::render()
 {
 	fill_rectangle(0, _viewport->area(), back, _viewport);
 
-	// if (camera == nullptr)
-	// {
-	// 	camera = new c_camera(Vector3(4, 3, 3));
-	// 	camera->look_at(Vector3(0, 0, 0));
-	// }
+	if (camera == nullptr)
+	{
+		camera = new c_camera(Vector3(4, 3, 3));
+		camera->look_at(Vector3(0, 0, 0));
+	}
 	// if (mesh == nullptr)
 	// {
 	// 	mesh = new c_mesh(Vector3(0, 0, 0));
@@ -40,8 +40,7 @@ void c_window::render()
 	// }
 	// mesh->draw(camera, _viewport);
 
- 	// Matrix Model = Matrix();
- 	// Matrix MVP = camera->projection() * camera->view() * Model;
+ 	// Matrix MVP = camera->MVP();
 	//
 	// static const GLfloat g_vertex_buffer_data[] = {
 	// 	-1.0f, -1.0f, 0.0f,
@@ -55,6 +54,10 @@ void c_window::render()
 	// 	 1.0f,  0.0f, 0.0f, 1.0f
 	// };
 	//
+	// Vector3 point = Vector3(g_vertex_buffer_data[0], g_vertex_buffer_data[1], g_vertex_buffer_data[2]);
+	// Vector3 tmp_point = MVP * point;
+	// cout << "From : " << point << " to " << tmp_point << endl;
+
 	// if (vertexbuffer == 0)
 	// {
 	// 	glGenBuffers(1, &vertexbuffer);

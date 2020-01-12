@@ -1,14 +1,12 @@
 #include "jgl.h"
 
-c_camera::c_camera(Vector3 p_pos, float p_pitch, float p_yaw)
+c_camera::c_camera(Vector3 p_pos, float p_fov, float p_near, float p_far)
 {
 	_pos = p_pos;
 
-	_fov = 70.0f;
-	_near = 0.01f;
-	_far = 50.0f;
-	_pitch = p_pitch;
-	_yaw = p_yaw;
+	_fov = p_fov;
+	_near = p_near;
+	_far = p_far;
 
 	_forward = Vector3(1, 0, 0);
 	_right = Vector3(0, 0, 1);
@@ -27,12 +25,7 @@ void c_camera::look_at(Vector3 target)
 
 void c_camera::rotate(float pitch, float yaw)
 {
-	_pitch = clamp_float(-89.0f, _pitch + pitch, 89.0f);
-	_yaw += yaw;
-	if (_yaw < 0)
-		_yaw += 360;
-	if (_yaw > 360)
-		_yaw -= 360;
+
 }
 
 void c_camera::move(Vector3 delta)
@@ -69,9 +62,9 @@ void c_camera::compute_view()
 	_view.value[1][2] = _forward.y;
 	_view.value[2][2] = _forward.z;
 	_view.value[3][2] = -(_forward.dot(_pos));
-	_view.value[0][3] = _pos.x;
-	_view.value[1][3] = _pos.y;
-	_view.value[2][3] = _pos.z;
+	_view.value[0][3] = 0;
+	_view.value[1][3] = 0;
+	_view.value[2][3] = 0;
 	_view.value[3][3] = 1;
 }
 
@@ -83,8 +76,8 @@ void c_camera::compute_projection()
 	float		t;
 
 	_projection = Matrix();
-	r = 1.0 / (tan(degree_to_radius(_fov / 2.0)));
-	t = 1.0 / (tan(degree_to_radius(_fov / 2.0))) / (4.0 / 3.0);
+	r = 1.0 / (tan(degree_to_radius(_fov / 2.0f)));
+	t = 1.0 / (tan(degree_to_radius(_fov / 2.0f))) / (4.0 / 3.0);
 	_projection.value[0][0] = t;
 	_projection.value[1][1] = r;
 	_projection.value[2][2] = -_far / (_far - _near);

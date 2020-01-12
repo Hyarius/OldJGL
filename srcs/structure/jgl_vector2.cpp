@@ -147,3 +147,13 @@ Vector2 Vector2::invert()
 	y *= -1;
 	return (*this);
 }
+
+Vector3 Vector2::convert(int p_value)
+{
+	return (Vector3(x, y, (float)p_value));
+}
+
+Vector3 Vector2::convert(float p_value)
+{
+	return (Vector3(x, y, p_value));
+}

@@ -27,6 +27,7 @@ struct Matrix
 	Matrix(SCALE, Vector3 delta);
 	Matrix operator * (Matrix p_matrix);
 	Vector3 operator * (Vector3 vertex);
+	Vector4 operator * (Vector4 vertex);
 	void print();
 };
 

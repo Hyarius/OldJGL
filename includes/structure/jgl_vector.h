@@ -16,7 +16,7 @@ struct Vector4
 	Vector4(int p_x, int p_y, int p_z, int p_w);
 
 	Vector4& operator = (int p_value);
-	Vector4& operator = (float  p_value);
+	Vector4& operator = (float p_value);
 
 	Vector4 operator + (const Vector4& delta);
 	Vector4 operator - (const Vector4& delta);
@@ -76,6 +76,8 @@ struct Vector3
 	string str();
 	Vector3 floor();
 	Vector3 invert();
+	Vector4 convert(int p_value);
+	Vector4 convert(float p_value = 0);
 };
 
 struct Vector2
@@ -111,6 +113,8 @@ struct Vector2
 	string str();
 	Vector2 floor();
 	Vector2 invert();
+	Vector3 convert(int p_value);
+	Vector3 convert(float p_value = 0);
 };
 
 ostream& operator<<(ostream& os, Vector2 value);

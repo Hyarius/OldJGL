@@ -21,7 +21,7 @@ private:
 	float _pitch;
 	float _yaw;
 public:
-	c_camera(Vector3 p_pos = Vector3(), float p_pitch = 0.0f, float p_yaw = 0.0f);
+	c_camera(Vector3 p_pos = Vector3(), float p_fov = 45, float p_near = 0.01f, float p_far = 50.0f);
 
 	void look_at(Vector3 target);
 	void rotate(float pitch, float yaw);

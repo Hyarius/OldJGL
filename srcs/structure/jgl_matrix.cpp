@@ -115,21 +115,19 @@ Matrix			Matrix::operator * (Matrix p_matrix)
 
 Vector3		Matrix::operator * (Vector3 vertex)
 {
-	float		result[3];
-
-	result[0] = value[0][0] * vertex.x + value[0][1] * vertex.y + value[0][2] * vertex.z + value[0][3] + value[0][3];
-	result[1] = value[1][0] * vertex.x + value[1][1] * vertex.y + value[1][2] * vertex.z + value[1][3] + value[1][3];
-	result[2] = value[2][0] * vertex.x + value[2][1] * vertex.y + value[2][2] * vertex.z + value[2][3] + value[2][3];
-
-	return (Vector3(result[0], result[1], result[2]));
+	return (Vector3(
+		value[0][0] * vertex.x + value[1][0] * vertex.y + value[2][0] * vertex.z + value[3][0] * value[3][3],
+        value[0][1] * vertex.x + value[1][1] * vertex.y + value[2][1] * vertex.z + value[3][1] * value[3][3],
+        value[0][2] * vertex.x + value[1][2] * vertex.y + value[2][2] * vertex.z + value[3][2] * value[3][3]
+    ));
 }
 
-// vec4 operator*( const mat4& m, const vec4& v )
-// {
-//     return vec4(
-//         m[0][0] * vertex.x + m[1][0] * vertex.y + m[2][0] * vertex.z + m[3][0],
-//         m[0][1] * vertex.x + m[1][1] * vertex.y + m[2][1] * vertex.z + m[3][1],
-//         m[0][2] * vertex.x + m[1][2] * vertex.y + m[2][2] * vertex.z + m[3][2],
-//         m[0][3] * vertex.x + m[1][3] * vertex.y + m[2][3] * vertex.z + m[3][3]
-//     );
-// }
+Vector4		Matrix::operator * (Vector4 vertex)
+{
+	return (Vector4(
+		value[0][0] * vertex.x + value[1][0] * vertex.y + value[2][0] * vertex.z + value[3][0] * vertex.w,
+        value[0][1] * vertex.x + value[1][1] * vertex.y + value[2][1] * vertex.z + value[3][1] * vertex.w,
+        value[0][2] * vertex.x + value[1][2] * vertex.y + value[2][2] * vertex.z + value[3][2] * vertex.w,
+        value[0][3] * vertex.x + value[1][3] * vertex.y + value[2][3] * vertex.z + value[3][3] * vertex.w
+    ));
+}
