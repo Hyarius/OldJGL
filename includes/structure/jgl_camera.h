@@ -28,11 +28,10 @@ public:
 	void move(Vector3 delta);
 	void place(Vector3 p_pos);
 
-	void compute_axis();
 	void compute_model();
 	void compute_view();
 	void compute_projection();
-	void compute(){compute_axis();compute_model();compute_view();compute_projection();}
+	void compute(){compute_model();compute_view();compute_projection();}
 
 	void set_viewport(c_viewport *p_viewport){_viewport = p_viewport;}
 	void set_yaw(float p_yaw){_yaw = p_yaw;}

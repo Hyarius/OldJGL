@@ -9,7 +9,7 @@ Matrix::Matrix(
 	value[0][0] = a0;			value[0][1] = a1;				value[0][2] = a2;				value[0][3] = a3;
 	value[1][0] = b0;			value[1][1] = b1;				value[1][2] = b2;				value[1][3] = b3;
 	value[2][0] = c0;			value[2][1] = c1;				value[2][2] = c2;				value[2][3] = c3;
-	value[2][0] = d0;			value[2][1] = d1;				value[2][2] = d2;				value[3][3] = d3;
+	value[3][0] = d0;			value[3][1] = d1;				value[3][2] = d2;				value[3][3] = d3;
 }
 
 Matrix::Matrix()
@@ -17,7 +17,7 @@ Matrix::Matrix()
 	value[0][0] = 1;			value[0][1] = 0;				value[0][2] = 0;				value[0][3] = 0;
 	value[1][0] = 0;			value[1][1] = 1;				value[1][2] = 0;				value[1][3] = 0;
 	value[2][0] = 0;			value[2][1] = 0;				value[2][2] = 1;				value[2][3] = 0;
-	value[2][0] = 0;			value[2][1] = 0;				value[2][2] = 0;				value[3][3] = 1;
+	value[3][0] = 0;			value[3][1] = 0;				value[3][2] = 0;				value[3][3] = 1;
 }
 
 Matrix::Matrix(X_ROTATE, float angle)
@@ -90,7 +90,7 @@ Matrix::Matrix(SCALE, Vector3 delta)
 	value[3][0] = 0;			value[3][1] = 0;				value[3][2] = 0;				value[3][3] = 1;
 }
 
-Matrix			Matrix::operator * (Matrix p_Matrix)
+Matrix			Matrix::operator * (Matrix p_matrix)
 {
 	int		i;
 	int		j;
@@ -102,10 +102,10 @@ Matrix			Matrix::operator * (Matrix p_Matrix)
 		j = 0;
 		while (j < 4)
 		{
-			m.value[i][j] = (value[i][0] * p_Matrix.value[0][j]) +
-					(value[i][1] * p_Matrix.value[1][j]) +
-					(value[i][2] * p_Matrix.value[2][j]) +
-					(value[i][3] * p_Matrix.value[3][j]);
+			m.value[i][j] = (this->value[0][i] * p_matrix.value[j][0]) \
+						+ (this->value[1][i] * p_matrix.value[j][1]) \
+						+ (this->value[2][i] * p_matrix.value[j][2]) \
+						+ (this->value[3][i] * p_matrix.value[j][3]);
 			j++;
 		}
 		i++;

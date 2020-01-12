@@ -33,7 +33,6 @@ void c_camera::rotate(float pitch, float yaw)
 		_yaw += 360;
 	if (_yaw > 360)
 		_yaw -= 360;
-	compute_axis();
 }
 
 void c_camera::move(Vector3 delta)
@@ -50,16 +49,9 @@ void c_camera::place(Vector3 p_pos)
 	compute();
 }
 
-void c_camera::compute_axis()
-{
-}
-
 void c_camera::compute_model()
 {
 	_model = Matrix();
-	_model.value[0][3] = _pos.x;
-	_model.value[1][3] = _pos.y;
-	_model.value[2][3] = _pos.z;
 }
 
 void c_camera::compute_view()
@@ -82,6 +74,7 @@ void c_camera::compute_view()
 	_view.value[2][3] = _pos.z;
 	_view.value[3][3] = 1;
 }
+
 void c_camera::compute_projection()
 {
 	float		n;
