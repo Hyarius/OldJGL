@@ -37,6 +37,7 @@ struct Vector4
 	float dot(Vector4 &other);
 	string str();
 	Vector4 floor();
+	Vector4 invert();
 };
 
 typedef Vector4 Vector3w;
@@ -74,6 +75,7 @@ struct Vector3
 	float dot(Vector3 &other);
 	string str();
 	Vector3 floor();
+	Vector3 invert();
 };
 
 struct Vector2
@@ -108,6 +110,7 @@ struct Vector2
 	float dot(Vector2 &other);
 	string str();
 	Vector2 floor();
+	Vector2 invert();
 };
 
 ostream& operator<<(ostream& os, Vector2 value);

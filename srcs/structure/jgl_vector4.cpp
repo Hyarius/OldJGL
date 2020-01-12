@@ -154,3 +154,12 @@ Vector4 Vector4::floor()
 
 	return (result);
 }
+
+Vector4 Vector4::invert()
+{
+	x *= -1;
+	y *= -1;
+	z *= -1;
+	w *= -1;
+	return (*this);
+}

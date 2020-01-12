@@ -57,7 +57,7 @@ ostream& operator<<(ostream& os, Matrix data)
 		{
 			if (j != 0)
 				os << " - ";
-			os << "[" << data.value[j][i] << "]";
+			os << "[" << ftoa(data.value[j][i], 0) << "]";
 		}
 		os << endl;
 	}

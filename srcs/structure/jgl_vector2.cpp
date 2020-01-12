@@ -140,3 +140,10 @@ Vector2 Vector2::floor()
 
 	return (result);
 }
+
+Vector2 Vector2::invert()
+{
+	x *= -1;
+	y *= -1;
+	return (*this);
+}

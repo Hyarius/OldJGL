@@ -38,7 +38,7 @@ private:
 
 	GLuint _matrix_colorID;
 	GLuint _matrix_textureID;
-	
+
 	GLuint _texture_textureID;
 	GLuint _textureID;
 
@@ -56,12 +56,16 @@ public:
 	Vector2 size(){return (_size);}
 	GLuint program_color(){return (_program_color);}
 	GLuint program_sprite(){return (_program_sprite);}
+	GLuint program_color_model(){return (_program_color_model);}
+	GLuint program_sprite_model(){return (_program_sprite_model);}
 	GLuint vertex_array(){return (_vertex_array);}
 	GLuint vertex_buffer(){return (_vertex_buffer);}
 	GLuint color_buffer(){return (_color_buffer);}
 	GLuint texture_buffer(){return (_texture_buffer);}
 	GLuint alpha_buffer(){return (_alpha_buffer);}
 	GLuint textureID(){return (_textureID);}
+	GLuint matrix_colorID(){return (_matrix_colorID);}
+	GLuint matrix_textureID(){return (_matrix_textureID);}
 	class c_window *central_widget(){return (_central_widget);}
 	bool play(){return (_play);}
 	SDL_Event *event(){return (&_event);}

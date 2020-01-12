@@ -149,3 +149,11 @@ Vector3 Vector3::floor()
 
 	return (result);
 }
+
+Vector3 Vector3::invert()
+{
+	x *= -1;
+	y *= -1;
+	z *= -1;
+	return (*this);
+}

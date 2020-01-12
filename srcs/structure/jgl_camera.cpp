@@ -19,14 +19,10 @@ c_camera::c_camera(Vector3 p_pos, float p_pitch, float p_yaw)
 
 void c_camera::look_at(Vector3 target)
 {
-	Vector3	result;
-
-	result = (_pos - target).normalize();
-	_yaw = radius_to_degree(atan2(result.z, -result.x)) - 90;
-	_pitch = radius_to_degree(atan2(result.y,
-				sqrt(result.x * result.x + result.z * result.z)));
-	_pitch = clamp_float(-89, _pitch, 89);
-	compute_axis();
+	_forward = (_pos - target).normalize();    // The "forward" vector.
+	_right = ((Vector3(0, 1, 0)).cross(_forward)).normalize();// The "right" vector.
+	_up = ((_forward).cross(_right)).normalize();
+	compute_view();
 }
 
 void c_camera::rotate(float pitch, float yaw)
@@ -56,12 +52,6 @@ void c_camera::place(Vector3 p_pos)
 
 void c_camera::compute_axis()
 {
-	float tmp_yaw = degree_to_radius(_yaw);
-	float tmp_pitch = degree_to_radius(_pitch);
-
-	_right = (Vector3(cos(tmp_pitch) * sin(tmp_yaw), sin(tmp_pitch), cos(tmp_pitch) * cos(tmp_yaw)) ).normalize();
-	_forward = (Vector3( sin(tmp_yaw - 3.14f / 2.0f), 0.0f, cos(tmp_yaw - 3.14f / 2.0f))).normalize();
-	_up = ((_forward).cross(_right)).normalize();
 }
 
 void c_camera::compute_model()
@@ -87,6 +77,10 @@ void c_camera::compute_view()
 	_view.value[1][2] = _forward.y;
 	_view.value[2][2] = _forward.z;
 	_view.value[3][2] = -(_forward.dot(_pos));
+	_view.value[0][3] = _pos.x;
+	_view.value[1][3] = _pos.y;
+	_view.value[2][3] = _pos.z;
+	_view.value[3][3] = 1;
 }
 void c_camera::compute_projection()
 {
@@ -100,7 +94,8 @@ void c_camera::compute_projection()
 	t = 1.0 / (tan(degree_to_radius(_fov / 2.0))) / (4.0 / 3.0);
 	_projection.value[0][0] = t;
 	_projection.value[1][1] = r;
-	_projection.value[2][2] = _far / (_far - _near);
-	_projection.value[2][3] = 1.0;
+	_projection.value[2][2] = -_far / (_far - _near);
+	_projection.value[2][3] = -1.0;
 	_projection.value[3][2] = -(2 * _far * _near) / (_far - _near);
+	_projection.value[3][3] = 0;
 }

@@ -22,7 +22,9 @@ struct Matrix
 	Matrix(Z_ROTATE, float angle);
 	Matrix(ROTATION, float x, float y, float z);
 	Matrix(TRANSLATION, float t_x, float t_y, float t_z);
+	Matrix(TRANSLATION, Vector3 delta);
 	Matrix(SCALE, float t_x, float t_y, float t_z);
+	Matrix(SCALE, Vector3 delta);
 	Matrix operator * (Matrix p_Matrix);
 	Vector3 operator * (Vector3 vertex);
 	void print();

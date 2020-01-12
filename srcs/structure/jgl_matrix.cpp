@@ -24,8 +24,8 @@ Matrix::Matrix(X_ROTATE, float angle)
 {
 	float		radian = degree_to_radius(angle);
 	value[0][0] = 1.0f; 		value[0][1] = 0.0f;       		value[0][2] = 0.0f;				value[0][3] = 0;
-	value[1][0] = 0.0f; 		value[1][1] = cos(radian); 		value[1][2] = -sin(radian);		value[1][3] = 0;
-	value[2][0] = 0.0f; 		value[2][1] = sin(radian); 		value[2][2] = cos(radian);		value[2][3] = 0;
+	value[1][0] = 0.0f; 		value[1][1] = cos(radian); 		value[1][2] = sin(radian);		value[1][3] = 0;
+	value[2][0] = 0.0f; 		value[2][1] = -sin(radian); 	value[2][2] = cos(radian);		value[2][3] = 0;
 	value[3][0] = 0;			value[3][1] = 0;				value[3][2] = 0;				value[3][3] = 1;
 }
 
@@ -55,22 +55,7 @@ Matrix::Matrix(ROTATION, float x, float y, float z)
 	Matrix roty = Matrix(Y, y);
 	Matrix rotz = Matrix(Z, z);
 
-	Matrix result = (rotx * roty * rotz);
-
-	int i;
-	int j;
-
-	i = 0;
-	while (i < 4)
-	{
-		j = 0;
-		while (j < 4)
-		{
-			value[i][j] = result.value[i][j];
-			j++;
-		}
-		i++;
-	}
+	*this = rotx * roty * rotz;
 }
 
 Matrix::Matrix(TRANSLATION, float t_x, float t_y, float t_z)
@@ -86,6 +71,22 @@ Matrix::Matrix(SCALE, float t_x, float t_y, float t_z)
 	value[0][0] = t_x;			value[0][1] = 0.0f; 			value[0][2] = 0.0f;				value[0][3] = 0.0f;
 	value[1][0] = 0.0f;			value[1][1] = t_y; 				value[1][2] = 0.0f;				value[1][3] = 0.0f;
 	value[2][0] = 0.0f;			value[2][1] = 0.0f; 			value[2][2] = t_z;				value[2][3] = 0.0f;
+	value[3][0] = 0;			value[3][1] = 0;				value[3][2] = 0;				value[3][3] = 1;
+}
+
+Matrix::Matrix(TRANSLATION, Vector3 delta)
+{
+	value[0][0] = 1.0f;			value[0][1] = 0.0f; 			value[0][2] = 0.0f;				value[0][3] = delta.x;
+	value[1][0] = 0.0f;			value[1][1] = 1.0f; 			value[1][2] = 0.0f;				value[1][3] = delta.y;
+	value[2][0] = 0.0f;			value[2][1] = 0.0f; 			value[2][2] = 1.0f;				value[2][3] = delta.z;
+	value[3][0] = 0;			value[3][1] = 0;				value[3][2] = 0;				value[3][3] = 1;
+}
+
+Matrix::Matrix(SCALE, Vector3 delta)
+{
+	value[0][0] = delta.x;		value[0][1] = 0.0f; 			value[0][2] = 0.0f;				value[0][3] = 0.0f;
+	value[1][0] = 0.0f;			value[1][1] = delta.y; 			value[1][2] = 0.0f;				value[1][3] = 0.0f;
+	value[2][0] = 0.0f;			value[2][1] = 0.0f; 			value[2][2] = delta.z;			value[2][3] = 0.0f;
 	value[3][0] = 0;			value[3][1] = 0;				value[3][2] = 0;				value[3][3] = 1;
 }
 
@@ -122,3 +123,13 @@ Vector3		Matrix::operator * (Vector3 vertex)
 
 	return (Vector3(result[0], result[1], result[2]));
 }
+
+// vec4 operator*( const mat4& m, const vec4& v )
+// {
+//     return vec4(
+//         m[0][0] * vertex.x + m[1][0] * vertex.y + m[2][0] * vertex.z + m[3][0],
+//         m[0][1] * vertex.x + m[1][1] * vertex.y + m[2][1] * vertex.z + m[3][1],
+//         m[0][2] * vertex.x + m[1][2] * vertex.y + m[2][2] * vertex.z + m[3][2],
+//         m[0][3] * vertex.x + m[1][3] * vertex.y + m[2][3] * vertex.z + m[3][3]
+//     );
+// }
