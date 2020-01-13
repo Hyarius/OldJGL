@@ -21,9 +21,6 @@ Pour utiliser la librairie JGL, vous devez creer imperativement une [c_applicati
 - [Affichage de formes primaires](readme/primitive.md)  
 	Fonctions permettant de dessiner des formes primitives en couleur (Cercle, point, line, rectangle).
 
-- [Affichage d'image](readme/draw_image.md)  
-	Fonctions permettant de dessiner des image precedement ouverte dans une [c_image](readme/image.md).
-
 - [Affichage de texte](readme/draw_text.md)  
 	Fonctions permettant de dessiner du texte a l'ecran.
 
@@ -145,6 +142,14 @@ Creation d'un widget custom : [Nouveau widget](readme/new_widget.md)
 
 # Composants de widget :  
 Afin d'aider a la creation de nouveaux widgets, la JGL comporte une serie de w_component permettant d'effectuer l'affichage de base des widgets.
+
+
+- [w_component](readme/comp.md)  
+	Composant primaire des composants de widget.  
+
+- [w_graphical_component](readme/graph_comp.md)  
+	Composant secondaire des composants graphiques.  
+	Contient les informations necessaires a l'affichage d'un composant graphique (les differentes couleurs, les textures a afficher).
 
 - [w_box_component](readme/box_comp.md)  
 	Composant affichant un simple rectangle avec une bordure.
