@@ -1,6 +1,6 @@
 ## Data : Conteneur de data
 La structure Data est une structure permettant de stocker plusieurs donnees afin d'etre passe a travers des pointeurs de fonctions.  
-Elle est principalement employee conjointement avec les [c_button](readme/button.mb).  
+Elle est principalement employee conjointement avec les [c_button](.readme/button.mb).  
 
 ### Methodes publiques :
 - `Data(void *p_data = NULL)`  
