@@ -9,15 +9,15 @@ La classe c_check_box est une classe permettant de faire une case a cocher.
 
 
 - `w_box_component &box()`  
-	Renvoi un reference sur le composant box du bouton.
+	Renvoi un reference sur le composant box du check_box.
 
 
 - `w_check_component &check()`
-	Renvoi un reference sur le composant check du bouton.
+	Renvoi un reference sur le composant check du check_box.
 
 
 - `w_text_component &label()`  
-	Renvoi un reference sur le composant label du bouton.
+	Renvoi un reference sur le composant label du check_box.
 
 
 
