@@ -1,8 +1,8 @@
-### C_APPLICATION : Classe gestionnaire de fenetre
+## C_APPLICATION : Classe gestionnaire de fenetre
 
 la classe c_application est la classe principale de la JGL
 
-# Methode publique :
+### Methode publique :
 
 `c_application(string name, Vector2 p_size = Vector2(840, 680), Color p_color = Color(50, 50, 50))`  
 Construit une application, initialise les composants de la librairie.  
