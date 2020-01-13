@@ -9,13 +9,32 @@ make
 
 Une fois la librarie compilee, le makefile vous aura donne un .a a lié a votre projet
 
-Pour utiliser la librairie JGL, vous devez creer imperativement une c_application au lancement du programme afin de pouvoir utiliser les fonctions d'affichage graphique
-readme/new_widget.md
+Pour utiliser la librairie JGL, vous devez creer imperativement une [c_application](readme/application.md) au lancement du programme afin de pouvoir utiliser les fonctions d'affichage graphique
 
 ***
 
-## Contenu :
-# Fonctionnalite de base :
+## Contenu :  
+# Fonctionnalite de base :  
+- [Fonctions utilitaires](readme/utils.md)  
+	Un groupe de fonctions variees, contenant des fonctions de conversions, des fonctions de recherche, etc.
+
+- [Affichage de formes primaires](readme/primitive.md)  
+	Fonctions permettant de dessiner des formes primitives en couleur (Cercle, point, line, rectangle).
+
+- [Affichage d'image](readme/draw_image.md)  
+	Fonctions permettant de dessiner des image precedement ouverte dans une [c_image](readme/image.md).
+
+- [Affichage de texte](readme/draw_text.md)  
+	Fonctions permettant de dessiner du texte a l'ecran.
+
+- [Fonctions de manipulation de fichier](readme/file.md)  
+	Fonctions permettant de gerer le contenu d'un o/f/stream.
+
+- [Fonctions de creation de json](readme/json.md)  
+	Fonctions permettant de creer un json.
+
+- [Fonctions de manipulation de fichier de log](readme/log.md)  
+	Fonctions permettant de gerer le contenu d'un fichier de log.
 
 ***
 
