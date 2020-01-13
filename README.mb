@@ -1,6 +1,6 @@
-## JGL - Librairie graphique pour creation d'interfaces graphiques 2D/3D
+### JGL - Librairie graphique pour creation d'interfaces graphiques 2D/3D
 
-Instruction d'utilisation :
+##Instruction d'utilisation :
 Telecharger la librairie et l'extraire.
 make install
 make
@@ -10,10 +10,10 @@ Une fois la librarie compilee, le makefile vous aura donne un .a a lié a votre 
 Pour utiliser la librairie JGL, vous devez creer imperativement une c_application au lancement du programme afin de pouvoir utiliser les fonctions d'affichage graphique
 readme/new_widget.md
 
-Contenu :
-= Fonctionnalite de base :
+##Contenu :
+# Fonctionnalite de base :
 
-= Structure et classe
+# Structure et classe
 	Gestionnaire de fenetre : [c_application](./readme/application.md)
 	Gestionnaire de camera pour les widgets 3D : TO DO
 	Gestionnaire d'objet 3D : TO DO
@@ -32,11 +32,11 @@ Contenu :
 		[Vector3](./readme/vector.md)
 		[Vector4](./readme/vector.md)
 
-= Systeme de widget :
+## Systeme de widget :
 Fonctionnement d'un [widget de base](./readme/base_widget.md) au sein de la JGL
 Creation d'un widget custom : [Nouveau widget](./readme/new_widget.md)
 
--Widget de base :
+# Widget de base :
 	widget [c_button](./readme/button.mb)
 	widget [c_check_box](./readme/check_box.mb)
 	widget [c_check_entry](./readme/check_entry.mb)
