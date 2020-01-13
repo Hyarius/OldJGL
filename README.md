@@ -2,7 +2,7 @@
 
 ***
 
-##Instruction d'utilisation :
+## Instruction d'utilisation :
 Telecharger la librairie et l'extraire.
 make install
 make
@@ -14,7 +14,7 @@ readme/new_widget.md
 
 ***
 
-##Contenu :
+## Contenu :
 # Fonctionnalite de base :
 
 ***
