@@ -142,3 +142,24 @@ Creation d'un widget custom : [Nouveau widget](readme/new_widget.md)
 
 - [c_vscrollbar](readme/scrollbar.mb)  
 	Un widget permettant de faire bouger les enfants du widget auquel il est lie via la mollette de la souris ou d'une interaction a l'ecran
+
+# Composants de widget :  
+Afin d'aider a la creation de nouveaux widgets, la JGL comporte une serie de w_component permettant d'effectuer l'affichage de base des widgets.
+
+- [w_box_component](readme/box_comp.md)  
+	Composant affichant un simple rectangle avec une bordure.
+
+- [w_check_component](readme/check_comp.md)  
+	Composant affichant une boite, selectionnable.
+
+- [w_text_component](readme/text_comp.md)  
+	Composant affichant un texte.
+
+- [w_text_entry_component](readme/text_entry_comp.md)  
+	Composant affichant une entree de texte.
+
+- [w_value_component](readme/value_comp.md)  
+	Composant affichant une valeur decimale.
+
+- [w_value_entry_component](readme/value_entry_comp.md)  
+	Composant affichant une entree de valeur decimale.
