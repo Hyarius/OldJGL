@@ -112,6 +112,7 @@ La classe c_button est une classe permettant de lier un widget avec un pointeur 
 	Retourne le style du texte.
 
 
+#### - Methode propre au bouton
 - `void set_action(Funct p_funct, Data p_data)`  
 	Defini le pointeur de fonction a utiliser en cas d'interaction avec le bouton.
 
