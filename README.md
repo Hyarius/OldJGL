@@ -20,41 +20,63 @@ readme/new_widget.md
 ***
 
 # Structure et classe
-Gestionnaire de fenetre : [c_application](readme/application.md)
 
-Gestionnaire de camera pour les widgets 3D : TO DO
+Classe :
 
-Gestionnaire d'objet 3D : TO DO
+- Gestionnaire de fenetre : [c_application](readme/application.md)
+	La classe principale de la JGL : Elle contient la fenetre ainsi que tout les composants necessaire a l'affichage a l'ecran de cette derniere
 
-Gestionnaire d'image : [c_image](readme/image.md)
+- Gestionnaire de camera pour les widgets 3D : TO DO
+	Une classe permettant d'afficher a l'ecran un c_mesh.
 
-Gestionnaire de tileset : [c_tileset](readme/tileset.md)
+- Gestionnaire d'objet 3D : TO DO
+	Une classe permettant de stocker un objet 3D en vue de l'afficher via une camera.
 
-Gestionnaire de graphique : [c_plot](readme/plot.md)
+- Gestionnaire d'image : [c_image](readme/image.md)
+	Une classe permettant de charger une image en vue de l'afficher a l'ecran.
 
-Gestionnaire d'event sourie et clavier : [event](readme/event.md)
+- Gestionnaire de tileset : [c_tileset](readme/tileset.md)
+	Une classe permettant de charger un tileset en vue de l'afficher a l'ecran.
 
-Gestionnaire de viewport : [c_viewport](readme/viewport.md)
+- Gestionnaire de graphique : [c_plot](readme/plot.md)
+	Une classe permettant de creer des graphiques et de les sauvegarder sous format numerique.
+
+- Gestionnaire de viewport : [c_viewport](readme/viewport.md)
+	Une classe permettant de creer des zones d'affichage a l'ecran, afin de decouper l'ecran en zones independantes.
 
 ***
 
-Structures basiques :
+Structures :
 
 - [Data](readme/data.md)
+	Une structure de donnees permettant de stocker plusieurs objets. Est necessaire aux widgets boutons.
 
 - [Color](readme/color.md)
+	Une structure de donnees permettant de stocker les 4 composantes d'une couleur.
 
 - [Uv](readme/geometry.md)
+	Une structure de donnees permettant de stocker les 2 coordonees d'un point d'une texture.
 
 - [Rect](readme/geometry.md)
+	Une structure de donnees permettant de stocker un rectangle
 
 - [Matrix](readme/matrix.md)
+	Une structure de donnees permettant d'effectuer des calculs matriciels avec les [Vector4](readme/vector.md).
 
 - [Vector2](readme/vector.md)
+	Une structure de donnees permettant de stocker une coordonnees en 2 dimensions.
 
 - [Vector3](readme/vector.md)
+	Une structure de donnees permettant de stocker une coordonnees en 3 dimensions.
 
 - [Vector4](readme/vector.md)
+	Une structure de donnees permettant de stocker une coordonnees en 4 dimensions.
+
+- [Mouse](readme/event.md)
+	Une structure de donnees permettant d'acceder a l'etat de la souris.
+
+- [Keyboard](readme/event.md)
+	Une structure de donnees permettant d'acceder a l'etat du clavier.
 
 ***
 
@@ -66,26 +88,38 @@ Creation d'un widget custom : [Nouveau widget](readme/new_widget.md)
 ***
 
 # Widget de base :
-- widget [c_button](readme/button.mb)
+- [c_button](readme/button.mb)
+	Un widget de bouton, pouvant lancer un pointeur de fonction en cas de clic de souris.
 
-- widget [c_check_box](readme/check_box.mb)
+- [c_check_box](readme/check_box.mb)
+	Un widget pouvant etre selectionne ou deselectionner, avec un texte.
 
-- widget [c_check_entry](readme/check_entry.mb)
+- [c_check_entry](readme/check_entry.mb)
+	Un widget pouvant etre selectionne ou deselectionner, avec une entree de texte.
 
-- widget [c_frame](readme/frame.mb)
+- [c_frame](readme/frame.mb)
+	Une simple zone dans laquelle ajouter des widgets enfants.
 
-- widget [c_hour_entry](readme/hour_entry.mb)
+- [c_hour_entry](readme/hour_entry.mb)
+	Un widget permettant d'inscrire une heure, dans une entree de texte.
 
-- widget [c_image_label](readme/image_label.mb)
+- [c_image_label](readme/image_label.mb)
+	Un widget permettant d'afficher une image a l'ecran, pouvant etre animee.
 
-- widget [c_tab](readme/tab.mb)
+- [c_tab](readme/tab.mb)
+	Un widget gerant un systeme de tabulation contenant chacune des widgets separes.
 
-- widget [c_text_entry](readme/text_entry.mb)
+- [c_text_entry](readme/text_entry.mb)
+	Un widget d'entree de texte.
 
-- widget [c_text_label](readme/text_label.mb)
+- [c_text_label](readme/text_label.mb)
+	Un widget permettant d'afficher un texte a l'ecran.
 
-- widget [c_value_entry](readme/value_entry.mb)
+- [c_value_entry](readme/value_entry.mb)
+	Un widget disposant d'une entree de texte dans laquelle inscrire une valeur decimale.
 
-- widget [c_value_label](readme/value_label.mb)
+- [c_value_label](readme/value_label.mb)
+	Un widget permettant d'afficher une valeur decimale a l'ecran
 
-- widget [c_vscrollbar](readme/vscrollbar.mb)
+- [c_vscrollbar](readme/scrollbar.mb)
+	Un widget permettant de faire bouger les enfants du widget auquel il est lie via la mollette de la souris ou d'une interaction a l'ecran
