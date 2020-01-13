@@ -18,16 +18,19 @@ Cette classe permet d'afficher une zone de couleur, taille et position defini da
 
 ### Exemple d'utilisation
 
-`class myWidget : public c_widget  
-{  
-private:  
-	w_box_component _box;  
+```
+class myWidget : public c_widget
+{
+private:
+	w_box_component _box;
+
 public:
-	c_frame(c_widget *p_parent = nullptr) : c_widget(p_parent)  
-	{  
+	c_frame(c_widget *p_parent = nullptr) : c_widget(p_parent)
+	{
 		//Initialisation du box_component avec comme proprietaire le myWidget
 		_box = w_box_component(this);
 	}
+
 	w_box_component &box(){return (_box);}
 	void set_geometry_imp(Vector2 p_anchor, Vector2 p_area)
 	{
@@ -40,4 +43,5 @@ public:
 		//Affichage du w_box_component sur le viewport herite du c_widget de myWidget
 		_box.render(_viewport);
 	}
-};`
+};
+```
