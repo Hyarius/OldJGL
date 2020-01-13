@@ -23,8 +23,8 @@ Cette classe permet d'afficher une zone de couleur, taille et position defini da
 private:  
 	w_box_component _box;  
 public:
-	c_frame(c_widget *p_parent = nullptr) : c_widget(p_parent)
-	{
+	c_frame(c_widget *p_parent = nullptr) : c_widget(p_parent)  
+	{  
 		//Initialisation du box_component avec comme proprietaire le myWidget
 		_box = w_box_component(this);
 	}
