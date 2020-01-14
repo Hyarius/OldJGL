@@ -1,4 +1,6 @@
-##  :
+## C_HOUR_ENTRY : Widget d'affichage et d'edition d'heure
+
+La classe c_hour_entry est une classe permettant d'afficher et d'editer une heure sous forme d'affichage digitale.
 
 
 ### Methodes publiques :
@@ -146,7 +148,7 @@
 
 
 - `string hour_text()` et `string minute_text()`  
-	Renvoi respectivement l'heure et les minutes du c_hour_entry sous forme de string. 
+	Renvoi respectivement l'heure et les minutes du c_hour_entry sous forme de string.
 
 
 ### Exemple d'utilisation
