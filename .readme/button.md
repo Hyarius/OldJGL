@@ -1,6 +1,6 @@
 ## C_BUTTON : Widget de bouton
 
-La classe c_button est une classe permettant de lier un widget avec un pointeur de fonction de type `void (*Funct)(Data)` avec comme parametre le [Data](.readme/data.md) donne au c_button.
+La classe c_button est une classe permettant de lier un widget avec un pointeur de fonction de type `void (*Funct)(Data)` avec comme parametre le [Data](data.md) donne au c_button.
 
 ### Methodes publiques :
 

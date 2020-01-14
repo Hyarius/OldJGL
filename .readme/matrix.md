@@ -46,7 +46,7 @@ La structure Matrix stocke 16 float, servant aux calculs matriciels.
 
 
 - `Matrix(T, Vector3 delta)`  
-	Construit une matrice de translation suivant les deplacements decrit par le [Vector3](.readme/vector.md) en parametres.
+	Construit une matrice de translation suivant les deplacements decrit par le [Vector3](vector.md) en parametres.
 	Exemple :  
 	`Matrix mat = Matrix(Vector3(0, 0, 1));`
 
@@ -58,7 +58,7 @@ La structure Matrix stocke 16 float, servant aux calculs matriciels.
 
 
 - `Matrix(S, Vector3 delta)`  
-	Construit une matrice de redimensionnement suivant les deplacements decrit par le [Vector3](.readme/vector.md) en parametres.
+	Construit une matrice de redimensionnement suivant les deplacements decrit par le [Vector3](vector.md) en parametres.
 	Exemple :  
 	`Matrix mat = Matrix(S, Vector3(2, 2, 2));`
 
@@ -68,11 +68,11 @@ La structure Matrix stocke 16 float, servant aux calculs matriciels.
 
 
 - `Vector3 operator * (Vector3 vertex)`  
-	Multiplie un [Vector3](.readme/vector.md) par une matrice, en conciderant le W = 1.
+	Multiplie un [Vector3](vector.md) par une matrice, en conciderant le W = 1.
 
 
 - `Vector4 operator * (Vector4 vertex)`  
-	Multiplie un [Vector4](.readme/vector.md) par une matrice.
+	Multiplie un [Vector4](vector.md) par une matrice.
 
 
 ### Exemple d'utilisation

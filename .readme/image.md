@@ -11,7 +11,7 @@ La structure c_image contient les informations necessaires a l'affichage d'une i
 
 
 - `c_image(size_t width, size_t height, Color p_color)`  
-	Construit une image de taille `width`/`height` et de [couleur](.readme/color.md) `p_color`.
+	Construit une image de taille `width`/`height` et de [couleur](color.md) `p_color`.
 
 
 - `c_image(SDL_Surface *p_surface)`  

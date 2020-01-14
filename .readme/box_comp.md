@@ -1,6 +1,6 @@
 ## W_BOX_COMPONENT : Composant de widget
 Le w_box_component est une classe de type w_component pouvant etre utiliser dans un widget.  
-Elle herite de la class [w_component](.readme/comp.md) et de la class [w_graphical_component](.readme/graph_comp.md) dont elle prendra les methodes.  
+Elle herite de la class [w_component](comp.md) et de la class [w_graphical_component](graph_comp.md) dont elle prendra les methodes.  
 Cette classe permet d'afficher une zone de couleur, taille et position defini dans le w_box_component.
 
 ### Methodes publiques :
@@ -14,7 +14,7 @@ Cette classe permet d'afficher une zone de couleur, taille et position defini da
 	Retourne la couleur affichee par dessus le w_bow_component.  
 
 - `void render(c_viewport *viewport = nullptr)`
-	Affiche le w_box_component a l'anchor defini dans la partie [w_component](.readme/comp.md)
+	Affiche le w_box_component a l'anchor defini dans la partie [w_component](comp.md)
 
 ### Exemple d'utilisation
 
