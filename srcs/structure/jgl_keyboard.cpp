@@ -7,10 +7,10 @@ Keyboard::Keyboard()
 	state = SDL_GetKeyboardState(nullptr);
 }
 
-int Keyboard::get_key(int scan_code)
+key_state Keyboard::get_key(int scan_code)
 {
 	int result = (state[scan_code] != 0 ? 1 : 0);
-	return (result);
+	return ((key_state)(result));
 }
 
 void Keyboard::reset_key(int scan_code)

@@ -66,7 +66,7 @@ public:
 	GLuint textureID(){return (_textureID);}
 	GLuint matrix_colorID(){return (_matrix_colorID);}
 	GLuint matrix_textureID(){return (_matrix_textureID);}
-	c_widget *central_widget(){return (_central_widget);}
+	class c_widget *central_widget(){return ((c_widget *)_central_widget);}
 	bool play(){return (_play);}
 	SDL_Event *event(){return (&_event);}
 
@@ -81,6 +81,8 @@ public:
 	void render();
 	int run();
 };
+
+extern c_application *g_application;
 
 GLuint		load_shaders(
 				string p_vertex_file_path,

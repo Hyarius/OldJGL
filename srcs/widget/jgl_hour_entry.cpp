@@ -136,17 +136,17 @@ bool c_hour_entry::handle_keyboard()
 	if (selected() == false || _entry == nullptr)
 		return (false);
 
-	if (g_keyboard->get_key(SDL_SCANCODE_RETURN))
+	if (g_keyboard->get_key(SDL_SCANCODE_RETURN) == key_state::down)
 	{
 		unselect();
 		g_keyboard->reset_key(SDL_SCANCODE_RETURN);
 	}
-	else if (g_keyboard->get_key(SDL_SCANCODE_KP_ENTER))
+	else if (g_keyboard->get_key(SDL_SCANCODE_KP_ENTER) == key_state::down)
 	{
 		unselect();
 		g_keyboard->reset_key(SDL_SCANCODE_KP_ENTER);
 	}
-	else if (g_keyboard->get_key(SDL_SCANCODE_LEFT))
+	else if (g_keyboard->get_key(SDL_SCANCODE_LEFT) == key_state::down)
 	{
 		if (_entry == &_minute && _entry->cursor() == 0)
 		{
@@ -159,7 +159,7 @@ bool c_hour_entry::handle_keyboard()
 			_entry->move_cursor(-1);
 		g_keyboard->reset_key(SDL_SCANCODE_LEFT);
 	}
-	else if (g_keyboard->get_key(SDL_SCANCODE_RIGHT))
+	else if (g_keyboard->get_key(SDL_SCANCODE_RIGHT) == key_state::down)
 	{
 		if (_entry == &_hour && _entry->cursor() == 1)
 		{

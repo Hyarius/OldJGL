@@ -46,8 +46,4 @@
 
 #include "jgl_define.h"
 
-extern c_application *g_application;
-extern Keyboard *g_keyboard;
-extern Mouse *g_mouse;
-
 #endif

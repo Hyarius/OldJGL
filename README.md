@@ -33,6 +33,9 @@ Pour utiliser la librairie JGL, vous devez creer imperativement une [c_applicati
 - [Fonctions de manipulation de fichier de log](.readme/log.md)  
 	Fonctions permettant de gerer le contenu d'un fichier de log.
 
+- [Fonctions de gestion des evenements de souris et clavier](.readme/event.md)  
+	Fonctions permettant de gerer les interactions de l'utilisateur via sa souris et son clavier.  
+
 ***
 
 # Structure et classe
@@ -87,12 +90,6 @@ Structures :
 
 - [Vector4](.readme/vector.md)  
 	Une structure de donnees permettant de stocker une coordonnees en 4 dimensions.
-
-- [Mouse](.readme/event.md)  
-	Une structure de donnees permettant d'acceder a l'etat de la souris.
-
-- [Keyboard](.readme/event.md)  
-	Une structure de donnees permettant d'acceder a l'etat du clavier.
 
 ***
 

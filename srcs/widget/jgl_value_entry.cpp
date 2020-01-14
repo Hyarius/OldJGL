@@ -64,32 +64,32 @@ bool c_value_entry::handle_keyboard()
 	if (selected() == false)
 		return (false);
 
-	if (g_keyboard->get_key(SDL_SCANCODE_RETURN))
+	if (g_keyboard->get_key(SDL_SCANCODE_RETURN) == key_state::down)
 	{
 		unselect();
 		g_keyboard->reset_key(SDL_SCANCODE_RETURN);
 	}
-	else if (g_keyboard->get_key(SDL_SCANCODE_KP_ENTER))
+	else if (g_keyboard->get_key(SDL_SCANCODE_KP_ENTER) == key_state::down)
 	{
 		unselect();
 		g_keyboard->reset_key(SDL_SCANCODE_KP_ENTER);
 	}
-	else if (g_keyboard->get_key(SDL_SCANCODE_LEFT))
+	else if (g_keyboard->get_key(SDL_SCANCODE_LEFT) == key_state::down)
 	{
 		_entry.move_cursor(-1);
 		g_keyboard->reset_key(SDL_SCANCODE_LEFT);
 	}
-	else if (g_keyboard->get_key(SDL_SCANCODE_RIGHT))
+	else if (g_keyboard->get_key(SDL_SCANCODE_RIGHT) == key_state::down)
 	{
 		_entry.move_cursor(1);
 		g_keyboard->reset_key(SDL_SCANCODE_RIGHT);
 	}
-	else if (g_keyboard->get_key(SDL_SCANCODE_BACKSPACE))
+	else if (g_keyboard->get_key(SDL_SCANCODE_BACKSPACE) == key_state::down)
 	{
 		_entry.remove_text();
 		g_keyboard->reset_key(SDL_SCANCODE_BACKSPACE);
 	}
-	else if (g_keyboard->get_key(SDL_SCANCODE_DELETE))
+	else if (g_keyboard->get_key(SDL_SCANCODE_DELETE) == key_state::down)
 	{
 		_entry.supp_text();
 		g_keyboard->reset_key(SDL_SCANCODE_DELETE);

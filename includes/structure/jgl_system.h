@@ -26,8 +26,15 @@ struct Keyboard
 	const Uint8	*state;
 
 	Keyboard();
-	int get_key(int scan_code);
+	key_state get_key(int scan_code);
 	void reset_key(int scan_code);
 };
+
+extern Keyboard *g_keyboard;
+extern Mouse *g_mouse;
+
+mouse_state get_button(mouse_button type){return (g_mouse->get_button(type));}
+key_state get_key(int scan_code){return (g_keyboard->get_key(scan_code));}
+void reset_key(int scan_code){return (g_keyboard->reset_key(scan_code));}
 
 #endif

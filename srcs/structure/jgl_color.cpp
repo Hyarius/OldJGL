@@ -10,7 +10,7 @@ Color::Color(float p_r, float p_g, float p_b, float p_a) : r(p_r), g(p_g), b(p_b
 
 }
 
-Color::Color(unsigned char p_r, unsigned char p_g, unsigned char p_b, unsigned char p_a) : r(CALC(p_r)), g(CALC(p_g)), b(CALC(p_b)), a(CALC(p_a))
+Color::Color(int p_r, int p_g, int p_b, int p_a) : r(CALC(p_r)), g(CALC(p_g)), b(CALC(p_b)), a(CALC(p_a))
 {
 
 }

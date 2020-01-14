@@ -12,8 +12,8 @@ Chaque valeur est stocke sous forme de gradient, exprime entre 0 et 1.
 	La composante alpha est facultative, et sera concideree comme 1.0f si absente.
 
 
-- `Color(unsigned char p_r, unsigned char p_g, unsigned char p_b, unsigned char p_a = 255)`  
-	Construit une couleur en prenant les valeurs passees en parametre et en les divisant par 255.  
+- `Color(int p_r, int p_g, int p_b, int p_a = 255)`  
+	Construit une couleur en prenant les valeurs passees en parametre et en les divisant par 255.0f.  
 	La composante alpha est facultative, et sera concideree comme 1.0f si absente.
 
 

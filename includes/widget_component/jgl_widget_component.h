@@ -20,7 +20,6 @@ public:
 					{set_anchor(p_anchor);set_area(p_area);}
 	Vector2 	anchor(){return (_anchor);}
 	Vector2 	area(){return (_area);}
-	Vector2 	area(){return (_area);}
 	Vector2		owner_anchor();
 
 	bool is_pointed(Vector2 point);

@@ -82,30 +82,30 @@ c_image				*get_char(char c, int size, int outline, text_color color, text_style
 
 	if (char_list.size() <= (size_t)size)
 		char_list.resize((size_t)size + 2);
-	if (char_list[size].size() <= (size_t)type)
-		char_list[size].resize((size_t)type + 2);
-	if (char_list[size][(size_t)type].size() <= (size_t)color)
-		char_list[size][(size_t)type].resize((size_t)color + 2);
-	if (char_list[size][(size_t)type][(size_t)color].size() <= (size_t)c)
-		char_list[size][(size_t)type][(size_t)color].resize(c + 2);
-	if (char_list[size][(size_t)type][(size_t)color][c] == nullptr)
+	if (char_list[size].size() <= (size_t)style)
+		char_list[size].resize((size_t)style + 2);
+	if (char_list[size][(size_t)style].size() <= (size_t)color)
+		char_list[size][(size_t)style].resize((size_t)color + 2);
+	if (char_list[size][(size_t)style][(size_t)color].size() <= (size_t)c)
+		char_list[size][(size_t)style][(size_t)color].resize(c + 2);
+	if (char_list[size][(size_t)style][(size_t)color][c] == nullptr)
 	{
 		TTF_Font *tmp = get_font((size_t)size);
 		//
-		TTF_SetFontStyle(tmp, static_cast<int>(type));
+		TTF_SetFontStyle(tmp, static_cast<int>(style));
 		TTF_SetFontOutline(tmp, outline);
 		//
 		text = c + '\0';
 
 		SDL_Surface *surface = TTF_RenderText_Blended(tmp, text.c_str(), get_color((size_t)color));
 		if (surface != nullptr)
-			char_list[size][(size_t)type][(size_t)color][c] = new c_image(surface);
+			char_list[size][(size_t)style][(size_t)color][c] = new c_image(surface);
 		else
 			error_exit(1, "Error while creating the char " + string (1, c));
 
 		TTF_SetFontStyle(tmp, static_cast<int>(text_style::normal));
 	}
-	return (char_list[size][(size_t)type][(size_t)color][c]);
+	return (char_list[size][(size_t)style][(size_t)color][c]);
 }
 
 int				draw_text(string text, Vector2 coord, int size, int outline, text_color color, text_style style, c_viewport *viewport)
@@ -124,7 +124,7 @@ int				draw_text(string text, Vector2 coord, int size, int outline, text_color c
 	while (i < text.length())
 	{
 		rel_coord = Vector2(coord.x + delta, coord.y);
-		image = get_char(text[i], size, outline, color, type);
+		image = get_char(text[i], size, outline, color, style);
 		image->draw(rel_coord, image->size(), viewport);
 		delta += image->size().x;
 
@@ -173,7 +173,7 @@ int				draw_centred_text(string text, Vector2 coord, int size, int outline, text
 		return 0;
 
 	int x = calc_text_len(text, size);
-	int y = get_char('M', size, 0, color, type)->size().y;
+	int y = get_char('M', size, 0, color, style)->size().y;
 
-	return (draw_text(text, Vector2(coord.x - x / 2, coord.y - y / 2), size, outline, color, type, viewport));
+	return (draw_text(text, Vector2(coord.x - x / 2, coord.y - y / 2), size, outline, color, style, viewport));
 }

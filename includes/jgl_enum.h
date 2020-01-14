@@ -57,6 +57,12 @@ enum class text_style
 # define MOUSE_LEFT 1
 # define MOUSE_MIDDLE 2
 
+enum class key_state
+{
+	up = 0,
+	down = 1
+};
+
 enum class mouse_button
 {
  	right = MOUSE_RIGHT,
