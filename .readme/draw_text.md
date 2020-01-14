@@ -1,5 +1,5 @@
 ## Enum des fonctions de draw texte :  
-### Couleur du texte :  
+### Couleur du texte :
 - black / white  
 - light_blue / blue / dark_blue  
 - light_red / red / dark_red  
@@ -10,12 +10,17 @@
 - light_yellow / yellow / dark_yellow  
 - light_purple / purple / dark_purple  
 
+Exemple : `text_color::black`
+
 ### Couleur du texte :  
 - normal  
 - bold  
 - italic  
 - underline  
-- strike  
+- strike   
+
+Exemple : `text_style::normal`
+
 
 ## Fonctions d'affichage de texte :
 
