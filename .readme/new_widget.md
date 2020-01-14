@@ -1,4 +1,4 @@
-- Creation d'un widget personnalité:  
+## Creation d'un widget personnalité:  
 Afin de creer un widget personnalise, il vous faudra simplement declarer votre structure comme heritant de la classe c_widget.  
 A ce titre, vous aurez besoin de surcharger les deux methodes abstraites de la classe c_widget :  
 
