@@ -3,9 +3,9 @@
 ***
 
 ## Instruction d'utilisation :
-Telecharger la librairie et l'extraire.
-make install
-make
+Telecharger la librairie et l'extraire.  
+./make install  
+./make  
 
 Une fois la librarie compilee, le makefile vous aura donne un .a a lié a votre projet
 
