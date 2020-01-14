@@ -8,7 +8,7 @@ Cette classe permet d'afficher une zone de couleur, taille et position defini da
 	Cree le composant en lui definisant un proprietaire (Le widget dont il fera parti).
 
 - `void set_delta(Color p_delta)`
-	Defini une couleur a appliquer par dessus les couleurs du w_box_xomponent (Utile pour les interactions type bouton)  
+	Defini une couleur a appliquer par dessus les couleurs du w_box_component (Utile pour les interactions type bouton)  
 
 - `Color delta()`  
 	Retourne la couleur affichee par dessus le w_bow_component.  
