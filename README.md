@@ -76,9 +76,6 @@ Structures :
 - [Uv](.readme/geometry.md)  
 	Une structure de donnees permettant de stocker les 2 coordonees d'un point d'une texture.
 
-- [Rect](.readme/geometry.md)  
-	Une structure de donnees permettant de stocker un rectangle
-
 - [Matrix](.readme/matrix.md)  
 	Une structure de donnees permettant d'effectuer des calculs matriciels avec les [Vector4](.readme/vector.md).
 
