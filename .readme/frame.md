@@ -5,7 +5,7 @@ La classe c_frame est une classe permettant de creer une zone pouvant contenir p
 ### Methodes publiques :
 
 - `c_frame(c_widget *p_parent = nullptr)`
-	Construit un widget de type c_button en lui assignant ces interactions.  
+	Construit un widget de type c_frame.  
 
 
 - `w_box_component &box()`  
