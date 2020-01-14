@@ -1,4 +1,4 @@
-## C_FRAME : Widget de zone
+## C_IMAGE_LABEL : Widget de zone
 
 La classe c_image_label est une classe permettant de creer une zone affichant une image.
 
