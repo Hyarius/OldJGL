@@ -15,49 +15,64 @@ La structure Matrix stocke 16 float, servant aux calculs matriciels.
 	d0 	d1 	d2 	d3  
 
 
-- `Matrix(X_ROTATE, float angle)`  
-	Construit une matrice
+- `Matrix(X, float angle)`  
+	Construit une matrice de rotation autour de l'axe X d'un angle en degree `angle`.
+	Exemple :  
+	`Matrix mat = Matrix(X, 145.0f);`
 
 
-- `Matrix(Y_ROTATE, float angle)`  
-	Construit une matrice
+- `Matrix(Y, float angle)`  
+	Construit une matrice de rotation autour de l'axe Y d'un angle en degree `angle`.
+	Exemple :  
+	`Matrix mat = Matrix(Y, 90.0f);`
 
 
-- `Matrix(Z_ROTATE, float angle)`  
-	Construit une matrice
+- `Matrix(Z, float angle)`  
+	Construit une matrice de rotation autour de l'axe Z d'un angle en degree `angle`.
+	Exemple :  
+	`Matrix mat = Matrix(Z, 45.0f);`
 
 
-- `Matrix(ROTATION, float x, float y, float z)`  
-	Construit une matrice
+- `Matrix(R, float x, float y, float z)`  
+	Construit une matrice de rotation autour des 3 axes.
+	Exemple :  
+	`Matrix mat = Matrix(10.0f, 10.0f, 10.0f);`
 
 
-- `Matrix(TRANSLATION, float t_x, float t_y, float t_z)`  
-	Construit une matrice
+- `Matrix(T, float t_x, float t_y, float t_z)`  
+	Construit une matrice de translation suivant les deplacements decrit par les floats en parametres.
+	Exemple :  
+	`Matrix mat = Matrix(0, 0, 1);`
 
 
-- `Matrix(TRANSLATION, Vector3 delta)`  
-	Construit une matrice
+- `Matrix(T, Vector3 delta)`  
+	Construit une matrice de translation suivant les deplacements decrit par le [Vector3](.readme/vector.md) en parametres.
+	Exemple :  
+	`Matrix mat = Matrix(Vector3(0, 0, 1));`
 
 
-- `Matrix(SCALE, float t_x, float t_y, float t_z)`  
-	Construit une matrice
+- `Matrix(S, float t_x, float t_y, float t_z)`  
+	Construit une matrice de redimensionnement suivant les deplacements decrit par les floats en parametres.
+	Exemple :  
+	`Matrix mat = Matrix(S, 2, 2, 2);`
 
 
-- `Matrix(SCALE, Vector3 delta)`  
-	Construit une matrice
+- `Matrix(S, Vector3 delta)`  
+	Construit une matrice de redimensionnement suivant les deplacements decrit par le [Vector3](.readme/vector.md) en parametres.
+	Exemple :  
+	`Matrix mat = Matrix(S, Vector3(2, 2, 2));`
 
 
 - `Matrix operator * (Matrix p_matrix)`  
-	Construit une matrice
+	Multiplie deux matrices entre elles.
 
 
 - `Vector3 operator * (Vector3 vertex)`  
-	Construit une matrice
+	Multiplie un [Vector3](.readme/vector.md) par une matrice, en conciderant le W = 1.
 
 
 - `Vector4 operator * (Vector4 vertex)`  
-	Construit une matrice
-
+	Multiplie un [Vector4](.readme/vector.md) par une matrice.
 
 
 ### Exemple d'utilisation
