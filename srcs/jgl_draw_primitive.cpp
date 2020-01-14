@@ -109,12 +109,12 @@ void fill_rectangle(Vector2 p_tl, Vector2 p_tr, Vector2 p_dl, Vector2 p_dr, Colo
 
 void draw_rectangle(Vector2 pos, Vector2 size, Color p_color, c_viewport *viewport)
 {
-	draw_rectangle(Pixel(pos.x, pos.y), Pixel(pos.x + size.x, pos.y), Pixel(pos.x, pos.y + size.y), Pixel(pos.x + size.x, pos.y + size.y), p_color, viewport);
+	draw_rectangle(pos, Vector2(pos.x + size.x, pos.y), Vector2(pos.x, pos.y + size.y), pos + size, p_color, viewport);
 }
 
 void fill_rectangle(Vector2 pos, Vector2 size, Color p_color, c_viewport *viewport)
 {
-	fill_rectangle(Pixel(pos.x, pos.y), Pixel(pos.x + size.x, pos.y), Pixel(pos.x, pos.y + size.y), Pixel(pos.x + size.x, pos.y + size.y), p_color, viewport);
+	fill_rectangle(pos, Vector2(pos.x + size.x, pos.y), Vector2(pos.x, pos.y + size.y), pos + size, p_color, viewport);
 }
 
 void fill_centred_rectangle(Vector2 p_coord, Vector2 p_size, Color p_color, c_viewport *viewport)

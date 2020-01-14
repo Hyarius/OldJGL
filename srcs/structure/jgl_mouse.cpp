@@ -51,3 +51,5 @@ mouse_state			Mouse::get_button(mouse_button type)
 	//button[value] = static_cast<int>(mouse_state::null);
 	return (result);
 }
+
+mouse_state get_button(mouse_button type){return (g_mouse->get_button(type));}

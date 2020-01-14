@@ -103,8 +103,6 @@ void				copy_file(string src_path, string dest_path)
 
 	source.read(buffer, size);
 	destination.write(buffer, size);
-
-	return (true);
 }
 
 void				write_on_file(fstream &file, string text)
