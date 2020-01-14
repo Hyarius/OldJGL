@@ -136,77 +136,17 @@
 	Retourne le style du texte.
 
 
-- `void set_hour_precision(int p_precision)`  
+#### - Fonctions propre aux c_hour_entry  
+- `void set_hour_value(float p_value)` et `void set_minute_value(float p_value)`  
+	Defini respectivement l'heure et les minutes du c_hour_entry.  
 
 
-
-- `void set_hour_text(string p_text)`  
-
-
-
-- `void set_hour_value(float p_value)`  
+- `float hour_value()` et `float minute_value()`   
+	Renvoi respectivement l'heure et les minutes du c_hour_entry sous forme de float.  
 
 
-
-- `void set_hour_cursor(int p_cursor)`  
-
-
-
-- `bool hour_selected()`  
-
-
-
-- `int hour_precision()`  
-
-
-
-- `float hour_value()`  
-
-
-
-- `string hour_text()`  
-
-
-
-- `int hour_cursor()`  
-
-
-
-- `void set_minute_precision(int p_precision)`  
-
-
-
-- `void set_minute_text(string p_text)`  
-
-
-
-- `void set_minute_value(float p_value)`  
-
-
-
-- `void set_minute_cursor(int p_cursor)`  
-
-
-
-- `bool minute_selected()`  
-
-
-
-- `int minute_precision()`  
-
-
-
-- `float minute_value()`  
-
-
-
-- `string minute_text()`  
-
-
-
-- `int minute_cursor()`  
-
-
+- `string hour_text()` et `string minute_text()`  
+	Renvoi respectivement l'heure et les minutes du c_hour_entry sous forme de string. 
 
 
 ### Exemple d'utilisation
