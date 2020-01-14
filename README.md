@@ -98,40 +98,40 @@ Creation d'un widget custom : [Nouveau widget](.readme/new_widget.md)
 ***
 
 # Widget de base :
-- [c_button](.readme/button.mb)  
+- [c_button](.readme/button.md)  
 	Un widget de bouton, pouvant lancer un pointeur de fonction en cas de clic de souris.
 
-- [c_check_box](.readme/check_box.mb)  
+- [c_check_box](.readme/check_box.md)  
 	Un widget pouvant etre selectionne ou deselectionner, avec un texte.
 
-- [c_check_entry](.readme/check_entry.mb)  
+- [c_check_entry](.readme/check_entry.md)  
 	Un widget pouvant etre selectionne ou deselectionner, avec une entree de texte.
 
-- [c_frame](.readme/frame.mb)  
+- [c_frame](.readme/frame.md)  
 	Une simple zone dans laquelle ajouter des widgets enfants.
 
-- [c_hour_entry](.readme/hour_entry.mb)  
+- [c_hour_entry](.readme/hour_entry.md)  
 	Un widget permettant d'inscrire une heure, dans une entree de texte.
 
-- [c_image_label](.readme/image_label.mb)  
+- [c_image_label](.readme/image_label.md)  
 	Un widget permettant d'afficher une image a l'ecran, pouvant etre animee.
 
-- [c_tab](.readme/tab.mb)  
+- [c_tab](.readme/tab.md)  
 	Un widget gerant un systeme de tabulation contenant chacune des widgets separes.
 
-- [c_text_entry](.readme/text_entry.mb)  
+- [c_text_entry](.readme/text_entry.md)  
 	Un widget d'entree de texte.
 
-- [c_text_label](.readme/text_label.mb)  
+- [c_text_label](.readme/text_label.md)  
 	Un widget permettant d'afficher un texte a l'ecran.
 
-- [c_value_entry](.readme/value_entry.mb)  
+- [c_value_entry](.readme/value_entry.md)  
 	Un widget disposant d'une entree de texte dans laquelle inscrire une valeur decimale.
 
-- [c_value_label](.readme/value_label.mb)  
+- [c_value_label](.readme/value_label.md)  
 	Un widget permettant d'afficher une valeur decimale a l'ecran
 
-- [c_vscrollbar](.readme/scrollbar.mb)  
+- [c_vscrollbar](.readme/scrollbar.md)  
 	Un widget permettant de faire bouger les enfants du widget auquel il est lie via la mollette de la souris ou d'une interaction a l'ecran
 
 # Composants de widget :  
