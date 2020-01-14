@@ -12,7 +12,7 @@ struct Color
 
 	Color();
 	Color(float p_r, float p_g, float p_b, float p_a = 1.0f);
-	Color(int p_r, int p_g, int p_b, int p_a = 255);
+	Color(unsigned char p_r, unsigned char p_g, unsigned char p_b, unsigned char p_a = 255);
 
 	float *decompose();
 

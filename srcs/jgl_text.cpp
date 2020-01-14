@@ -73,7 +73,7 @@ TTF_Font *get_font(int size)
 	return (font[size]);
 }
 
-c_image				*get_char(char c, int size, int outline, text_color color, text_style type)
+c_image				*get_char(char c, int size, int outline, text_color color, text_style style)
 {
 	string text;
 
@@ -108,7 +108,7 @@ c_image				*get_char(char c, int size, int outline, text_color color, text_style
 	return (char_list[size][(size_t)type][(size_t)color][c]);
 }
 
-int				draw_text(string text, Vector2 coord, int size, int outline, text_color color, text_style type, c_viewport *viewport)
+int				draw_text(string text, Vector2 coord, int size, int outline, text_color color, text_style style, c_viewport *viewport)
 {
 	c_image			*image;
 	size_t			i = 0;
@@ -164,7 +164,7 @@ int				calc_text_len(string text, int size)
 	return (delta);
 }
 
-int				draw_centred_text(string text, Vector2 coord, int size, int outline, text_color color, text_style type, c_viewport *viewport)
+int				draw_centred_text(string text, Vector2 coord, int size, int outline, text_color color, text_style style, c_viewport *viewport)
 {
 	if (viewport == nullptr)
 		viewport = g_application->central_widget()->viewport();

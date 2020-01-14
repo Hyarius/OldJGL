@@ -15,10 +15,11 @@ struct Data
 	void operator = (void *p_data);
 	void operator + (void *p_ptr);
 	Data operator + (const Data& delta);
+	void operator += (void *p_ptr);
 	void operator += (const Data& delta);
 
 	template <typename T>
-	T acces(size_t i){return (static_cast<T>(content[i]));}
+	T acces(size_t index){return (static_cast<T>(content[index]));}
 };
 
 #endif

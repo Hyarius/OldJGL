@@ -44,6 +44,11 @@ Data		Data::operator + (const Data& delta)
 	return (result);
 }
 
+void 		Data::operator += (void *p_ptr)
+{
+	this->content.push_back(p_ptr);
+}
+
 void 		Data::operator += (const Data& delta)
 {
 	for (size_t i = 0; i < delta.content.size(); i++)

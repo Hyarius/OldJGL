@@ -47,7 +47,7 @@ private:
 	SDL_Event _event;
 
 public:
-	c_application(string name, Vector2 p_size = Vector2(), Color p_color = Color(50, 50, 50));
+	c_application(string name, Vector2 p_size = Vector2(840, 680), Color p_color = Color(50, 50, 50));
 
 	SDL_Window *window(){return (_window);}
 	SDL_GLContext *context(){return (&_context);}
@@ -66,7 +66,7 @@ public:
 	GLuint textureID(){return (_textureID);}
 	GLuint matrix_colorID(){return (_matrix_colorID);}
 	GLuint matrix_textureID(){return (_matrix_textureID);}
-	class c_window *central_widget(){return (_central_widget);}
+	c_widget *central_widget(){return (_central_widget);}
 	bool play(){return (_play);}
 	SDL_Event *event(){return (&_event);}
 
@@ -74,7 +74,7 @@ public:
 	void reset_viewport(){_active_viewport = _viewport;_viewport->use();}
 	void set_font_path(string p_font_path);
 	void quit();
-	void set_background(Color p_color = Color(50, 50, 50));
+	void set_background(Color p_color);
 	void resize(Vector2 p_size);
 	void select();
 	void clear();

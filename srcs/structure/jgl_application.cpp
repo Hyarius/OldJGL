@@ -68,7 +68,7 @@ c_application::c_application(string name, Vector2 p_size, Color p_color)
 	glEnable(GL_BLEND);
 	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 	glEnable(GL_DEPTH_TEST);
-	glDepthFunc(GL_ALWAYS);
+	glDepthFunc(GL_LEQUAL);
 
 	glBindVertexArray(_vertex_array);
 	glBindBuffer(GL_ARRAY_BUFFER, _vertex_buffer);

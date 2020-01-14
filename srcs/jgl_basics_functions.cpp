@@ -114,6 +114,16 @@ string ftoa(float n, int afterpoint)
     out << setprecision(afterpoint) << n;
     return out.str();
 }
+// Converts a floating point number to string.
+string ftoa(double n, int afterpoint)
+{
+	ostringstream out;
+
+	if (n > 0 || n < -1)
+		afterpoint += 2;
+    out << setprecision(afterpoint) << n;
+    return out.str();
+}
 
 bool string_is_numeric(string text)
 {
