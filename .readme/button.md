@@ -68,8 +68,10 @@ La classe c_button est une classe permettant de lier un widget avec un pointeur 
 
 - `Color back()`  
 	Retourne la couleur de la bordure.
+
+
 - `Color front()`  
-	Retourne la couleur de l'interieur .
+	Retourne la couleur de l'interieur.
 
 #### - label redirection function
 - `void 		set_text(string p_text)`  
