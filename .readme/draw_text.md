@@ -1,3 +1,22 @@
+## Enum des fonctions de draw texte :  
+### Couleur du texte :  
+- black / white  
+- light_blue / blue / dark_blue  
+- light_red / red / dark_red  
+- light_green / green / dark_green  
+- light_cyan / cyan / dark_cyan  
+- light_grey / grey / dark_grey  
+- light_orange / orange / dark_orange  
+- light_yellow / yellow / dark_yellow  
+- light_purple / purple / dark_purple  
+
+### Couleur du texte :  
+- normal  
+- bold  
+- italic  
+- underline  
+- strike  
+
 ## Fonctions d'affichage de texte :
 
 - `int draw_text(string text, Vector2 coord, int size = 16, int outline = 0, text_color color = text_color::black, text_style type = text_style::normal, c_viewport *viewport = nullptr)`
@@ -6,7 +25,8 @@
 		`size` -> La taille en pixel du texte a l'ecran.  
 		`outline` -> Le detourage du texte.  
 		`color` -> La couleur du texte a afficher.  
-		`style` -> Le style du texte a afficher.
+		`style` -> Le style du texte a afficher.  
+		`viewport` -> Le viewport dans lequel le texte doit apparaitre.  
 
 
 - `int draw_centred_text(string text, Vector2 coord, int size = 16, int outline = 0, text_color color = text_color::black, text_style type = text_style::normal, c_viewport *viewport = nullptr)`
@@ -15,7 +35,8 @@
 		`size` -> La taille en pixel du texte a l'ecran.  
 		`outline` -> Le detourage du texte.  
 		`color` -> La couleur du texte a afficher.  
-		`style` -> Le style du texte a afficher.
+		`style` -> Le style du texte a afficher.  
+		`viewport` -> Le viewport dans lequel le texte doit apparaitre.  
 
 
 ### Exemple d'utilisation
