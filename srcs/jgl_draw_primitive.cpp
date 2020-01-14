@@ -18,9 +18,9 @@ vector<Vector2> calc_point(int width)
 	}
 
 	return (result);
-} 
+}
 
-void draw_line(Pixel p1, Pixel p2, int width, Color p_color, c_viewport *viewport)
+void draw_line(Vector2 p1, Vector2 p2, int width, Color p_color, c_viewport *viewport)
 {
 	if (viewport == nullptr)
 		viewport = g_application->central_widget()->viewport();
@@ -42,7 +42,7 @@ void draw_line(Pixel p1, Pixel p2, int width, Color p_color, c_viewport *viewpor
 
 }
 
-void draw_point(Pixel center, int width, Color p_color, c_viewport *viewport)
+void draw_point(Vector2 center, int width, Color p_color, c_viewport *viewport)
 {
 	if (viewport == nullptr)
 		viewport = g_application->central_widget()->viewport();
@@ -60,7 +60,7 @@ void draw_point(Pixel center, int width, Color p_color, c_viewport *viewport)
 	}
 }
 
-void draw_rectangle(Pixel p_tl, Pixel p_tr, Pixel p_dl, Pixel p_dr, Color p_color, c_viewport *viewport)
+void draw_rectangle(Vector2 p_tl, Vector2 p_tr, Vector2 p_dl, Vector2 p_dr, Color p_color, c_viewport *viewport)
 {
 	if (viewport == nullptr)
 		viewport = g_application->central_widget()->viewport();
@@ -85,7 +85,7 @@ void draw_rectangle(Pixel p_tl, Pixel p_tr, Pixel p_dl, Pixel p_dr, Color p_colo
 	draw_triangle_color(points, colors, 2);
 }
 
-void fill_rectangle(Pixel p_tl, Pixel p_tr, Pixel p_dl, Pixel p_dr, Color p_color, c_viewport *viewport)
+void fill_rectangle(Vector2 p_tl, Vector2 p_tr, Vector2 p_dl, Vector2 p_dr, Color p_color, c_viewport *viewport)
 {
 	Pixel points[] = {
 		convert_screen_to_opengl(p_tl),
@@ -107,22 +107,22 @@ void fill_rectangle(Pixel p_tl, Pixel p_tr, Pixel p_dl, Pixel p_dr, Color p_colo
 	fill_triangle_color(points, colors, 2);
 }
 
-void draw_rectangle(Pixel pos, Pixel size, Color p_color, c_viewport *viewport)
+void draw_rectangle(Vector2 pos, Vector2 size, Color p_color, c_viewport *viewport)
 {
 	draw_rectangle(Pixel(pos.x, pos.y), Pixel(pos.x + size.x, pos.y), Pixel(pos.x, pos.y + size.y), Pixel(pos.x + size.x, pos.y + size.y), p_color, viewport);
 }
 
-void fill_rectangle(Pixel pos, Pixel size, Color p_color, c_viewport *viewport)
+void fill_rectangle(Vector2 pos, Vector2 size, Color p_color, c_viewport *viewport)
 {
 	fill_rectangle(Pixel(pos.x, pos.y), Pixel(pos.x + size.x, pos.y), Pixel(pos.x, pos.y + size.y), Pixel(pos.x + size.x, pos.y + size.y), p_color, viewport);
 }
 
-void fill_centred_rectangle(Pixel p_coord, Pixel p_size, Color p_color, c_viewport *viewport)
+void fill_centred_rectangle(Vector2 p_coord, Vector2 p_size, Color p_color, c_viewport *viewport)
 {
 	fill_rectangle(p_coord - p_size / 2, p_size, p_color, viewport);
 }
 
-void draw_centred_rectangle(Pixel p_coord, Pixel p_size, Color p_color, c_viewport *viewport)
+void draw_centred_rectangle(Vector2 p_coord, Vector2 p_size, Color p_color, c_viewport *viewport)
 {
 	draw_rectangle(p_coord - p_size / 2, p_size, p_color, viewport);
 }

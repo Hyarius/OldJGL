@@ -26,15 +26,3 @@ void json_add_line(fstream &file, size_t tab, string text)
 
 	write_on_file(file, result);
 }
-
-void json_add_value(fstream &file, size_t tab, string value_name, string value_content)
-{
-	string result = "";
-
-	for (size_t i = 0; i < tab; i++)
-		result += "\t";
-
-	result += "\"" + value_name + "\":\"" + value_content + "\",";
-
-	write_on_file(file, result);
-}

@@ -10,8 +10,7 @@ struct Uv
 	float u;
 	float v;
 
-	Uv() : u(0), v(0){}
-	Uv(float p_u, float p_v) : u(p_u), v(p_v){}
+	Uv(float p_u = 0.0f, float p_v = 0.0f) : u(p_u), v(p_v){}
 	Uv(Vector2 pos) : u(pos.x), v(pos.y){}
 };
 

@@ -16,13 +16,13 @@ void draw_triangle_texture(Pixel *points, Uv *uvs, float *alpha, size_t nb = 1);
 void fill_triangle_color(Pixel *points, Color *colors, size_t nb = 1);
 
 vector<Vector2> calc_point(int width);
-void draw_line(Pixel p1, Pixel p2, int width, Color p_color, c_viewport *viewport = nullptr);
-void draw_point(Pixel center, int width, Color p_color, c_viewport *viewport = nullptr);
-void draw_rectangle(Pixel p_tl, Pixel p_tr, Pixel p_dl, Pixel p_dr, Color p_color, c_viewport *viewport = nullptr);
-void fill_rectangle(Pixel p_tl, Pixel p_tr, Pixel p_dl, Pixel p_dr, Color p_color, c_viewport *viewport = nullptr);
-void draw_rectangle(Pixel pos, Pixel size, Color p_color, c_viewport *viewport = nullptr);
-void fill_rectangle(Pixel pos, Pixel size, Color p_color, c_viewport *viewport = nullptr);
-void fill_centred_rectangle(Pixel p_coord, Pixel p_size, Color p_color, c_viewport *viewport = nullptr);
-void draw_centred_rectangle(Pixel p_coord, Pixel p_size, Color p_color, c_viewport *viewport = nullptr);
+void draw_line(Vector2 p1, Vector2 p2, int width, Color p_color, c_viewport *viewport = nullptr);
+void draw_point(Vector2 center, int width, Color p_color, c_viewport *viewport = nullptr);
+void draw_rectangle(Vector2 p_tl, Vector2 p_tr, Vector2 p_dl, Vector2 p_dr, Color p_color, c_viewport *viewport = nullptr);
+void fill_rectangle(Vector2 p_tl, Vector2 p_tr, Vector2 p_dl, Vector2 p_dr, Color p_color, c_viewport *viewport = nullptr);
+void draw_rectangle(Vector2 pos, Vector2 size, Color p_color, c_viewport *viewport = nullptr);
+void fill_rectangle(Vector2 pos, Vector2 size, Color p_color, c_viewport *viewport = nullptr);
+void fill_centred_rectangle(Vector2 p_coord, Vector2 p_size, Color p_color, c_viewport *viewport = nullptr);
+void draw_centred_rectangle(Vector2 p_coord, Vector2 p_size, Color p_color, c_viewport *viewport = nullptr);
 
 #endif

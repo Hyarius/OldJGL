@@ -2,21 +2,21 @@
 
 fstream				open_file(string path, ios_base::openmode mode)
 {
-	fstream myfile;
-	myfile.open(path, mode);
-	if (mode & ios_base::out && myfile.fail())
+	fstream file;
+	file.open(path, mode);
+	if (mode & ios_base::out && file.fail())
 		error_exit(1, "Error while creating a file at path : " + path);
 
-	return (myfile);
+	return (file);
 }
 
-string					get_str(fstream &myfile)
+string					get_str(fstream &file)
 {
     string line;
 
-	if (myfile.eof())
+	if (file.eof())
 		return ("");
-    getline(myfile, line);
+    getline(file, line);
 	if (line.size() == 0)
 		return ("");
     if (line[strlen((char *)line.c_str()) - 1] == '\n')
@@ -24,7 +24,7 @@ string					get_str(fstream &myfile)
     return (line);
 }
 
-vector<string>			get_strsplit(fstream &myfile, const string c, int size)
+vector<string>			get_strsplit(fstream &file, const string c, int size)
 {
     vector<string> tab;
     string line;
@@ -32,7 +32,7 @@ vector<string>			get_strsplit(fstream &myfile, const string c, int size)
     char	*word;
 	char	*context = NULL;
 
-    line = get_str(myfile);
+    line = get_str(file);
 	if (line == "")
 	{
 		if (size != -1)
@@ -88,13 +88,13 @@ bool				check_file_exist(string path)
     return file.good();
 }
 
-bool				copy_file(string src, string dest)
+void				copy_file(string src_path, string dest_path)
 {
 	fstream source;
 	fstream destination;
 
-	source.open(src, ios::binary);
-	destination.open(dest, ios::binary);
+	source.open(src_path, ios::binary);
+	destination.open(dest_path, ios::binary);
 
 	source.seekg(0, ios::end);
 	fstream::pos_type size = source.tellg();
@@ -107,23 +107,23 @@ bool				copy_file(string src, string dest)
 	return (true);
 }
 
-void				write_on_file(fstream &myfile, string text)
+void				write_on_file(fstream &file, string text)
 {
-	myfile << text << endl;
+	file << text << endl;
 }
 
 void				write_on_file(string path, string text)
 {
-	fstream myfile;
-	myfile.open(path.c_str(), ios::app);
-	myfile << text << endl;
-	myfile.close();
+	fstream file;
+	file.open(path.c_str(), ios::app);
+	file << text << endl;
+	file.close();
 }
 
 void				rewrite_on_file(string path, string text)
 {
-	fstream myfile;
-	myfile.open(path.c_str());
-	myfile << text << endl;
-	myfile.close();
+	fstream file;
+	file.open(path.c_str());
+	file << text << endl;
+	file.close();
 }

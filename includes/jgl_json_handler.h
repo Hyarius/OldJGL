@@ -4,8 +4,6 @@
 void json_add_line(fstream &file, size_t tab, string type_name, string symbol);
 void json_add_line(fstream &file, size_t tab, string text);
 
-void json_add_value(fstream &file, size_t tab, string value_name, string value_content);
-
 template <typename T>
 void json_add_vector(fstream &file, size_t tab, string type_name, vector<T> &vector, Funct p_funct, Data p_data)
 {
