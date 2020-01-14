@@ -5,9 +5,9 @@ La classe c_image_label est une classe permettant de creer une zone pouvant cont
 ### Methodes publiques :
 
 - `c_image_label(c_widget *p_parent = nullptr)`  
-...`c_image_label(string path, c_widget *p_parent = nullptr)`  
-...`c_image_label(c_image *image = nullptr, c_widget *p_parent = nullptr)`
-...`c_image_label(c_tileset *image, c_widget *p_parent = nullptr)`
+`c_image_label(string path, c_widget *p_parent = nullptr)`  
+`c_image_label(c_image *image = nullptr, c_widget *p_parent = nullptr)`  
+`c_image_label(c_tileset *image, c_widget *p_parent = nullptr)`
 	Construit un widget de type c_button en lui assignant ces interactions.  
 
 
