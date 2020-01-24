@@ -62,8 +62,6 @@ void c_window::render()
 
 		//MatrixID = glGetUniformLocation(g_application->program_color_model(), "MVP");
 
-		MVP_1 = camera->MVP();
-
 		static const GLfloat g_vertex_buffer_data[] = {
 			 0.0f, 0.0f, 0.0f,
 			 0.0f, 1.0f, 0.0f,
@@ -108,6 +106,8 @@ void c_window::render()
 
 	glUseProgram(g_application->program_color_model());
 
+	MVP_1 = camera->MVP();
+
 	glUniformMatrix4fv(g_application->matrix_colorID(), 1, GL_FALSE, &(MVP_1.value[0][0]));
 
 		// 1rst attribute buffer : vertices
@@ -139,6 +139,8 @@ void c_window::render()
 
 		glDisableVertexAttribArray(0);
 		glDisableVertexAttribArray(1);
+
+		camera->rotate_around_point(Vector3(0, 0, 0), Vector3(0, 2, 0));
 }
 
 bool c_window::handle_keyboard()

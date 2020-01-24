@@ -24,6 +24,7 @@ public:
 	c_camera(Vector3 p_pos = Vector3(), float p_fov = 45, float p_near = 0.01f, float p_far = 50.0f);
 
 	void look_at(Vector3 target);
+	void rotate_around_point(Vector3 point, Vector3 angle);
 	void rotate(float pitch, float yaw);
 	void move(Vector3 delta);
 	void place(Vector3 p_pos);

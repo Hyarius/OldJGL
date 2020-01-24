@@ -23,6 +23,27 @@ void c_camera::look_at(Vector3 target)
 	compute_view();
 }
 
+void c_camera::rotate_around_point(Vector3 target, Vector3 delta)
+{
+	Matrix translate;
+	Matrix axis_mat;
+	Matrix inv_axis_mat;
+	Matrix rotation;
+	Matrix inv_translate;
+	int			i;
+
+	translate = Matrix( T, target - _pos);
+	inv_translate = Matrix( T, (target - _pos).invert());
+	rotation = Matrix( R, delta.x, delta.y, delta.z);
+
+	_pos = inv_translate * _pos;
+	_pos = rotation * _pos;
+	_pos = translate * _pos;
+	_forward = rotation * _forward;
+	_right = rotation * _right;
+	_up = rotation * _up;
+}
+
 void c_camera::rotate(float pitch, float yaw)
 {
 
