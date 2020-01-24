@@ -64,7 +64,7 @@ $(NAME):		$(OBJ) $(INC_DIR) Makefile
 				@echo " DONE"
 
 $(OBJ_DIR)/%.o : %.cpp
-				@mkdir $(OBJ_DIR) 2> /dev/null || true
+				@mkdir -p $(OBJ_DIR)
 				@echo "Compiling $< ...\c"
 				@$(CC) $(CFLAGS) $(IFLAGS) -o $@ -c $<
 				@echo " DONE"
