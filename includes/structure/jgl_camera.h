@@ -9,6 +9,8 @@ private:
 	Matrix _model;
 	Matrix _view;
 	Matrix _projection;
+	Matrix _MVP;
+	Matrix _MVP_pos;
 
 	Vector3 _pos;
 	Vector3 _forward;
@@ -29,10 +31,11 @@ public:
 	void move(Vector3 delta);
 	void place(Vector3 p_pos);
 
+	void actualize();
 	void compute_model();
 	void compute_view();
 	void compute_projection();
-	void compute(){compute_model();compute_view();compute_projection();}
+	void compute(){actualize();compute_model();compute_view();compute_projection();bake();}
 
 	void set_viewport(c_viewport *p_viewport){_viewport = p_viewport;}
 	void set_yaw(float p_yaw){_yaw = p_yaw;}
@@ -51,7 +54,9 @@ public:
 	Matrix model(){return (_model);}
 	Matrix view(){return (_view);}
 	Matrix projection(){return (_projection);}
-	Matrix MVP(){compute();return (_projection * _view * _model);}
+	void bake(){_MVP = _projection * _view * _model;}
+	Matrix &MVP(Vector3 pos){_MVP_pos = Matrix(T, pos) * _projection * _view * _model;return (_MVP_pos);}
+	Matrix &MVP(){return (_MVP);}
 	Vector3 pos(){return (_pos);}
 	Vector3 forward(){return (_forward);}
 	Vector3 right(){return (_right);}

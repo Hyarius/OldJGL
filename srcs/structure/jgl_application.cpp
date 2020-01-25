@@ -55,7 +55,10 @@ c_application::c_application(string name, Vector2 p_size, Color p_color)
 	_program_sprite_model = load_shaders(texture_model_shader_vert, texture_model_shader_frag);
 
 	_matrix_colorID = glGetUniformLocation(_program_color_model, "MVP");
+	_pos_colorID = glGetUniformLocation(_program_color_model, "pos");
+
 	_matrix_textureID = glGetUniformLocation(_program_sprite_model, "MVP");
+	_pos_textureID = glGetUniformLocation(_program_sprite_model, "pos");
 
 	glGenTextures(1, &_textureID);
 	glBindTexture(GL_TEXTURE_2D, _textureID);
@@ -66,9 +69,10 @@ c_application::c_application(string name, Vector2 p_size, Color p_color)
 	glTexParameterf( GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST );
 
 	glEnable(GL_BLEND);
+	glFrontFace(GL_CW);
 	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 	glEnable(GL_DEPTH_TEST);
-	glDepthFunc(GL_LEQUAL);
+	glDepthFunc(GL_LESS);
 
 	glBindVertexArray(_vertex_array);
 	glBindBuffer(GL_ARRAY_BUFFER, _vertex_buffer);

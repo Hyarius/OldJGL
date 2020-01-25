@@ -2,35 +2,54 @@
 
 c_camera::c_camera(Vector3 p_pos, float p_fov, float p_near, float p_far)
 {
+	_pitch = 0;
+	_yaw = 0;
 	_pos = p_pos;
 
 	_fov = p_fov;
 	_near = p_near;
 	_far = p_far;
 
-	_forward = Vector3(1, 0, 0);
-	_right = Vector3(0, 0, 1);
-	_up = Vector3(0, 1, 0);
-
 	compute();
+}
+
+void c_camera::actualize()
+{
+	float tmp_pitch = degree_to_radius(_pitch);
+	float tmp_yaw = degree_to_radius(_yaw);
+	Vector3	xaxis;
+	Vector3	yaxis;
+	Vector3	zaxis;
+
+	zaxis = Vector3(
+		cos(tmp_pitch) * sin(tmp_yaw),
+		sin(tmp_pitch),
+		cos(tmp_pitch) * cos(tmp_yaw)).normalize();
+	xaxis = Vector3(
+		sin(tmp_yaw - 3.14f / 2.0f), 0.0f,
+		cos(tmp_yaw - 3.14f / 2.0f)).normalize();
+	yaxis = (xaxis.cross(zaxis)).normalize();
+	_forward = zaxis;
+	_right = xaxis;
+	_up = yaxis;
 }
 
 void c_camera::look_at(Vector3 target)
 {
-	_forward = (_pos - target).normalize();    // The "forward" vector.
-	_right = ((Vector3(0, 1, 0)).cross(_forward)).normalize();// The "right" vector.
-	_up = ((_forward).cross(_right)).normalize();
-	compute_view();
+	Vector3	r;
+
+	r = (_pos - target).normalize();
+	_yaw = radius_to_degree(atan2(r.z, -r.x)) - 90;
+	_pitch = radius_to_degree(atan2(r.y, sqrt(pow(r.x, 2) + pow(r.z, 2))));
+	_pitch = clamp_float(-89.0f, _pitch, 89.0f);
+	compute();
 }
 
 void c_camera::rotate_around_point(Vector3 target, Vector3 delta)
 {
 	Matrix translate;
-	Matrix axis_mat;
-	Matrix inv_axis_mat;
 	Matrix rotation;
 	Matrix inv_translate;
-	int			i;
 
 	translate = Matrix( T, target - _pos);
 	inv_translate = Matrix( T, (target - _pos).invert());
@@ -39,14 +58,15 @@ void c_camera::rotate_around_point(Vector3 target, Vector3 delta)
 	_pos = inv_translate * _pos;
 	_pos = rotation * _pos;
 	_pos = translate * _pos;
-	_forward = rotation * _forward;
-	_right = rotation * _right;
-	_up = rotation * _up;
+	compute();
 }
 
-void c_camera::rotate(float pitch, float yaw)
+void c_camera::rotate(float p_pitch, float p_yaw)
 {
-
+	_yaw += p_pitch;
+	_pitch += p_yaw;
+	_pitch = clamp_float(-89.0f, _pitch, 89.0f);
+	compute();
 }
 
 void c_camera::move(Vector3 delta)

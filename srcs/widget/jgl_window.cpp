@@ -4,11 +4,10 @@
 #include <glm/gtc/type_ptr.hpp>
 
 using namespace std;
-int type = 0;
-c_camera *camera;
-Matrix MVP_1;
+c_camera *camera = nullptr;
 GLuint vertexbuffer;
 GLuint colorbuffer;
+c_mesh *mesh;
 
 ostream& operator<<(ostream& os, glm::mat4 data)
 {
@@ -54,93 +53,6 @@ void c_window::set_color(Color p_color)
 void c_window::render()
 {
 	fill_rectangle(0, _viewport->area(), back, _viewport);
-
-	if (type == 0)
-	{
-		camera = new c_camera(Vector3(4, 3, 3), 45, 0.1f, 100.0f);
-		camera->look_at(Vector3(0, 0, 0));
-
-		//MatrixID = glGetUniformLocation(g_application->program_color_model(), "MVP");
-
-		static const GLfloat g_vertex_buffer_data[] = {
-			 0.0f, 0.0f, 0.0f,
-			 0.0f, 1.0f, 0.0f,
-			 0.0f, 0.0f, 1.0f,
-			 0.0f, 0.0f, 0.0f,
-			 0.0f, 1.0f, 0.0f,
-			 1.0f, 0.0f, 0.0f,
-			 0.0f, 0.0f, 0.0f,
-			 0.0f, 1.0f, 0.0f,
-			 -1.0f, 0.0f, 0.0f,
- 			 0.0f, 0.0f, 0.0f,
- 			 0.0f, 1.0f, 0.0f,
- 			 0.0f, 0.0f, -1.0f
-		};
-
-		static const GLfloat g_color_buffer_data[] = {
-			1.0f, 0.0f, 0.0f, 1.0f,
-			1.0f, 0.0f, 0.0f, 1.0f,
-			1.0f, 0.0f, 0.0f, 1.0f,
-			0.0f, 0.0f, 1.0f, 1.0f,
-			0.0f, 0.0f, 1.0f, 1.0f,
-			0.0f, 0.0f, 1.0f, 1.0f,
-			0.0f, 1.0f, 0.0f, 1.0f,
-			0.0f, 1.0f, 0.0f, 1.0f,
-			0.0f, 1.0f, 0.0f, 1.0f,
-			1.0f, 1.0f, 0.0f, 1.0f,
-			1.0f, 1.0f, 0.0f, 1.0f,
-			1.0f, 1.0f, 0.0f, 1.0f
-		};
-
-		glGenBuffers(1, &vertexbuffer);
-		glBindBuffer(GL_ARRAY_BUFFER, vertexbuffer);
-		glBufferData(GL_ARRAY_BUFFER, sizeof(g_vertex_buffer_data), g_vertex_buffer_data, GL_STATIC_DRAW);
-
-		glGenBuffers(1, &colorbuffer);
-		glBindBuffer(GL_ARRAY_BUFFER, colorbuffer);
-		glBufferData(GL_ARRAY_BUFFER, sizeof(g_color_buffer_data), g_color_buffer_data, GL_STATIC_DRAW);
-		type = 1;
-	}
-
-	glClear(GL_DEPTH_BUFFER_BIT);
-
-	glUseProgram(g_application->program_color_model());
-
-	MVP_1 = camera->MVP();
-
-	glUniformMatrix4fv(g_application->matrix_colorID(), 1, GL_FALSE, &(MVP_1.value[0][0]));
-
-		// 1rst attribute buffer : vertices
-		glEnableVertexAttribArray(0);
-		glBindBuffer(GL_ARRAY_BUFFER, vertexbuffer);
-		glVertexAttribPointer(
-			0,                  // attribute. No particular reason for 0, but must match the layout in the shader.
-			3,                  // size
-			GL_FLOAT,           // type
-			GL_FALSE,           // normalized?
-			0,                  // stride
-			(void*)0            // array buffer offset
-		);
-
-			// 1rst attribute buffer : vertices
-		glEnableVertexAttribArray(1);
-		glBindBuffer(GL_ARRAY_BUFFER, colorbuffer);
-		glVertexAttribPointer(
-			1,                  // attribute. No particular reason for 0, but must match the layout in the shader.
-			4,                  // size
-			GL_FLOAT,           // type
-			GL_FALSE,           // normalized?
-			0,                  // stride
-			(void*)0            // array buffer offset
-		);
-
-		// Draw the triangle !
-		glDrawArrays(GL_TRIANGLES, 0, 12*3); // 3 indices starting at 0 -> 1 triangle
-
-		glDisableVertexAttribArray(0);
-		glDisableVertexAttribArray(1);
-
-		camera->rotate_around_point(Vector3(0, 0, 0), Vector3(0, 2, 0));
 }
 
 bool c_window::handle_keyboard()

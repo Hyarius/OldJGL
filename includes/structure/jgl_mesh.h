@@ -8,7 +8,7 @@ struct Face
 	int index_uvs[3];
 	Vector3 normale;
 
-	Face(vector<int> p_index_vertices, vector<int> p_index_uvs, Color p_color = Color(190, 190, 190))
+	Face(int p_index_vertices[3], int p_index_uvs[3], Color p_color = Color(190, 190, 190))
 	{
 		for (size_t i = 0; i < 3; i++)
 		{
@@ -22,6 +22,11 @@ struct Face
 class c_mesh
 {
 private:
+	GLuint _vertex_buffer;
+	GLuint _color_buffer;
+	GLuint _uv_buffer;
+	GLuint _alpha_buffer;
+
 	Vector3 _pos;
 	Vector3 _size;
 
@@ -54,6 +59,7 @@ public:
 
 	vector<Vector3> &vertices(){return (_vertices);}
 	vector<Vector2> &uvs(){return (_uvs);}
+	vector<Face> &faces(){return (_faces);}
 
 	void add_point(Vector3 p_point);
 	void add_uv(Vector2 p_uv);
@@ -70,7 +76,8 @@ public:
 	void move(Vector3 delta);
 	void place(Vector3 p_pos);
 
-	void draw(c_camera *camera, c_viewport *viewport = nullptr);
+	void render(Matrix &MVP);
 };
 
+c_mesh *primitive_cube(Vector3 pos, Vector3 size, Color color);
 #endif

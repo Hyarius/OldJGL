@@ -70,13 +70,16 @@ string color_model_shader_vert = {
 	layout(location = 0) in vec3 vertexPosition_modelspace; \
 	layout(location = 1) in vec4 vertexColor; \
 	\
+	vec3 tmp_pos; \
 	out vec4 fragmentColor; \
 	\
 	uniform mat4 MVP; \
+	uniform vec3 pos; \
 	\
 	void main() \
 	{\
-		gl_Position =  MVP * vec4(vertexPosition_modelspace,1); \
+		tmp_pos = vertexPosition_modelspace + pos;\
+		gl_Position =  MVP * vec4(tmp_pos, 1); \
 		fragmentColor = vertexColor;\
 	}"
 };
@@ -107,9 +110,11 @@ string texture_model_shader_vert = {
 	out float ALPHA; \
 	\
 	uniform mat4 MVP; \
+	uniform vec3 pos; \
+	\
 	void main() \
 	{ \
-		gl_Position =  MVP * vec4(vertexPosition_modelspace,1); \
+		gl_Position =  MVP * vec4(vertexPosition_modelspace + pos,1); \
 		UV = vertexUV; \
 		ALPHA = vertexA; \
 	}"

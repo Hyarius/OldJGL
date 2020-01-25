@@ -37,7 +37,10 @@ private:
 	GLuint _alpha_buffer;
 
 	GLuint _matrix_colorID;
+	GLuint _pos_colorID;
+
 	GLuint _matrix_textureID;
+	GLuint _pos_textureID;
 
 	GLuint _texture_textureID;
 	GLuint _textureID;
@@ -65,7 +68,9 @@ public:
 	GLuint alpha_buffer(){return (_alpha_buffer);}
 	GLuint textureID(){return (_textureID);}
 	GLuint matrix_colorID(){return (_matrix_colorID);}
+	GLuint pos_colorID(){return (_pos_colorID);}
 	GLuint matrix_textureID(){return (_matrix_textureID);}
+	GLuint pos_textureID(){return (_pos_textureID);}
 	class c_widget *central_widget(){return ((c_widget *)_central_widget);}
 	bool play(){return (_play);}
 	SDL_Event *event(){return (&_event);}
