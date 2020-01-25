@@ -3,7 +3,7 @@
 c_mesh *primitive_cube(Vector3 pos, Vector3 size, Color color)
 {
 	c_mesh *result;
-	Vector3 delta = Vector3(0.5f, 0.0f, 0.5f);
+	Vector3 delta = Vector3(size.x / 2.0f, 0.0f, size.z / 2.0f);
 
 	result = new c_mesh(pos);
 
@@ -69,8 +69,8 @@ c_mesh *primitive_cube(Vector3 pos, Vector3 size, Color color)
 	// set_t_face_uvs(&tmp_face1, 8, 4, 7);
 	// set_t_face_vertices(&tmp_face2, 0, 3, 4);
 	// set_t_face_uvs(&tmp_face2, 3, 7, 4);
-	result->add_face(Face((int []){7, 4, 3}, (int []){-1, -1, -1}, Color(0, 255, 255)));
-	result->add_face(Face((int []){0, 3, 4}, (int []){-1, -1, -1}, Color(0, 255, 255)));
+	result->add_face(Face((int []){7, 4, 3}, (int []){8, 4, 7}, Color(0, 255, 255)));
+	result->add_face(Face((int []){0, 3, 4}, (int []){3, 7, 4}, Color(0, 255, 255)));
 
 	result->bake();
 

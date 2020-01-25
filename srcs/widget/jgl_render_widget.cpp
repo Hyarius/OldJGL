@@ -2,13 +2,9 @@
 
 c_render_widget::c_render_widget(c_widget *p_parent) : c_widget(p_parent)
 {
-	_camera = new c_camera(Vector3(1.0f, 3.5f, 3.0f), 45, 0.1f, 100.0f);
+	_camera = new c_camera(Vector3(10.0f, 10.5f, 10.0f), 45, 0.1f, 100.0f);
 	_camera->look_at(Vector3(0, 0, 0));
 	_meshes.clear();
-	_meshes.push_back(primitive_cube(Vector3(0, 0, 0), Vector3(1, 1, 1), Color(255, 255, 255)));
-	_meshes.push_back(primitive_cube(Vector3(3, 0, 0), Vector3(1, 1, 1), Color(255, 255, 255)));
-	_meshes.push_back(primitive_cube(Vector3(-3, 0, 0), Vector3(1, 1, 1), Color(255, 255, 255)));
-	_meshes.push_back(primitive_cube(Vector3(0, 2, 0), Vector3(1, 1, 1), Color(255, 255, 255)));
 }
 
 void c_render_widget::set_geometry_imp(Vector2 p_anchor, Vector2 p_area)
@@ -40,7 +36,4 @@ void c_render_widget::render()
 	{
 		_meshes[i]->render(MVP);
 	}
-
-	_camera->rotate_around_point(_meshes[0]->pos(), Vector3(0.0f, 0.5f, 0.0f));
-	_camera->look_at(Vector3(0, 0, 0));
 }
