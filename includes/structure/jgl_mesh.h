@@ -25,6 +25,7 @@ private:
 	GLuint _vertex_buffer;
 	GLuint _color_buffer;
 	GLuint _uv_buffer;
+	GLuint _normale_buffer;
 	GLuint _alpha_buffer;
 
 	Vector3 _pos;
@@ -39,6 +40,8 @@ private:
 
 	vector<Vector3>	_vertices;
 	vector<Vector2>	_uvs;
+
+	float _transparency;
 
 	vector<Vector3>	_baked_vertices;
 	vector<Vector2>	_baked_uvs;
@@ -76,7 +79,9 @@ public:
 	void move(Vector3 delta);
 	void place(Vector3 p_pos);
 
-	void render(Matrix &MVP);
+	void render_color(c_camera *camera);
+	void render_texture(c_camera *camera);
+	void render(c_camera *camera);
 };
 
 c_mesh *primitive_cube(Vector3 pos, Vector3 size, Color color);

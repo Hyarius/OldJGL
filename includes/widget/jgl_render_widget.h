@@ -13,7 +13,7 @@ private:
 public:
 	c_render_widget(c_widget *p_parent = nullptr);
 
-	void add_mesh(c_mesh *p_mesh){_meshes.push_back(p_mesh);}
+	c_mesh *add_mesh(c_mesh *p_mesh){_meshes.push_back(p_mesh);return (_meshes.back());}
 
 	void set_geometry_imp(Vector2 p_anchor, Vector2 p_area);
 	void render();

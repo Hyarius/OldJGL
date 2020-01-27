@@ -18,16 +18,8 @@ void			draw_image(Vector2 p_tl, Vector2 p_tr, Vector2 p_dl, Vector2 p_dr, float 
 		p_uv_dr,
 		p_uv_tr
 	};
-	float alphas[] = {
-		p_alpha,
-		p_alpha,
-		p_alpha,
-		p_alpha,
-		p_alpha,
-		p_alpha
-	};
 
-	draw_triangle_texture(points, uvs, alphas, 2);
+	draw_triangle_texture(points, uvs, p_alpha, 2);
 }
 
 void			draw_image(Vector2 coord, Vector2 size, float p_alpha,

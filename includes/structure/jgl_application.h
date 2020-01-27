@@ -25,25 +25,30 @@ private:
 	Vector2 _size;
 
 	GLuint _program_color;
-	GLuint _program_sprite;
+	GLuint _program_texture;
 	GLuint _program_color_model;
-	GLuint _program_sprite_model;
+	GLuint _program_texture_model;
 
 	GLuint _vertex_array;
 
 	GLuint _vertex_buffer;
 	GLuint _color_buffer;
 	GLuint _texture_buffer;
-	GLuint _alpha_buffer;
 
 	GLuint _matrix_colorID;
 	GLuint _pos_colorID;
+	GLuint _dir_light_colorID;
+	GLuint _angle_colorID;
 
 	GLuint _matrix_textureID;
 	GLuint _pos_textureID;
-
+	GLuint _angle_textureID;
+	GLuint _dir_light_textureID;
 	GLuint _texture_textureID;
+	GLuint _alpha_textureID;
+
 	GLuint _textureID;
+	GLuint _alphaID;
 
 	class c_window *_central_widget;
 	bool _play;
@@ -58,19 +63,29 @@ public:
 	c_viewport *active_viewport(){return (_active_viewport);}
 	Vector2 size(){return (_size);}
 	GLuint program_color(){return (_program_color);}
-	GLuint program_sprite(){return (_program_sprite);}
+	GLuint program_texture(){return (_program_texture);}
 	GLuint program_color_model(){return (_program_color_model);}
-	GLuint program_sprite_model(){return (_program_sprite_model);}
+	GLuint program_texture_model(){return (_program_texture_model);}
 	GLuint vertex_array(){return (_vertex_array);}
 	GLuint vertex_buffer(){return (_vertex_buffer);}
 	GLuint color_buffer(){return (_color_buffer);}
 	GLuint texture_buffer(){return (_texture_buffer);}
-	GLuint alpha_buffer(){return (_alpha_buffer);}
+
 	GLuint textureID(){return (_textureID);}
+	GLuint alphaID(){return (_alphaID);}
+
 	GLuint matrix_colorID(){return (_matrix_colorID);}
 	GLuint pos_colorID(){return (_pos_colorID);}
+	GLuint dir_light_colorID(){return (_dir_light_colorID);}
+	GLuint angle_colorID(){return (_angle_colorID);}
+
 	GLuint matrix_textureID(){return (_matrix_textureID);}
 	GLuint pos_textureID(){return (_pos_textureID);}
+	GLuint angle_textureID(){return (_angle_textureID);}
+	GLuint dir_light_textureID(){return (_dir_light_textureID);}
+	GLuint texture_textureID(){return (_texture_textureID);}
+	GLuint alpha_textureID(){return (_alpha_textureID);}
+
 	class c_widget *central_widget(){return ((c_widget *)_central_widget);}
 	bool play(){return (_play);}
 	SDL_Event *event(){return (&_event);}

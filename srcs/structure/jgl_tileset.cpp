@@ -90,16 +90,8 @@ void c_tileset::draw(int id, Vector2 pos, Vector2 size, float p_alpha, c_viewpor
 		Uv(sprite_coord + _unit),
 		Uv(sprite_coord + Vector2(_unit.x, 0.0f))
 	};
-	float alphas[] = {
-		p_alpha,
-		p_alpha,
-		p_alpha,
-		p_alpha,
-		p_alpha,
-		p_alpha
-	};
 
-	draw_triangle_texture(points, uvs, alphas, 2);
+	draw_triangle_texture(points, uvs, p_alpha, 2);
 }
 
 void c_tileset::draw_centred(int id, Vector2 pos, Vector2 size, float p_alpha, c_viewport *viewport)

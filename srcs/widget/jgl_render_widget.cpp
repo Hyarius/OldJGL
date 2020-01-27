@@ -34,6 +34,9 @@ void c_render_widget::render()
 
 	for (size_t i = 0; i < _meshes.size(); i++)
 	{
-		_meshes[i]->render(MVP);
+		_meshes[i]->render(_camera);
 	}
+
+	_camera->rotate_around_point(_meshes[0]->pos(), Vector3(0, 1, 0));
+	_camera->look_at(Vector3(0, 0, 0));
 }

@@ -12,6 +12,8 @@ private:
 	Matrix _MVP;
 	Matrix _MVP_pos;
 
+	Vector3 _dir_light;
+
 	Vector3 _pos;
 	Vector3 _forward;
 	Vector3 _right;
@@ -57,6 +59,7 @@ public:
 	void bake(){_MVP = _projection * _view * _model;}
 	Matrix &MVP(Vector3 pos){_MVP_pos = Matrix(T, pos) * _projection * _view * _model;return (_MVP_pos);}
 	Matrix &MVP(){return (_MVP);}
+	Vector3 dir_light(){return (_dir_light);}
 	Vector3 pos(){return (_pos);}
 	Vector3 forward(){return (_forward);}
 	Vector3 right(){return (_right);}

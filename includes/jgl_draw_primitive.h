@@ -12,7 +12,7 @@ void draw_pixel_color(Pixel points, Color colors, size_t nb = 1);
 void draw_pixel_color(Pixel *points, Color *colors, size_t nb = 1);
 void draw_line_color(Pixel *points, Color *colors, size_t nb = 1);
 void draw_triangle_color(Pixel *points, Color *colors, size_t nb = 1);
-void draw_triangle_texture(Pixel *points, Uv *uvs, float *alpha, size_t nb = 1);
+void draw_triangle_texture(Pixel *points, Uv *uvs, float alpha, size_t nb = 1);
 void fill_triangle_color(Pixel *points, Color *colors, size_t nb = 1);
 
 vector<Vector2> calc_point(int width);

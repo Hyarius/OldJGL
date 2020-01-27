@@ -6,6 +6,9 @@ c_camera::c_camera(Vector3 p_pos, float p_fov, float p_near, float p_far)
 	_yaw = 0;
 	_pos = p_pos;
 
+	_dir_light = Vector3(0.35f, 1.8f, 0.65f);
+	_dir_light = _dir_light.normalize();
+
 	_fov = p_fov;
 	_near = p_near;
 	_far = p_far;
@@ -47,17 +50,14 @@ void c_camera::look_at(Vector3 target)
 
 void c_camera::rotate_around_point(Vector3 target, Vector3 delta)
 {
-	Matrix translate;
+	Vector3 tmp;
 	Matrix rotation;
-	Matrix inv_translate;
 
-	translate = Matrix( T, target - _pos);
-	inv_translate = Matrix( T, (target - _pos).invert());
 	rotation = Matrix( R, delta.x, delta.y, delta.z);
 
-	_pos = inv_translate * _pos;
-	_pos = rotation * _pos;
-	_pos = translate * _pos;
+	tmp = _pos - target;
+	tmp = rotation * tmp;
+	_pos = tmp + target;
 	compute();
 }
 

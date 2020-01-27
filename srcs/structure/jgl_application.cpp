@@ -47,18 +47,24 @@ c_application::c_application(string name, Vector2 p_size, Color p_color)
 	glGenBuffers(1, &_vertex_buffer);
 	glGenBuffers(1, &_color_buffer);
 	glGenBuffers(1, &_texture_buffer);
-	glGenBuffers(1, &_alpha_buffer);
 
 	_program_color = load_shaders(color_shader_vert, color_shader_frag);
-	_program_sprite = load_shaders(texture_shader_vert, texture_shader_frag);
+	_program_texture = load_shaders(texture_shader_vert, texture_shader_frag);
 	_program_color_model = load_shaders(color_model_shader_vert, color_model_shader_frag);
-	_program_sprite_model = load_shaders(texture_model_shader_vert, texture_model_shader_frag);
+	_program_texture_model = load_shaders(texture_model_shader_vert, texture_model_shader_frag);
+
+	_textureID = glGetUniformLocation(_program_texture, "textureID");
+	_alphaID = glGetUniformLocation(_program_texture, "alpha_value");
 
 	_matrix_colorID = glGetUniformLocation(_program_color_model, "MVP");
 	_pos_colorID = glGetUniformLocation(_program_color_model, "pos");
+	_dir_light_colorID = glGetUniformLocation(_program_color_model, "dir_light");
 
-	_matrix_textureID = glGetUniformLocation(_program_sprite_model, "MVP");
-	_pos_textureID = glGetUniformLocation(_program_sprite_model, "pos");
+	_matrix_textureID = glGetUniformLocation(_program_texture_model, "MVP");
+	_pos_textureID = glGetUniformLocation(_program_texture_model, "pos");
+	_alpha_textureID = glGetUniformLocation(_program_texture_model, "alpha_value");
+	_texture_textureID = glGetUniformLocation(_program_texture_model, "textureID");
+	//_angle_textureID = glGetUniformLocation(_program_texture_model, "angle");
 
 	glGenTextures(1, &_textureID);
 	glBindTexture(GL_TEXTURE_2D, _textureID);
@@ -82,9 +88,6 @@ c_application::c_application(string name, Vector2 p_size, Color p_color)
 	glBufferData(GL_ARRAY_BUFFER, sizeof(GLfloat) * _size.x * _size.y \
 										* 4, NULL, GL_DYNAMIC_DRAW);
 	glBindBuffer(GL_ARRAY_BUFFER, _texture_buffer);
-	glBufferData(GL_ARRAY_BUFFER, sizeof(GLfloat) * _size.x * _size.y \
-										* 4, NULL, GL_DYNAMIC_DRAW);
-	glBindBuffer(GL_ARRAY_BUFFER, _alpha_buffer);
 	glBufferData(GL_ARRAY_BUFFER, sizeof(GLfloat) * _size.x * _size.y \
 										* 4, NULL, GL_DYNAMIC_DRAW);
 
