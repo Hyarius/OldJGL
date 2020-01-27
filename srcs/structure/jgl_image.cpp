@@ -71,12 +71,12 @@ void c_image::save(string file_path)
 	// https://www.codeproject.com/Questions/655714/How-to-write-openGl-offscreen-data-in-to-JPG-image
 }
 
-void c_image::draw(Vector2 p_pos, Vector2 p_size, c_viewport *viewport)
+void c_image::draw(Vector2 p_pos, Vector2 p_size, float p_alpha, c_viewport *viewport)
 {
 	if (_surface != NULL)
 	{
 		glBindTexture(GL_TEXTURE_2D, _texture_id);
-		draw_image(p_pos, p_size);
+		draw_image(p_pos, p_size, p_alpha);
 	}
 	else
 	{

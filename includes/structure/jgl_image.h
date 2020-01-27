@@ -22,7 +22,7 @@ public:
 	c_image(size_t width, size_t height, Color p_color);
 	c_image(SDL_Surface *p_surface);
 
-	void draw(Vector2 p_pos, Vector2 p_size, c_viewport *viewport = nullptr);
+	void draw(Vector2 p_pos, Vector2 p_size, float p_alpha = 1.0f, c_viewport *viewport = nullptr);
 	void upload_texture();
 	void save(string file_path);
 

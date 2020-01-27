@@ -21,6 +21,7 @@ struct Matrix
 	Matrix(Y_ROTATE, float angle);
 	Matrix(Z_ROTATE, float angle);
 	Matrix(ROTATION, float x, float y, float z);
+	Matrix(ROTATION, Vector3 angle){*this = Matrix(R, angle.x, angle.y, angle.z);}
 	Matrix(TRANSLATION, float t_x, float t_y, float t_z);
 	Matrix(TRANSLATION, Vector3 delta);
 	Matrix(SCALE, float t_x, float t_y, float t_z);

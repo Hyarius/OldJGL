@@ -3,7 +3,7 @@
 c_mesh *primitive_cube(Vector3 pos, Vector3 size, Color color)
 {
 	c_mesh *result;
-	Vector3 delta = Vector3(size.x / 2.0f, 0.0f, size.z / 2.0f);
+	Vector3 delta = Vector3(size.x / 2.0f, size.y / 2.0f, size.z / 2.0f);
 
 	result = new c_mesh(pos);
 

@@ -125,7 +125,7 @@ int				draw_text(string text, Vector2 coord, int size, int outline, text_color c
 	{
 		rel_coord = Vector2(coord.x + delta, coord.y);
 		image = get_char(text[i], size, outline, color, style);
-		image->draw(rel_coord, image->size(), viewport);
+		image->draw(rel_coord, image->size(), 1.0f, viewport);
 		delta += image->size().x;
 
 		i++;

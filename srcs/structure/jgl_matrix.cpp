@@ -94,7 +94,7 @@ Matrix			Matrix::operator * (Matrix p_matrix)
 {
 	int		i;
 	int		j;
-	Matrix	m = Matrix(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
+	Matrix	m = Matrix();
 
 	i = 0;
 	while (i < 4)
@@ -112,29 +112,6 @@ Matrix			Matrix::operator * (Matrix p_matrix)
 	}
 	return (m);
 }
-
-// Matrix			Matrix::operator * (Matrix p_matrix)
-// {
-// 	int		i;
-// 	int		j;
-// 	Matrix	m = Matrix(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
-//
-// 	i = 0;
-// 	while (i < 4)
-// 	{
-// 		j = 0;
-// 		while (j < 4)
-// 		{
-// 			m.value[i][j] = (this->value[0][i] * p_matrix.value[j][0]) \
-// 						+ (this->value[1][i] * p_matrix.value[j][1]) \
-// 						+ (this->value[2][i] * p_matrix.value[j][2]) \
-// 						+ (this->value[3][i] * p_matrix.value[j][3]);
-// 			j++;
-// 		}
-// 		i++;
-// 	}
-// 	return (m);
-// }
 
 Vector3		Matrix::operator * (Vector3 vertex)
 {

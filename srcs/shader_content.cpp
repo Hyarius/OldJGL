@@ -63,27 +63,26 @@ string texture_shader_frag = {
 	}"
 };
 
-
-
-
 string color_model_shader_vert = {
 	"#version 330 core \
 	layout(location = 0) in vec3 vertexPosition_modelspace; \
 	layout(location = 1) in vec4 vertexColor; \
 	layout(location = 2) in vec3 normale; \
 	\
-	vec3 tmp_pos; \
+	vec4 tmp_pos; \
 	out vec4 fragmentColor; \
-	out float value;\
+	out float value; \
 	\
 	uniform mat4 MVP; \
 	uniform vec3 pos; \
+	uniform mat4 rot; \
 	uniform vec3 dir_light; \
 	\
 	void main() \
 	{\
-		tmp_pos = vertexPosition_modelspace + pos;\
-		gl_Position =  MVP * vec4(tmp_pos, 1); \
+		tmp_pos = rot * vec4(vertexPosition_modelspace, 1); \
+		tmp_pos = tmp_pos + vec4(pos, 1);\
+		gl_Position =  MVP * tmp_pos; \
 		fragmentColor = vertexColor;\
 		value = (dot(normale, dir_light) + 1) / 2.0f;\
 	}"
@@ -115,27 +114,27 @@ string texture_model_shader_vert = {
 	layout(location = 1) in vec2 vertexUV; \
 	layout(location = 2) in vec3 normale; \
 	\
-	vec3 tmp_pos; \
+	vec4 tmp_pos; \
 	out vec2 UV;\
 	out float value;\
 	out float alpha;\
 	\
 	uniform mat4 MVP; \
 	uniform vec3 pos; \
+	uniform mat4 rot; \
 	uniform vec3 dir_light; \
 	uniform float alpha_value; \
 	\
 	void main() \
 	{\
-		tmp_pos = vertexPosition_modelspace + pos;\
-		gl_Position =  MVP * vec4(tmp_pos, 1); \
-		value = 1;\
+		tmp_pos = rot * vec4(vertexPosition_modelspace, 1); \
+		tmp_pos = tmp_pos + vec4(pos, 1);\
+		gl_Position =  MVP * tmp_pos; \
+		value = (dot(normale, dir_light) + 1) / 2.0f;\
 		UV = vertexUV;\
 		alpha = alpha_value;\
 	}"
 };
-
-//(dot(normale, dir_light) + 1) / 2.0f;\
 
 string texture_model_shader_frag = {
 	"#version 330 core \
@@ -150,9 +149,9 @@ string texture_model_shader_frag = {
 	void main() \
 	{ \
 		color = texture( textureID, UV ).rgba; \
-		color.r = color.r * value;\
-		color.g = color.g * value;\
-		color.b = color.b * value;\
-		color.a = color.a * alpha;\
+		color.r = color.r;\
+		color.g = color.g;\
+		color.b = color.b;\
+		color.a = 1.0f;\
 	}"
 };

@@ -32,6 +32,7 @@ private:
 	Vector3 _size;
 
 	Vector3 _rotation;
+	Matrix _rot_matrix;
 	Vector3 _forward;
 	Vector3 _right;
 	Vector3 _up;
@@ -53,6 +54,7 @@ private:
 public:
 	c_mesh(Vector3 p_pos);
 
+	float transparency(){return (_transparency);}
 	Vector3 pos(){return (_pos);}
 	Vector3 size(){return (_size);}
 	Vector3 rotation(){return (_rotation);}
@@ -68,16 +70,18 @@ public:
 	void add_uv(Vector2 p_uv);
 	void add_face(Face p_face);
 	void set_texture(c_image *p_texture);
+	void set_transparency(float p_transparency){_transparency = p_transparency;}
 	void compute_normales();
 	void compute_axis();
 
+	void bake_normales();
 	void bake();
 
 	void look_at(Vector3 target);
 	void rotate_around_point(Vector3 target, Vector3 delta);
 	void rotate(Vector3 delta);
-	void move(Vector3 delta);
-	void place(Vector3 p_pos);
+	void move(Vector3 delta){_pos += delta;}
+	void place(Vector3 p_pos){_pos = p_pos;}
 
 	void render_color(c_camera *camera);
 	void render_texture(c_camera *camera);

@@ -38,13 +38,14 @@ private:
 	GLuint _matrix_colorID;
 	GLuint _pos_colorID;
 	GLuint _dir_light_colorID;
-	GLuint _angle_colorID;
+	GLuint _rot_colorID;
 
 	GLuint _matrix_textureID;
 	GLuint _pos_textureID;
-	GLuint _angle_textureID;
+	GLuint _rot_textureID;
 	GLuint _dir_light_textureID;
 	GLuint _texture_textureID;
+
 	GLuint _alpha_textureID;
 
 	GLuint _textureID;
@@ -77,11 +78,11 @@ public:
 	GLuint matrix_colorID(){return (_matrix_colorID);}
 	GLuint pos_colorID(){return (_pos_colorID);}
 	GLuint dir_light_colorID(){return (_dir_light_colorID);}
-	GLuint angle_colorID(){return (_angle_colorID);}
+	GLuint rot_colorID(){return (_rot_colorID);}
 
 	GLuint matrix_textureID(){return (_matrix_textureID);}
 	GLuint pos_textureID(){return (_pos_textureID);}
-	GLuint angle_textureID(){return (_angle_textureID);}
+	GLuint rot_textureID(){return (_rot_textureID);}
 	GLuint dir_light_textureID(){return (_dir_light_textureID);}
 	GLuint texture_textureID(){return (_texture_textureID);}
 	GLuint alpha_textureID(){return (_alpha_textureID);}

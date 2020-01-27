@@ -58,13 +58,14 @@ c_application::c_application(string name, Vector2 p_size, Color p_color)
 
 	_matrix_colorID = glGetUniformLocation(_program_color_model, "MVP");
 	_pos_colorID = glGetUniformLocation(_program_color_model, "pos");
+	_rot_colorID = glGetUniformLocation(_program_color_model, "rot");
 	_dir_light_colorID = glGetUniformLocation(_program_color_model, "dir_light");
 
 	_matrix_textureID = glGetUniformLocation(_program_texture_model, "MVP");
 	_pos_textureID = glGetUniformLocation(_program_texture_model, "pos");
+	_rot_textureID = glGetUniformLocation(_program_texture_model, "rot");
 	_alpha_textureID = glGetUniformLocation(_program_texture_model, "alpha_value");
 	_texture_textureID = glGetUniformLocation(_program_texture_model, "textureID");
-	//_angle_textureID = glGetUniformLocation(_program_texture_model, "angle");
 
 	glGenTextures(1, &_textureID);
 	glBindTexture(GL_TEXTURE_2D, _textureID);
@@ -74,11 +75,11 @@ c_application::c_application(string name, Vector2 p_size, Color p_color)
 	glTexParameterf( GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST );
 	glTexParameterf( GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST );
 
-	glEnable(GL_BLEND);
-	glFrontFace(GL_CW);
-	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 	glEnable(GL_DEPTH_TEST);
-	glDepthFunc(GL_LESS);
+	glDepthFunc(GL_LEQUAL);
+	glEnable(GL_BLEND);
+	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+	glFrontFace(GL_CW);
 
 	glBindVertexArray(_vertex_array);
 	glBindBuffer(GL_ARRAY_BUFFER, _vertex_buffer);

@@ -51,15 +51,13 @@ void c_mesh::set_texture(c_image *p_texture)
 
 void c_mesh::compute_normales()
 {
-	Vector3 a;
 	Vector3 b;
 	Vector3 c;
 
 	for (size_t i = 0; i < _faces.size(); i++)
 	{
-		a = _vertices[_faces[i].index_vertices[0]];
-		b = _vertices[_faces[i].index_vertices[1]] - _vertices[_faces[i].index_vertices[0]];
-		c = _vertices[_faces[i].index_vertices[2]] - _vertices[_faces[i].index_vertices[0]];
+		b = _rot_matrix * (_vertices[_faces[i].index_vertices[1]] - _vertices[_faces[i].index_vertices[0]]);
+		c = _rot_matrix * (_vertices[_faces[i].index_vertices[2]] - _vertices[_faces[i].index_vertices[0]]);
 		_faces[i].normale = (b.cross(c)).normalize();
 	}
 }
@@ -69,6 +67,10 @@ void c_mesh::compute_axis()
 	float tmp_yaw = degree_to_radius(_rotation.y);
 	float tmp_pitch = degree_to_radius(_rotation.z);
 
+	_rot_matrix = Matrix(R, _rotation);
+	_rot_matrix.value[3][3] = 1.0f;
+	compute_normales();
+	bake_normales();
 	_forward = (Vector3( sin(tmp_yaw - 3.14f / 2.0f), 0.0f, cos(tmp_yaw - 3.14f / 2.0f))).normalize();
 	_right = (Vector3(cos(tmp_pitch) * sin(tmp_yaw), sin(tmp_pitch), cos(tmp_pitch) * cos(tmp_yaw)) ).normalize();
 	_up = ((_forward).cross(_right)).normalize();
@@ -83,6 +85,7 @@ void c_mesh::look_at(Vector3 target)
 	_rotation.z = radius_to_degree(atan2(result.y,
 				sqrt(result.x * result.x + result.z * result.z)));
 	_rotation.z = clamp_float(-89, _rotation.z, 89);
+	compute_axis();
 	bake();
 }
 
@@ -102,18 +105,20 @@ void c_mesh::rotate_around_point(Vector3 target, Vector3 delta)
 void c_mesh::rotate(Vector3 delta)
 {
 	_rotation += delta;
-
 	compute_axis();
+	bake_normales();
 }
 
-void c_mesh::move(Vector3 delta)
+void c_mesh::bake_normales()
 {
-	_pos += delta;
-}
+	_baked_normales.clear();
 
-void c_mesh::place(Vector3 p_pos)
-{
-	_pos = p_pos;
+	for (size_t i = 0; i < _faces.size(); i++)
+		for (size_t j = 0; j < 3; j++)
+			_baked_normales.push_back(_faces[i].normale);
+
+	glBindBuffer(GL_ARRAY_BUFFER, _normale_buffer);
+	glBufferData(GL_ARRAY_BUFFER, _baked_normales.size() * 3 * sizeof(float), static_cast<float *>(&(_baked_normales[0].x)), GL_STATIC_DRAW);
 }
 
 void c_mesh::bake()
@@ -123,7 +128,6 @@ void c_mesh::bake()
 	_baked_vertices.clear();
 	_baked_uvs.clear();
 	_baked_colors.clear();
-	_baked_normales.clear();
 
 	for (size_t i = 0; i < _faces.size(); i++)
 	{
@@ -138,9 +142,10 @@ void c_mesh::bake()
 			else
 				_baked_uvs.push_back(Vector2(-1, -1));
 			_baked_colors.push_back(_faces[i].color);
-			_baked_normales.push_back(_faces[i].normale);
 		}
 	}
+
+	bake_normales();
 
 	glBindBuffer(GL_ARRAY_BUFFER, _vertex_buffer);
 	glBufferData(GL_ARRAY_BUFFER, _baked_vertices.size() * 3 * sizeof(float), static_cast<float *>(&(_baked_vertices[0].x)), GL_STATIC_DRAW);
@@ -150,9 +155,6 @@ void c_mesh::bake()
 
 	glBindBuffer(GL_ARRAY_BUFFER, _uv_buffer);
 	glBufferData(GL_ARRAY_BUFFER, _baked_uvs.size() * 2 * sizeof(float), static_cast<float *>(&(_baked_uvs[0].x)), GL_STATIC_DRAW);
-
-	glBindBuffer(GL_ARRAY_BUFFER, _normale_buffer);
-	glBufferData(GL_ARRAY_BUFFER, _baked_normales.size() * 3 * sizeof(float), static_cast<float *>(&(_baked_normales[0].x)), GL_STATIC_DRAW);
 }
 
 
@@ -168,7 +170,7 @@ void c_mesh::render_color(c_camera *camera)
 
 	glUniformMatrix4fv(g_application->matrix_colorID(), 1, GL_FALSE, &(camera->MVP().value[0][0]));
 	glUniform3f(g_application->pos_colorID(), _pos.x, _pos.y, _pos.z);
-	glUniform3f(g_application->angle_colorID(), _rotation.x, _rotation.y, _rotation.z);
+	glUniformMatrix4fv(g_application->rot_colorID(), 1, GL_FALSE, &(_rot_matrix.value[0][0]));
 	glUniform3f(g_application->dir_light_textureID(), camera->dir_light().x, camera->dir_light().y, camera->dir_light().z);
 
 	// 1rst attribute buffer : vertices
@@ -195,6 +197,7 @@ void c_mesh::render_color(c_camera *camera)
 
 	glDisableVertexAttribArray(0);
 	glDisableVertexAttribArray(1);
+	glDisableVertexAttribArray(2);
 }
 
 void c_mesh::render_texture(c_camera *camera)
@@ -208,7 +211,7 @@ void c_mesh::render_texture(c_camera *camera)
 
 	glUniformMatrix4fv(g_application->matrix_textureID(), 1, GL_FALSE, &(camera->MVP().value[0][0]));
 	glUniform3f(g_application->pos_textureID(), _pos.x, _pos.y, _pos.z);
-	glUniform3f(g_application->angle_textureID(), _rotation.x, _rotation.y, _rotation.z);
+	glUniformMatrix4fv(g_application->rot_textureID(), 1, GL_FALSE, &(_rot_matrix.value[0][0]));
 	glUniform3f(g_application->dir_light_textureID(), camera->dir_light().x, camera->dir_light().y, camera->dir_light().z);
 	glUniform1f(g_application->alpha_textureID(), _transparency);
 
