@@ -18,5 +18,7 @@ void Keyboard::reset_key(int scan_code)
 	((Uint8	*)state)[scan_code] = 0;
 }
 
-key_state get_key(int scan_code){return (g_keyboard->get_key(scan_code));}
-void reset_key(int scan_code){return (g_keyboard->reset_key(scan_code));}
+Keyboard *get_keyboard()
+{
+	return (g_keyboard);
+}

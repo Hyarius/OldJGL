@@ -70,6 +70,7 @@ string color_model_shader_vert = {
 	layout(location = 2) in vec3 normale; \
 	\
 	vec4 tmp_pos; \
+	vec4 tmp_normale; \
 	out vec4 fragmentColor; \
 	out float value; \
 	\
@@ -82,9 +83,10 @@ string color_model_shader_vert = {
 	{\
 		tmp_pos = rot * vec4(vertexPosition_modelspace, 1); \
 		tmp_pos = tmp_pos + vec4(pos, 1);\
+		tmp_normale = rot * vec4(normale, 1); \
 		gl_Position =  MVP * tmp_pos; \
 		fragmentColor = vertexColor;\
-		value = (dot(normale, dir_light) + 1) / 2.0f;\
+		value = (dot(vec3(tmp_normale), dir_light) + 1) / 2.0f;\
 	}"
 };
 
@@ -95,19 +97,19 @@ string color_model_shader_frag = {
 	\
 	out vec4 color; \
 	\
+	float tmp_value; \
+	\
 	void main() \
 	{\
 		color = fragmentColor;\
-		color.r = color.r * value;\
-		color.g = color.g * value;\
-		color.b = color.b * value;\
+		tmp_value = value; \
+		if (tmp_value < 0.3f) \
+			tmp_value = 0.3f; \
+		color.r = color.r * tmp_value;\
+		color.g = color.g * tmp_value;\
+		color.b = color.b * tmp_value;\
 	}"
 };
-
-
-// color.r = color.r * value;\
-// color.g = color.g * value;\
-// color.b = color.b * value;\
 
 
 
@@ -118,6 +120,7 @@ string texture_model_shader_vert = {
 	layout(location = 2) in vec3 normale; \
 	\
 	vec4 tmp_pos; \
+	vec4 tmp_normale; \
 	out vec2 UV;\
 	out float value;\
 	out float alpha;\
@@ -132,8 +135,9 @@ string texture_model_shader_vert = {
 	{\
 		tmp_pos = rot * vec4(vertexPosition_modelspace, 1); \
 		tmp_pos = tmp_pos + vec4(pos, 1);\
+		tmp_normale = rot * vec4(normale, 1); \
 		gl_Position =  MVP * tmp_pos; \
-		value = (dot(normale, dir_light) + 1) / 2.0f;\
+		value = (dot(vec3(tmp_normale), dir_light) + 1) / 2.0f;\
 		UV = vertexUV;\
 		alpha = alpha_value;\
 	}"
@@ -147,14 +151,19 @@ string texture_model_shader_frag = {
 	\
 	out vec4 color; \
 	\
+	float tmp_value; \
+	\
 	uniform sampler2D textureID; \
 	\
 	void main() \
 	{ \
 		color = texture( textureID, UV ).rgba; \
-		color.r = color.r * value;\
-		color.g = color.g * value;\
-		color.b = color.b * value;\
+		tmp_value = value; \
+		if (tmp_value < 0.3f) \
+			tmp_value = 0.3f; \
+		color.r = color.r * tmp_value;\
+		color.g = color.g * tmp_value;\
+		color.b = color.b * tmp_value;\
 		color.a = alpha;\
 	}"
 };

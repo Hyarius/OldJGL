@@ -4,8 +4,11 @@ Mouse *g_mouse;
 
 Mouse::Mouse()
 {
-	old_pos = Vector2();
-	pos = Vector2();
+	int x, y;
+
+	SDL_GetMouseState(&(x), &(y));
+	pos = Vector2(x, y);
+	old_pos = Vector2(x, y);
 	rel_pos = Vector2(0, 0);
 	wheel = 0.0f;
 	button[MOUSE_LEFT] = MOUSE_NULL;
@@ -52,4 +55,15 @@ mouse_state			Mouse::get_button(mouse_button type)
 	return (result);
 }
 
-mouse_state get_button(mouse_button type){return (g_mouse->get_button(type));}
+void Mouse::place(Vector2 coord)
+{
+	pos = coord;
+	old_pos = coord;
+	rel_pos = Vector2(0, 0);
+	SDL_WarpMouseInWindow(g_application->window(), coord.x, coord.y);
+}
+
+Mouse *get_mouse()
+{
+	return (g_mouse);
+}

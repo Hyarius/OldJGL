@@ -38,6 +38,9 @@ c_application::c_application(string name, Vector2 p_size, Color p_color)
 	//_renderer = SDL_CreateRenderer(_window, -1, SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC);
 	//SDL_SetRenderDrawBlendMode(_renderer, SDL_BLENDMODE_BLEND);
 
+	SDL_WarpMouseInWindow(_window, _size.x / 2, _size.y / 2);
+	SDL_GL_SetSwapInterval(0);
+	
 	glClearColor((GLclampf)p_color.r, (GLclampf)p_color.g, (GLclampf)p_color.b, 1.0f);
 
 	glGenVertexArrays(1, &_vertex_array);
@@ -108,7 +111,6 @@ c_application::c_application(string name, Vector2 p_size, Color p_color)
 	_central_widget->set_geometry(Vector2(0, 0), _size);
 	_central_widget->set_color(p_color);
 	_central_widget->activate();
-
 	//_viewport->use();
 
 	SDL_StartTextInput();
@@ -165,6 +167,8 @@ int c_application::run()
 		_central_widget->handle_event();
 
 		_central_widget->update_children();
+
+		check_frame(true);
 
 		render();
 

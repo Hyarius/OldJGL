@@ -6,14 +6,15 @@ struct Face
 	Color color;
 	int index_vertices[3];
 	int index_uvs[3];
-	Vector3 normale;
+	int index_normale[3];
 
-	Face(int p_index_vertices[3], int p_index_uvs[3], Color p_color = Color(190, 190, 190))
+	Face(int p_index_vertices[3], int p_index_uvs[3], int p_index_normale[3], Color p_color = Color(190, 190, 190))
 	{
 		for (size_t i = 0; i < 3; i++)
 		{
 			index_vertices[i] = p_index_vertices[i];
 			index_uvs[i] = p_index_uvs[i];
+			index_normale[i] = p_index_normale[i];
 		}
 		color = p_color;
 	}
@@ -41,6 +42,7 @@ private:
 
 	vector<Vector3>	_vertices;
 	vector<Vector2>	_uvs;
+	vector<Vector3>	_normales;
 
 	float _transparency;
 
@@ -68,13 +70,13 @@ public:
 
 	void add_point(Vector3 p_point);
 	void add_uv(Vector2 p_uv);
+	void add_normale(Vector3 p_normale);
 	void add_face(Face p_face);
 	void set_texture(c_image *p_texture);
 	void set_transparency(float p_transparency){_transparency = p_transparency;}
 	void compute_normales();
 	void compute_axis();
 
-	void bake_normales();
 	void bake();
 
 	void look_at(Vector3 target);

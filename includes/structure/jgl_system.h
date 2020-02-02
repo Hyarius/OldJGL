@@ -18,6 +18,7 @@ struct Mouse
 	Mouse();
 	void actualize_mouse(SDL_Event *event = nullptr);
 	mouse_state get_button(mouse_button type);
+	void place(Vector2 coord);
 };
 
 struct Keyboard
@@ -33,8 +34,7 @@ struct Keyboard
 extern Keyboard *g_keyboard;
 extern Mouse *g_mouse;
 
-mouse_state get_button(mouse_button type);
-key_state get_key(int scan_code);
-void reset_key(int scan_code);
+Keyboard *get_keyboard();
+Mouse *get_mouse();
 
 #endif

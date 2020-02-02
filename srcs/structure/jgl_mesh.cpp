@@ -20,6 +20,7 @@ c_mesh::c_mesh(Vector3 p_pos)
 
 	_vertices.clear();
 	_uvs.clear();
+	_normales.clear();
 
 	_baked_vertices.clear();
 	_baked_uvs.clear();
@@ -39,6 +40,11 @@ void c_mesh::add_uv(Vector2 p_uv)
 	_uvs.push_back(p_uv);
 }
 
+void c_mesh::add_normale(Vector3 p_normale)
+{
+	_normales.push_back(p_normale);
+}
+
 void c_mesh::add_face(Face p_face)
 {
 	_faces.push_back(p_face);
@@ -53,12 +59,25 @@ void c_mesh::compute_normales()
 {
 	Vector3 b;
 	Vector3 c;
+	Vector3 tmp;
 
+	_normales.clear();
 	for (size_t i = 0; i < _faces.size(); i++)
 	{
 		b = _rot_matrix * (_vertices[_faces[i].index_vertices[1]] - _vertices[_faces[i].index_vertices[0]]);
 		c = _rot_matrix * (_vertices[_faces[i].index_vertices[2]] - _vertices[_faces[i].index_vertices[0]]);
-		_faces[i].normale = (b.cross(c)).normalize();
+		tmp = b.cross(c).normalize();
+		for (size_t j = 0; j < 3; j++)
+		{
+			if (_faces[i].index_normale[j] == -1)
+				_normales.push_back(tmp);
+			else
+			{
+				if (_normales.size() <= _faces[i].index_normale[j])
+					_normales.resize(_faces[i].index_normale[j] + 1);
+				_normales[_faces[i].index_normale[j]] = tmp;
+			}
+		}
 	}
 }
 
@@ -69,8 +88,6 @@ void c_mesh::compute_axis()
 
 	_rot_matrix = Matrix(R, _rotation);
 	_rot_matrix.value[3][3] = 1.0f;
-	compute_normales();
-	bake_normales();
 	_forward = (Vector3( sin(tmp_yaw - 3.14f / 2.0f), 0.0f, cos(tmp_yaw - 3.14f / 2.0f))).normalize();
 	_right = (Vector3(cos(tmp_pitch) * sin(tmp_yaw), sin(tmp_pitch), cos(tmp_pitch) * cos(tmp_yaw)) ).normalize();
 	_up = ((_forward).cross(_right)).normalize();
@@ -86,7 +103,6 @@ void c_mesh::look_at(Vector3 target)
 				sqrt(result.x * result.x + result.z * result.z)));
 	_rotation.z = clamp_float(-89, _rotation.z, 89);
 	compute_axis();
-	bake();
 }
 
 void c_mesh::rotate_around_point(Vector3 target, Vector3 delta)
@@ -99,26 +115,12 @@ void c_mesh::rotate_around_point(Vector3 target, Vector3 delta)
 	tmp = _pos - target;
 	tmp = rotation * tmp;
 	_pos = tmp + target;
-	bake();
 }
 
 void c_mesh::rotate(Vector3 delta)
 {
 	_rotation += delta;
 	compute_axis();
-	bake_normales();
-}
-
-void c_mesh::bake_normales()
-{
-	_baked_normales.clear();
-
-	for (size_t i = 0; i < _faces.size(); i++)
-		for (size_t j = 0; j < 3; j++)
-			_baked_normales.push_back(_faces[i].normale);
-
-	glBindBuffer(GL_ARRAY_BUFFER, _normale_buffer);
-	glBufferData(GL_ARRAY_BUFFER, _baked_normales.size() * 3 * sizeof(float), static_cast<float *>(&(_baked_normales[0].x)), GL_STATIC_DRAW);
 }
 
 void c_mesh::bake()
@@ -128,6 +130,7 @@ void c_mesh::bake()
 	_baked_vertices.clear();
 	_baked_uvs.clear();
 	_baked_colors.clear();
+	_baked_normales.clear();
 
 	for (size_t i = 0; i < _faces.size(); i++)
 	{
@@ -137,15 +140,20 @@ void c_mesh::bake()
 				_baked_vertices.push_back(_vertices[_faces[i].index_vertices[j]]);
 			else
 				_baked_vertices.push_back(Vector3(-1, -1, -1));
+
 			if (_faces[i].index_uvs[j] != -1)
 				_baked_uvs.push_back(_uvs[_faces[i].index_uvs[j]]);
 			else
 				_baked_uvs.push_back(Vector2(-1, -1));
+
+			if (_faces[i].index_normale[j] != -1)
+				_baked_normales.push_back(_normales[_faces[i].index_normale[j]]);
+			else
+				_baked_normales.push_back(_normales[i * 3 + j]);
+
 			_baked_colors.push_back(_faces[i].color);
 		}
 	}
-
-	bake_normales();
 
 	glBindBuffer(GL_ARRAY_BUFFER, _vertex_buffer);
 	glBufferData(GL_ARRAY_BUFFER, _baked_vertices.size() * 3 * sizeof(float), static_cast<float *>(&(_baked_vertices[0].x)), GL_STATIC_DRAW);
@@ -155,6 +163,10 @@ void c_mesh::bake()
 
 	glBindBuffer(GL_ARRAY_BUFFER, _uv_buffer);
 	glBufferData(GL_ARRAY_BUFFER, _baked_uvs.size() * 2 * sizeof(float), static_cast<float *>(&(_baked_uvs[0].x)), GL_STATIC_DRAW);
+
+	glBindBuffer(GL_ARRAY_BUFFER, _normale_buffer);
+	glBufferData(GL_ARRAY_BUFFER, _baked_normales.size() * 3 * sizeof(float), static_cast<float *>(&(_baked_normales[0].x)), GL_STATIC_DRAW);
+
 }
 
 
