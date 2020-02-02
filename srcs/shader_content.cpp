@@ -105,6 +105,9 @@ string color_model_shader_frag = {
 };
 
 
+// color.r = color.r * value;\
+// color.g = color.g * value;\
+// color.b = color.b * value;\
 
 
 
@@ -149,9 +152,9 @@ string texture_model_shader_frag = {
 	void main() \
 	{ \
 		color = texture( textureID, UV ).rgba; \
-		color.r = color.r;\
-		color.g = color.g;\
-		color.b = color.b;\
-		color.a = 1.0f;\
+		color.r = color.r * value;\
+		color.g = color.g * value;\
+		color.b = color.b * value;\
+		color.a = alpha;\
 	}"
 };

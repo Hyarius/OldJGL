@@ -89,4 +89,6 @@ public:
 };
 
 c_mesh *primitive_cube(Vector3 pos, Vector3 size, Color color);
+c_mesh *primitive_plane(Vector3 pos, Vector2 size, Color color);
+c_mesh *primitive_plane(Vector3 pos, Vector3 size, Color color);
 #endif

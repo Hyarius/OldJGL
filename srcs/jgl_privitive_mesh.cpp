@@ -58,3 +58,38 @@ c_mesh *primitive_cube(Vector3 pos, Vector3 size, Color color)
 
 	return (result);
 }
+
+c_mesh *primitive_plane(Vector3 pos, Vector2 size, Color color)
+{
+	return (primitive_plane(pos, Vector3(size.x, 0.0f, size.y), color));
+}
+
+c_mesh *primitive_plane(Vector3 pos, Vector3 size, Color color)
+{
+	c_mesh *result;
+	Vector3 delta = Vector3(size.x / 2.0f, 0.0f, size.z / 2.0f);
+
+	result = new c_mesh(pos);
+
+	result->add_point(Vector3(0.0f, 0.0f, 0.0f) - delta);
+	result->add_point(Vector3(size.x, 0.0f, 0.0f) - delta);
+	result->add_point(Vector3(size.x, 0.0f, size.z) - delta);
+	result->add_point(Vector3(0.0f, 0.0f, size.z) - delta);
+
+	result->add_uv(Vector2(0.0f, 0.0f));
+	result->add_uv(Vector2(1.0f, 0.0f));
+	result->add_uv(Vector2(0.0f, 1.0f));
+	result->add_uv(Vector2(1.0f, 1.0f));
+
+	// FACE DOWN
+	result->add_face(Face((int []){2, 3, 1}, (int []){3, 2, 1}, color));
+	result->add_face(Face((int []){0, 1, 3}, (int []){0, 1, 2}, color));
+
+	// FACE TOP
+	result->add_face(Face((int []){2, 1, 3}, (int []){3, 1, 2}, color));
+	result->add_face(Face((int []){0, 3, 1}, (int []){0, 2, 1}, color));
+
+	result->bake();
+
+	return (result);
+}

@@ -228,7 +228,7 @@ void c_mesh::render_texture(c_camera *camera)
 		// 3rst attribute buffer : normales
 	glEnableVertexAttribArray(2);
 	glBindBuffer(GL_ARRAY_BUFFER, _normale_buffer);
-	glVertexAttribPointer(2, 1, GL_FLOAT, GL_FALSE, 0, (void*)0);
+	glVertexAttribPointer(2, 3, GL_FLOAT, GL_FALSE, 0, (void*)0);
 
 	// Draw the triangle !
 	glEnable(GL_CULL_FACE);
