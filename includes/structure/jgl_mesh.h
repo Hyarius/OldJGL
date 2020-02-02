@@ -54,7 +54,8 @@ private:
 	c_image *_texture;
 
 public:
-	c_mesh(Vector3 p_pos);
+	c_mesh(Vector3 p_pos = 0, Vector3 p_rot = 0);
+	c_mesh(string path, Vector3 p_pos = 0, Vector3 p_rot = 0);
 
 	float transparency(){return (_transparency);}
 	Vector3 pos(){return (_pos);}

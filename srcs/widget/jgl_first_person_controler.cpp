@@ -28,7 +28,7 @@ void c_first_person_controler::render()
 		if (_meshes[i]->transparency() != 1 && _meshes[i]->transparency() != 0)
 			_meshes[i]->render(_camera);
 
-	_meshes[0]->rotate(Vector3(0, 1, 0));
+	// _meshes[0]->rotate(Vector3(0, 1, 0) * g_application->fps_ratio());
 }
 
 bool c_first_person_controler::handle_keyboard()
@@ -42,42 +42,42 @@ bool c_first_person_controler::handle_keyboard()
 	}
 	if (get_keyboard()->get_key(SDL_SCANCODE_W) == key_state::down)
 	{
-		_camera->move(_camera->forward() * Vector3(1, 0, 1) * -_move_speed);
+		_camera->move(_camera->forward() * Vector3(1, 0, 1) * -_move_speed * g_application->fps_ratio());
 		action = true;
 	}
 	if (get_keyboard()->get_key(SDL_SCANCODE_S) == key_state::down)
 	{
-		_camera->move(_camera->forward() * Vector3(1, 0, 1) * _move_speed);
+		_camera->move(_camera->forward() * Vector3(1, 0, 1) * _move_speed * g_application->fps_ratio());
 		action = true;
 	}
 	if (get_keyboard()->get_key(SDL_SCANCODE_D) == key_state::down)
 	{
-		_camera->move(_camera->right() * _move_speed);
+		_camera->move(_camera->right() * _move_speed * g_application->fps_ratio());
 		action = true;
 	}
 	if (get_keyboard()->get_key(SDL_SCANCODE_A) == key_state::down)
 	{
-		_camera->move(_camera->right() * -_move_speed);
+		_camera->move(_camera->right() * -_move_speed * g_application->fps_ratio());
 		action = true;
 	}
 	if (get_keyboard()->get_key(SDL_SCANCODE_E) == key_state::down)
 	{
-		_camera->rotate(1, 0);
+		_camera->rotate(1 * g_application->fps_ratio(), 0 * g_application->fps_ratio());
 		action = true;
 	}
 	if (get_keyboard()->get_key(SDL_SCANCODE_Q) == key_state::down)
 	{
-		_camera->rotate(-1, 0);
+		_camera->rotate(-1 * g_application->fps_ratio(), 0 * g_application->fps_ratio());
 		action = true;
 	}
 	if (get_keyboard()->get_key(SDL_SCANCODE_LSHIFT) == key_state::down)
 	{
-		_camera->move(Vector3(0, -1, 0) * _move_speed);
+		_camera->move(Vector3(0, -1, 0) * _move_speed * g_application->fps_ratio());
 		action = true;
 	}
 	if (get_keyboard()->get_key(SDL_SCANCODE_SPACE) == key_state::down)
 	{
-		_camera->move(Vector3(0, 1, 0) * _move_speed);
+		_camera->move(Vector3(0, 1, 0) * _move_speed * g_application->fps_ratio());
 		action = true;
 	}
 

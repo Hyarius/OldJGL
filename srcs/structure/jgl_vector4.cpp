@@ -16,6 +16,10 @@ Vector4::Vector4(int p_x, int p_y, int p_z, int p_w) :
 	x(static_cast<float>(p_x)), y(static_cast<float>(p_y)),
 	z(static_cast<float>(p_z)), w(static_cast<float>(p_w)){}
 
+Vector4::Vector4(double p_x, double p_y, double p_z, double p_w) :
+	x(static_cast<float>(p_x)), y(static_cast<float>(p_y)),
+	z(static_cast<float>(p_z)), w(static_cast<float>(p_w)){}
+
 Vector4&		Vector4::operator = (int p_value) {
 	x = static_cast<float>(p_value);
 	y = static_cast<float>(p_value);

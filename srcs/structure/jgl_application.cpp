@@ -39,8 +39,11 @@ c_application::c_application(string name, Vector2 p_size, Color p_color)
 	//SDL_SetRenderDrawBlendMode(_renderer, SDL_BLENDMODE_BLEND);
 
 	SDL_WarpMouseInWindow(_window, _size.x / 2, _size.y / 2);
+
+	_max_fps = 60;
+	_fps_ratio = 1.0f;
 	SDL_GL_SetSwapInterval(0);
-	
+
 	glClearColor((GLclampf)p_color.r, (GLclampf)p_color.g, (GLclampf)p_color.b, 1.0f);
 
 	glGenVertexArrays(1, &_vertex_array);

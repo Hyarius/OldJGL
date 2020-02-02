@@ -9,7 +9,7 @@ using namespace std;
 
 void check_sdl_error(const char *file, int line);
 bool string_is_numeric(string text);
-vector<string> strsplit(string input, string c);
+vector<string> strsplit(string input, string c, bool regroup = true);
 void error_exit(int num, string error);
 string ftoa(float n, int afterpoint = -1);
 string ftoa(double n, int afterpoint = -1);

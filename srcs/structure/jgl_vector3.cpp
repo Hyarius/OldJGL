@@ -6,6 +6,10 @@ Vector3::Vector3(int p_value) :
 	x(static_cast<float>(p_value)), y(static_cast<float>(p_value)),
 	z(static_cast<float>(p_value)){}
 
+Vector3::Vector3(double p_value) :
+	x(static_cast<float>(p_value)), y(static_cast<float>(p_value)),
+	z(static_cast<float>(p_value)){}
+
 Vector3::Vector3(float p_value) :
 	x(p_value), y(p_value), z(p_value){}
 
@@ -13,6 +17,10 @@ Vector3::Vector3(float p_x, float p_y, float p_z) :
 	x(p_x), y(p_y), z(p_z){}
 
 Vector3::Vector3(int p_x, int p_y, int p_z) :
+	x(static_cast<float>(p_x)), y(static_cast<float>(p_y)),
+	z(static_cast<float>(p_z)){}
+
+Vector3::Vector3(double p_x, double p_y, double p_z) :
 	x(static_cast<float>(p_x)), y(static_cast<float>(p_y)),
 	z(static_cast<float>(p_z)){}
 

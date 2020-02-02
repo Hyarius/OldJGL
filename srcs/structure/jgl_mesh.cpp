@@ -1,6 +1,6 @@
 #include "jgl.h"
 
-c_mesh::c_mesh(Vector3 p_pos)
+c_mesh::c_mesh(Vector3 p_pos, Vector3 p_rot)
 {
 	_pos = p_pos;
 
@@ -10,10 +10,8 @@ c_mesh::c_mesh(Vector3 p_pos)
 	glGenBuffers(1, &_uv_buffer);
 	glGenBuffers(1, &_alpha_buffer);
 
-	_rotation = Vector3(0, 0, 0);
-	_forward = Vector3(1, 0, 0);
-	_right = Vector3(0, 0, 1);
-	_up = Vector3(0, 1, 0);
+	_rotation = p_rot;
+	compute_axis();
 
 	_transparency = 1.0f;
 	_faces.clear();
@@ -28,6 +26,48 @@ c_mesh::c_mesh(Vector3 p_pos)
 	_baked_normales.clear();
 
 	_texture = nullptr;
+}
+
+c_mesh::c_mesh(string p_path, Vector3 p_pos, Vector3 p_rot) : c_mesh(p_pos, p_rot)
+{
+	int index_vertices[3] = {-1, -1, -1}, index_uvs[3] = {-1, -1, -1}, index_normales[3] = {-1, -1, -1};
+	vector<string> tab;
+	vector<string> face_content;
+	fstream file = open_file(p_path, ios_base::in | ios_base::out);
+
+	while (file.eof() == false)
+	{
+		tab = get_strsplit(file, " ");
+		if (tab.size() != 0)
+		{
+			if (tab[0] == "v")
+				add_point(Vector3(atof(tab[1].c_str()), atof(tab[2].c_str()), atof(tab[3].c_str())));
+			else if (tab[0] == "vt")
+				add_uv(Vector2(atof(tab[1].c_str()), atof(tab[2].c_str())));
+			else if (tab[0] == "vn")
+				add_normale(Vector3(atof(tab[1].c_str()), atof(tab[2].c_str()), atof(tab[3].c_str())));
+			else if (tab[0] == "f")
+			{
+				for (size_t i = 0; i < 3; i++)
+				{
+					face_content = strsplit(tab[i + 1], "/", false);
+					index_vertices[i] = atoi(face_content[0].c_str()) - 1;
+					if (face_content.size() >= 2)
+						index_uvs[i] = (face_content[1].length() == 0 ? -1 : atoi(face_content[1].c_str()) - 1);
+					if (face_content.size() >= 3)
+						index_normales[i] = (face_content[2].length() == 0 ? -1 : atoi(face_content[2].c_str()) - 1);
+				}
+				add_face(Face(index_vertices, index_uvs, index_normales, Color(210, 210, 210)));
+				for (size_t i = 0; i < 3; i++)
+				{
+					index_vertices[i] = -1;
+					index_uvs[i] = -1;
+					index_normales[i] = -1;
+				}
+			}
+		}
+	}
+	bake();
 }
 
 void c_mesh::add_point(Vector3 p_point)
@@ -70,10 +110,10 @@ void c_mesh::compute_normales()
 		for (size_t j = 0; j < 3; j++)
 		{
 			if (_faces[i].index_normale[j] == -1)
-				_normales.push_back(tmp);
+				_normales.insert(_normales.end(), tmp);
 			else
 			{
-				if (_normales.size() <= _faces[i].index_normale[j])
+				if (_normales.size() <= _faces[i].index_normale[j] + 1)
 					_normales.resize(_faces[i].index_normale[j] + 1);
 				_normales[_faces[i].index_normale[j]] = tmp;
 			}

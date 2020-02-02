@@ -11,9 +11,11 @@ struct Vector4
 	float w;
 
 	Vector4(int p_value);
+	Vector4(double p_value);
 	Vector4(float p_value = -1);
 	Vector4(float p_x, float p_y, float p_z, float p_w);
 	Vector4(int p_x, int p_y, int p_z, int p_w);
+	Vector4(double p_x, double p_y, double p_z, double p_w);
 
 	Vector4& operator = (int p_value);
 	Vector4& operator = (float p_value);
@@ -49,9 +51,11 @@ struct Vector3
 	float z;
 
 	Vector3(int p_value);
+	Vector3(double p_value);
 	Vector3(float p_value = -1);
 	Vector3(float p_x, float p_y, float p_z);
 	Vector3(int p_x, int p_y, int p_z);
+	Vector3(double p_x, double p_y, double p_z);
 
 	Vector3& operator = (int p_value);
 	Vector3& operator = (float  p_value);
@@ -86,9 +90,11 @@ struct Vector2
 	float y;
 
 	Vector2(int p_value);
+	Vector2(double p_value);
 	Vector2(float p_value = -1);
 	Vector2(float p_x, float p_y);
 	Vector2(int p_x, int p_y);
+	Vector2(double p_x, double p_y);
 
 	Vector2& operator = (int p_value);
 	Vector2& operator = (float  p_value);

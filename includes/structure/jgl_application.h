@@ -51,6 +51,9 @@ private:
 	GLuint _textureID;
 	GLuint _alphaID;
 
+	size_t _max_fps;
+	float _fps_ratio;
+
 	class c_window *_central_widget;
 	bool _play;
 	SDL_Event _event;
@@ -87,11 +90,16 @@ public:
 	GLuint texture_textureID(){return (_texture_textureID);}
 	GLuint alpha_textureID(){return (_alpha_textureID);}
 
+	size_t max_fps(){return (_max_fps);}
+	float fps_ratio(){return (_fps_ratio);}
+
 	class c_widget *central_widget(){return ((c_widget *)_central_widget);}
 	bool play(){return (_play);}
 	SDL_Event *event(){return (&_event);}
 
 	void set_active_viewport(class c_viewport *p_active_viewport){if (p_active_viewport == nullptr)_active_viewport = _viewport;_active_viewport = p_active_viewport;}
+	void set_max_fps(int p_max_fps){_max_fps = p_max_fps;_fps_ratio = 60.0f / p_max_fps;}
+	void check_frame(bool draw = false);
 	void reset_viewport(){_active_viewport = _viewport;_viewport->use();}
 	void set_font_path(string p_font_path);
 	void quit();

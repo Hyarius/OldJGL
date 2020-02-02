@@ -2,7 +2,7 @@
 
 using namespace std;
 
-vector<string>		strsplit(string input, string delim)
+vector<string>		strsplit(string input, string delim, bool regroup)
 {
 	vector<string>	tab;
 	string			word;
@@ -14,7 +14,9 @@ vector<string>		strsplit(string input, string delim)
 	{
 		end = input.find(delim, start);
 		word = input.substr(start, end - start);
-		if (word.size() > 0)
+		if (word.size() > 0 && regroup == true)
+			tab.insert(tab.end(), word);
+		else if (regroup == false)
 			tab.insert(tab.end(), word);
 		start = end + delim.size();
 	}
