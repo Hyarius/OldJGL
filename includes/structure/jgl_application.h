@@ -99,6 +99,7 @@ public:
 
 	void set_active_viewport(class c_viewport *p_active_viewport){if (p_active_viewport == nullptr)_active_viewport = _viewport;_active_viewport = p_active_viewport;}
 	void set_max_fps(int p_max_fps){_max_fps = p_max_fps;_fps_ratio = 60.0f / p_max_fps;}
+	void set_fps_ratio(float p_ratio){_fps_ratio = p_ratio;}
 	void check_frame(bool draw = false);
 	void reset_viewport(){_active_viewport = _viewport;_viewport->use();}
 	void set_font_path(string p_font_path);

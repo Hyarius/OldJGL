@@ -11,7 +11,6 @@
 #include "jgl_color.h"
 #include "jgl_geometry.h"
 #include "jgl_basics_functions.h"
-#include "jgl_algorithm.h"
 #include "jgl_system.h"
 #include "jgl_application.h"
 #include "jgl_viewport.h"
@@ -21,6 +20,8 @@
 #include "jgl_draw_primitive.h"
 #include "jgl_image.h"
 #include "jgl_mesh.h"
+#include "jgl_algorithm.h"
+#include "jgl_engine.h"
 #include "jgl_tileset.h"
 #include "jgl_widgets.h"
 

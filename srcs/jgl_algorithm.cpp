@@ -1,50 +1,134 @@
 #include "jgl.h"
 
-void SAT_test(Vector2 normale, vector<Vector2> vector_list, float *min, float *max)
+Triangle3D		calc_face_triangle(Face *face, c_mesh *mesh)
 {
-	int		i;
-	float	dot_result;
+	Triangle3D	result;
 
-	*min = INT_MAX;
-	*max = INT_MIN;
-	i = 0;
-
-	while (i < vector_list.size())
-	{
-		dot_result = normale.dot(vector_list[i]);
-
-		if (dot_result < *min)
-			*min = dot_result;
-		if (dot_result > *max)
-			*max = dot_result;
-
-		i++;
-	}
+	result.a = (mesh->rot_matrix() * mesh->vertices()[face->index_vertices[0]]) + mesh->pos() + mesh->velocity();
+	result.b = (mesh->rot_matrix() * mesh->vertices()[face->index_vertices[1]]) + mesh->pos() + mesh->velocity();
+	result.c = (mesh->rot_matrix() * mesh->vertices()[face->index_vertices[2]]) + mesh->pos() + mesh->velocity();
+	return (result);
 }
 
-// template<typename Type>
-// void collision_detection(vector<Type> poly_source, vector<Type> poly_target)
-// {
-// 	int		i;
-// 	float	value[4];
-//
-// 	i = 0;
-// 	while (i < poly_source.size())
-// 	{
-// 		sat_test(t_face_list_get(mesh_compared->faces, i)->normale, mesh_compared->next_vertices_in_world, &(value[0]), &(value[1]));
-// 		sat_test(t_face_list_get(mesh_compared->faces, i)->normale, mesh_target->vertices_in_world, &(value[2]), &(value[3]));
-// 		if (!is_middle(value[0], value[1], value[2]) && !is_middle(value[2], value[3], value[0]))
-// 			return (BOOL_FALSE);
-// 		i++;
-// 	}
-// 	i = 0;
-// 	while (i < mesh_target->faces->size)
-// 	{
-// 		sat_test(t_face_list_get(mesh_target->faces, i)->normale, mesh_compared->next_vertices_in_world, &(value[0]), &(value[1]));
-// 		sat_test(t_face_list_get(mesh_target->faces, i)->normale, mesh_target->vertices_in_world, &(value[2]), &(value[3]));
-// 		if (!is_middle(value[0], value[1], value[2]) && !is_middle(value[2], value[3], value[0]))
-// 			return (BOOL_FALSE);
-// 		i++;
-// 	}
-// 	return (BOOL_TRUE);
-// }
+Vector3		triangle_center(Triangle3D tri)
+{
+	Vector3	ret;
+
+	ret = Vector3(
+		(tri.a.x + tri.b.x + tri.c.x) / 3.0f,
+		(tri.a.y + tri.b.y + tri.c.y) / 3.0f,
+		(tri.a.z + tri.b.z + tri.c.z) / 3.0f
+	);
+	return (ret);
+}
+
+float signed_volume(Vector3 a, Vector3 b, Vector3 c, Vector3 d)
+{
+	return (((b - a).cross(c - a)).dot(d - a) / 6);
+}
+
+#define POSITIVE 1
+#define NEGATIVE 0
+
+int get_sign(float value)
+{
+	if (value >= 0)
+		return (POSITIVE);
+	return (NEGATIVE);
+}
+
+int		intersect_triangle_by_segment(Triangle3D triangle, Line3D line)
+{
+	int a = get_sign(signed_volume(line.a, triangle.a, triangle.b, triangle.c));
+	int b = get_sign(signed_volume(line.b, triangle.a, triangle.b, triangle.c));
+	int c = get_sign(signed_volume(line.a, line.b, triangle.a, triangle.b));
+	int d = get_sign(signed_volume(line.a, line.b, triangle.b, triangle.c));
+	int e = get_sign(signed_volume(line.a, line.b, triangle.c, triangle.a));
+
+	if (a != b && c == d && d == e)
+		return (true);
+	return (false);
+}
+
+bool triangles_intersection(Triangle3D tri1, Triangle3D tri2)
+{
+	Line3D	seg;
+
+	seg = Line3D(tri1.a, tri1.b);
+	if (intersect_triangle_by_segment(tri2, seg) == true)
+		return (true);
+	seg = Line3D(tri1.b, tri1.c);
+	if (intersect_triangle_by_segment(tri2, seg) == true)
+		return (true);
+	seg = Line3D(tri1.a, tri1.c);
+	if (intersect_triangle_by_segment(tri2, seg) == true)
+		return (true);
+	return (false);
+}
+
+bool is_triangle_parallele(Triangle3D tri1, Triangle3D tri2)
+{
+	Vector3 normale_a;
+	Vector3 normale_b;
+	Vector3 b;
+	Vector3 c;
+	float tmp;
+
+	b = tri1.b - tri1.a;
+	c = tri1.c - tri1.a;
+	normale_a = b.cross(c).normalize();
+	b = tri2.b - tri2.a;
+	c = tri2.c - tri2.a;
+	normale_b = b.cross(c).normalize();
+	tmp = normale_a.dot(normale_b);
+	if (tmp == 1 || tmp == -1)
+		return (true);
+	return (false);
+}
+
+bool compare_faces(Face *face, c_mesh *to_move, c_mesh *to_check)
+{
+	Triangle3D	tri_comp;
+	Triangle3D	tri_tar;
+	Face		*actual;
+	float		dist;
+
+	tri_tar = calc_face_triangle(face, to_move);
+	dist = abs(to_check->pos().distance(triangle_center(tri_tar)));
+	if (dist < abs(tri_tar.a.distance(tri_tar.b)) ||
+		dist < abs(tri_tar.a.distance(tri_tar.c)) ||
+		dist < abs(tri_tar.c.distance(tri_tar.b)))
+	{
+		for (size_t i = 0; i < to_check->faces().size(); i++)
+		{
+			actual = to_check->faces(i);
+			tri_comp = calc_face_triangle(actual, to_check);
+			if (triangles_intersection(tri_comp, tri_tar) == true)
+				return (true);
+		}
+	}
+	return (false);
+}
+
+bool intersect_mesh(c_mesh *to_move, c_mesh *to_check)
+{
+	Face *tmp;
+
+	for (size_t i = 0; i < to_check->faces().size(); i++)
+	{
+		tmp = to_check->faces(i);
+		if (compare_faces(tmp, to_check, to_move) == true)
+			return (true);
+	}
+	return (false);
+}
+
+bool intersect_bubble_box(c_mesh *to_move, c_mesh *to_check)
+{
+	float distance;
+
+	distance = (to_move->pos() + to_move->center()).distance(to_check->pos() + to_check->center());
+	if (distance < to_move->radius() + to_check->radius())
+		return (true);
+	return (false);
+}

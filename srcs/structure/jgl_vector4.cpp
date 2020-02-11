@@ -36,49 +36,49 @@ Vector4& Vector4::operator = (float  p_value) {
 	return *this;
 }
 
-Vector4		Vector4::operator + (const Vector4& delta){
+Vector4		Vector4::operator + (const Vector4 delta){
 	return (Vector4(x + delta.x, y + delta.y, z + delta.z, 1.0f));
 }
 
-Vector4		Vector4::operator - (const Vector4& delta){
+Vector4		Vector4::operator - (const Vector4 delta){
 	return (Vector4(x - delta.x, y - delta.y, z - delta.z, 1.0f));
 }
 
-Vector4		Vector4::operator * (const Vector4& delta){
+Vector4		Vector4::operator * (const Vector4 delta){
 	return (Vector4(x * delta.x, y * delta.y, z * delta.z, 1.0f));
 }
 
-Vector4		Vector4::operator / (const Vector4& delta){
+Vector4		Vector4::operator / (const Vector4 delta){
 	return (Vector4(x / delta.x, y / delta.y, z / delta.z, 1.0f));
 }
 
-void 		Vector4::operator += (const Vector4& delta){
+void 		Vector4::operator += (const Vector4 delta){
     x += delta.x; y += delta.y; z += delta.z;
 }
 
-void 		Vector4::operator -= (const Vector4& delta){
+void 		Vector4::operator -= (const Vector4 delta){
     x -= delta.x; y -= delta.y; z -= delta.z;
 }
 
-void 		Vector4::operator *= (const Vector4& delta){
+void 		Vector4::operator *= (const Vector4 delta){
     x *= delta.x; y *= delta.y; z *= delta.z;
 }
 
-void 		Vector4::operator /= (const Vector4& delta){
+void 		Vector4::operator /= (const Vector4 delta){
     x /= delta.x; y /= delta.y; z /= delta.z;
 }
 
-bool		Vector4::operator == (const Vector4& delta) const{
+bool		Vector4::operator == (const Vector4 delta) const{
 	return ((x == delta.x && y == delta.y && z == delta.z) ?
 			true : false);
 }
 
-bool		Vector4::operator != (const Vector4& delta) const{
+bool		Vector4::operator != (const Vector4 delta) const{
 	return ((x == delta.x && y == delta.y && z == delta.z) ?
 			false : true);
 }
 
-bool Vector4::operator < (const Vector4& other) const
+bool Vector4::operator < (const Vector4 other) const
 {
 	if (z < other.z)
 		return (true);
@@ -89,7 +89,7 @@ bool Vector4::operator < (const Vector4& other) const
 	return (false);
 }
 
-bool Vector4::operator > (const Vector4& other) const
+bool Vector4::operator > (const Vector4 other) const
 {
 	if (z < other.z || y < other.y || x < other.x)
 		return (false);
@@ -100,7 +100,7 @@ float *Vector4::decompose(){
 	return (&x);
 }
 
-float Vector4::distance(Vector4 &point)
+float Vector4::distance(Vector4 point)
 {
 	return (sqrt( pow(point.x - x, 2.0f)
 				+ pow(point.y - y, 2.0f)
@@ -119,7 +119,7 @@ Vector4		Vector4::normalize()
 	return (Vector4(x / length, y / length, z / length, 1.0f));
 }
 
-float			Vector4::dot(Vector4 &b)
+float			Vector4::dot(Vector4 b)
 {
 	float		result;
 
@@ -128,7 +128,7 @@ float			Vector4::dot(Vector4 &b)
 	return (result);
 }
 
-Vector4		Vector4::cross(Vector4 &other) //Produit vectoriel / cross product
+Vector4		Vector4::cross(Vector4 other) //Produit vectoriel / cross product
 {
 	Vector4	result = Vector4(
 			y * other.z - z * other.y,

@@ -3,11 +3,11 @@
 c_first_person_controler::c_first_person_controler(c_widget *p_parent) : c_widget(p_parent)
 {
 	SDL_ShowCursor(SDL_DISABLE);
-	_camera = new c_camera(Vector3(1.0f, 0.0f, 1.0f), 45, 0.1f, 100.0f);
-	_camera->look_at(Vector3(0, 0, 0));
+	_camera = new c_camera(Vector3(0.0f, 0.0f, 0.0f), 45, 0.1f, 100.0f);
+	_camera->look_at(Vector3(0, 10, 0));
 	_move_speed = 0.05f;
 	_rot_speed = 0.1f;
-	_meshes.clear();
+	_engine = new c_engine();
 }
 
 void c_first_person_controler::set_geometry_imp(Vector2 p_anchor, Vector2 p_area)
@@ -20,15 +20,13 @@ void c_first_person_controler::render()
 	_viewport->use();
 	glClear(GL_DEPTH_BUFFER_BIT);
 
-	for (size_t i = 0; i < _meshes.size(); i++)
-		if (_meshes[i]->transparency() == 1.0f)
-			_meshes[i]->render(_camera);
+	for (size_t i = 0; i < _engine->meshes().size(); i++)
+		if (_engine->mesh(i)->transparency() == 1.0f)
+			_engine->mesh(i)->render(_camera);
 
-	for (size_t i = 0; i < _meshes.size(); i++)
-		if (_meshes[i]->transparency() != 1 && _meshes[i]->transparency() != 0)
-			_meshes[i]->render(_camera);
-
-	// _meshes[0]->rotate(Vector3(0, 1, 0) * g_application->fps_ratio());
+	for (size_t i = 0; i < _engine->meshes().size(); i++)
+		if (_engine->mesh(i)->transparency() != 1 && _engine->mesh(i)->transparency() != 0)
+			_engine->mesh(i)->render(_camera);
 }
 
 bool c_first_person_controler::handle_keyboard()

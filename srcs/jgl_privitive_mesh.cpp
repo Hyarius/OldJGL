@@ -1,11 +1,12 @@
 #include "jgl.h"
 
-c_mesh *primitive_cube(Vector3 pos, Vector3 size, Color color)
+c_mesh *primitive_cube(Vector3 pos, Vector3 rot, Vector3 size, Color color, bool should_bake)
 {
 	c_mesh *result;
 	Vector3 delta = Vector3(size.x / 2.0f, size.y / 2.0f, size.z / 2.0f);
 
 	result = new c_mesh(pos);
+	result->rotate(rot);
 
 	result->add_point(Vector3(0.0f, 0.0f, 0.0f) - delta);
 	result->add_point(Vector3(size.x, 0.0f, 0.0f) - delta);
@@ -54,22 +55,24 @@ c_mesh *primitive_cube(Vector3 pos, Vector3 size, Color color)
 	result->add_face(Face((int []){7, 4, 3}, (int []){8, 4, 7}, (int []){-1, -1, -1}, color));
 	result->add_face(Face((int []){0, 3, 4}, (int []){3, 7, 4}, (int []){-1, -1, -1}, color));
 
-	result->bake();
+	if (should_bake == true)
+		result->bake();
 
 	return (result);
 }
 
-c_mesh *primitive_plane(Vector3 pos, Vector2 size, Color color)
+c_mesh *primitive_plane(Vector3 pos, Vector3 rot, Vector2 size, Color color, bool should_bake)
 {
-	return (primitive_plane(pos, Vector3(size.x, 0.0f, size.y), color));
+	return (primitive_plane(pos, rot, Vector3(size.x, 0.0f, size.y), color));
 }
 
-c_mesh *primitive_plane(Vector3 pos, Vector3 size, Color color)
+c_mesh *primitive_plane(Vector3 pos, Vector3 rot, Vector3 size, Color color, bool should_bake)
 {
 	c_mesh *result;
 	Vector3 delta = Vector3(size.x / 2.0f, 0.0f, size.z / 2.0f);
 
 	result = new c_mesh(pos);
+	result->rotate(rot);
 
 	result->add_point(Vector3(0.0f, 0.0f, 0.0f) - delta);
 	result->add_point(Vector3(size.x, 0.0f, 0.0f) - delta);
@@ -89,7 +92,8 @@ c_mesh *primitive_plane(Vector3 pos, Vector3 size, Color color)
 	result->add_face(Face((int []){2, 1, 3}, (int []){3, 1, 2}, (int []){-1, -1, -1}, color));
 	result->add_face(Face((int []){0, 3, 1}, (int []){0, 2, 1}, (int []){-1, -1, -1}, color));
 
-	result->bake();
+	if (should_bake == true)
+		result->bake();
 
 	return (result);
 }

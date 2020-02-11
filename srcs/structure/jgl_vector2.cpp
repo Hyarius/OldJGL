@@ -34,49 +34,49 @@ Vector2& Vector2::operator = (float  p_value)
 	return *this;
 }
 
-Vector2		Vector2::operator + (const Vector2& delta){
+Vector2		Vector2::operator + (const Vector2 delta){
 	return (Vector2(x + delta.x, y + delta.y));
 }
 
-Vector2		Vector2::operator - (const Vector2& delta){
+Vector2		Vector2::operator - (const Vector2 delta){
 	return (Vector2(x - delta.x, y - delta.y));
 }
 
-Vector2		Vector2::operator * (const Vector2& delta){
+Vector2		Vector2::operator * (const Vector2 delta){
 	return (Vector2(x * delta.x, y * delta.y));
 }
 
-Vector2		Vector2::operator / (const Vector2& delta){
+Vector2		Vector2::operator / (const Vector2 delta){
 	return (Vector2(x / delta.x, y / delta.y));
 }
 
-void 		Vector2::operator += (const Vector2& delta){
+void 		Vector2::operator += (const Vector2 delta){
     x += delta.x; y += delta.y;
 }
 
-void 		Vector2::operator -= (const Vector2& delta){
+void 		Vector2::operator -= (const Vector2 delta){
     x -= delta.x; y -= delta.y;
 }
 
-void 		Vector2::operator *= (const Vector2& delta){
+void 		Vector2::operator *= (const Vector2 delta){
     x *= delta.x; y *= delta.y;
 }
 
-void 		Vector2::operator /= (const Vector2& delta){
+void 		Vector2::operator /= (const Vector2 delta){
     x /= delta.x; y /= delta.y;
 }
 
-bool		Vector2::operator == (const Vector2& delta) const
+bool		Vector2::operator == (const Vector2 delta) const
 {
 	return ((x == delta.x && y == delta.y) ? true : false);
 }
 
-bool		Vector2::operator != (const Vector2& delta) const
+bool		Vector2::operator != (const Vector2 delta) const
 {
 	return ((x == delta.x && y == delta.y) ? false : true);
 }
 
-bool Vector2::operator < (const Vector2& other) const
+bool Vector2::operator < (const Vector2 other) const
 {
 	if (y < other.y)
 		return (true);
@@ -85,7 +85,7 @@ bool Vector2::operator < (const Vector2& other) const
 	return (false);
 }
 
-bool Vector2::operator > (const Vector2& other) const
+bool Vector2::operator > (const Vector2 other) const
 {
 	if (y < other.y || x < other.x)
 		return (false);
@@ -97,7 +97,7 @@ float *Vector2::decompose()
 	return (&x);
 }
 
-float Vector2::distance(Vector2 &point)
+float Vector2::distance(Vector2 point)
 {
 	return (sqrt( pow(point.x - x, 2.0f)
 				+ pow(point.y - y, 2.0f)));
@@ -112,7 +112,7 @@ Vector2		Vector2::normalize()
 	return (Vector2(x / length, y / length));
 }
 
-Vector2 Vector2::cross(Vector2 &other)
+Vector2 Vector2::cross(Vector2 other)
 {
 	Vector2 result;
 
@@ -121,7 +121,7 @@ Vector2 Vector2::cross(Vector2 &other)
 	return (result);
 }
 
-float Vector2::dot(Vector2 &other)
+float Vector2::dot(Vector2 other)
 {
 	float		result;
 

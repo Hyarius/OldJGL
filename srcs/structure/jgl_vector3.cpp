@@ -38,49 +38,49 @@ Vector3& Vector3::operator = (float  p_value) {
 	return *this;
 }
 
-Vector3		Vector3::operator + (const Vector3& delta){
+Vector3		Vector3::operator + (const Vector3 delta){
 	return (Vector3(x + delta.x, y + delta.y, z + delta.z));
 }
 
-Vector3		Vector3::operator - (const Vector3& delta){
+Vector3		Vector3::operator - (const Vector3 delta){
 	return (Vector3(x - delta.x, y - delta.y, z - delta.z));
 }
 
-Vector3		Vector3::operator * (const Vector3& delta){
+Vector3		Vector3::operator * (const Vector3 delta){
 	return (Vector3(x * delta.x, y * delta.y, z * delta.z));
 }
 
-Vector3		Vector3::operator / (const Vector3& delta){
+Vector3		Vector3::operator / (const Vector3 delta){
 	return (Vector3(x / delta.x, y / delta.y, z / delta.z));
 }
 
-void 		Vector3::operator += (const Vector3& delta){
+void 		Vector3::operator += (const Vector3 delta){
     x += delta.x; y += delta.y; z += delta.z;
 }
 
-void 		Vector3::operator -= (const Vector3& delta){
+void 		Vector3::operator -= (const Vector3 delta){
     x -= delta.x; y -= delta.y; z -= delta.z;
 }
 
-void 		Vector3::operator *= (const Vector3& delta){
+void 		Vector3::operator *= (const Vector3 delta){
     x *= delta.x; y *= delta.y; z *= delta.z;
 }
 
-void 		Vector3::operator /= (const Vector3& delta){
+void 		Vector3::operator /= (const Vector3 delta){
     x /= delta.x; y /= delta.y; z /= delta.z;
 }
 
-bool		Vector3::operator == (const Vector3& delta) const{
+bool		Vector3::operator == (const Vector3 delta) const{
 	return ((x == delta.x && y == delta.y && z == delta.z) ?
 			true : false);
 }
 
-bool		Vector3::operator != (const Vector3& delta) const{
+bool		Vector3::operator != (const Vector3 delta) const{
 	return ((x == delta.x && y == delta.y && z == delta.z) ?
 			false : true);
 }
 
-bool Vector3::operator < (const Vector3& other) const
+bool Vector3::operator < (const Vector3 other) const
 {
 	if (z < other.z)
 		return (true);
@@ -91,7 +91,7 @@ bool Vector3::operator < (const Vector3& other) const
 	return (false);
 }
 
-bool Vector3::operator > (const Vector3& other) const
+bool Vector3::operator > (const Vector3 other) const
 {
 	if (z < other.z || y < other.y || x < other.x)
 		return (false);
@@ -102,7 +102,7 @@ float *Vector3::decompose(){
 	return (&x);
 }
 
-float Vector3::distance(Vector3 &point)
+float Vector3::distance(Vector3 point)
 {
 	return (sqrt( pow(point.x - x, 2.0f)
 				+ pow(point.y - y, 2.0f)
@@ -120,7 +120,7 @@ Vector3		Vector3::normalize()
 	return (Vector3(x / length, y / length, z / length));
 }
 
-float			Vector3::dot(Vector3 &b)
+float			Vector3::dot(Vector3 b)
 {
 	float		result;
 
@@ -129,7 +129,7 @@ float			Vector3::dot(Vector3 &b)
 	return (result);
 }
 
-Vector3		Vector3::cross(Vector3 &other) //Produit vectoriel / cross product
+Vector3		Vector3::cross(Vector3 other) //Produit vectoriel / cross product
 {
 	Vector3	result = Vector3(
 			y * other.z - z * other.y,

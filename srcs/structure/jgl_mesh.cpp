@@ -1,8 +1,11 @@
 #include "jgl.h"
 
-c_mesh::c_mesh(Vector3 p_pos, Vector3 p_rot)
+c_mesh::c_mesh(Vector3 p_pos, Vector3 p_rot, Vector3 p_size)
 {
 	_pos = p_pos;
+	_size = p_size;
+	_velocity = 0;
+	_kinetic = false;
 
 	glGenBuffers(1, &_vertex_buffer);
 	glGenBuffers(1, &_color_buffer);
@@ -28,7 +31,7 @@ c_mesh::c_mesh(Vector3 p_pos, Vector3 p_rot)
 	_texture = nullptr;
 }
 
-c_mesh::c_mesh(string p_path, Vector3 p_pos, Vector3 p_rot) : c_mesh(p_pos, p_rot)
+c_mesh::c_mesh(string p_path, Vector3 p_pos, Vector3 p_rot, Vector3 p_size, Color color) : c_mesh(p_pos, p_rot)
 {
 	int index_vertices[3] = {-1, -1, -1}, index_uvs[3] = {-1, -1, -1}, index_normales[3] = {-1, -1, -1};
 	vector<string> tab;
@@ -57,7 +60,7 @@ c_mesh::c_mesh(string p_path, Vector3 p_pos, Vector3 p_rot) : c_mesh(p_pos, p_ro
 					if (face_content.size() >= 3)
 						index_normales[i] = (face_content[2].length() == 0 ? -1 : atoi(face_content[2].c_str()) - 1);
 				}
-				add_face(Face(index_vertices, index_uvs, index_normales, Color(210, 210, 210)));
+				add_face(Face(index_vertices, index_uvs, index_normales, color));
 				for (size_t i = 0; i < 3; i++)
 				{
 					index_vertices[i] = -1;
@@ -107,6 +110,7 @@ void c_mesh::compute_normales()
 		b = _rot_matrix * (_vertices[_faces[i].index_vertices[1]] - _vertices[_faces[i].index_vertices[0]]);
 		c = _rot_matrix * (_vertices[_faces[i].index_vertices[2]] - _vertices[_faces[i].index_vertices[0]]);
 		tmp = b.cross(c).normalize();
+		_faces[i].normale = tmp;
 		for (size_t j = 0; j < 3; j++)
 		{
 			if (_faces[i].index_normale[j] == -1)
@@ -163,8 +167,26 @@ void c_mesh::rotate(Vector3 delta)
 	compute_axis();
 }
 
+void c_mesh::compute_bubble_box()
+{
+	Vector3 total;
+
+	total = 0;
+	for (size_t i = 0; i < _vertices.size(); i++)
+		total += _vertices[i];
+	_center = static_cast<int>(_vertices.size());
+	_radius = 0;
+	for (size_t i = 0; i < _vertices.size(); i++)
+	{
+		float tmp_radius = _center.distance(_vertices[i]);
+		if (_radius < tmp_radius)
+			_radius = tmp_radius;
+	}
+}
+
 void c_mesh::bake()
 {
+	compute_bubble_box();
 	compute_normales();
 
 	_baked_vertices.clear();
@@ -300,4 +322,41 @@ void c_mesh::render(c_camera *camera)
 		render_color(camera);
 	else
 		render_texture(camera);
+}
+
+void c_mesh::add_component(c_mesh *mesh)
+{
+	int index_actual_vertices;
+	int index_actual_uvs;
+	int index_actual_normales;
+
+	index_actual_vertices = _vertices.size();
+	index_actual_uvs = _uvs.size();
+	index_actual_normales = _normales.size();
+	for (size_t i = 0; i < mesh->vertices().size(); i++)
+		add_point(mesh->vertices()[i] + mesh->pos());
+	for (size_t i = 0; i < mesh->uvs().size(); i++)
+		add_uv(mesh->uvs()[i]);
+	for (size_t i = 0; i < mesh->normales().size(); i++)
+		add_normale(mesh->normales()[i]);
+
+	for (size_t i = 0; i < mesh->faces().size(); i++)
+	{
+		Face *actual;
+
+		actual = mesh->faces(i);
+		add_face(Face((int []){
+			actual->index_vertices[0] + index_actual_vertices,
+			actual->index_vertices[1] + index_actual_vertices,
+			actual->index_vertices[2] + index_actual_vertices
+		}, (int []){
+			(actual->index_uvs[0] == -1 ? -1 : actual->index_uvs[0] + index_actual_uvs),
+			(actual->index_uvs[1] == -1 ? -1 : actual->index_uvs[1] + index_actual_uvs),
+			(actual->index_uvs[2] == -1 ? -1 : actual->index_uvs[2] + index_actual_uvs)
+		}, (int []){
+			(actual->index_normale[0] == -1 ? -1 : actual->index_normale[0] + index_actual_normales),
+			(actual->index_normale[1] == -1 ? -1 : actual->index_normale[1] + index_actual_normales),
+			(actual->index_normale[2] == -1 ? -1 : actual->index_normale[2] + index_actual_normales)
+		}));
+	}
 }

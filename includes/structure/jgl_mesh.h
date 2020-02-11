@@ -4,6 +4,7 @@
 struct Face
 {
 	Color color;
+	Vector3 normale;
 	int index_vertices[3];
 	int index_uvs[3];
 	int index_normale[3];
@@ -30,7 +31,11 @@ private:
 	GLuint _alpha_buffer;
 
 	Vector3 _pos;
+	Vector3 _center;
+	float _radius;
 	Vector3 _size;
+	Vector3 _velocity;
+	bool _kinetic;
 
 	Vector3 _rotation;
 	Matrix _rot_matrix;
@@ -54,21 +59,29 @@ private:
 	c_image *_texture;
 
 public:
-	c_mesh(Vector3 p_pos = 0, Vector3 p_rot = 0);
-	c_mesh(string path, Vector3 p_pos = 0, Vector3 p_rot = 0);
+	c_mesh(Vector3 p_pos, Vector3 p_rot = 0, Vector3 p_size = 1);
+	c_mesh(string path, Vector3 p_pos, Vector3 p_rot, Vector3 p_size, Color color = Color(190, 190, 190));
 
 	float transparency(){return (_transparency);}
+	bool kinetic(){return (_kinetic);}
 	Vector3 pos(){return (_pos);}
+	float radius(){return (_radius);}
+	Vector3 center(){return (_center);}
+	Vector3 velocity(){return (_velocity);}
 	Vector3 size(){return (_size);}
 	Vector3 rotation(){return (_rotation);}
+	Matrix rot_matrix(){return (_rot_matrix);}
 	Vector3 forward(){return (_forward);}
 	Vector3 right(){return (_right);}
 	Vector3 up(){return (_up);}
 
 	vector<Vector3> &vertices(){return (_vertices);}
 	vector<Vector2> &uvs(){return (_uvs);}
+	vector<Vector3> &normales(){return (_normales);}
 	vector<Face> &faces(){return (_faces);}
+	Face *faces(size_t i){if (i >= _faces.size())return (NULL);return (&(_faces[i]));}
 
+	void add_component(c_mesh *mesh);
 	void add_point(Vector3 p_point);
 	void add_uv(Vector2 p_uv);
 	void add_normale(Vector3 p_normale);
@@ -76,7 +89,10 @@ public:
 	void set_texture(c_image *p_texture);
 	void set_transparency(float p_transparency){_transparency = p_transparency;}
 	void compute_normales();
+	void compute_bubble_box();
 	void compute_axis();
+
+	void set_kinetic(bool p_kinetic){_kinetic = p_kinetic;}
 
 	void bake();
 
@@ -84,6 +100,10 @@ public:
 	void rotate_around_point(Vector3 target, Vector3 delta);
 	void rotate(Vector3 delta);
 	void move(Vector3 delta){_pos += delta;}
+	void add_velocity(Vector3 delta){_velocity += delta;}
+	void apply_velocity(){move(_velocity);}
+	void reset_velocity(){_velocity = 0;}
+	void set_velocity(Vector3 p_velocity){_velocity = p_velocity;}
 	void place(Vector3 p_pos){_pos = p_pos;}
 
 	void render_color(c_camera *camera);
@@ -91,7 +111,8 @@ public:
 	void render(c_camera *camera);
 };
 
-c_mesh *primitive_cube(Vector3 pos, Vector3 size, Color color);
-c_mesh *primitive_plane(Vector3 pos, Vector2 size, Color color);
-c_mesh *primitive_plane(Vector3 pos, Vector3 size, Color color);
+c_mesh *primitive_cube(Vector3 pos, Vector3 rot, Vector3 size, Color color, bool should_bake = true);
+c_mesh *primitive_plane(Vector3 pos, Vector3 rot, Vector2 size, Color color, bool should_bake = true);
+c_mesh *primitive_plane(Vector3 pos, Vector3 rot, Vector3 size, Color color, bool should_bake = true);
+
 #endif

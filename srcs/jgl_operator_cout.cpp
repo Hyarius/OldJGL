@@ -64,3 +64,15 @@ ostream& operator<<(ostream& os, Matrix data)
 	os << "--------------------------------------------------------------" << endl;
 	return os;
 }
+
+ostream& operator<<(ostream& os, Line3D value)
+{
+	os << "(" << value.a << " / " << value.b << ")";
+	return os;
+}
+
+ostream& operator<<(ostream& os, Triangle3D value)
+{
+	os << "(" << value.a << " / " << value.b << " / " << value.c << ")";
+	return os;
+}

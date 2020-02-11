@@ -165,6 +165,7 @@ int c_application::run()
 		clear();
 
 		//_central_widget->render();
+
 		_central_widget->render_children();
 
 		_central_widget->handle_event();
