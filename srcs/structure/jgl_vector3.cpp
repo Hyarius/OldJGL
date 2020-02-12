@@ -142,7 +142,7 @@ Vector3		Vector3::cross(Vector3 other) //Produit vectoriel / cross product
 
 string Vector3::str()
 {
-	string result = "(" + to_string(x) + " / " + to_string(y) + " / " + to_string(z) + ")";
+	string result = "(" + ftoa(x, 2) + " / " + ftoa(y, 2) + " / " + ftoa(z, 2) + ")";
 
 	return (result);
 }

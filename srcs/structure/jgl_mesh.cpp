@@ -174,7 +174,7 @@ void c_mesh::compute_bubble_box()
 	total = 0;
 	for (size_t i = 0; i < _vertices.size(); i++)
 		total += _vertices[i];
-	_center = static_cast<int>(_vertices.size());
+	_center = total / static_cast<int>(_vertices.size());
 	_radius = 0;
 	for (size_t i = 0; i < _vertices.size(); i++)
 	{
@@ -239,8 +239,6 @@ void c_mesh::render_color(c_camera *camera)
 		return ;
 
 	glUseProgram(g_application->program_color_model());
-
-	glUniform3f(g_application->pos_colorID(), _pos.x, _pos.y, _pos.z);
 
 	glUniformMatrix4fv(g_application->matrix_colorID(), 1, GL_FALSE, &(camera->MVP().value[0][0]));
 	glUniform3f(g_application->pos_colorID(), _pos.x, _pos.y, _pos.z);

@@ -78,7 +78,7 @@ void reverse(string &base)
     }
 }
 
-string intToStr(int x, int d)
+string itoa(int x, int d)
 {
 	char c;
 	string result;
@@ -94,7 +94,7 @@ string intToStr(int x, int d)
 
     while (i < d)
 	{
-		result.append("0");
+		result.append(" ");
 		i++;
 	}
 
@@ -107,24 +107,25 @@ string intToStr(int x, int d)
 }
 
 // Converts a floating point number to string.
-string ftoa(float n, int afterpoint)
+string ftoa(float n, int afterpoint, int length)
 {
+	string text;
 	ostringstream out;
 
 	if (n > 0 || n < -1)
 		afterpoint += 2;
-    out << setprecision(afterpoint) << n;
+	out << setprecision(afterpoint) << n;
+	text = out.str();
+	while (length != -1 && text.length() < length)
+		text.insert(text.begin(), ' ');
+	out.seekp(0);
+    out << text;
     return out.str();
 }
 // Converts a floating point number to string.
-string ftoa(double n, int afterpoint)
+string ftoa(double n, int afterpoint, int length)
 {
-	ostringstream out;
-
-	if (n > 0 || n < -1)
-		afterpoint += 2;
-    out << setprecision(afterpoint) << n;
-    return out.str();
+    return (ftoa((float)n, afterpoint, length));
 }
 
 bool string_is_numeric(string text)

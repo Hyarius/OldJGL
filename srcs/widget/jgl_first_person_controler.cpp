@@ -3,8 +3,8 @@
 c_first_person_controler::c_first_person_controler(c_widget *p_parent) : c_widget(p_parent)
 {
 	SDL_ShowCursor(SDL_DISABLE);
-	_camera = new c_camera(Vector3(0.0f, 0.0f, 0.0f), 45, 0.1f, 100.0f);
-	_camera->look_at(Vector3(0, 10, 0));
+	_camera = new c_camera(Vector3(3.0f, 0.5f, 0.0f), 45, 0.1f, 100.0f);
+	_camera->look_at(Vector3(0.0f, 0.5f, 0.0f));
 	_move_speed = 0.05f;
 	_rot_speed = 0.1f;
 	_engine = new c_engine();
@@ -17,8 +17,13 @@ void c_first_person_controler::set_geometry_imp(Vector2 p_anchor, Vector2 p_area
 
 void c_first_person_controler::render()
 {
+	static Vector2		coord = Vector2(50, 50);
 	_viewport->use();
 	glClear(GL_DEPTH_BUFFER_BIT);
+
+	draw_text("Camera pos : " + _camera->pos().str(), coord, 12, 0, text_color::white);
+	draw_text("FPS = [" + itoa(g_application->max_fps(), 5) + "]", coord + Vector2(0, 16), 12, 0, text_color::white);
+	draw_text("FPS RATIO = [" + ftoa(g_application->fps_ratio(), 4) + "]", coord + Vector2(0, 32), 12, 0, text_color::white);
 
 	for (size_t i = 0; i < _engine->meshes().size(); i++)
 		if (_engine->mesh(i)->transparency() == 1.0f)
@@ -40,12 +45,12 @@ bool c_first_person_controler::handle_keyboard()
 	}
 	if (get_keyboard()->get_key(SDL_SCANCODE_W) == key_state::down)
 	{
-		_camera->move(_camera->forward() * Vector3(1, 0, 1) * -_move_speed * g_application->fps_ratio());
+		_camera->move((_camera->forward() * Vector3(1, 0, 1)).normalize() * -_move_speed * g_application->fps_ratio());
 		action = true;
 	}
 	if (get_keyboard()->get_key(SDL_SCANCODE_S) == key_state::down)
 	{
-		_camera->move(_camera->forward() * Vector3(1, 0, 1) * _move_speed * g_application->fps_ratio());
+		_camera->move((_camera->forward() * Vector3(1, 0, 1)).normalize() * _move_speed * g_application->fps_ratio());
 		action = true;
 	}
 	if (get_keyboard()->get_key(SDL_SCANCODE_D) == key_state::down)

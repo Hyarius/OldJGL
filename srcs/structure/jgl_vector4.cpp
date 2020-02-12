@@ -142,7 +142,7 @@ Vector4		Vector4::cross(Vector4 other) //Produit vectoriel / cross product
 
 string Vector4::str()
 {
-	string result = "(" + to_string(x) + " / " + to_string(y) + " / " + to_string(z) + " / " + to_string(w) + ")";
+	string result = "(" + ftoa(x, 2) + " / " + ftoa(y, 2) + " / " + ftoa(z, 2) + " / " + ftoa(w, 2) + ")";
 
 	return (result);
 }

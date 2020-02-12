@@ -18,16 +18,14 @@ void c_engine::handle_physics()
 			found = false;
 			for (size_t j = 0; j < _meshes.size(); j++)
 			{
-				if (j != i && intersect_bubble_box(tmp, mesh(j)) == true && intersect_mesh(tmp, mesh(j)) == true)
+				if (j != i && intersect_bubble_box(tmp, mesh(j)) == true)
 					found = true;
 			}
 
 			if (found == false)
-				tmp->add_velocity(Vector3(0.0f, -0.001f, 0.0f) * g_application->fps_ratio());
+				tmp->add_velocity(Vector3(0.0f, -0.05f, 0.0f) * g_application->fps_ratio());
 			else
-			{
-				tmp->add_velocity(Vector3(tmp->velocity().x * -0.9f, tmp->velocity().y * -0.9f, tmp->velocity().z * -0.9f));
-			}
+				tmp->reset_velocity();
 		}
 	}
 	for (size_t i = 0; i < _meshes.size(); i++)

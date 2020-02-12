@@ -132,7 +132,7 @@ float Vector2::dot(Vector2 other)
 
 string Vector2::str()
 {
-	string result = "(" + to_string(x) + " / " + to_string(y) + ")";
+	string result = "(" + ftoa(x, 2) + " / " + ftoa(y, 2) + ")";
 
 	return (result);
 }

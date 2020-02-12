@@ -125,10 +125,17 @@ bool intersect_mesh(c_mesh *to_move, c_mesh *to_check)
 
 bool intersect_bubble_box(c_mesh *to_move, c_mesh *to_check)
 {
+	Vector3 move_center;
+	Vector3 check_center;
 	float distance;
 
-	distance = (to_move->pos() + to_move->center()).distance(to_check->pos() + to_check->center());
+	move_center = to_move->pos() + to_move->center();
+	check_center = to_check->pos() + to_check->center();
+	distance = move_center.distance(check_center);
 	if (distance < to_move->radius() + to_check->radius())
+	{
+		cout << "From " << move_center << " to " << check_center << " = " << distance << " vs " << ftoa(to_move->radius() + to_check->radius(), 2) << endl;
 		return (true);
+	}
 	return (false);
 }

@@ -57,7 +57,6 @@ public:
 	Matrix view(){return (_view);}
 	Matrix projection(){return (_projection);}
 	void bake(){_MVP = _projection * _view * _model;}
-	Matrix &MVP(Vector3 pos){_MVP_pos = Matrix(T, pos) * _projection * _view * _model;return (_MVP_pos);}
 	Matrix &MVP(){return (_MVP);}
 	Vector3 dir_light(){return (_dir_light);}
 	Vector3 pos(){return (_pos);}

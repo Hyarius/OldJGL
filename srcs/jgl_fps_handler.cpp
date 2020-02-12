@@ -14,25 +14,20 @@ int				get_frame_state(int div)
 
 void c_application::check_frame(bool draw)
 {
-	Vector2			coord;
-	static string	str = "FPS";
 	static unsigned int	framedelay = 0;
 
-	coord = Vector2(50, 50);
 	if (saved_fps != g_application->max_fps())
 	{
 		saved_fps = g_application->max_fps();
 		framedelay = 1000.0f / static_cast<float>(saved_fps);
 	}
 	frame_actual = SDL_GetTicks();
-	if (draw == true)
-		draw_text(str, coord, 12, 0, text_color::white);
 	if (beginsecond == 0)
 		beginsecond = frame_actual;
 	if (frame_actual - beginsecond > 1000)
 	{
-		str = "FPS = " + to_string(nb_frame);
 		_fps_ratio = 60.0f / nb_frame;
+		g_application->set_max_fps(nb_frame);
 		nb_frame = 0;
 		beginsecond = 0;
 	}
