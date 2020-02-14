@@ -48,34 +48,34 @@ LFLAGS = 	$(foreach dir, $(LIB_DIR), -L $(dir) ) $(foreach lib, $(LIB), -l$(lib)
 CC=			g++
 
 all:
-				make $(NAME)
+			make $(NAME)
 
 install:
-				make libs
+			make libs
 
 libs:
-				$(foreach lib, $(LIB_DWN), $(DWL) install $(lib); )
+			$(foreach lib, $(LIB_DWN), $(DWL) install $(lib); )
 
-$(NAME):		$(OBJ) $(INC_DIR) Makefile
-				@echo "Compiling $(NAME) ...\c"
-				@ar rc $(NAME) $(OBJ)
-				@ranlib $(NAME)
-				@echo " DONE"
+$(NAME):	$(OBJ) $(INC_DIR) Makefile
+			@echo "Compiling $(NAME) ...\c"
+			@ar rc $(NAME) $(OBJ)
+			@ranlib $(NAME)
+			@echo " DONE"
 
 $(OBJ_DIR)/%.o : %.cpp
-				@mkdir -p $(OBJ_DIR)
-				@echo "Compiling $< ...\c"
-				@$(CC) $(CFLAGS) $(IFLAGS) -o $@ -c $<
-				@echo " DONE"
+			@mkdir -p $(OBJ_DIR)
+			@echo "Compiling $< ...\c"
+			@$(CC) $(CFLAGS) $(IFLAGS) -o $@ -c $<
+			@echo " DONE"
 
 clean:
-				@rm -rf $(OBJ_DIR)
-				@echo "clean"
+			@rm -rf $(OBJ_DIR)
+			@echo "clean"
 
 fclean:			clean
-				@rm -f $(NAME)
-				@echo "fclean"
+			@rm -f $(NAME)
+			@echo "fclean"
 
-re:				fclean all
+re:			fclean all
 
 .PHONY: all clean fclean re

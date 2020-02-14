@@ -206,9 +206,7 @@ void c_mesh::bake()
 
 }
 
-
-
-void c_mesh::render_color(c_camera *camera)
+void c_mesh::render_color_differed(c_camera *camera, Vector3 p_pos)
 {
 	if (_baked_vertices.size() == 0)
 		return ;
@@ -216,7 +214,7 @@ void c_mesh::render_color(c_camera *camera)
 	glUseProgram(g_application->program_color_model());
 
 	glUniformMatrix4fv(g_application->matrix_colorID(), 1, GL_FALSE, &(camera->MVP().value[0][0]));
-	glUniform3f(g_application->pos_colorID(), _pos.x, _pos.y, _pos.z);
+	glUniform3f(g_application->pos_colorID(), p_pos.x, p_pos.y, p_pos.z);
 	glUniformMatrix4fv(g_application->rot_colorID(), 1, GL_FALSE, &(_rot_matrix.value[0][0]));
 	glUniform3f(g_application->dir_light_textureID(), camera->dir_light().x, camera->dir_light().y, camera->dir_light().z);
 
@@ -247,7 +245,7 @@ void c_mesh::render_color(c_camera *camera)
 	glDisableVertexAttribArray(2);
 }
 
-void c_mesh::render_texture(c_camera *camera)
+void c_mesh::render_texture_differed(c_camera *camera, Vector3 p_pos)
 {
 	if (_baked_vertices.size() == 0)
 		return ;
@@ -257,7 +255,7 @@ void c_mesh::render_texture(c_camera *camera)
 	glBindTexture(GL_TEXTURE_2D, _texture->texture_id());
 
 	glUniformMatrix4fv(g_application->matrix_textureID(), 1, GL_FALSE, &(camera->MVP().value[0][0]));
-	glUniform3f(g_application->pos_textureID(), _pos.x, _pos.y, _pos.z);
+	glUniform3f(g_application->pos_textureID(), p_pos.x, p_pos.y, p_pos.z);
 	glUniformMatrix4fv(g_application->rot_textureID(), 1, GL_FALSE, &(_rot_matrix.value[0][0]));
 	glUniform3f(g_application->dir_light_textureID(), camera->dir_light().x, camera->dir_light().y, camera->dir_light().z);
 	glUniform1f(g_application->alpha_textureID(), _transparency);
@@ -289,105 +287,16 @@ void c_mesh::render_texture(c_camera *camera)
 	glDisableVertexAttribArray(2);
 }
 
-
-void c_mesh::render_color_differed(c_camera *camera, Vector3 pos)
-{
-	if (_baked_vertices.size() == 0)
-		return ;
-
-	glUseProgram(g_application->program_color_model());
-
-	glUniformMatrix4fv(g_application->matrix_colorID(), 1, GL_FALSE, &(camera->MVP().value[0][0]));
-	glUniform3f(g_application->pos_colorID(), pos.x, pos.y, pos.z);
-	glUniformMatrix4fv(g_application->rot_colorID(), 1, GL_FALSE, &(_rot_matrix.value[0][0]));
-	glUniform3f(g_application->dir_light_textureID(), camera->dir_light().x, camera->dir_light().y, camera->dir_light().z);
-
-	// 1rst attribute buffer : vertices
-	glEnableVertexAttribArray(0);
-	glBindBuffer(GL_ARRAY_BUFFER, _vertex_buffer);
-	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 0, (void*)0);
-
-		// 2rst attribute buffer : vertices
-	glEnableVertexAttribArray(1);
-	glBindBuffer(GL_ARRAY_BUFFER, _color_buffer);
-	glVertexAttribPointer(1, 4, GL_FLOAT, GL_FALSE, 0, (void*)0);
-
-		// 3rst attribute buffer : vertices
-	glEnableVertexAttribArray(2);
-	glBindBuffer(GL_ARRAY_BUFFER, _normale_buffer);
-	glVertexAttribPointer(2, 3, GL_FLOAT, GL_FALSE, 0, (void*)0);
-
-	// Draw the triangle !
-	glEnable(GL_CULL_FACE);
-	// glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
-	glDrawArrays(GL_TRIANGLES, 0, _baked_vertices.size() * 3); // 3 indices starting at 0 -> 1 triangle
-	// glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
-	glDisable(GL_CULL_FACE);
-
-	glDisableVertexAttribArray(0);
-	glDisableVertexAttribArray(1);
-	glDisableVertexAttribArray(2);
-}
-
-void c_mesh::render_texture_differed(c_camera *camera, Vector3 pos)
-{
-	if (_baked_vertices.size() == 0)
-		return ;
-
-	glUseProgram(g_application->program_texture_model());
-
-	glBindTexture(GL_TEXTURE_2D, _texture->texture_id());
-
-	glUniformMatrix4fv(g_application->matrix_textureID(), 1, GL_FALSE, &(camera->MVP().value[0][0]));
-	glUniform3f(g_application->pos_textureID(), pos.x, pos.y, pos.z);
-	glUniformMatrix4fv(g_application->rot_textureID(), 1, GL_FALSE, &(_rot_matrix.value[0][0]));
-	glUniform3f(g_application->dir_light_textureID(), camera->dir_light().x, camera->dir_light().y, camera->dir_light().z);
-	glUniform1f(g_application->alpha_textureID(), _transparency);
-
-	// 1rst attribute buffer : vertices
-	glEnableVertexAttribArray(0);
-	glBindBuffer(GL_ARRAY_BUFFER, _vertex_buffer);
-	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 0, (void*)0);
-
-		// 2rst attribute buffer : uv
-	glEnableVertexAttribArray(1);
-	glBindBuffer(GL_ARRAY_BUFFER, _uv_buffer);
-	glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 0, (void*)0);
-
-		// 3rst attribute buffer : normales
-	glEnableVertexAttribArray(2);
-	glBindBuffer(GL_ARRAY_BUFFER, _normale_buffer);
-	glVertexAttribPointer(2, 3, GL_FLOAT, GL_FALSE, 0, (void*)0);
-
-	// Draw the triangle !
-	// glEnable(GL_CULL_FACE);
-	// glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
-	glDrawArrays(GL_TRIANGLES, 0, _baked_vertices.size() * 3); // 3 indices starting at 0 -> 1 triangle
-	// glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
-	// glDisable(GL_CULL_FACE);
-
-	glDisableVertexAttribArray(0);
-	glDisableVertexAttribArray(1);
-	glDisableVertexAttribArray(2);
-}
-
-void c_mesh::render(c_camera *camera)
+void c_mesh::render_differed(c_camera *camera, Vector3 p_pos)
 {
 	if (_texture == nullptr)
-		render_color(camera);
+		render_color_differed(camera, p_pos);
 	else
-		render_texture(camera);
+		render_texture_differed(camera, p_pos);
 }
 
-void c_mesh::render_differed(c_camera *camera, Vector3 pos)
+void c_mesh::add_component(c_mesh *mesh, Vector3 p_pos)
 {
-	if (_texture == nullptr)
-		render_color(camera, pos);
-	else
-		render_texture(camera, pos);
-}
-
-void add_component(c_mesh *mesh, Vector3 pos)
 	int index_actual_vertices;
 	int index_actual_uvs;
 	int index_actual_normales;
@@ -396,7 +305,7 @@ void add_component(c_mesh *mesh, Vector3 pos)
 	index_actual_uvs = _uvs.size();
 	index_actual_normales = _normales.size();
 	for (size_t i = 0; i < mesh->vertices().size(); i++)
-		add_point(mesh->vertices()[i] + pos);
+		add_point(mesh->vertices()[i] + p_pos);
 	for (size_t i = 0; i < mesh->uvs().size(); i++)
 		add_uv(mesh->uvs()[i]);
 	for (size_t i = 0; i < mesh->normales().size(); i++)

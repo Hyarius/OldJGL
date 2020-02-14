@@ -108,12 +108,12 @@ public:
 	void set_velocity(Vector3 p_velocity){_velocity = p_velocity;}
 	void place(Vector3 p_pos){_pos = p_pos;}
 
-	void render_color(c_camera *camera);
-	void render_texture(c_camera *camera);
-	void render_color_differed(c_camera *camera);
-	void render_texture_differed(c_camera *camera);
-	void render(c_camera *camera);
-	void render_differed(c_camera *camera, Vector3 pos);
+	void render_color(c_camera *camera){render_color_differed(camera, pos());}
+	void render_texture(c_camera *camera){render_texture_differed(camera, pos());}
+	void render_color_differed(c_camera *camera, Vector3 p_pos);
+	void render_texture_differed(c_camera *camera, Vector3 p_pos);
+	void render(c_camera *camera){render_differed(camera, pos());}
+	void render_differed(c_camera *camera, Vector3 p_pos);
 };
 
 c_mesh *primitive_cube(Vector3 pos, Vector3 rot, Vector3 size, Color color, bool should_bake = true);
