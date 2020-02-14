@@ -81,12 +81,14 @@ public:
 	vector<Face> &faces(){return (_faces);}
 	Face *faces(size_t i){if (i >= _faces.size())return (NULL);return (&(_faces[i]));}
 
-	void add_component(c_mesh *mesh);
-	void add_point(Vector3 p_point);
-	void add_uv(Vector2 p_uv);
-	void add_normale(Vector3 p_normale);
-	void add_face(Face p_face);
-	void set_texture(c_image *p_texture);
+	void add_component(c_mesh *mesh){add_component(mesh, mesh->pos());}
+	void add_component(c_mesh *mesh, Vector3 pos);
+	void add_point(Vector3 p_point){_vertices.push_back(p_point);}
+	void add_uv(Vector2 p_uv){_uvs.push_back(p_uv);}
+	void add_normale(Vector3 p_normale){_normales.push_back(p_normale);}
+	void add_face(Face p_face){_faces.push_back(p_face);}
+	void set_texture(c_image *p_texture){_texture = p_texture;}
+	void set_texture(c_tileset *p_texture){set_texture(p_texture->image());}
 	void set_transparency(float p_transparency){_transparency = p_transparency;}
 	void compute_normales();
 	void compute_bubble_box();
@@ -108,10 +110,16 @@ public:
 
 	void render_color(c_camera *camera);
 	void render_texture(c_camera *camera);
+	void render_color_differed(c_camera *camera);
+	void render_texture_differed(c_camera *camera);
 	void render(c_camera *camera);
+	void render_differed(c_camera *camera, Vector3 pos);
 };
 
 c_mesh *primitive_cube(Vector3 pos, Vector3 rot, Vector3 size, Color color, bool should_bake = true);
+
+c_mesh *primitive_voxel(Vector3 pos, c_tileset *tileset, Vector2 top_sprite, Vector2 side_sprite, Vector2 down_sprite, float p_transparency = 1.0f, bool should_bake = false, Vector3 rot = 0, Vector3 size = 1);
+c_mesh *primitive_voxel(Vector3 pos, c_tileset *tileset, size_t type, float p_transparency = 1.0f, bool should_bake = false, Vector3 rot = 0, Vector3 size = 1);
 c_mesh *primitive_plane(Vector3 pos, Vector3 rot, Vector2 size, Color color, bool should_bake = true);
 c_mesh *primitive_plane(Vector3 pos, Vector3 rot, Vector3 size, Color color, bool should_bake = true);
 

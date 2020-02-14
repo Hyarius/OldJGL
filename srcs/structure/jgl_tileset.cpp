@@ -11,17 +11,19 @@ c_tileset::c_tileset(string path, Vector2 p_size)
 	Vector2	tmp = 0;
 	if (p_size == 1)
 		_sprites.insert(_sprites.end(), 0);
-
-	while (tmp.x * tmp.y < _size.x * (_size.y - 1))
+	else
 	{
-		if (tmp.x >= _size.x)
+		while (tmp.y != _size.y)
 		{
-			tmp.x = 0;
-			tmp.y++;
+			Vector2 result = Vector2(tmp.x / _size.x, tmp.y / _size.y);
+			_sprites.insert(_sprites.end(), result);
+			tmp.x++;
+			if (tmp.x >= _size.x)
+			{
+				tmp.x = 0;
+				tmp.y++;
+			}
 		}
-		Vector2 result = Vector2(tmp.x / _size.x, tmp.y / _size.y);
-		_sprites.insert(_sprites.end(), result);
-		tmp.x++;
 	}
 }
 
@@ -34,19 +36,19 @@ c_tileset::c_tileset(c_image *p_image, Vector2 p_size)
 	Vector2	tmp = 0;
 	if (p_size == 1)
 		_sprites.insert(_sprites.end(), 0);
-
 	else
 	{
-		while (tmp.x * tmp.y < _size.x * (_size.y - 1))
+		while (tmp.y != _size.y)
 		{
+			Vector2 result = Vector2(tmp.x / _size.x, tmp.y / _size.y);
+			_sprites.insert(_sprites.end(), result);
+			cout << "Sprite size = " << _sprites.size() << " with " << result << endl;
+			tmp.x++;
 			if (tmp.x >= _size.x)
 			{
 				tmp.x = 0;
 				tmp.y++;
 			}
-			Vector2 result = Vector2(tmp.x / _size.x, tmp.y / _size.y);
-			_sprites.insert(_sprites.end(), result);
-			tmp.x++;
 		}
 	}
 

@@ -82,7 +82,7 @@ c_application::c_application(string name, Vector2 p_size, Color p_color)
 	glTexParameterf( GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST );
 
 	glEnable(GL_DEPTH_TEST);
-	glDepthFunc(GL_LEQUAL);
+	glDepthFunc(GL_LESS);
 	glEnable(GL_BLEND);
 	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 	glFrontFace(GL_CW);
@@ -117,7 +117,7 @@ c_application::c_application(string name, Vector2 p_size, Color p_color)
 	//_viewport->use();
 
 	SDL_StartTextInput();
-
+	set_max_fps(6000);
 }
 
 void c_application::resize(Vector2 p_size)

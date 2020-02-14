@@ -52,7 +52,6 @@ all:
 
 install:
 				make libs
-				make $(NAME)
 
 libs:
 				$(foreach lib, $(LIB_DWN), $(DWL) install $(lib); )

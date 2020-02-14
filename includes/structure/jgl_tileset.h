@@ -23,6 +23,19 @@ public:
 	Vector2 size(){return (_size);}
 	Vector2 unit(){return (_unit);}
 	vector<Vector2> &sprites(){return (_sprites);}
+	Vector2 sprite(size_t index)
+	{
+		if (index >= _sprites.size())
+			return (-1);
+		return (_sprites[index]);
+	}
+	Vector2 sprite(Vector2 coord)
+	{
+		if (coord.x < 0 || coord.x >= _size.x ||
+			coord.y < 0 || coord.y >= _size.y)
+			return (-1);
+		return (sprite(coord.x + (_size.x * coord.y)));
+	}
 
 	void draw(int id, Vector2 pos, Vector2 size, float p_alpha = 1.0f, c_viewport *viewport = nullptr);
 	void draw_centred(int id, Vector2 pos, Vector2 size, float p_alpha = 1.0f, c_viewport *viewport = nullptr);

@@ -21,10 +21,6 @@ void c_first_person_controler::render()
 	_viewport->use();
 	glClear(GL_DEPTH_BUFFER_BIT);
 
-	draw_text("Camera pos : " + _camera->pos().str(), coord, 12, 0, text_color::white);
-	draw_text("FPS = [" + itoa(g_application->max_fps(), 5) + "]", coord + Vector2(0, 16), 12, 0, text_color::white);
-	draw_text("FPS RATIO = [" + ftoa(g_application->fps_ratio(), 4) + "]", coord + Vector2(0, 32), 12, 0, text_color::white);
-
 	for (size_t i = 0; i < _engine->meshes().size(); i++)
 		if (_engine->mesh(i)->transparency() == 1.0f)
 			_engine->mesh(i)->render(_camera);

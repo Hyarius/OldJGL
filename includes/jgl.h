@@ -19,10 +19,10 @@
 #include "jgl_draw_image.h"
 #include "jgl_draw_primitive.h"
 #include "jgl_image.h"
+#include "jgl_tileset.h"
 #include "jgl_mesh.h"
 #include "jgl_algorithm.h"
 #include "jgl_engine.h"
-#include "jgl_tileset.h"
 #include "jgl_widgets.h"
 
 #include "jgl_text_label.h"
