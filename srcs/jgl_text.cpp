@@ -53,7 +53,7 @@ SDL_Color			get_color(int i)
 	return (color_tab[i]);
 }
 
-TTF_Font *get_font(int size)
+TTF_Font *get_font(size_t size)
 {
 	if (size < 2)
 		error_exit(1, "Can't load a font of size < 2");
@@ -65,7 +65,7 @@ TTF_Font *get_font(int size)
 
 	if (font[size] == nullptr)
 	{
-		font[size] = TTF_OpenFont(font_path.c_str(), size);
+		font[size] = TTF_OpenFont(font_path.c_str(), static_cast<int>(size));
 		if (font[size] == nullptr)
 			error_exit(1, "Can't load a font");
 	}
@@ -73,7 +73,7 @@ TTF_Font *get_font(int size)
 	return (font[size]);
 }
 
-c_image				*get_char(char c, int size, int outline, text_color color, text_style style)
+c_image				*get_char(char c, size_t size, int outline, text_color color, text_style style)
 {
 	string text;
 
@@ -108,7 +108,7 @@ c_image				*get_char(char c, int size, int outline, text_color color, text_style
 	return (char_list[size][(size_t)style][(size_t)color][c]);
 }
 
-int				draw_text(string text, Vector2 coord, int size, int outline, text_color color, text_style style, c_viewport *viewport)
+int				draw_text(string text, Vector2 coord, size_t size, int outline, text_color color, text_style style, c_viewport *viewport)
 {
 	c_image			*image;
 	size_t			i = 0;
@@ -126,14 +126,14 @@ int				draw_text(string text, Vector2 coord, int size, int outline, text_color c
 		rel_coord = Vector2(coord.x + delta, coord.y);
 		image = get_char(text[i], size, outline, color, style);
 		image->draw(rel_coord, image->size(), 1.0f, viewport);
-		delta += image->size().x;
+		delta += static_cast<int>(image->size().x);
 
 		i++;
 	}
 	return (delta);
 }
 
-int				max_char_in_box(int space, int size)
+int				max_char_in_box(int space, size_t size)
 {
 	int nb_char = 0;
 	c_image			*image;
@@ -142,14 +142,14 @@ int				max_char_in_box(int space, int size)
 	image = get_char('M', size);
 	while (delta < space)
 	{
-		delta += image->size().x;
+		delta += static_cast<int>(image->size().x);
 		nb_char++;
 	}
 
 	return (nb_char);
 }
 
-int				calc_text_len(string text, int size)
+int				calc_text_len(string text, size_t size)
 {
 	c_image			*image;
 	size_t			i = 0;
@@ -158,13 +158,13 @@ int				calc_text_len(string text, int size)
 	while (i < text.length())
 	{
 		image = get_char(text[i], size);
-		delta += image->size().x;
+		delta += static_cast<int>(image->size().x);
 		i++;
 	}
 	return (delta);
 }
 
-int				draw_centred_text(string text, Vector2 coord, int size, int outline, text_color color, text_style style, c_viewport *viewport)
+int				draw_centred_text(string text, Vector2 coord, size_t size, int outline, text_color color, text_style style, c_viewport *viewport)
 {
 	if (viewport == nullptr)
 		viewport = g_application->central_widget()->viewport();
@@ -173,7 +173,7 @@ int				draw_centred_text(string text, Vector2 coord, int size, int outline, text
 		return 0;
 
 	int x = calc_text_len(text, size);
-	int y = get_char('M', size, 0, color, style)->size().y;
+	int y = static_cast<int>(get_char('M', size, 0, color, style)->size().y);
 
 	return (draw_text(text, Vector2(coord.x - x / 2, coord.y - y / 2), size, outline, color, style, viewport));
 }

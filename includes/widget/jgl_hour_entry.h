@@ -76,7 +76,7 @@ public:
 	int			hour_precision(){return (_hour.precision());}
 	float 		hour_value(){return (_hour.value());}
 	string 		hour_text(){return (_hour.text());}
-	int 		hour_cursor(){return (_hour.cursor());}
+	size_t 		hour_cursor(){return (_hour.cursor());}
 
 	void 		set_minute_selected(bool p_selected){_minute.set_selected(p_selected);}
 	void 		set_minute_precision(int p_precision){_minute.set_precision(p_precision);}
@@ -87,7 +87,7 @@ public:
 	int			minute_precision(){return (_minute.precision());}
 	float 		minute_value(){return (_minute.value());}
 	string 		minute_text(){return (_minute.text());}
-	int 		minute_cursor(){return (_minute.cursor());}
+	size_t 		minute_cursor(){return (_minute.cursor());}
 
 	void set_selected(bool p_selected){_selected = p_selected;}
 	void set_box(w_box_component new_box){_box = new_box;}

@@ -155,9 +155,9 @@ Pixel Pixel::floor()
 {
 	Pixel result;
 
-	result.x = static_cast<int>(this->x);
-	result.y = static_cast<int>(this->y);
-	result.z = static_cast<int>(this->z);
+	result.x = this->x;
+	result.y = this->y;
+	result.z = this->z;
 
 	return (result);
 }

@@ -11,8 +11,8 @@ private:
 	w_value_entry_component _entry;
 
 	bool _select;
-	long _next_input;
-	long _input_delay;
+	unsigned long _next_input;
+	unsigned long _input_delay;
 
 public:
 	c_value_entry(float p_value = 0.001f, c_widget *p_parent = nullptr);
@@ -49,7 +49,7 @@ public:
 	int			precision(){return (_entry.precision());}
 	float 		value(){return (_entry.value());}
 	string 		text(){return (_entry.text());}
-	int 		cursor(){return (_entry.cursor());}
+	size_t 		cursor(){return (_entry.cursor());}
 
 	void 		set_align(alignment p_align){_entry.set_align(p_align);}
 	void 		set_size(int p_size){_entry.set_size(p_size);}

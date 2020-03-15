@@ -15,7 +15,12 @@ private:
 	vector<Vector2> _sprites;
 
 public:
-	c_tileset(){}
+	c_tileset(){
+		_image = nullptr;
+		_size = 0;
+		_unit = 1;
+		_sprites.clear();
+	}
 	c_tileset(c_image *p_image, Vector2 p_size = 1);
 	c_tileset(string path, Vector2 p_size = 0);
 
@@ -34,7 +39,7 @@ public:
 		if (coord.x < 0 || coord.x >= _size.x ||
 			coord.y < 0 || coord.y >= _size.y)
 			return (-1);
-		return (sprite(coord.x + (_size.x * coord.y)));
+		return (sprite(static_cast<size_t>(coord.x + (_size.x * coord.y))));
 	}
 
 	void draw(int id, Vector2 pos, Vector2 size, float p_alpha = 1.0f, c_viewport *viewport = nullptr);

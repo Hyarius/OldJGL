@@ -2,15 +2,15 @@
 
 using namespace std;
 
-vector<Vector2> calc_point(int width)
+vector<Vector2> calc_point(size_t width)
 {
 	vector<Vector2> result;
 	Vector2 center = 0;
 	Vector2 actual;
 
-	for (actual.x = -width / 2; actual.x <= width / 2 || actual.x == 0; actual.x++)
+	for (actual.x = -static_cast<int>(width) / 2.0f; actual.x <= static_cast<int>(width) / 2.0f || actual.x == 0; actual.x++)
 	{
-		for (actual.y = -width / 2; actual.y <= width / 2 || actual.y == 0; actual.y++)
+		for (actual.y = -static_cast<int>(width) / 2.0f; actual.y <= static_cast<int>(width) / 2.0f || actual.y == 0; actual.y++)
 		{
 			if (center.distance(actual) < width / 2.0f)
 				result.push_back(actual);
@@ -20,7 +20,7 @@ vector<Vector2> calc_point(int width)
 	return (result);
 }
 
-void draw_line(Vector2 p1, Vector2 p2, int width, Color p_color, c_viewport *viewport)
+void draw_line(Vector2 p1, Vector2 p2, size_t width, Color p_color, c_viewport *viewport)
 {
 	if (viewport == nullptr)
 		viewport = g_application->central_widget()->viewport();
@@ -34,7 +34,6 @@ void draw_line(Vector2 p1, Vector2 p2, int width, Color p_color, c_viewport *vie
 	colors[1] = p_color;
 	for (size_t i = 0; i < to_draw.size(); i++)
 	{
-
 		pixels[0] = convert_screen_to_opengl(Vector2(to_draw[i].x + p1.x, to_draw[i].y + p1.y));
 		pixels[1] = convert_screen_to_opengl(Vector2(to_draw[i].x + p2.x, to_draw[i].y + p2.y));
 		draw_line_color(pixels, colors, 1);
@@ -42,7 +41,7 @@ void draw_line(Vector2 p1, Vector2 p2, int width, Color p_color, c_viewport *vie
 
 }
 
-void draw_point(Vector2 center, int width, Color p_color, c_viewport *viewport)
+void draw_point(Vector2 center, size_t width, Color p_color, c_viewport *viewport)
 {
 	if (viewport == nullptr)
 		viewport = g_application->central_widget()->viewport();
@@ -50,9 +49,9 @@ void draw_point(Vector2 center, int width, Color p_color, c_viewport *viewport)
 	Pixel tmp_center = 0;
 	Pixel actual;
 
-	for (actual.x = -width / 2; actual.x <= width / 2 || actual.x == 0; actual.x++)
+	for (actual.x = -static_cast<int>(width) / 2.0f; actual.x <= static_cast<int>(width) / 2.0f || actual.x == 0; actual.x++)
 	{
-		for (actual.y = -width / 2; actual.y <= width / 2 || actual.y == 0; actual.y++)
+		for (actual.y = -static_cast<int>(width) / 2.0f; actual.y <= static_cast<int>(width) / 2.0f || actual.y == 0; actual.y++)
 		{
 			if (tmp_center.distance(actual) < width / 2.0f)
 				draw_pixel_color(Pixel(actual.x + center.x, actual.y + center.y), p_color);

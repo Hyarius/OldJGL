@@ -59,9 +59,9 @@ c_frame *c_tab::add_tab(string p_name, int index)
 	new_tab_button->activate();
 
 	if (index == -1)
-		index = _tabs.size();
+		index = static_cast<int>(_tabs.size());
 
-	for (size_t i = _tabs.size(); i <= index + 1; i++)
+	for (size_t i = _tabs.size(); i <= static_cast<size_t>(index)+1; i++)
 	{
 		_tabs.push_back(nullptr);
 		_buttons.push_back(nullptr);
@@ -110,8 +110,8 @@ void c_tab::reset_button()
 	{
 		if (_buttons[i] != nullptr)
 		{
-			float tmp = calc_text_len(_buttons[i]->text(), 20);
-			size.x = tmp;
+			int tmp = calc_text_len(_buttons[i]->text(), 20);
+			size.x = static_cast<float>(tmp);
 			_buttons[i]->set_geometry(pos, size);
 			pos.x += size.x + button_area->border();
 			_buttons[i]->set_data(Data(3, &_buttons, &_tabs, i));

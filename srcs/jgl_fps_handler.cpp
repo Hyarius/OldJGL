@@ -19,7 +19,7 @@ void c_application::check_frame(bool draw)
 	if (saved_fps != g_application->max_fps())
 	{
 		saved_fps = g_application->max_fps();
-		framedelay = 1000.0f / static_cast<float>(saved_fps);
+		framedelay = static_cast<unsigned int>(1000.0f / static_cast<float>(saved_fps));
 	}
 	frame_actual = SDL_GetTicks();
 	if (beginsecond == 0)

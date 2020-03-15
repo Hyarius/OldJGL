@@ -4,6 +4,7 @@
 #define FPS 60.0f;
 
 #include "jgl_includes.h"
+#include "jgl_dirent.h"
 #include "jgl_enum.h"
 #include "jgl_data.h"
 #include "jgl_vector.h"

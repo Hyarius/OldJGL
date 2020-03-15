@@ -153,11 +153,11 @@ public:
 class w_text_entry_component : public w_component, public w_graphical_component, public w_textual_component
 {
 protected:
-	int _cursor;
+	size_t _cursor;
 	bool _selected;
 
 	string _text_to_draw;
-	int _cursor_to_draw;
+	size_t _cursor_to_draw;
 
 public:
 		//Constructor
@@ -169,10 +169,10 @@ public:
 
 		//Getter
 	bool		selected(){return (_selected);}
-	int 		cursor(){return (_cursor);}
+	size_t 		cursor(){return (_cursor);}
 
 	string 		text_to_draw(){return (_text_to_draw);}
-	int 		cursor_to_draw(){return (_cursor_to_draw);}
+	size_t 		cursor_to_draw(){return (_cursor_to_draw);}
 
 	void 		resize(Vector2 p_anchor, Vector2 p_area)
 		{set_anchor(p_anchor);set_area(p_area);calc_text_size_height(_area);}
@@ -218,10 +218,10 @@ protected:
 	bool _selected;
 	float _value;
 	int _precision;
-	int _cursor;
+	size_t _cursor;
 
 	string _text_to_draw;
-	int _cursor_to_draw;
+	size_t _cursor_to_draw;
 
 public:
 		//Constructor
@@ -243,9 +243,9 @@ public:
 	int			precision(){return (_precision);}
 	float 		value(){return (_value);}
 	string 		text(){return (_text);}
-	int 		cursor(){return (_cursor);}
+	size_t 		cursor(){return (_cursor);}
 	string 		text_to_draw(){return (_text_to_draw);}
-	int 		cursor_to_draw(){return (_cursor_to_draw);}
+	size_t 		cursor_to_draw(){return (_cursor_to_draw);}
 
 	void 		calc_text_to_draw();
 	void 		move_cursor(int delta);

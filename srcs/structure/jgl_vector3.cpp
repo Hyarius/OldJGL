@@ -151,9 +151,9 @@ Vector3 Vector3::floor()
 {
 	Vector3 result;
 
-	result.x = static_cast<int>(x);
-	result.y = static_cast<int>(y);
-	result.z = static_cast<int>(z);
+	result.x = static_cast<float>(std::floor(x));
+	result.y = static_cast<float>(std::floor(y));
+	result.z = static_cast<float>(std::floor(z));
 
 	return (result);
 }

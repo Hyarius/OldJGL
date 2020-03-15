@@ -73,8 +73,8 @@ void c_hour_entry::render()
 
 void c_hour_entry::round()
 {
-	_hour.set_value((int)(_hour.value()) % 24);
-	_minute.set_value((int)(_minute.value()) % 60);
+	_hour.set_value(static_cast<float>(static_cast<int>(_hour.value()) % 24));
+	_minute.set_value(static_cast<float>(static_cast<int>(_minute.value()) % 60));
 
 	while (_hour.text().size() < 2)
 		_hour.set_text("0" + _hour.text());

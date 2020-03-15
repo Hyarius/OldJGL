@@ -15,7 +15,7 @@ string itoa(int x, int d);
 string ftoa(float n, int afterpoint = -1, int lenght = -1);
 string ftoa(double n, int afterpoint = -1, int lenght = -1);
 string normalize_string(string str, char c, size_t size);
-string normalize_float(float num, size_t after_point, char c, size_t size);
+string normalize_float(float num, int after_point, char c, size_t size);
 bool is_middle(float a, float b, float c);
 vector<Vector2> calc_line_2d(float x1, float y1, float x2, float y2);
 int generate_nbr(int min, int max);

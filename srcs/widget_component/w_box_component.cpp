@@ -21,8 +21,8 @@ void w_box_component::render(c_viewport *viewport)
 		float corner_size = (_corner_size == -1 ? 32.0f : _corner_size);
 		if (corner_size * 2 > _area.x || corner_size * 2 > _area.y)
 			corner_size = (_area.x < _area.y ? _area.x : _area.y) / 2;
-		int nb_sub_x = ceil((_area.x - corner_size * 2) / corner_size);
-		int nb_sub_y = ceil((_area.y - corner_size * 2) / corner_size);
+		int nb_sub_x = static_cast<int>(ceil((_area.x - corner_size * 2) / corner_size));
+		int nb_sub_y = static_cast<int>(ceil((_area.y - corner_size * 2) / corner_size));
 		Vector2 h_middle_size = Vector2((_area.x - corner_size * 2) / (nb_sub_x == 0 ? 1 : nb_sub_x), corner_size);
 		Vector2 v_middle_size = Vector2(corner_size, (_area.y - corner_size * 2) / (nb_sub_y == 0 ? 1 : nb_sub_y));
 		Vector2 c_middle_size = Vector2(h_middle_size.x, v_middle_size.y);

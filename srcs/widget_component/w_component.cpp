@@ -24,7 +24,6 @@ Vector2		w_component::owner_anchor()
 
 bool w_component::is_pointed(Vector2 point)
 {
-	c_widget *tmp;
 	Vector2 pos1, pos2;
 
 	pos1 = _anchor;

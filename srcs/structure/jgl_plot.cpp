@@ -56,7 +56,7 @@ void c_plot::calc_axis_unit()
 
 void c_plot::initialize()
 {
-	_plot = new c_image(_size.x, _size.y, _color);
+	_plot = new c_image(static_cast<int>(_size.x), static_cast<int>(_size.y), _color);
 }
 
 void c_plot::draw()
@@ -102,7 +102,7 @@ void c_plot::draw_plot_line(Vector2 point_a, Vector2 point_b, Color color)
 
 void c_plot::draw_absciss_point(float value)
 {
-	string text = ftoa(value, absciss().precision);
+	string text = ftoa(value, static_cast<int>(absciss().precision));
 	if (absciss().funct != nullptr)
 		text = absciss().funct(value);
 	float delta = value - absciss().min;
@@ -119,7 +119,7 @@ void c_plot::draw_ordinate()
 
 void c_plot::draw_ordinate_point(float value)
 {
-	string text = ftoa(value, ordinate().precision);
+	string text = ftoa(value, static_cast<int>(ordinate().precision));
 	float delta = value - ordinate().min;
 	draw_point(_origin + _ordinate_unit * delta, 5, Color(0, 0, 0));
 	draw_centred_text(text, _origin + _ordinate_unit * delta - Vector2(_margin.x / 2, 0.0f));

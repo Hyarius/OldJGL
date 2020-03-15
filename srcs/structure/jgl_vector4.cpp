@@ -151,10 +151,10 @@ Vector4 Vector4::floor()
 {
 	Vector4 result;
 
-	result.x = static_cast<int>(x);
-	result.y = static_cast<int>(y);
-	result.z = static_cast<int>(z);
-	result.w = static_cast<int>(w);
+	result.x = std::floor(x);
+	result.y = std::floor(y);
+	result.z = std::floor(z);
+	result.w = std::floor(w);
 
 	return (result);
 }

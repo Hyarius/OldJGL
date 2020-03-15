@@ -17,7 +17,6 @@ static void	compile_shader(GLuint p_id, string p_source)
 	GLint	result;
 	const char *content;
 
-	int msg_len;
 	content = p_source.c_str();
 	result = GL_FALSE;
 	glShaderSource(p_id, 1, &content, NULL);

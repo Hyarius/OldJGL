@@ -14,7 +14,7 @@ c_application::c_application(string name, Vector2 p_size, Color p_color)
 	SDL_GL_SetAttribute(SDL_GL_DOUBLEBUFFER, 1);
 	SDL_GL_SetAttribute(SDL_GL_DEPTH_SIZE, 16);
 
-	srand(time(NULL));
+	srand(static_cast<unsigned int>(time(NULL)));
 	TTF_Init();
 
 	_size = p_size;
@@ -38,7 +38,7 @@ c_application::c_application(string name, Vector2 p_size, Color p_color)
 	//_renderer = SDL_CreateRenderer(_window, -1, SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC);
 	//SDL_SetRenderDrawBlendMode(_renderer, SDL_BLENDMODE_BLEND);
 
-	SDL_WarpMouseInWindow(_window, _size.x / 2, _size.y / 2);
+	SDL_WarpMouseInWindow(_window, static_cast<int>(_size.x / 2), static_cast<int>(_size.y / 2));
 
 	_max_fps = 60;
 	_fps_ratio = 1.0f;
@@ -89,14 +89,11 @@ c_application::c_application(string name, Vector2 p_size, Color p_color)
 
 	glBindVertexArray(_vertex_array);
 	glBindBuffer(GL_ARRAY_BUFFER, _vertex_buffer);
-	glBufferData(GL_ARRAY_BUFFER, sizeof(GLfloat) * _size.x * _size.y \
-										* 3, NULL, GL_STATIC_DRAW);
+	glBufferData(GL_ARRAY_BUFFER, static_cast<GLuint>(sizeof(GLfloat) * _size.x * _size.y * 3), NULL, GL_STATIC_DRAW);
 	glBindBuffer(GL_ARRAY_BUFFER, _color_buffer);
-	glBufferData(GL_ARRAY_BUFFER, sizeof(GLfloat) * _size.x * _size.y \
-										* 4, NULL, GL_DYNAMIC_DRAW);
+	glBufferData(GL_ARRAY_BUFFER, static_cast<GLuint>(sizeof(GLfloat) * _size.x * _size.y * 4), NULL, GL_DYNAMIC_DRAW);
 	glBindBuffer(GL_ARRAY_BUFFER, _texture_buffer);
-	glBufferData(GL_ARRAY_BUFFER, sizeof(GLfloat) * _size.x * _size.y \
-										* 4, NULL, GL_DYNAMIC_DRAW);
+	glBufferData(GL_ARRAY_BUFFER, static_cast<GLuint>(sizeof(GLfloat) * _size.x * _size.y * 4), NULL, GL_DYNAMIC_DRAW);
 
 	g_mouse = new Mouse();
 	g_keyboard = new Keyboard();

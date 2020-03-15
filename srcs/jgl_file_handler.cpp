@@ -99,7 +99,7 @@ void				copy_file(string src_path, string dest_path)
 	source.seekg(0, ios::end);
 	fstream::pos_type size = source.tellg();
 	source.seekg(0);
-	char* buffer = new char[size];
+	char* buffer = new char[static_cast<size_t>(size)];
 
 	source.read(buffer, size);
 	destination.write(buffer, size);

@@ -9,8 +9,17 @@ struct Face
 	int index_uvs[3];
 	int index_normale[3];
 
+	Face()
+	{
+		normale = 0;
+		index_vertices[0] = 0;
+		index_uvs[0] = 0;
+		index_normale[0] = 0;
+		color = Color(255, 255, 255);
+	}
 	Face(int p_index_vertices[3], int p_index_uvs[3], int p_index_normale[3], Color p_color = Color(190, 190, 190))
 	{
+		normale = 0;
 		for (size_t i = 0; i < 3; i++)
 		{
 			index_vertices[i] = p_index_vertices[i];

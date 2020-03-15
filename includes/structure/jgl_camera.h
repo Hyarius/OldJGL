@@ -49,8 +49,8 @@ public:
 
 	c_viewport *viewport(){return (_viewport);}
 	float fov(){return (_fov);}
-	float near(){return (_near);}
-	float far(){return (_far);}
+	float view_near(){return (_near);}
+	float view_far(){return (_far);}
 	float yaw(){return (_yaw);}
 	float pitch(){return (_pitch);}
 	Matrix model(){return (_model);}

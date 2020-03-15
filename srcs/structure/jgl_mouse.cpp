@@ -29,7 +29,7 @@ void		Mouse::actualize_mouse(SDL_Event *event)
 		rel_pos = pos - old_pos;
 
 	if (event != NULL && event->type == SDL_MOUSEWHEEL)
-		wheel = event->wheel.y;
+		wheel = static_cast<float>(event->wheel.y);
 	else
 		wheel = 0.0f;
 
@@ -60,7 +60,7 @@ void Mouse::place(Vector2 coord)
 	pos = coord;
 	old_pos = coord;
 	rel_pos = Vector2(0, 0);
-	SDL_WarpMouseInWindow(g_application->window(), coord.x, coord.y);
+	SDL_WarpMouseInWindow(g_application->window(), static_cast<int>(coord.x), static_cast<int>(coord.y));
 }
 
 Mouse *get_mouse()

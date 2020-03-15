@@ -92,7 +92,7 @@ void c_mesh::compute_normales()
 				_normales.insert(_normales.end(), tmp);
 			else
 			{
-				if (_normales.size() <= _faces[i].index_normale[j] + 1)
+				if (_normales.size() <= static_cast<size_t>(_faces[i].index_normale[j] + 1))
 					_normales.resize(_faces[i].index_normale[j] + 1);
 				_normales[_faces[i].index_normale[j]] = tmp;
 			}
@@ -105,7 +105,7 @@ void c_mesh::compute_axis()
 	float tmp_yaw = degree_to_radius(_rotation.y);
 	float tmp_pitch = degree_to_radius(_rotation.z);
 
-	_rot_matrix = Matrix(R, _rotation);
+	_rot_matrix = Matrix(Matrix_type::rotation, _rotation);
 	_rot_matrix.value[3][3] = 1.0f;
 	_forward = (Vector3( sin(tmp_yaw - 3.14f / 2.0f), 0.0f, cos(tmp_yaw - 3.14f / 2.0f))).normalize();
 	_right = (Vector3(cos(tmp_pitch) * sin(tmp_yaw), sin(tmp_pitch), cos(tmp_pitch) * cos(tmp_yaw)) ).normalize();
@@ -129,7 +129,7 @@ void c_mesh::rotate_around_point(Vector3 target, Vector3 delta)
 	Vector3 tmp;
 	Matrix rotation;
 
-	rotation = Matrix( R, delta.x, delta.y, delta.z);
+	rotation = Matrix(Matrix_type::rotation, delta.x, delta.y, delta.z);
 
 	tmp = _pos - target;
 	tmp = rotation * tmp;
@@ -236,7 +236,7 @@ void c_mesh::render_color_differed(c_camera *camera, Vector3 p_pos)
 	// Draw the triangle !
 	glEnable(GL_CULL_FACE);
 	// glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
-	glDrawArrays(GL_TRIANGLES, 0, _baked_vertices.size() * 3); // 3 indices starting at 0 -> 1 triangle
+	glDrawArrays(GL_TRIANGLES, 0, static_cast<GLsizei>(_baked_vertices.size() * 3)); // 3 indices starting at 0 -> 1 triangle
 	// glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
 	glDisable(GL_CULL_FACE);
 
@@ -278,7 +278,7 @@ void c_mesh::render_texture_differed(c_camera *camera, Vector3 p_pos)
 	// Draw the triangle !
 	// glEnable(GL_CULL_FACE);
 	// glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
-	glDrawArrays(GL_TRIANGLES, 0, _baked_vertices.size() * 3); // 3 indices starting at 0 -> 1 triangle
+	glDrawArrays(GL_TRIANGLES, 0, static_cast<GLsizei>(_baked_vertices.size() * 3)); // 3 indices starting at 0 -> 1 triangle
 	// glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
 	// glDisable(GL_CULL_FACE);
 
@@ -297,9 +297,9 @@ void c_mesh::render_differed(c_camera *camera, Vector3 p_pos)
 
 void c_mesh::add_component(c_mesh *mesh, Vector3 p_pos)
 {
-	int index_actual_vertices;
-	int index_actual_uvs;
-	int index_actual_normales;
+	size_t index_actual_vertices;
+	size_t index_actual_uvs;
+	size_t index_actual_normales;
 
 	index_actual_vertices = _vertices.size();
 	index_actual_uvs = _uvs.size();
@@ -316,18 +316,18 @@ void c_mesh::add_component(c_mesh *mesh, Vector3 p_pos)
 		Face *actual;
 
 		actual = mesh->faces(i);
-		add_face(Face((int []){
-			actual->index_vertices[0] + index_actual_vertices,
-			actual->index_vertices[1] + index_actual_vertices,
-			actual->index_vertices[2] + index_actual_vertices
-		}, (int []){
-			(actual->index_uvs[0] == -1 ? -1 : actual->index_uvs[0] + index_actual_uvs),
-			(actual->index_uvs[1] == -1 ? -1 : actual->index_uvs[1] + index_actual_uvs),
-			(actual->index_uvs[2] == -1 ? -1 : actual->index_uvs[2] + index_actual_uvs)
-		}, (int []){
-			(actual->index_normale[0] == -1 ? -1 : actual->index_normale[0] + index_actual_normales),
-			(actual->index_normale[1] == -1 ? -1 : actual->index_normale[1] + index_actual_normales),
-			(actual->index_normale[2] == -1 ? -1 : actual->index_normale[2] + index_actual_normales)
+		add_face(Face(new int [3]{
+			actual->index_vertices[0] + static_cast<int>(index_actual_vertices),
+			actual->index_vertices[1] + static_cast<int>(index_actual_vertices),
+			actual->index_vertices[2] + static_cast<int>(index_actual_vertices)
+		}, new int[3]{
+			(actual->index_uvs[0] == -1 ? -1 : actual->index_uvs[0] + static_cast<int>(index_actual_uvs)),
+			(actual->index_uvs[1] == -1 ? -1 : actual->index_uvs[1] + static_cast<int>(index_actual_uvs)),
+			(actual->index_uvs[2] == -1 ? -1 : actual->index_uvs[2] + static_cast<int>(index_actual_uvs))
+		}, new int[3]{
+			(actual->index_normale[0] == -1 ? -1 : actual->index_normale[0] + static_cast<int>(index_actual_normales)),
+			(actual->index_normale[1] == -1 ? -1 : actual->index_normale[1] + static_cast<int>(index_actual_normales)),
+			(actual->index_normale[2] == -1 ? -1 : actual->index_normale[2] + static_cast<int>(index_actual_normales))
 		}));
 	}
 }

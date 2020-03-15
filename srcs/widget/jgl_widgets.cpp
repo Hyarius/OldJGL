@@ -61,7 +61,7 @@ bool c_widget::handle_event()
 	if (is_active() == false || area() == -1)
 		return (false);
 
-	for (int i = _childrens.size() - 1; i >= 0; i--)
+	for (size_t i = _childrens.size() - 1; i >= 0; i--)
 		if (_childrens[i]->handle_event() == true)
 			return (true);
 
@@ -75,7 +75,6 @@ bool c_widget::handle_event()
 
 bool c_widget::is_pointed(Vector2 point)
 {
-	c_widget *tmp;
 	Vector2 pos1, pos2;
 
 	pos1 = _viewport->anchor();

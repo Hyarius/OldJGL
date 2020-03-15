@@ -141,8 +141,8 @@ Vector2 Vector2::floor()
 {
 	Vector2 result;
 
-	result.x = static_cast<int>(x);
-	result.y = static_cast<int>(y);
+	result.x = std::floor(x);
+	result.y = std::floor(y);
 
 	return (result);
 }

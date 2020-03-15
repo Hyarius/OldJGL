@@ -53,7 +53,7 @@ void c_camera::rotate_around_point(Vector3 target, Vector3 delta)
 	Vector3 tmp;
 	Matrix rotation;
 
-	rotation = Matrix( R, delta.x, delta.y, delta.z);
+	rotation = Matrix(Matrix_type::rotation, delta.x, delta.y, delta.z);
 
 	tmp = _pos - target;
 	tmp = rotation * tmp;
@@ -111,14 +111,12 @@ void c_camera::compute_view()
 
 void c_camera::compute_projection()
 {
-	float		n;
 	float		r;
-	float		f;
 	float		t;
 
 	_projection = Matrix();
-	r = 1.0 / (tan(degree_to_radius(_fov / 2.0f)));
-	t = 1.0 / (tan(degree_to_radius(_fov / 2.0f))) / (4.0 / 3.0);
+	r = 1.0f / (tan(degree_to_radius(_fov / 2.0f)));
+	t = 1.0f / (tan(degree_to_radius(_fov / 2.0f))) / (4.0f / 3.0f);
 	_projection.value[0][0] = t;
 	_projection.value[1][1] = r;
 	_projection.value[2][2] = -_far / (_far - _near);

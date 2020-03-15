@@ -46,7 +46,7 @@ public:
 	void		set_text(string p_text){_entry.set_text(p_text);}
 	void 		set_selected(bool p_selected){_entry.set_selected(p_selected);}
 	bool		selected(){return (_entry.selected());}
-	int 		cursor(){return (_entry.cursor());}
+	size_t 		cursor(){return (_entry.cursor());}
 
 	void 		set_align(alignment p_align){_entry.set_align(p_align);}
 	void 		set_size(int p_size){_entry.set_size(p_size);}

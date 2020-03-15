@@ -6,8 +6,8 @@ vector<string>		strsplit(string input, string delim, bool regroup)
 {
 	vector<string>	tab;
 	string			word;
-	int 			start = 0;
-	int 			end = 0;
+	size_t 			start = 0;
+	size_t 			end = 0;
 
 	tab = vector<string>();
 	while (end != -1)
@@ -55,7 +55,7 @@ string normalize_string(string str, char c, size_t size)
 	return (result);
 }
 
-string normalize_float(float num, size_t after_point, char c, size_t size)
+string normalize_float(float num, int after_point, char c, size_t size)
 {
 	string result;
 
@@ -68,7 +68,8 @@ string normalize_float(float num, size_t after_point, char c, size_t size)
 
 void reverse(string &base)
 {
-    int i = 0, j = base.length() - 1, temp;
+	size_t i = 0, j = base.length() - 1;
+	char temp;
     while (i<j)
     {
         temp = base[i];
@@ -116,7 +117,7 @@ string ftoa(float n, int afterpoint, int length)
 		afterpoint += 2;
 	out << setprecision(afterpoint) << n;
 	text = out.str();
-	while (length != -1 && text.length() < length)
+	while (length != -1 && text.length() < static_cast<size_t>(length))
 		text.insert(text.begin(), ' ');
 	out.seekp(0);
     out << text;
@@ -243,12 +244,12 @@ SDL_Surface			*create_surface_color(Color p_color)
 
 float				degree_to_radius(float angle)
 {
-	return ((angle * M_PI) / 180.0f);
+	return ((angle * static_cast<float>(M_PI)) / 180.0f);
 }
 
 float				radius_to_degree(float radian)
 {
-	return ((radian * 180.0f) / M_PI);
+	return ((radian * 180.0f) / static_cast<float>(M_PI));
 }
 
 float clamp_float(float min, float value, float max)

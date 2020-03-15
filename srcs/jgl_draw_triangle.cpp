@@ -28,7 +28,7 @@ void			draw_pixel_color(Pixel points, Color colors, size_t nb)
 	glBindBuffer(GL_ARRAY_BUFFER, g_application->color_buffer());
 	glVertexAttribPointer(1, 4, GL_FLOAT, GL_FALSE, 0, NULL);
 
-	glDrawArrays(GL_LINES, 0, 1 * nb);
+	glDrawArrays(GL_LINES, 0, static_cast<GLsizei>(1 * nb));
 }
 
 void			draw_line_color(Pixel *points, Color *colors, size_t nb)
@@ -59,7 +59,7 @@ void			draw_line_color(Pixel *points, Color *colors, size_t nb)
 	glBindBuffer(GL_ARRAY_BUFFER, g_application->color_buffer());
 	glVertexAttribPointer(1, 4, GL_FLOAT, GL_FALSE, 0, NULL);
 
-	glDrawArrays(GL_LINES, 0, 2 * nb);
+	glDrawArrays(GL_LINES, 0, static_cast<GLsizei>(2 * nb));
 }
 
 void			draw_triangle_color(Pixel *points, Color *colors, size_t nb)
@@ -90,7 +90,7 @@ void			draw_triangle_color(Pixel *points, Color *colors, size_t nb)
 	glBindBuffer(GL_ARRAY_BUFFER, g_application->color_buffer());
 	glVertexAttribPointer(1, 4, GL_FLOAT, GL_FALSE, 0, NULL);
 
-	glDrawArrays(GL_TRIANGLES, 0, 3 * nb);
+	glDrawArrays(GL_TRIANGLES, 0, static_cast<GLsizei>(3 * nb));
 }
 
 void			fill_triangle_color(Pixel *points, Color *colors, size_t nb)
@@ -121,7 +121,7 @@ void			fill_triangle_color(Pixel *points, Color *colors, size_t nb)
 	glBindBuffer(GL_ARRAY_BUFFER, g_application->color_buffer());
 	glVertexAttribPointer(1, 4, GL_FLOAT, GL_FALSE, 0, NULL);
 
-	glDrawArrays(GL_TRIANGLES, 0, 3 * nb);
+	glDrawArrays(GL_TRIANGLES, 0, static_cast<GLsizei>(3 * nb));
 }
 
 void			draw_triangle_texture(Pixel *points, Uv *uvs, float alpha, size_t nb)
@@ -153,5 +153,5 @@ void			draw_triangle_texture(Pixel *points, Uv *uvs, float alpha, size_t nb)
 	glBindBuffer(GL_ARRAY_BUFFER, g_application->texture_buffer());
 	glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 0, NULL);
 
-	glDrawArrays(GL_TRIANGLES, 0, 3 * nb);
+	glDrawArrays(GL_TRIANGLES, 0, static_cast<GLsizei>(3 * nb));
 }

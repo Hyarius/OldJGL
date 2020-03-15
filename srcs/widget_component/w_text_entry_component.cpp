@@ -65,7 +65,7 @@ void w_text_entry_component::calc_text_to_draw()
 	_text_to_draw = "";
 	_cursor_to_draw = 0;
 
-	int i = _cursor;
+	size_t i = _cursor;
 
 	if (_text.empty() == false)
 	{

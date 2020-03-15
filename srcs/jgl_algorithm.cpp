@@ -37,7 +37,7 @@ int get_sign(float value)
 	return (NEGATIVE);
 }
 
-int		intersect_triangle_by_segment(Triangle3D triangle, Line3D line)
+bool		intersect_triangle_by_segment(Triangle3D triangle, Line3D line)
 {
 	int a = get_sign(signed_volume(line.a, triangle.a, triangle.b, triangle.c));
 	int b = get_sign(signed_volume(line.b, triangle.a, triangle.b, triangle.c));
