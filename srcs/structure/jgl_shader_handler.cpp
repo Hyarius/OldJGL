@@ -15,6 +15,7 @@
 static void	compile_shader(GLuint p_id, string p_source)
 {
 	GLint	result;
+	int len;
 	const char *content;
 
 	content = p_source.c_str();
@@ -23,7 +24,12 @@ static void	compile_shader(GLuint p_id, string p_source)
 	glCompileShader(p_id);
 	glGetShaderiv(p_id, GL_COMPILE_STATUS, &result);
 	if (result != GL_TRUE)
-	 	error_exit(-2, "Error while compiling shader");
+	{
+		glGetShaderiv(p_id, GL_INFO_LOG_LENGTH, &len);
+		vector<char> msg(len + 1);
+		glGetShaderInfoLog(p_id, len, NULL, &msg[0]);
+		error_exit(-2, &msg[0]);
+	}
 }
 
 static void	compute_program(GLuint p_program_id, GLuint p_vertex_shader_id, GLuint p_fragment_shader_id)

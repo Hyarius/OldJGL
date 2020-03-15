@@ -7,7 +7,9 @@ c_application::c_application(string name, Vector2 p_size, Color p_color)
 	SDL_Init(SDL_INIT_EVERYTHING);
 	IMG_Init(IMG_INIT_JPG | IMG_INIT_PNG);
 
-	SDL_GL_SetAttribute(SDL_GL_CONTEXT_MAJOR_VERSION, 3);
+	check_sdl_error(__FILE__, __LINE__);
+
+	SDL_GL_SetAttribute(SDL_GL_CONTEXT_MAJOR_VERSION, 4);
 	SDL_GL_SetAttribute(SDL_GL_CONTEXT_MINOR_VERSION, 1);
 	SDL_GL_SetAttribute(SDL_GL_ACCELERATED_VISUAL, 1);
 	SDL_GL_SetAttribute(SDL_GL_CONTEXT_PROFILE_MASK, SDL_GL_CONTEXT_PROFILE_CORE);
@@ -17,11 +19,15 @@ c_application::c_application(string name, Vector2 p_size, Color p_color)
 	srand(static_cast<unsigned int>(time(NULL)));
 	TTF_Init();
 
+	check_sdl_error(__FILE__, __LINE__);
+
 	_size = p_size;
 	if (p_size.x <= 1 && p_size.y <= 1)
 	{
 		SDL_DisplayMode current;
 		SDL_GetDesktopDisplayMode(0, &current);
+
+		check_sdl_error(__FILE__, __LINE__);
 		if (p_size == Vector2())
 			_size = Vector2(current.w * 0.8f, current.h * 0.8f);
 		else
@@ -30,11 +36,33 @@ c_application::c_application(string name, Vector2 p_size, Color p_color)
 
 	string tmp = string(name.begin(), name.end());
 
+	check_sdl_error(__FILE__, __LINE__);
+
 	_window = SDL_CreateWindow(tmp.c_str(),
 		SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED,
-		static_cast<int>(_size.x), static_cast<int>(_size.y), 0);
+		static_cast<int>(_size.x), static_cast<int>(_size.y),
+		SDL_WINDOW_SHOWN | SDL_WINDOW_OPENGL);
 
+	check_sdl_error(__FILE__, __LINE__);
+	if (_window == nullptr)
+	{
+		error_exit(1, "Error with window creation");
+	}
 	_context = SDL_GL_CreateContext(_window);
+
+	check_sdl_error(__FILE__, __LINE__);
+	if (_context == nullptr)
+	{
+		error_exit(1, "Error with context creation");
+	}
+
+	cout << "Graphical info :\n" << endl;
+	cout << string((char*)(glGetString(GL_VENDOR))) + "\n" << endl;
+	cout << string((char*)(glGetString(GL_RENDERER))) + "\n" << endl;
+	cout << string((char*)(glGetString(GL_VERSION))) + "\n" << endl;
+	cout << string((char*)(glGetString(GL_SHADING_LANGUAGE_VERSION))) + "\n" << endl;
+	cout << "\n" << endl;
+
 	//_renderer = SDL_CreateRenderer(_window, -1, SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC);
 	//SDL_SetRenderDrawBlendMode(_renderer, SDL_BLENDMODE_BLEND);
 
@@ -42,7 +70,14 @@ c_application::c_application(string name, Vector2 p_size, Color p_color)
 
 	_max_fps = 60;
 	_fps_ratio = 1.0f;
-	SDL_GL_SetSwapInterval(0);
+	SDL_GL_MakeCurrent(_window,
+		_context);
+	int err = glewInit();
+	if (err != GLEW_OK)
+	{
+		cout << "bug : " << glewGetErrorString(err) << endl;
+		exit(1);
+	}
 
 	glClearColor((GLclampf)p_color.r, (GLclampf)p_color.g, (GLclampf)p_color.b, 1.0f);
 
