@@ -1,20 +1,22 @@
 #ifndef JGL_ENGINE_H
 #define JGL_ENGINE_H
 
-class c_engine
+namespace jgl
 {
-private:
-	vector<c_mesh *> _meshes;
+	class Engine
+	{
+	protected:
+		std::vector<jgl::Mesh*> _meshes;
 
-public:
-	c_engine();
+	public:
+		Engine();
 
-	c_mesh *add_mesh(c_mesh *p_mesh){_meshes.push_back(p_mesh);return (p_mesh);}
+		Mesh* add_mesh(Mesh* p_mesh) { _meshes.push_back(p_mesh); return (p_mesh); }
 
-	vector<c_mesh *> &meshes(){return (_meshes);}
-	c_mesh *mesh(size_t i){if (i >= _meshes.size())return (NULL);return (_meshes[i]);}
+		std::vector<Mesh*>& meshes() { return (_meshes); }
+		Mesh* mesh(size_t i) { if (i >= _meshes.size())return (NULL); return (_meshes[i]); }
 
-	void handle_physics();
-};
-
+		void handle_physics();
+	};
+}
 #endif

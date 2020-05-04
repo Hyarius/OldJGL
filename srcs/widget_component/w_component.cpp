@@ -1,36 +1,39 @@
 #include "jgl.h"
 
-w_component::w_component(class c_widget* p_owner)
+namespace jgl
 {
-	_owner = p_owner;
-	_anchor = Vector2() + owner_anchor();
-	_area = Vector2();
-}
+	w_component::w_component(Widget* p_owner)
+	{
+		_owner = p_owner;
+		_anchor = Vector2() + owner_anchor();
+		_area = Vector2();
+	}
 
-w_component::~w_component()
-{
-	_owner = nullptr;
-}
+	w_component::~w_component()
+	{
+		_owner = nullptr;
+	}
 
-Vector2		w_component::owner_anchor()
-{
-	if (_owner == nullptr || _owner->parent() == nullptr ||
-		_owner->parent()->viewport()->active() == true)
-		return (Vector2(0, 0));
+	Vector2		w_component::owner_anchor()
+	{
+		if (_owner == nullptr || _owner->parent() == nullptr ||
+			_owner->parent()->viewport()->active() == true)
+			return (Vector2(0, 0));
 
-	return (_owner->parent()->anchor());
-};
+		return (_owner->parent()->anchor());
+	};
 
 
-bool w_component::is_pointed(Vector2 point)
-{
-	Vector2 pos1, pos2;
+	bool w_component::is_pointed(Vector2 point)
+	{
+		Vector2 pos1, pos2;
 
-	pos1 = _anchor;
+		pos1 = _anchor;
 
-	pos2 = pos1 + _area;
+		pos2 = pos1 + _area;
 
-	if (point.x < pos1.x || point.x > pos2.x || point.y < pos1.y || point.y > pos2.y)
-		return (false);
-	return (true);
+		if (point.x < pos1.x || point.x > pos2.x || point.y < pos1.y || point.y > pos2.y)
+			return (false);
+		return (true);
+	}
 }

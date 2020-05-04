@@ -7,4 +7,6 @@
    #define M_PI 3.14159265358979323846f
 #endif
 
+#define JGL_STRING_PUSH_SIZE 100
+
 #endif

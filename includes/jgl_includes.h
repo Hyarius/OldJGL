@@ -1,8 +1,6 @@
 #ifndef JGL_INCLUDES_H
 #define JGL_INCLUDES_H
 
-#pragma warning(disable:4996)
-
 #ifdef __APPLE__
 #	include <stdlib.h>
 #elif defined _WIN32
@@ -12,6 +10,7 @@
 #include <fstream>
 #include <fcntl.h>
 #include <string>
+#include <wchar.h>
 #include <stdio.h>
 #include <map>
 #include <stdint.h>
@@ -19,6 +18,7 @@
 #include <tuple>
 #include <algorithm>
 #include <string.h>
+#include <bitset>
 #include <vector>
 #include <math.h>
 #include <iomanip>

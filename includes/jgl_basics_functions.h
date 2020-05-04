@@ -5,53 +5,54 @@
 
 #include "jgl_vector.h"
 
-using namespace std;
-
-void check_sdl_error(const char *file, int line);
-bool string_is_numeric(string text);
-vector<string> strsplit(string input, string c, bool regroup = true);
-void error_exit(int num, string error);
-string itoa(int x, int d);
-string ftoa(float n, int afterpoint = -1, int lenght = -1);
-string ftoa(double n, int afterpoint = -1, int lenght = -1);
-string normalize_string(string str, char c, size_t size);
-string normalize_float(float num, int after_point, char c, size_t size);
-bool is_middle(float a, float b, float c);
-vector<Vector2> calc_line_2d(float x1, float y1, float x2, float y2);
-int generate_nbr(int min, int max);
-
-void remove_char(string &src, string to_remove);
-
-template<typename K, typename V>
-K find_key(map<K, V> &src_map, V &value)
+namespace jgl
 {
-	auto it = src_map.begin();
+	void check_sdl_error(const char* file, int line);
+	bool string_is_numeric(jgl::String text);
+	std::vector<jgl::String> strsplit(jgl::String input, jgl::String c, bool regroup = true);
+	void error_exit(int num, jgl::String error);
+	void reverse(jgl::String& base);
+	jgl::String itoa(int x, int d);
+	jgl::String ftoa(float n, int afterpoint = -1, int lenght = -1);
+	jgl::String ftoa(double n, int afterpoint = -1, int lenght = -1);
+	float stof(String text);
+	int stoi(String text);
+	jgl::String normalize_string(jgl::String str, char c, size_t size);
+	jgl::String normalize_float(float num, int after_point, char c, size_t size);
+	bool is_middle(float a, float b, float c);
+	std::vector<jgl::Vector2> calc_line_2d(float x1, float y1, float x2, float y2);
+	int generate_nbr(int min, int max);
 
-	while (it != src_map.end())
+	void remove_char(jgl::String& src, jgl::String to_remove);
+
+	template<typename K, typename V>
+	K find_key(std::map<K, V>& src_map, V& value)
 	{
-		if(it->second == value)
+		auto it = src_map.begin();
+
+		while (it != src_map.end())
 		{
-			break;
+			if (it->second == value)
+			{
+				break;
+			}
+			it++;
 		}
-		it++;
+		return (it->first);
 	}
-	return (it->first);
-}
 
-template<typename K, typename V>
-bool map_contain(map<K, V> &src_map, K value)
-{
-	for (auto it = src_map.begin(); it != src_map.end(); it++)
-		if (it->first == value)
-			return (true);
-	return (false);
-}
+	template<typename K, typename V>
+	bool map_contain(std::map<K, V>& src_map, K value)
+	{
+		return (src_map.count(value));
+	}
 
-Pixel convert_screen_to_opengl(Vector2 source);
-Pixel convert_screen_to_opengl(Pixel source);
-SDL_Surface *create_surface_color(Color p_color);
-float degree_to_radius(float angle);
-float radius_to_degree(float radian);
-float clamp_float(float min, float value, float max);
-int clamp_int(int min, int value, int max);
+	Pixel convert_screen_to_opengl(Pixel source);
+	SDL_Surface* create_surface_color(Color p_color);
+	float degree_to_radian(float angle);
+	float radian_to_degree(float radian);
+	float clamp_float(float min, float value, float max);
+	int clamp_int(int min, int value, int max);
+	bool point_in_rectangle(jgl::Vector2 target, jgl::Vector2 pos, jgl::Vector2 size);
+}
 #endif

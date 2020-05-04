@@ -6,6 +6,8 @@
 #include "jgl_includes.h"
 #include "jgl_dirent.h"
 #include "jgl_enum.h"
+#include "jgl_glyph.h"
+#include "jgl_string.h"
 #include "jgl_data.h"
 #include "jgl_vector.h"
 #include "jgl_matrix.h"
@@ -39,7 +41,6 @@
 #include "jgl_vscrollable_bar.h"
 #include "jgl_image_label.h"
 #include "jgl_render_widget.h"
-#include "jgl_first_person_controler.h"
 
 #include "jgl_file_handler.h"
 #include "jgl_log_handler.h"

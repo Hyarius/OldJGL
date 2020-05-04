@@ -6,35 +6,45 @@
 #include "jgl_color.h"
 #include "jgl_enum.h"
 
-struct Mouse
+namespace jgl
 {
-	Vector2 old_pos;
-	Vector2 pos;
-	Vector2 rel_pos;
-	float wheel;
-	int button[MOUSE_BUTTON];
-	bool motion;
+	struct Mouse
+	{
+		Vector2 begin_pos;
+		Vector2 old_pos;
+		Vector2 pos;
+		Vector2 rel_pos;
+		float wheel;
+		bool motion;
+		mouse_state button[3];
 
-	Mouse();
-	void actualize_mouse(SDL_Event *event = nullptr);
-	mouse_state get_button(mouse_button type);
-	void place(Vector2 coord);
-};
+		Mouse();
+		void actualize_pos(int x, int y);
+		void actualize_button(Uint32 mousestate);
+		void actualize();
+		mouse_state get_button(mouse_button type);
+		void place(Vector2 coord);
+		void update(int p_time = 20);
+	};
 
-struct Keyboard
-{
-	char clicked;
-	const Uint8	*state;
+	struct Keyboard
+	{
+		key_state keys[150];
+		char clicked;
+		const Uint8* state;
 
-	Keyboard();
-	key_state get_key(int scan_code);
-	void reset_key(int scan_code);
-};
+		Keyboard();
+		void actualize();
+		key_state get_key(key key_type);
+		key_state get_key(size_t key_type) { return (get_key(static_cast<key>(key_type))); }
+	};
+}
 
-extern Keyboard *g_keyboard;
-extern Mouse *g_mouse;
+extern jgl::Keyboard *g_keyboard;
+extern jgl::Mouse *g_mouse;
 
-Keyboard *get_keyboard();
-Mouse *get_mouse();
+jgl::String key_name(jgl::key type);
+jgl::Keyboard *get_keyboard();
+jgl::Mouse *get_mouse();
 
 #endif

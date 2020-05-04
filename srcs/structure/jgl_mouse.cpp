@@ -1,69 +1,109 @@
 #include "jgl.h"
 
-Mouse *g_mouse;
+jgl::Mouse* g_mouse;
 
-Mouse::Mouse()
+namespace jgl
 {
-	int x, y;
 
-	SDL_GetMouseState(&(x), &(y));
-	pos = Vector2(x, y);
-	old_pos = Vector2(x, y);
-	rel_pos = Vector2(0, 0);
-	wheel = 0.0f;
-	button[MOUSE_LEFT] = MOUSE_NULL;
-	button[MOUSE_RIGHT] = MOUSE_NULL;
-	button[MOUSE_MIDDLE] = MOUSE_NULL;
-}
+	Mouse::Mouse()
+	{
+		int x, y;
 
-void		Mouse::actualize_mouse(SDL_Event *event)
-{
-	int x, y;
-	Uint32 mousestate;
-
-	old_pos = pos;
-	mousestate = SDL_GetMouseState(&(x), &(y));
-	pos = Vector2(x, y);
-
-	if (old_pos.x != -1)
-		rel_pos = pos - old_pos;
-
-	if (event != NULL && event->type == SDL_MOUSEWHEEL)
-		wheel = static_cast<float>(event->wheel.y);
-	else
+		SDL_GetMouseState(&(x), &(y));
+		pos = Vector2(x, y);
+		old_pos = Vector2(x, y);
+		rel_pos = Vector2(0, 0);
 		wheel = 0.0f;
-
-	button[MOUSE_LEFT] = (mousestate & SDL_BUTTON(SDL_BUTTON_LEFT) ? MOUSE_DOWN : (button[MOUSE_LEFT] == MOUSE_DOWN ? MOUSE_UP : MOUSE_NULL));
-	button[MOUSE_RIGHT] = (mousestate & SDL_BUTTON(SDL_BUTTON_RIGHT) ? MOUSE_DOWN : (button[MOUSE_RIGHT] == MOUSE_DOWN ? MOUSE_UP : MOUSE_NULL));
-	button[MOUSE_MIDDLE] = (mousestate & SDL_BUTTON(SDL_BUTTON_MIDDLE) ? MOUSE_DOWN : (button[MOUSE_MIDDLE] == MOUSE_DOWN ? MOUSE_UP : MOUSE_NULL));
-
-	if (old_pos != Vector2())
-		rel_pos = pos - old_pos;
-
-	if (rel_pos != Vector2(0, 0))
-		motion = true;
-
-	if (button[MOUSE_LEFT] == MOUSE_NULL && button[MOUSE_RIGHT] == MOUSE_NULL)
 		motion = false;
-}
+		for (size_t i = 0; i < 3; i++)
+			button[i] = mouse_state::up;
+	}
 
-mouse_state			Mouse::get_button(mouse_button type)
-{
-	int value = static_cast<int>(type);
-	mouse_state result = static_cast<mouse_state>(button[value]);
-	//button[value] = static_cast<int>(mouse_state::null);
-	return (result);
-}
+	void		Mouse::actualize_pos(int x, int y)
+	{
+		pos = Vector2(x, y);
 
-void Mouse::place(Vector2 coord)
-{
-	pos = coord;
-	old_pos = coord;
-	rel_pos = Vector2(0, 0);
-	SDL_WarpMouseInWindow(g_application->window(), static_cast<int>(coord.x), static_cast<int>(coord.y));
-}
+		if (old_pos.x != -1)
+			rel_pos = pos - old_pos;
 
-Mouse *get_mouse()
-{
-	return (g_mouse);
+		if (g_application->poll_ret() != 0 && g_application->event()->type == SDL_MOUSEWHEEL)
+			wheel = static_cast<float>(g_application->event()->wheel.y);
+		else
+			wheel = 0.0f;
+
+		if (old_pos != Vector2())
+			rel_pos = pos - old_pos;
+	}
+
+	Uint32 value_mouse_button[] = { SDL_BUTTON_RIGHT , SDL_BUTTON_LEFT , SDL_BUTTON_MIDDLE };
+
+	void		Mouse::actualize_button(Uint32 mousestate)
+	{
+		size_t nb = static_cast<size_t>(mouse_button::count);
+		for (size_t i = 0; i < nb; i++)
+		{
+			if (mousestate & SDL_BUTTON(value_mouse_button[i])) // Le bouton est pressé
+			{
+				if (button[i] == mouse_state::up || button[i] == mouse_state::release)
+				{
+					button[i] = mouse_state::pressed;
+					begin_pos = pos;
+					motion = false;
+				}
+				else
+					button[i] = mouse_state::down;
+			}
+			else // Le bouton n'est pas pressé
+			{
+				if (button[i] == mouse_state::down || button[i] == mouse_state::pressed)
+				{
+					button[i] = mouse_state::release;
+					if (point_in_rectangle(begin_pos, pos - 5, 10) == false)
+						motion = true;
+				}
+				else
+				{
+					button[i] = mouse_state::up;
+				}
+			}
+		}
+	}
+
+	void		Mouse::actualize()
+	{
+		int x, y;
+		Uint32 mousestate;
+
+		old_pos = pos;
+		SDL_PumpEvents();
+		mousestate = SDL_GetMouseState(&(x), &(y));
+
+		actualize_pos(x, y);
+		actualize_button(mousestate);
+	}
+
+	mouse_state			Mouse::get_button(mouse_button type)
+	{
+		return (button[static_cast<int>(type)]);
+	}
+
+	void Mouse::place(Vector2 coord)
+	{
+		pos = coord;
+		old_pos = coord;
+		rel_pos = Vector2(0, 0);
+		SDL_WarpMouseInWindow(g_application->window(), static_cast<int>(coord.x), static_cast<int>(coord.y));
+	}
+
+	void Mouse::update(int p_time)
+	{
+		SDL_PollEvent(g_application->event());
+		SDL_Delay(p_time);
+		actualize();
+	}
+
+	Mouse* get_mouse()
+	{
+		return (g_mouse);
+	}
 }

@@ -3,23 +3,23 @@
 
 #include "jgl_includes.h"
 
-using namespace std;
-
-struct Data
+namespace jgl
 {
-	vector<void *> content;
+	struct Data
+	{
+		std::vector<void*> content;
 
-	Data(void *p_data = NULL);
-	Data(int nb_param, ...);
+		Data(void* p_data = NULL);
+		Data(int nb_param, ...);
 
-	void operator = (void *p_data);
-	void operator + (void *p_ptr);
-	Data operator + (const Data& delta);
-	void operator += (void *p_ptr);
-	void operator += (const Data& delta);
+		void operator = (void* p_data);
+		void operator + (void* p_ptr);
+		Data operator + (const Data& delta);
+		void operator += (void* p_ptr);
+		void operator += (const Data& delta);
 
-	template <typename T>
-	T acces(size_t index){return (static_cast<T>(content[index]));}
-};
-
+		template <typename T>
+		T acces(size_t index) { return (static_cast<T>(content[index])); }
+	};
+}
 #endif

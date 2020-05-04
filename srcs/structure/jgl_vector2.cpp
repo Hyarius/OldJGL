@@ -1,165 +1,179 @@
 #include "jgl.h"
 
-using namespace std;
-
-Vector2::Vector2(int p_value) :
-	x(static_cast<float>(p_value)), y(static_cast<float>(p_value)){}
-
-Vector2::Vector2(double p_value) :
-	x(static_cast<float>(p_value)), y(static_cast<float>(p_value)){}
-
-Vector2::Vector2(float p_value) :
-	x(p_value), y(p_value){}
-
-Vector2::Vector2(float p_x, float p_y) :
-	x(p_x), y(p_y){}
-
-Vector2::Vector2(int p_x, int p_y) :
-	x(static_cast<float>(p_x)), y(static_cast<float>(p_y)){}
-
-Vector2::Vector2(double p_x, double p_y) :
-	x(static_cast<float>(p_x)), y(static_cast<float>(p_y)){}
-
-Vector2&		Vector2::operator = (int p_value)
+namespace jgl
 {
-	x = static_cast<float>(p_value);
-	y = static_cast<float>(p_value);
-	return *this;
-}
+	Vector2::Vector2(int p_value) :
+		x(static_cast<float>(p_value)), y(static_cast<float>(p_value)) {}
 
-Vector2& Vector2::operator = (float  p_value)
-{
-	x = p_value;
-	y = p_value;
-	return *this;
-}
+	Vector2::Vector2(size_t p_value) :
+		x(static_cast<float>(p_value)), y(static_cast<float>(p_value)) {}
 
-Vector2		Vector2::operator + (const Vector2 delta){
-	return (Vector2(x + delta.x, y + delta.y));
-}
+	Vector2::Vector2(double p_value) :
+		x(static_cast<float>(p_value)), y(static_cast<float>(p_value)) {}
 
-Vector2		Vector2::operator - (const Vector2 delta){
-	return (Vector2(x - delta.x, y - delta.y));
-}
+	Vector2::Vector2(float p_value) :
+		x(p_value), y(p_value) {}
 
-Vector2		Vector2::operator * (const Vector2 delta){
-	return (Vector2(x * delta.x, y * delta.y));
-}
+	Vector2::Vector2(float p_x, float p_y) :
+		x(p_x), y(p_y) {}
 
-Vector2		Vector2::operator / (const Vector2 delta){
-	return (Vector2(x / delta.x, y / delta.y));
-}
+	Vector2::Vector2(int p_x, int p_y) :
+		x(static_cast<float>(p_x)), y(static_cast<float>(p_y)) {}
 
-void 		Vector2::operator += (const Vector2 delta){
-    x += delta.x; y += delta.y;
-}
+	Vector2::Vector2(size_t p_x, size_t p_y) :
+		x(static_cast<float>(p_x)), y(static_cast<float>(p_y)) {}
 
-void 		Vector2::operator -= (const Vector2 delta){
-    x -= delta.x; y -= delta.y;
-}
+	Vector2::Vector2(double p_x, double p_y) :
+		x(static_cast<float>(p_x)), y(static_cast<float>(p_y)) {}
 
-void 		Vector2::operator *= (const Vector2 delta){
-    x *= delta.x; y *= delta.y;
-}
+	Vector2& Vector2::operator = (int p_value)
+	{
+		x = static_cast<float>(p_value);
+		y = static_cast<float>(p_value);
+		return *this;
+	}
 
-void 		Vector2::operator /= (const Vector2 delta){
-    x /= delta.x; y /= delta.y;
-}
+	Vector2& Vector2::operator = (float  p_value)
+	{
+		x = p_value;
+		y = p_value;
+		return *this;
+	}
 
-bool		Vector2::operator == (const Vector2 delta) const
-{
-	return ((x == delta.x && y == delta.y) ? true : false);
-}
+	Vector2		Vector2::operator + (const Vector2 delta) {
+		return (Vector2(x + delta.x, y + delta.y));
+	}
 
-bool		Vector2::operator != (const Vector2 delta) const
-{
-	return ((x == delta.x && y == delta.y) ? false : true);
-}
+	Vector2		Vector2::operator - (const Vector2 delta) {
+		return (Vector2(x - delta.x, y - delta.y));
+	}
 
-bool Vector2::operator < (const Vector2 other) const
-{
-	if (y < other.y)
-		return (true);
-	if (y == other.y && x < other.x)
-		return (true);
-	return (false);
-}
+	Vector2		Vector2::operator * (const Vector2 delta) {
+		return (Vector2(x * delta.x, y * delta.y));
+	}
 
-bool Vector2::operator > (const Vector2 other) const
-{
-	if (y < other.y || x < other.x)
+	Vector2		Vector2::operator / (const Vector2 delta) {
+		return (Vector2(x / delta.x, y / delta.y));
+	}
+
+	void 		Vector2::operator += (const Vector2 delta) {
+		x += delta.x; y += delta.y;
+	}
+
+	void 		Vector2::operator -= (const Vector2 delta) {
+		x -= delta.x; y -= delta.y;
+	}
+
+	void 		Vector2::operator *= (const Vector2 delta) {
+		x *= delta.x; y *= delta.y;
+	}
+
+	void 		Vector2::operator /= (const Vector2 delta) {
+		x /= delta.x; y /= delta.y;
+	}
+
+	bool		Vector2::operator == (const Vector2 delta) const
+	{
+		return ((x == delta.x && y == delta.y) ? true : false);
+	}
+
+	bool		Vector2::operator != (const Vector2 delta) const
+	{
+		return ((x == delta.x && y == delta.y) ? false : true);
+	}
+
+	bool Vector2::operator < (const Vector2 other) const
+	{
+		if (y < other.y)
+			return (true);
+		if (y == other.y && x < other.x)
+			return (true);
 		return (false);
-	return (true);
-}
+	}
 
-float *Vector2::decompose()
-{
-	return (&x);
-}
+	bool Vector2::operator > (const Vector2 other) const
+	{
+		if (y < other.y || x < other.x)
+			return (false);
+		return (true);
+	}
 
-float Vector2::distance(Vector2 point)
-{
-	return (sqrt( pow(point.x - x, 2.0f)
-				+ pow(point.y - y, 2.0f)));
-}
+	float* Vector2::decompose()
+	{
+		return (&x);
+	}
 
-Vector2		Vector2::normalize()
-{
-	float		length;
+	float Vector2::distance(Vector2 point)
+	{
+		return (sqrt(pow(point.x - x, 2.0f)
+			+ pow(point.y - y, 2.0f)));
+	}
 
-	length = sqrt((x * x) + (y * y));
+	Vector2		Vector2::normalize()
+	{
+		float		length;
 
-	return (Vector2(x / length, y / length));
-}
+		length = sqrt((x * x) + (y * y));
 
-Vector2 Vector2::cross(Vector2 other)
-{
-	Vector2 result;
+		return (Vector2(x / length, y / length));
+	}
 
-	result = Vector2(-(other.y - y), other.x - x);
+	Vector2 Vector2::cross(Vector2 other)
+	{
+		Vector2 result;
 
-	return (result);
-}
+		result = Vector2(-(other.y - y), other.x - x);
 
-float Vector2::dot(Vector2 other)
-{
-	float		result;
+		return (result);
+	}
 
-	result = x * other.x + y * other.y;
+	float Vector2::dot(Vector2 other)
+	{
+		float		result;
 
-	return (result);
-}
+		result = x * other.x + y * other.y;
 
-string Vector2::str()
-{
-	string result = "(" + ftoa(x, 2) + " / " + ftoa(y, 2) + ")";
+		return (result);
+	}
 
-	return (result);
-}
+	jgl::String Vector2::str()
+	{
+		jgl::String result = "(" + ftoa(x, 2) + " / " + ftoa(y, 2) + ")";
 
-Vector2 Vector2::floor()
-{
-	Vector2 result;
+		return (result);
+	}
 
-	result.x = std::floor(x);
-	result.y = std::floor(y);
+	jgl::String Vector2::text()
+	{
+		jgl::String result = ftoa(x, 2) + " " + ftoa(y, 2);
 
-	return (result);
-}
+		return (result);
+	}
 
-Vector2 Vector2::invert()
-{
-	x *= -1;
-	y *= -1;
-	return (*this);
-}
+	Vector2 Vector2::floor()
+	{
+		Vector2 result;
 
-Vector3 Vector2::convert(int p_value)
-{
-	return (Vector3(x, y, (float)p_value));
-}
+		result.x = std::floor(x);
+		result.y = std::floor(y);
 
-Vector3 Vector2::convert(float p_value)
-{
-	return (Vector3(x, y, p_value));
+		return (result);
+	}
+
+	Vector2 Vector2::invert()
+	{
+		x *= -1;
+		y *= -1;
+		return (*this);
+	}
+
+	Vector3 Vector2::convert(int p_value)
+	{
+		return (Vector3(x, y, (float)p_value));
+	}
+
+	Vector3 Vector2::convert(float p_value)
+	{
+		return (Vector3(x, y, p_value));
+	}
 }

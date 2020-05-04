@@ -3,23 +3,25 @@
 
 #define CALC(value) ((value % 256) / 255.0f)
 
-struct Color
+namespace jgl
 {
-	float r;
-	float g;
-	float b;
-	float a;
+	struct Color
+	{
+		float r;
+		float g;
+		float b;
+		float a;
 
-	Color();
-	Color(float p_r, float p_g, float p_b, float p_a = 1.0f);
-	Color(int p_r, int p_g, int p_b, int p_a = 255);
+		Color();
+		Color(float p_r, float p_g, float p_b, float p_a = 1.0f);
+		Color(int p_r, int p_g, int p_b, int p_a = 255);
 
-	float *decompose();
+		float* decompose();
 
-	Color operator + (const Color& delta);
+		Color operator + (const Color& delta);
+	};
+}
 
-};
-
-ostream& operator<<(ostream& os, Color value);
+std::ostream& operator<<(std::ostream& os, jgl::Color& value);
 
 #endif
