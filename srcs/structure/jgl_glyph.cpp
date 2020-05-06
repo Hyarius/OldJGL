@@ -16,6 +16,7 @@ namespace jgl
 		for (int i = 0; i < len; i++)
 			_content[i] = str[i];
 	}
+
 	Glyph::Glyph(int value)
 	{
 		char* str = (char*)(&value);
@@ -24,10 +25,12 @@ namespace jgl
 		for (int i = 0; i < len; i++)
 			_content[i] = str[i];
 	}
+
 	Glyph::Glyph(char c)
 	{
 		initialize(); _content[0] = c;
 	}
+
 	Glyph::Glyph(char* str)
 	{
 		initialize();
@@ -35,16 +38,19 @@ namespace jgl
 		for (int i = 0; i < len; i++)
 			_content[i] = str[i];
 	}
+
 	Glyph::Glyph(const Glyph& c)
 	{
 		initialize();
 		for (size_t i = 0; i < 4; i++)
 			_content[i] = c._content[i];
 	}
+
 	Glyph::Glyph()
 	{
 		initialize();
 	}
+
 	Glyph::Glyph(Glyph& p_value)
 	{
 		initialize();
@@ -52,17 +58,12 @@ namespace jgl
 			_content[i] = p_value._content[i];
 	}
 
-	const char* Glyph::content()
-	{
-		return (_content);
-	}
-
 	const char* Glyph::content() const
 	{
 		return (_content);
 	}
 
-	void Glyph::print_info()
+	void Glyph::print_info() const
 	{
 		std::cout << "Value total : " << value() << std::endl;
 		std::cout << "Binary : ";
@@ -75,14 +76,6 @@ namespace jgl
 		std::cout << std::endl;
 	}
 
-	size_t Glyph::value()
-	{
-		size_t self_value = 0;
-		for (size_t i = 0; i < 4; i++)
-			self_value += 255 * _content[i];
-		return (self_value);
-	}
-
 	size_t Glyph::value() const
 	{
 		size_t self_value = 0;
@@ -91,46 +84,40 @@ namespace jgl
 		return (self_value);
 	}
 
-	/*Glyph Glyph::operator = (Glyph& p_value)
+	bool operator == (const Glyph& tmp, const Glyph& other)
 	{
-		for (size_t i = 0; i < 4; i++)
-			_content[i] = p_value._content[i];
-
-		return (*this);
-	}*/
-
-	Glyph Glyph::operator = (const Glyph p_value)
-	{
-		for (size_t i = 0; i < 4; i++)
-			_content[i] = p_value._content[i];
-
-		return (*this);
+		if (tmp.value() == other.value())
+			return (true);
+		return (false);
 	}
-
-	bool Glyph::operator == (Glyph c)
+	bool operator != (const Glyph& tmp, const Glyph& other)
 	{
-		return (value() == c.value());
+		if (tmp.value() != other.value())
+			return (true);
+		return (false);
 	}
-	bool Glyph::operator != (Glyph c)
+	bool operator > (const Glyph& tmp, const Glyph& other)
 	{
-		return (value() != c.value());
+		if (tmp.value() > other.value())
+			return (true);
+		return (false);
 	}
-
-	bool Glyph::operator == (Glyph& c) const
+	bool operator < (const Glyph& tmp, const Glyph& other)
 	{
-		return (value() == c.value());
+		if (tmp.value() < other.value())
+			return (true);
+		return (false);
 	}
-	bool Glyph::operator != (Glyph& c) const
+	bool operator >= (const Glyph& tmp, const Glyph& other)
 	{
-		return (value() != c.value());
+		if (tmp.value() >= other.value())
+			return (true);
+		return (false);
 	}
-
-	bool Glyph::operator > (Glyph& other)
+	bool operator <= (const Glyph& tmp, const Glyph& other)
 	{
-		return (value() > other.value());
-	}
-	bool Glyph::operator < (Glyph& other)
-	{
-		return (value() < other.value());
+		if (tmp.value() <= other.value())
+			return (true);
+		return (false);
 	}
 }
