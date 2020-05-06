@@ -21,25 +21,19 @@ namespace jgl
 		Glyph(const Glyph& c);
 		Glyph();
 
-		const char* content();
-		const char* content() const ;
+		const char* content() const;
 
-		void print_info();
+		void print_info() const;
 
-		size_t value();
 		size_t value() const;
-
-		Glyph operator = (const Glyph p_value);
-
-		bool operator == (Glyph c);
-		bool operator != (Glyph c);
-
-		bool operator == (Glyph& c) const ;
-		bool operator != (Glyph& c) const ;
-
-		bool operator > (Glyph& other);
-		bool operator < (Glyph& other);
 	};
+
+	bool operator == (const Glyph& tmp, const Glyph& other);
+	bool operator != (const Glyph& tmp, const Glyph& other);
+	bool operator > (const Glyph& tmp, const Glyph& other);
+	bool operator < (const Glyph& tmp, const Glyph& other);
+	bool operator >= (const Glyph& tmp, const Glyph& other);
+	bool operator <= (const Glyph& tmp, const Glyph& other);
 }
 std::ostream& operator<<(std::ostream& os, jgl::Glyph& value);
 std::ostream& operator<<(std::ostream& os, const jgl::Glyph& value);
