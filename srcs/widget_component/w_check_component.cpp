@@ -2,7 +2,7 @@
 
 namespace jgl
 {
-	w_check_component::w_check_component(Widget* p_owner, bool p_state) :
+	w_check_component::w_check_component(bool p_state, Widget* p_owner) :
 		w_component(p_owner), w_graphical_component()
 	{
 		_area = Vector2();

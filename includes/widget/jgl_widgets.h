@@ -23,7 +23,7 @@ namespace jgl
 		std::vector<Widget*> childrens() { return (_childrens); }
 		Widget* parent() { return (_parent); }
 		Vector2 area() { return (_viewport->area()); }
-		Vector2 anchor() { return (_viewport->anchor()); }
+		Vector2 anchor() { if (_parent == nullptr)return(_viewport->anchor()); return (_viewport->anchor() + _parent->anchor()); }
 		Viewport* viewport() { return (_viewport); }
 
 		bool is_active() { return (_activated); }

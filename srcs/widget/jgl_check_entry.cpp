@@ -5,10 +5,10 @@ namespace jgl
 	Check_entry::Check_entry(jgl::String p_entry, bool p_state, Widget* p_parent) : Widget(p_parent)
 	{
 		_box = w_box_component(this);
-		_entry = w_text_entry_component(this, p_entry);
+		_entry = w_text_entry_component(p_entry, this);
 		_entry.set_align(alignment::centred);
 
-		_check = w_check_component(this, p_state);
+		_check = w_check_component(p_state, this);
 		_check.set_check(Color(70, 150, 255));
 
 		set_geometry(-1, -1);

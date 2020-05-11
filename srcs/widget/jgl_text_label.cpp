@@ -7,7 +7,7 @@ namespace jgl
 		_box = w_box_component(this);
 		_box.set_back(Color(0, 0, 0, 0));
 		_box.set_front(Color(0, 0, 0, 0));
-		_label = w_text_component(this, p_text);
+		_label = w_text_component(p_text, this);
 
 		set_geometry(-1, -1);
 	}

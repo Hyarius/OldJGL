@@ -12,7 +12,7 @@ namespace jgl
 		_repeat_click = false;
 
 		_box = w_box_component(this);
-		_label = w_text_component(this, "Click me !");
+		_label = w_text_component("Click me !", this);
 		_label.set_align(alignment::centred);
 
 		set_geometry(-1, -1);

@@ -12,6 +12,7 @@ namespace jgl
 	class Viewport
 	{
 	protected:
+		class Widget* _owner;
 		SDL_GLContext* _context;
 		Color _background;
 		bool _active;
@@ -20,8 +21,9 @@ namespace jgl
 		Rect _old_viewport;
 
 	public:
-		Viewport(Color p_color = Color(), Vector2 p_anchor = Vector2(), Vector2 p_size = Vector2());
+		Viewport(Color p_color = Color(), Vector2 p_anchor = Vector2(), Vector2 p_size = Vector2(), class jgl::Widget *p_owner = nullptr);
 
+		void set_owner(class Widget* p_owner) { _owner = p_owner; }
 		void set_anchor(Vector2 p_anchor) { _anchor = p_anchor; }
 		void set_area(Vector2 p_area) { _area = p_area; }
 		void set_viewport(Vector2 p_anchor = Vector2(), Vector2 p_area = Vector2());

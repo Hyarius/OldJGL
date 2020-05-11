@@ -8,9 +8,7 @@ namespace jgl
 	class Glyph
 	{
 	private:
-		char _content[5];
-
-		void initialize();
+		char _content[5] = {0, 0, 0, 0, 0};
 
 	public:
 		Glyph(size_t value);
@@ -35,6 +33,7 @@ namespace jgl
 	bool operator >= (const Glyph& tmp, const Glyph& other);
 	bool operator <= (const Glyph& tmp, const Glyph& other);
 }
+
 std::ostream& operator<<(std::ostream& os, jgl::Glyph& value);
 std::ostream& operator<<(std::ostream& os, const jgl::Glyph& value);
 

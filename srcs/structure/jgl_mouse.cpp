@@ -106,4 +106,13 @@ namespace jgl
 	{
 		return (g_mouse);
 	}
+	
+	mouse_state get_button(mouse_button type)
+	{
+		return (g_mouse->get_button(type));
+	}
+	Vector2 get_mouse_pos()
+	{
+		return (g_mouse->pos);
+	}
 }

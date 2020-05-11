@@ -5,7 +5,7 @@ namespace jgl
 	Text_entry::Text_entry(jgl::String p_text, Widget* p_parent) : Widget(p_parent)
 	{
 		_box = w_box_component(this);
-		_entry = w_text_entry_component(this, p_text);
+		_entry = w_text_entry_component(p_text, this);
 
 		_select = false;
 		_next_input = 0;

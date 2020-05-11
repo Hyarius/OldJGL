@@ -5,9 +5,9 @@ namespace jgl
 	Hour_entry::Hour_entry(float p_hour, float p_minute, Widget* p_parent) : Widget(p_parent)
 	{
 		_box = w_box_component(this);
-		_label = w_text_component(this, ":");
-		_hour = w_value_entry_component(this, p_hour);
-		_minute = w_value_entry_component(this, p_minute);
+		_label = w_text_component(":", this);
+		_hour = w_value_entry_component<float>(p_hour, this);
+		_minute = w_value_entry_component<float>(p_minute, this);
 
 		_entry = nullptr;
 		_selected = false;

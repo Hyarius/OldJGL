@@ -38,13 +38,14 @@ namespace jgl
 		key_state get_key(key key_type);
 		key_state get_key(size_t key_type) { return (get_key(static_cast<key>(key_type))); }
 	};
+
+	key_state get_key(key key_type);
+	key_state get_key(size_t key_type);
+	mouse_state get_button(mouse_button type);
+	Vector2 get_mouse_pos();
 }
 
 extern jgl::Keyboard *g_keyboard;
 extern jgl::Mouse *g_mouse;
-
-jgl::String key_name(jgl::key type);
-jgl::Keyboard *get_keyboard();
-jgl::Mouse *get_mouse();
 
 #endif

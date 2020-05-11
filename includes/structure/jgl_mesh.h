@@ -99,7 +99,7 @@ namespace jgl
 		void add_normale(Vector3 p_normale) { _normales.push_back(p_normale); }
 		void add_face(Face p_face) { _faces.push_back(p_face); }
 		void set_texture(Image* p_texture) { _texture = p_texture; }
-		void set_texture(Tileset* p_texture) { set_texture(p_texture->image()); }
+		void set_texture(Sprite_sheet* p_texture) { if (p_texture == nullptr)_texture = nullptr;else set_texture(p_texture->image()); }
 		void set_transparency(float p_transparency) { _transparency = p_transparency; }
 		void compute_normales();
 		void compute_bubble_box();
@@ -130,8 +130,8 @@ namespace jgl
 	};
 	Mesh *primitive_cube(Vector3 pos, Vector3 rot, Vector3 size, jgl::Color color, bool should_bake = true);
 
-	Mesh *primitive_voxel(Vector3 pos, Tileset *tileset, Vector2 top_sprite, Vector2 side_sprite, Vector2 down_sprite, float p_transparency = 1.0f, bool should_bake = false, Vector3 rot = 0, Vector3 size = 1);
-	Mesh *primitive_voxel(Vector3 pos, Tileset *tileset, size_t type, float p_transparency = 1.0f, bool should_bake = false, Vector3 rot = 0, Vector3 size = 1);
+	Mesh *primitive_voxel(Vector3 pos, Sprite_sheet *tileset, Vector2 top_sprite, Vector2 side_sprite, Vector2 down_sprite, float p_transparency = 1.0f, bool should_bake = false, Vector3 rot = 0, Vector3 size = 1);
+	Mesh *primitive_voxel(Vector3 pos, Sprite_sheet *tileset, size_t type, float p_transparency = 1.0f, bool should_bake = false, Vector3 rot = 0, Vector3 size = 1);
 	Mesh *primitive_plane(Vector3 pos, Vector3 rot, Vector2 size, jgl::Color color, bool should_bake = true);
 	Mesh *primitive_plane(Vector3 pos, Vector3 rot, Vector3 size, jgl::Color color, bool should_bake = true);
 }

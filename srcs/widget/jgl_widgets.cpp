@@ -9,6 +9,7 @@ namespace jgl
 		_parent = nullptr;
 		set_parent(p_parent);
 		_viewport = new Viewport();
+		_viewport->set_owner(this);
 		_activated = false;
 	}
 
@@ -94,8 +95,8 @@ namespace jgl
 		if (parent() != nullptr)
 			parent()->viewport()->use();
 		else
-			g_application->viewport()->reset();
-
+			g_application->viewport()->use();
+		
 		render();
 
 		for (size_t i = 0; i < _childrens.size(); i++)

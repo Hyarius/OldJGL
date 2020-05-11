@@ -86,7 +86,10 @@ namespace jgl
 		SDL_SCANCODE_RETURN,
 		SDL_SCANCODE_KP_ENTER,
 		SDL_SCANCODE_BACKSPACE,
-		SDL_SCANCODE_DELETE
+		SDL_SCANCODE_DELETE,
+		SDL_SCANCODE_SPACE,
+		SDL_SCANCODE_LSHIFT,
+		SDL_SCANCODE_RSHIFT
 	};
 
 	jgl::String key_name_value[] = {
@@ -162,7 +165,10 @@ namespace jgl
 		"key RETURN",
 		"key KP_ENTER",
 		"key BACKSPACE",
-		"key DELETE"
+		"key DELETE",
+		"key SPACE",
+		"key LEFT SHIFT",
+		"key RIGHT SHIFT"
 	};
 
 	void Keyboard::actualize()
@@ -201,4 +207,14 @@ namespace jgl
 	{
 		return (key_name_value[static_cast<size_t>(type)]);
 	}
+
+	key_state get_key(key key_type)
+	{
+		return (g_keyboard->get_key(key_type));
+	}
+	key_state get_key(size_t key_type)
+	{
+		return (get_key(static_cast<key>(key_type)));
+	}
+		
 }

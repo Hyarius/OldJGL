@@ -22,7 +22,7 @@ namespace jgl
 
 	void Frame::set_geometry_imp(Vector2 p_anchor, Vector2 p_area)
 	{
-		viewport()->resize(p_anchor + _box.border(), p_area - _box.border() * 2);
+		viewport()->resize(p_anchor, p_area);
 		_box.set_area(p_area);
 		_box.set_anchor(p_anchor);
 	}

@@ -92,6 +92,7 @@ namespace jgl
 		glGenBuffers(1, &_color_buffer);
 		glGenBuffers(1, &_texture_buffer);
 
+		_custom_program.clear();
 		_program_color = load_shaders(color_shader_vert, color_shader_frag);
 		_program_texture = load_shaders(texture_shader_vert, texture_shader_frag);
 		_program_color_model = load_shaders(color_model_shader_vert, color_model_shader_frag);
@@ -233,5 +234,23 @@ namespace jgl
 		_central_widget->quit_children();
 
 		return (0);
+	}
+
+	GLuint Application::add_custom_shader(jgl::String p_vertex_content, jgl::String p_fragment_content)
+	{
+		GLuint result = load_shaders(p_vertex_content.std(), p_fragment_content.std());
+		_custom_program.push_back(result);
+
+		return (result);
+	}
+	GLuint Application::get_custom_program(size_t index)
+	{
+		if (index >= _custom_program.size())
+			return (0);
+		return (_custom_program[index]);
+	}
+	GLuint Application::get_custom_uniform(GLuint p_program, jgl::String p_param)
+	{
+		return (glGetUniformLocation(p_program, p_param.std().c_str()));
 	}
 }

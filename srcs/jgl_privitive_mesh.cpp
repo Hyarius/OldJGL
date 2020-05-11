@@ -63,7 +63,7 @@ namespace jgl
 		return (result);
 	}
 
-	Mesh* primitive_voxel(Vector3 pos, Tileset* tileset,
+	Mesh* primitive_voxel(Vector3 pos, Sprite_sheet* tileset,
 		Vector2 top_sprite, Vector2 side_sprite, Vector2 down_sprite,
 		float p_transparency,
 		bool should_bake, Vector3 rot, Vector3 size)
@@ -137,7 +137,7 @@ namespace jgl
 		return (result);
 	}
 
-	Mesh* primitive_voxel(Vector3 pos, Tileset* tileset, size_t type, float p_transparency, bool should_bake, Vector3 rot, Vector3 size)
+	Mesh* primitive_voxel(Vector3 pos, Sprite_sheet* tileset, size_t type, float p_transparency, bool should_bake, Vector3 rot, Vector3 size)
 	{
 		Mesh* result;
 		Vector3 delta = Vector3(size.x / 2.0f, 0.0f, size.z / 2.0f);

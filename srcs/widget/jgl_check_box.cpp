@@ -5,10 +5,10 @@ namespace jgl
 	Check_box::Check_box(jgl::String p_label, bool p_state, Widget* p_parent) : Widget(p_parent)
 	{
 		_box = w_box_component(this);
-		_label = w_text_component(this, p_label);
+		_label = w_text_component(p_label, this);
 		_label.set_align(alignment::centred);
 
-		_check = w_check_component(this, p_state);
+		_check = w_check_component(p_state, this);
 		_check.set_check(Color(70, 150, 255));
 
 		set_geometry(-1, -1);

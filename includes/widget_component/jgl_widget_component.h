@@ -34,10 +34,10 @@ namespace jgl
 	class w_graphical_component
 	{
 	protected:
-		Tileset* _tileset;
+		Sprite_sheet* _tileset;
 		size_t _corner_size;
 
-		Tileset* _image;
+		Sprite_sheet* _image;
 		int _sprite;
 
 		Color _back;
@@ -47,8 +47,8 @@ namespace jgl
 	public:
 		w_graphical_component();
 
-		void set_tileset(Tileset* p_tileset) { _tileset = p_tileset; }
-		void set_image(Tileset* p_image) { _image = p_image; }
+		void set_tileset(Sprite_sheet* p_tileset) { _tileset = p_tileset; }
+		void set_image(Sprite_sheet* p_image) { _image = p_image; }
 		void set_back(Color p_back) { _back = p_back; }
 		void set_front(Color p_front) { _front = p_front; }
 		void set_border(int p_border) { _border = p_border; }
@@ -56,8 +56,8 @@ namespace jgl
 		void set_corner_size(size_t p_corner_size) { _corner_size = p_corner_size; }
 
 		//Getter
-		Tileset* tileset() { return (_tileset); }
-		Tileset* image() { return (_image); }
+		Sprite_sheet* tileset() { return (_tileset); }
+		Sprite_sheet* image() { return (_image); }
 		int border() { return (_border); }
 		int sprite() { return (_sprite); }
 		size_t corner_size() { return (_corner_size); }
@@ -103,7 +103,7 @@ namespace jgl
 		size_t _cursor_to_draw;
 
 	public:
-		w_entry_component(class Widget* p_owner = nullptr, jgl::String p_text = "");
+		w_entry_component(jgl::String p_text = "", class Widget* p_owner = nullptr);
 		void		set_text(jgl::String new_text) { _text = new_text; _cursor = new_text.size(); calc_text_to_draw(); }
 		void 		set_selected(bool p_selected) { _selected = p_selected; }
 		void		set_cursor(size_t p_cursor) { _cursor = p_cursor; }
@@ -131,7 +131,7 @@ namespace jgl
 	class w_text_component : public w_component, public w_graphical_component, public w_textual_component
 	{
 	public:
-		w_text_component(class Widget* p_owner = nullptr, jgl::String p_text = "");
+		w_text_component(jgl::String p_text = "", class Widget* p_owner = nullptr);
 
 		void 		resize(Vector2 p_anchor, Vector2 p_area);
 
@@ -149,7 +149,7 @@ namespace jgl
 
 	public:
 		//Constructor
-		w_check_component(class Widget* p_owner = nullptr, bool p_state = false);
+		w_check_component(bool p_state = false, class Widget* p_owner = nullptr);
 
 		//Setter
 		void set_state(bool p_state) { _state = p_state; }
@@ -199,42 +199,90 @@ namespace jgl
 		size_t _cursor_to_draw;
 
 	public:
-		w_text_entry_component(class Widget* p_owner = nullptr, jgl::String p_text = "");
+		w_text_entry_component(jgl::String p_text = "", class Widget* p_owner = nullptr);
 	};
 
+	template<typename T>
 	class w_value_component : public w_component, public w_graphical_component, public w_textual_component
 	{
 	protected:
-		float _value;
-		int _precision;
+		T* _value_ptr = nullptr;
+		T _value = 0;
+		int _precision = 3;
 
 	public:
 		//Constructor
-		w_value_component(class Widget* p_owner = nullptr, float p_value = 0.0f);
+		w_value_component(class Widget* p_owner = nullptr) : w_component(p_owner), w_graphical_component(), w_textual_component()
+		{
+			_value_ptr = nullptr;
+			_value = 0;
+			_anchor = Vector2();
+			_area = Vector2();
+			_align = alignment::left;
+			_size = 16;
+			_color = text_color::black;
+			_style = text_style::normal;
+		}
+		w_value_component(T p_value, class Widget* p_owner = nullptr) : w_value_component()
+		{
+			_value = p_value;
+			calc_text();
+		}
+		w_value_component(T* p_value_ptr, class Widget* p_owner = nullptr) : w_value_component()
+		{
+			_value_ptr = p_value_ptr;
+			calc_text();
+		}
 
 		//Setter
 		void 		set_text(jgl::String p_text) { _text = p_text; calc_value(); }
-		void 		set_value(float p_value) { _value = p_value; calc_text(); }
+		void 		set_value(T p_value) { _value = p_value; calc_text(); }
+		void 		set_value(T* p_value) { _value = p_value; calc_text(); }
 		void 		set_precision(int p_precision) { _precision = p_precision; }
 		void 		resize(Vector2 p_anchor, Vector2 p_area)
 		{
 			set_anchor(p_anchor); set_area(p_area); calc_text_size(_area);
 		}
-		void 		calc_value() { _value = static_cast<float>(jgl::stof(_text)); }
-		void 		calc_text() { _text = ftoa(_value, _precision); }
+		void 		calc_value() { _value = static_cast<T>(jgl::stof(_text)); }
+		void 		calc_text() { if (_value_ptr != nullptr && *_value_ptr != _value) set_value(*_value_ptr); _text = ftoa(static_cast<float>(_value), _precision); }
 
 		//Getter
-		float		value() { return (_value); }
+		T*			value_ptr() { return (_value_ptr); }
+		T			value() { if (_value_ptr != nullptr)return (*_value_ptr); return (_value); }
 		int			precision() { return (_precision); }
 
-		void render(Viewport* viewport = nullptr);
+		void render(Viewport* viewport = nullptr)
+		{
+			Vector2 pos;
+
+			if (_value_ptr != nullptr && *_value_ptr != _value)
+				set_value(*_value_ptr);
+
+			if (_align == alignment::left)
+			{
+				pos.x = calc_text_len(_text, _size) / 2.0f;
+				pos.y = _area.y / 2.0f;
+			}
+			else if (_align == alignment::centred)
+			{
+				pos = _area / 2;
+			}
+			else if (_align == alignment::right)
+			{
+				pos.x = _area.x - calc_text_len(_text, _size) / 2.0f;
+				pos.y = _area.y / 2.0f;
+			}
+			draw_centred_text(_text, pos + _anchor, _size, 0, _color, _style, viewport);
+		}
 	};
 
+	template<typename T>
 	class w_value_entry_component : public w_entry_component
 	{
 	protected:
 		bool _selected;
-		float _value;
+		T _value;
+		T* _value_ptr;
 		int _precision;
 		size_t _cursor;
 
@@ -243,18 +291,67 @@ namespace jgl
 
 	public:
 		//Constructor
-		w_value_entry_component(class Widget* p_owner = nullptr, float p_value = 0.0f);
+		w_value_entry_component(class Widget* p_owner = nullptr)
+		{
+			_value_ptr = nullptr;
+			_value = 0;
+			_anchor = Vector2();
+			_area = Vector2();
+			_align = alignment::left;
+			_size = 16;
+			_color = text_color::black;
+			_style = text_style::normal;
+		}
+		w_value_entry_component(T p_value, class Widget* p_owner = nullptr) : w_value_entry_component()
+		{
+			_value = p_value;
+			set_precision(3);
+			calc_text();
+		}
+		w_value_entry_component(T* p_value_ptr, class Widget* p_owner = nullptr) : w_value_entry_component()
+		{
+			_value_ptr = p_value_ptr;
+			set_precision(3);
+			calc_text();
+		}
 
 		//Setter
 		void 		set_precision(int p_precision) { _precision = p_precision; }
-		void 		set_text(jgl::String p_text) { _text = p_text; calc_value(); calc_text_to_draw(); }
-		void 		set_value(float p_value) { _value = p_value; calc_text(); calc_text_to_draw(); }
-		void 		calc_value() { _value = stof(_text); }
-		void 		calc_text() { _text = ftoa(_value, _precision); }
+		void 		set_text(jgl::String p_text) { _text = p_text; calc_value(); }
+		void 		set_value(T p_value) { _value = p_value; calc_text(); }
+		void 		set_value(T* p_value) { _value = p_value; calc_text(); }
+		void 		calc_value() { _value = static_cast<T>(jgl::stof(_text)); }
+		void 		calc_text() { if (_value_ptr != nullptr && *_value_ptr != _value) set_value(*_value_ptr); _text = ftoa(static_cast<float>(_value), _precision); }
 
 		//Getter
 		int			precision() { return (_precision); }
-		float 		value() { return (_value); }
+		T			value() { return (_value); }
+		size_t		cursor() { return (_cursor); }
+		bool		selected() { return (_selected); }
+
+		void render(Viewport* viewport = nullptr)
+		{
+			Vector2 pos;
+
+			if (_value_ptr != nullptr && *_value_ptr != _value)
+				set_value(*_value_ptr);
+
+			if (_align == alignment::left)
+			{
+				pos.x = calc_text_len(_text, _size) / 2.0f;
+				pos.y = _area.y / 2.0f;
+			}
+			else if (_align == alignment::centred)
+			{
+				pos = _area / 2;
+			}
+			else if (_align == alignment::right)
+			{
+				pos.x = _area.x - calc_text_len(_text, _size) / 2.0f;
+				pos.y = _area.y / 2.0f;
+			}
+			draw_centred_text(_text, pos + _anchor, _size, 0, _color, _style, viewport);
+		}
 	};
 }
 

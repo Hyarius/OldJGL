@@ -2,16 +2,10 @@
 
 namespace jgl
 {
-	void Glyph::initialize()
-	{
-		for (size_t i = 0; i < 5; i++)
-			_content[i] = 0;
-	}
 
 	Glyph::Glyph(size_t value)
 	{
 		char* str = (char*)(&value);
-		initialize();
 		int len = create_char_unicode(nullptr, str, 0);
 		for (int i = 0; i < len; i++)
 			_content[i] = str[i];
@@ -20,7 +14,6 @@ namespace jgl
 	Glyph::Glyph(int value)
 	{
 		char* str = (char*)(&value);
-		initialize();
 		int len = create_char_unicode(nullptr, str, 0);
 		for (int i = 0; i < len; i++)
 			_content[i] = str[i];
@@ -28,12 +21,11 @@ namespace jgl
 
 	Glyph::Glyph(char c)
 	{
-		initialize(); _content[0] = c;
+		_content[0] = c;
 	}
 
 	Glyph::Glyph(char* str)
 	{
-		initialize();
 		int len = create_char_unicode(nullptr, str, 0);
 		for (int i = 0; i < len; i++)
 			_content[i] = str[i];
@@ -41,19 +33,17 @@ namespace jgl
 
 	Glyph::Glyph(const Glyph& c)
 	{
-		initialize();
 		for (size_t i = 0; i < 4; i++)
 			_content[i] = c._content[i];
 	}
 
 	Glyph::Glyph()
 	{
-		initialize();
+		
 	}
 
 	Glyph::Glyph(Glyph& p_value)
 	{
-		initialize();
 		for (size_t i = 0; i < 4; i++)
 			_content[i] = p_value._content[i];
 	}

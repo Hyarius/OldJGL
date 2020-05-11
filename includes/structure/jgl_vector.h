@@ -126,16 +126,17 @@ namespace jgl
 		jgl::String str();
 		jgl::String text();
 		Vector2 floor();
+		Vector2 ceiling();
 		Vector2 invert();
 		Vector3 convert(int p_value);
 		Vector3 convert(float p_value = 0);
 	};
 }
 
-std::ostream& operator<<(std::ostream& os, jgl::Vector2& value);
+std::ostream& operator<<(std::ostream& os, jgl::Vector2 value);
 
-std::ostream& operator<<(std::ostream& os, jgl::Vector3& value);
+std::ostream& operator<<(std::ostream& os, jgl::Vector3 value);
 
-std::ostream& operator<<(std::ostream& os, jgl::Vector4& value);
+std::ostream& operator<<(std::ostream& os, jgl::Vector4 value);
 
 #endif

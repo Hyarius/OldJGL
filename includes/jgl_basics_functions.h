@@ -12,7 +12,7 @@ namespace jgl
 	std::vector<jgl::String> strsplit(jgl::String input, jgl::String c, bool regroup = true);
 	void error_exit(int num, jgl::String error);
 	void reverse(jgl::String& base);
-	jgl::String itoa(int x, int d);
+	jgl::String itoa(int x, int d = -1);
 	jgl::String ftoa(float n, int afterpoint = -1, int lenght = -1);
 	jgl::String ftoa(double n, int afterpoint = -1, int lenght = -1);
 	float stof(String text);

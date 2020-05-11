@@ -85,6 +85,9 @@ namespace jgl
 		key_pad_return_key = 70,
 		backspace = 71,
 		delete_key = 72,
+		space = 73,
+		left_shift = 74,
+		right_shift = 75,
 		count
 	};
 

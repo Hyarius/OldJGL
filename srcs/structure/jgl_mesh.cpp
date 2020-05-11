@@ -166,6 +166,7 @@ namespace jgl
 	void Mesh::bake()
 	{
 		compute_bubble_box();
+
 		if (_normales.size() == 0)
 			compute_normales();
 
@@ -185,17 +186,29 @@ namespace jgl
 			{
 				size_t tmp = i * 3 + j;
 				if (_faces[i].index_vertices[j] != -1)
+				{
+					if (_faces[i].index_vertices[j] >= _vertices.size())
+						jgl::error_exit(1, "Error while baking a mesh with vertices = " + jgl::itoa(_faces[i].index_normale[j]) + " over " + jgl::itoa(_normales.size()) + " possibility");
 					_baked_vertices[tmp] = _vertices[_faces[i].index_vertices[j]];
+				}
 				else
 					_baked_vertices[tmp] = Vector3(-1, -1, -1);
 
 				if (_faces[i].index_uvs[j] != -1)
+				{
+					if (_faces[i].index_uvs[j] >= _uvs.size())
+						jgl::error_exit(1, "Error while baking a mesh with uvs = " + jgl::itoa(_faces[i].index_normale[j]) + " over " + jgl::itoa(_normales.size()) + " possibility");
 					_baked_uvs[tmp] = _uvs[_faces[i].index_uvs[j]];
+				}
 				else
 					_baked_uvs[tmp] = Vector2(-1, -1);
 
 				if (_faces[i].index_normale[j] != -1)
+				{
+					if (_faces[i].index_normale[j] >= _normales.size())
+						jgl::error_exit(1, "Error while baking a mesh with normales = " + jgl::itoa(_faces[i].index_normale[j]) + " over " + jgl::itoa(_normales.size()) + " possibility");
 					_baked_normales[tmp] = _normales[_faces[i].index_normale[j]];
+				}
 				else
 					_baked_normales[tmp] = _normales[tmp];
 
@@ -342,7 +355,7 @@ namespace jgl
 					(actual->index_normale[0] == -1 ? -1 : actual->index_normale[0] + static_cast<int>(index_actual_normales)),
 					(actual->index_normale[1] == -1 ? -1 : actual->index_normale[1] + static_cast<int>(index_actual_normales)),
 					(actual->index_normale[2] == -1 ? -1 : actual->index_normale[2] + static_cast<int>(index_actual_normales))
-				}));
+				}, actual->color));
 		}
 	}
 

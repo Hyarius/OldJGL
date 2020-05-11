@@ -2,7 +2,7 @@
 
 namespace jgl
 {
-	w_text_component::w_text_component(Widget* p_owner, jgl::String p_text) :
+	w_text_component::w_text_component(jgl::String p_text, Widget* p_owner) :
 		w_component(p_owner), w_graphical_component(), w_textual_component()
 	{
 		_text = p_text;

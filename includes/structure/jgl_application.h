@@ -31,6 +31,8 @@ namespace jgl
 		GLuint _program_color_model;
 		GLuint _program_texture_model;
 
+		std::vector<GLuint> _custom_program;
+
 		GLuint _vertex_array;
 
 		GLuint _vertex_buffer;
@@ -69,6 +71,11 @@ namespace jgl
 		Viewport* viewport() { return (_viewport); }
 		Viewport* active_viewport() { return (_active_viewport); }
 		Vector2 size() { return (_size); }
+
+		GLuint add_custom_shader(jgl::String p_vertex_content, jgl::String p_fragment_content);
+		GLuint get_custom_program(size_t index);
+		GLuint get_custom_uniform(GLuint p_program, jgl::String p_param);
+
 		GLuint program_color() { return (_program_color); }
 		GLuint program_texture() { return (_program_texture); }
 		GLuint program_color_model() { return (_program_color_model); }
@@ -116,8 +123,8 @@ namespace jgl
 	};
 
 	GLuint		load_shaders(
-		std::string p_vertex_file_path,
-		std::string p_fragment_file_path
+		std::string p_vertex_content,
+		std::string p_fragment_content
 	);
 }
 

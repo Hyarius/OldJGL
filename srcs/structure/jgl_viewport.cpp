@@ -2,10 +2,15 @@
 
 namespace jgl
 {
-	Viewport::Viewport(Color p_color, Vector2 p_anchor, Vector2 p_area)
+	Viewport::Viewport(Color p_color, Vector2 p_anchor, Vector2 p_area, class jgl::Widget* p_owner)
 	{
 		if (g_application == nullptr)
 			g_application = new Application("Main window");
+
+		if (p_owner == nullptr)
+			_owner = g_application->central_widget();
+		else
+			_owner = p_owner;
 
 		_active = false;
 		_context = g_application->context();
@@ -35,8 +40,15 @@ namespace jgl
 	{
 		g_application->set_active_viewport(this);
 		glClear(GL_DEPTH_BUFFER_BIT);
-		glViewport(static_cast<int>(_anchor.x), static_cast<int>(g_application->size().y - _anchor.y - _area.y),
-			static_cast<int>(_area.x), static_cast<int>(_area.y));
+		
+		jgl::Vector2 pos, size;
+		jgl::Vector2 tmp;
+
+		size = _area;
+		tmp = (_owner != nullptr ? _owner->anchor() : 0);
+		pos = jgl::Vector2(tmp.x, g_application->size().y - _area.y - tmp.y);
+
+		glViewport(static_cast<int>(pos.x), static_cast<int>(pos.y), static_cast<int>(size.x), static_cast<int>(size.y));
 	}
 
 	void Viewport::reset()

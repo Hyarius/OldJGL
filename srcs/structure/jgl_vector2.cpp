@@ -160,6 +160,16 @@ namespace jgl
 		return (result);
 	}
 
+	Vector2 Vector2::ceiling()
+	{
+		Vector2 result;
+
+		result.x = std::ceil(x);
+		result.y = std::ceil(y);
+
+		return (result);
+	}
+
 	Vector2 Vector2::invert()
 	{
 		x *= -1;

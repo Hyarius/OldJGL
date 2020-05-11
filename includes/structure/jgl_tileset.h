@@ -1,12 +1,12 @@
-#ifndef JGL_TILESET_H
-#define JGL_TILESET_H
+#ifndef JGL_SPRITE_SHEET_H
+#define JGL_SPRITE_SHEET_H
 
 #include "jgl_includes.h"
 #include "jgl_image.h"
 
 namespace jgl
 {
-	class Tileset
+	class Sprite_sheet
 	{
 	protected:
 		Image* _image;
@@ -15,14 +15,14 @@ namespace jgl
 		std::vector<Vector2> _sprites;
 
 	public:
-		Tileset() {
+		Sprite_sheet() {
 			_image = nullptr;
 			_size = 0;
 			_unit = 1;
 			_sprites.clear();
 		}
-		Tileset(Image* p_image, Vector2 p_size = 1);
-		Tileset(jgl::String path, Vector2 p_size = 0);
+		Sprite_sheet(Image* p_image, Vector2 p_size = 1);
+		Sprite_sheet(jgl::String path, Vector2 p_size = 0);
 
 		Image* image() { return (_image); }
 		Vector2 size() { return (_size); }

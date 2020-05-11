@@ -2,7 +2,7 @@
 
 namespace jgl
 {
-	Tileset::Tileset(jgl::String path, Vector2 p_size)
+	Sprite_sheet::Sprite_sheet(jgl::String path, Vector2 p_size)
 	{
 		_image = new Image(path);
 		_sprites.clear();
@@ -27,7 +27,7 @@ namespace jgl
 		}
 	}
 
-	Tileset::Tileset(Image* p_image, Vector2 p_size)
+	Sprite_sheet::Sprite_sheet(Image* p_image, Vector2 p_size)
 	{
 		_image = p_image;
 		_sprites.clear();
@@ -53,7 +53,7 @@ namespace jgl
 
 	}
 
-	void Tileset::draw(int id, Vector2 pos, Vector2 size, float p_alpha, Viewport* viewport)
+	void Sprite_sheet::draw(int id, Vector2 pos, Vector2 size, float p_alpha, Viewport* viewport)
 	{
 		glBindTexture(GL_TEXTURE_2D, _image->texture_id());
 
@@ -95,12 +95,12 @@ namespace jgl
 		draw_triangle_texture(points, uvs, p_alpha, 2);
 	}
 
-	void Tileset::draw_centred(int id, Vector2 pos, Vector2 size, float p_alpha, Viewport* viewport)
+	void Sprite_sheet::draw_centred(int id, Vector2 pos, Vector2 size, float p_alpha, Viewport* viewport)
 	{
 		draw(id, pos - size / 2, size, p_alpha, viewport);
 	}
 
-	void Tileset::draw(Vector2 coord, Vector2 pos, Vector2 size, float p_alpha, Viewport* viewport)
+	void Sprite_sheet::draw(Vector2 coord, Vector2 pos, Vector2 size, float p_alpha, Viewport* viewport)
 	{
 		glBindTexture(GL_TEXTURE_2D, _image->texture_id());
 
@@ -140,7 +140,7 @@ namespace jgl
 		draw_triangle_texture(points, uvs, p_alpha, 2);
 	}
 
-	void Tileset::draw_centred(Vector2 coord, Vector2 pos, Vector2 size, float p_alpha, Viewport* viewport)
+	void Sprite_sheet::draw_centred(Vector2 coord, Vector2 pos, Vector2 size, float p_alpha, Viewport* viewport)
 	{
 		draw(coord, pos - size / 2, size, p_alpha, viewport);
 	}
