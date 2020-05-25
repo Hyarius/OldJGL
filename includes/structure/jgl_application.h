@@ -26,6 +26,8 @@ namespace jgl
 		Viewport* _active_viewport;
 		Vector2 _size;
 
+		Uint32 _time;
+
 		GLuint _program_color;
 		GLuint _program_texture;
 		GLuint _program_color_model;
@@ -66,6 +68,7 @@ namespace jgl
 	public:
 		Application(jgl::String name, Vector2 p_size = Vector2(840, 680), Color p_color = Color(50, 50, 50));
 
+		Uint32 time(){return (_time);}
 		SDL_Window* window() { return (_window); }
 		SDL_GLContext* context() { return (&_context); }
 		Viewport* viewport() { return (_viewport); }

@@ -13,7 +13,7 @@ namespace jgl
 
 		Plot_data(jgl::String p_name = "Value", float p_min = 0.0f, float p_max = 100.0f, jgl::String (*p_funct)(float) = nullptr)
 		{
-			name = p_name;
+			name = jgl::String(p_name);
 			funct = p_funct;
 			min = p_min;
 			max = p_max;
@@ -112,7 +112,7 @@ namespace jgl
 		void set_absciss(Plot_data p_absciss){_absciss = p_absciss;calc_axis_unit();}
 		void set_ordinate(Plot_data p_ordinate){_ordinate = p_ordinate;calc_axis_unit();}
 
-		void set_absciss_name(jgl::String p_name){absciss().name = p_name;}
+		void set_absciss_name(jgl::String p_name){absciss().name = jgl::String(p_name);}
 		void set_absciss_funct(jgl::String (*p_funct)(float)){absciss().set_funct(p_funct);}
 		void set_absciss_min(float p_min){absciss().set_min(p_min);calc_axis_unit();}
 		void set_absciss_max(float p_max){absciss().set_max(p_max);calc_axis_unit();}
@@ -120,7 +120,7 @@ namespace jgl
 		void divide_absciss(size_t subdivision){absciss().divide(subdivision);calc_axis_unit();}
 		void set_absciss_precision(int p_precision){absciss().precision = p_precision;}
 
-		void set_ordinate_name(jgl::String p_name){ordinate().name = p_name;}
+		void set_ordinate_name(jgl::String p_name){ordinate().name = jgl::String(p_name);}
 		void set_ordinate_funct(jgl::String (*p_funct)(float)){ordinate().set_funct(p_funct);}
 		void set_ordinate_min(float p_min){ordinate().set_min(p_min);calc_axis_unit();}
 		void set_ordinate_max(float p_max){ordinate().set_max(p_max);calc_axis_unit();}

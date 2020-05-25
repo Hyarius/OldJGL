@@ -52,6 +52,12 @@ namespace jgl
 		float y;
 		float z;
 
+		static Vector3 up() { return (Vector3(0, 1, 0)); }
+		static Vector3 right() { return (Vector3(0, 0, 1)); }
+		static Vector3 front() { return (Vector3(1, 0, 0)); }
+		static Vector3 zero() { return (0); }
+
+		Vector3(Vector4 p_other);
 		Vector3(int p_value);
 		Vector3(size_t p_value);
 		Vector3(double p_value);
@@ -61,6 +67,7 @@ namespace jgl
 		Vector3(size_t p_x, size_t p_y, size_t p_z);
 		Vector3(double p_x, double p_y, double p_z);
 
+		Vector3& operator = (Vector4 p_other);
 		Vector3& operator = (int p_value);
 		Vector3& operator = (float  p_value);
 
@@ -77,6 +84,7 @@ namespace jgl
 		bool operator < (const Vector3 other) const;
 		bool operator > (const Vector3 other) const;
 		float* decompose();
+		float length();
 		float distance(Vector3 point);
 		Vector3 normalize();
 		Vector3 cross(Vector3 other);

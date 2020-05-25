@@ -49,7 +49,7 @@ namespace jgl
 		bool _kinetic;
 
 		Vector3 _rotation;
-		Matrix _rot_matrix;
+		Matrix4x4 _rot_matrix;
 		Vector3 _forward;
 		Vector3 _right;
 		Vector3 _up;
@@ -81,7 +81,7 @@ namespace jgl
 		Vector3 velocity() { return (_velocity); }
 		Vector3 size() { return (_size); }
 		Vector3 rotation() { return (_rotation); }
-		Matrix rot_matrix() { return (_rot_matrix); }
+		Matrix4x4 rot_matrix() { return (_rot_matrix); }
 		Vector3 forward() { return (_forward); }
 		Vector3 right() { return (_right); }
 		Vector3 up() { return (_up); }
@@ -109,6 +109,7 @@ namespace jgl
 
 		void bake();
 		void clear();
+		void clear_baked();
 
 		void look_at(Vector3 target);
 		void rotate_around_point(Vector3 target, Vector3 delta);

@@ -19,7 +19,7 @@ namespace jgl
 	int stoi(String text);
 	jgl::String normalize_string(jgl::String str, char c, size_t size);
 	jgl::String normalize_float(float num, int after_point, char c, size_t size);
-	bool is_middle(float a, float b, float c);
+	bool is_middle(float min, float value, float max);
 	std::vector<jgl::Vector2> calc_line_2d(float x1, float y1, float x2, float y2);
 	int generate_nbr(int min, int max);
 

@@ -19,7 +19,7 @@ namespace jgl
 		SDL_GL_SetAttribute(SDL_GL_DOUBLEBUFFER, 1);
 		SDL_GL_SetAttribute(SDL_GL_DEPTH_SIZE, 16);
 
-		srand(static_cast<unsigned int>(time(NULL)));
+		srand(static_cast<unsigned int>(std::time(NULL)));
 		TTF_Init();
 
 		check_sdl_error(__FILE__, __LINE__);
@@ -160,7 +160,8 @@ namespace jgl
 
 		SDL_StartTextInput();
 		//set_max_fps(6000);
-	}
+		_time = SDL_GetTicks();
+}
 
 	void Application::resize(Vector2 p_size)
 	{

@@ -151,11 +151,11 @@ namespace jgl
 		return (text.contain("0123456789."));
 	}
 
-	bool is_middle(float a, float b, float c)
+	bool is_middle(float min, float value, float max)
 	{
-		if (a > b)
+		if (min > value)
 			return (false);
-		if (b > c)
+		if (value > max)
 			return (false);
 		return (true);
 	}

@@ -111,6 +111,43 @@ namespace jgl
 		return (font_outline[size]);
 	}
 
+	Image* get_string_image(jgl::String str, size_t size, size_t outline, text_color color, text_style style)
+	{
+		const char* text;
+
+		TTF_Font* tmp = get_font(static_cast<size_t>(size));
+		TTF_SetFontStyle(tmp, static_cast<int>(style));
+
+		std::string tmp_str = str.std();
+		text = tmp_str.c_str();
+
+		SDL_Surface* surface = TTF_RenderUTF8_Blended(tmp, text, get_color(static_cast<size_t>(color)));
+
+		if (outline > 0)
+		{
+			TTF_Font* tmp_outline = get_font_outline(static_cast<size_t>(size));
+			TTF_SetFontStyle(tmp_outline, static_cast<int>(style));
+			TTF_SetFontOutline(tmp_outline, outline);
+
+			SDL_Surface* outline_surface = TTF_RenderUTF8_Blended(tmp_outline, text, get_color(static_cast<size_t>(text_color::black)));
+			if (outline_surface == nullptr)
+				error_exit(1, "Error while creating the outline for char ");
+			SDL_Rect rect = { static_cast<int>(outline), static_cast<int>(outline), surface->w, surface->h };
+
+			SDL_SetSurfaceBlendMode(surface, SDL_BLENDMODE_BLEND);
+			SDL_BlitSurface(surface, NULL, outline_surface, &rect);
+			SDL_FreeSurface(surface);
+
+			surface = outline_surface;
+
+			TTF_SetFontStyle(tmp_outline, static_cast<int>(text_style::normal));
+		}
+
+		TTF_SetFontStyle(tmp, static_cast<int>(text_style::normal));
+
+		return (new Image(surface));
+	}
+
 	Image* get_char(Glyph c, size_t size, size_t outline, text_color color, text_style style)
 	{
 		const char *text;
@@ -146,7 +183,6 @@ namespace jgl
 					error_exit(1, "Error while creating the outline for char ");
 				SDL_Rect rect = { static_cast<int>(outline), static_cast<int>(outline), surface->w, surface->h };
 
-				/* blit text onto its outline */
 				SDL_SetSurfaceBlendMode(surface, SDL_BLENDMODE_BLEND);
 				SDL_BlitSurface(surface, NULL, outline_surface, &rect);
 				SDL_FreeSurface(surface);

@@ -51,19 +51,22 @@ namespace jgl
 					motion = false;
 				}
 				else
+				{
 					button[i] = mouse_state::down;
+					if (point_in_rectangle(begin_pos, pos - 5, 10) == false && motion == false)
+						motion = true;
+				}
 			}
 			else // Le bouton n'est pas pressé
 			{
 				if (button[i] == mouse_state::down || button[i] == mouse_state::pressed)
 				{
 					button[i] = mouse_state::release;
-					if (point_in_rectangle(begin_pos, pos - 5, 10) == false)
-						motion = true;
 				}
 				else
 				{
 					button[i] = mouse_state::up;
+					motion = false;
 				}
 			}
 		}

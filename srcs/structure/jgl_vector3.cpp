@@ -2,6 +2,10 @@
 
 namespace jgl
 {
+
+	Vector3::Vector3(Vector4 other) :
+		x(other.x), y(other.y), z(other.z) {}
+
 	Vector3::Vector3(int p_value) :
 		x(static_cast<float>(p_value)), y(static_cast<float>(p_value)),
 		z(static_cast<float>(p_value)) {}
@@ -32,6 +36,12 @@ namespace jgl
 		x(static_cast<float>(p_x)), y(static_cast<float>(p_y)),
 		z(static_cast<float>(p_z)) {}
 
+	Vector3& Vector3::operator = (Vector4 other){
+		x = other.x;
+		y = other.y;
+		z = other.z;
+		return *this;
+	}
 	Vector3& Vector3::operator = (int p_value) {
 		x = static_cast<float>(p_value);
 		y = static_cast<float>(p_value);
@@ -108,6 +118,12 @@ namespace jgl
 
 	float* Vector3::decompose() {
 		return (&x);
+	}
+	float Vector3::length()
+	{
+		return (sqrt(pow(x, 2.0f)
+			+ pow(y, 2.0f)
+			+ pow(z, 2.0f)));
 	}
 
 	float Vector3::distance(Vector3 point)
