@@ -45,10 +45,12 @@ namespace jgl
 		GLuint _pos_colorID;
 		GLuint _dir_light_colorID;
 		GLuint _rot_colorID;
+		GLuint _size_colorID;
 
 		GLuint _matrix_textureID;
 		GLuint _pos_textureID;
 		GLuint _rot_textureID;
+		GLuint _size_textureID;
 		GLuint _dir_light_textureID;
 		GLuint _texture_textureID;
 
@@ -95,10 +97,12 @@ namespace jgl
 		GLuint pos_colorID() { return (_pos_colorID); }
 		GLuint dir_light_colorID() { return (_dir_light_colorID); }
 		GLuint rot_colorID() { return (_rot_colorID); }
+		GLuint size_colorID() { return (_size_colorID); }
 
 		GLuint matrix_textureID() { return (_matrix_textureID); }
 		GLuint pos_textureID() { return (_pos_textureID); }
 		GLuint rot_textureID() { return (_rot_textureID); }
+		GLuint size_textureID() { return (_size_textureID); }
 		GLuint dir_light_textureID() { return (_dir_light_textureID); }
 		GLuint texture_textureID() { return (_texture_textureID); }
 		GLuint alpha_textureID() { return (_alpha_textureID); }

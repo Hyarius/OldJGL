@@ -22,6 +22,6 @@ namespace jgl
 	};
 }
 
-std::ostream& operator<<(std::ostream& os, jgl::Color& value);
+std::ostream& operator<<(std::ostream& os, jgl::Color value);
 
 #endif

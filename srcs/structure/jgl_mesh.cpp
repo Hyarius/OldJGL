@@ -9,61 +9,212 @@ namespace jgl
 		_velocity = 0;
 		_kinetic = false;
 
-		glGenBuffers(1, &_vertex_buffer);
-		glGenBuffers(1, &_color_buffer);
-		glGenBuffers(1, &_normale_buffer);
-		glGenBuffers(1, &_uv_buffer);
-		glGenBuffers(1, &_alpha_buffer);
-
 		_rotation = p_rot;
 		compute_axis();
 
 		_transparency = 1.0f;
-		_faces.clear();
-
-		_vertices.clear();
-		_uvs.clear();
-		_normales.clear();
-
-		_baked_vertices.clear();
-		_baked_uvs.clear();
-		_baked_colors.clear();
-		_baked_normales.clear();
-
-		_texture = nullptr;
 	}
 
 	int face_index_value[2][3] = {
 		{1, 2, 3},
-		{3, 2, 4}
+		{1, 3, 4}
 	};
 
-	static void compose_face(jgl::Mesh *target, std::vector<jgl::String> tab, int type, Color color)
+	static void compose_face(jgl::Mesh *target, std::vector<jgl::String> tab, int type, Color color, size_t index)
 	{
 		std::vector<jgl::String> face_content;
 		int index_vertices[3] = { -1, -1, -1 }, index_uvs[3] = { -1, -1, -1 }, index_normales[3] = { -1, -1, -1 };
+		int delta_vertice_index = 0;
+		int delta_uvs_index = 0;
+		int delta_normale_index = 0;
+
+		for (size_t i = 0; i < index; i++)
+		{
+			Mesh_part* tmp = target->parts(i);
+			delta_vertice_index += tmp->vertices().size();
+			delta_uvs_index += tmp->uvs().size();
+			delta_normale_index += tmp->normales().size();
+		}
 
 		for (size_t i = 0; i < 3; i++)
 		{
 			face_content = strsplit(tab[face_index_value[type][2 - i]], "/", false);
-			std::cout << "face content [" << i << "] = " << tab[face_index_value[type][2 - i]] << std::endl;
-			index_vertices[i] = stoi(face_content[0]) - 1;
+			index_vertices[i] = stoi(face_content[0]) - 1 - delta_vertice_index;
 			if (face_content.size() >= 2)
-				index_uvs[i] = (face_content[1].size() == 0 ? -1 : stoi(face_content[1]) - 1);
+				index_uvs[i] = (face_content[1].size() == 0 ? -1 : stoi(face_content[1]) - 1 - delta_uvs_index);
 			if (face_content.size() >= 3)
-				index_normales[i] = (face_content[2].size() == 0 ? -1 : stoi(face_content[2]) - 1);
+				index_normales[i] = (face_content[2].size() == 0 ? -1 : stoi(face_content[2]) - 1 - delta_normale_index);
 		}
-		std::cout << "Face =	" << index_vertices[0] << "/" << index_vertices[1] << "/" << index_vertices[2] << std::endl;
-		std::cout << "			" << index_uvs[0] << "/" << index_uvs[1] << "/" << index_uvs[2] << std::endl;
-		std::cout << "			" << index_normales[0] << "/" << index_normales[1] << "/" << index_normales[2] << std::endl;
-		target->add_face(Face(index_vertices, index_uvs, index_normales, color));
+		target->add_face(Face(index_vertices, index_uvs, index_normales, color), index);
 	}
 
-	Mesh::Mesh(jgl::String p_path, Vector3 p_pos, Vector3 p_rot, Vector3 p_size, Color color) : Mesh(p_pos, p_rot)
+	static jgl::String create_address(jgl::String path)
 	{
+		std::vector<jgl::String> tab = strsplit(path, "/");
+		jgl::String result = "";
+
+		for (size_t i = 0; i < tab.size() - 1; i++)
+			result += tab[i] + "/";
+
+		return (result);
+	}
+
+	jgl::Color create_color_from_tab(std::vector<jgl::String> tab)
+	{
+		return (Color(stof(tab[1]), stof(tab[2]), stof(tab[3])));
+	}
+
+	void Mesh::parse_materials(jgl::String p_path)
+	{
+		Material* material = nullptr;
+		std::fstream file = open_file(p_path, std::ios_base::in | std::ios_base::out);
+		jgl::String line;
+		std::vector<jgl::String> tab;
+
+		while (file.eof() == false)
+		{
+			line = get_str(file);
+			if (line.size() != 0 && line[0] != '#')
+			{
+				tab = strsplit(line, " ");
+				if (tab[0] == "newmtl")
+				{
+					if (material != nullptr)
+						_materials.push_back(material);
+					material = new Material(tab[1]);
+				}
+				// Ambient Color
+				if (tab[0] == "Ka")
+				{
+					if (tab.size() != 4)
+						error_exit(1, "Bad number of argument in Ka construction");
+
+					material->ka = create_color_from_tab(tab);
+				}
+				// Diffuse Color
+				if (tab[0] == "Kd")
+				{
+					if (tab.size() != 4)
+						error_exit(1, "Bad number of argument in Kd construction");
+
+					material->kd = create_color_from_tab(tab);
+				}
+				// Specular Color
+				if (tab[0] == "Ks")
+				{
+					if (tab.size() != 4)
+						error_exit(1, "Bad number of argument in Ks construction");
+
+					material->ks = create_color_from_tab(tab);
+				}
+				// Specular Exponent
+				if (tab[0] == "Ns")
+				{
+					if (tab.size() != 2)
+						error_exit(1, "Bad number of argument in Ns construction");
+
+					material->ns = stof(tab[1]);
+				}
+				if (tab[0] == "Ke")
+				{
+					if (tab.size() != 4)
+						error_exit(1, "Bad number of argument in Ke construction");
+
+					material->ke = create_color_from_tab(tab);
+				}
+				// Optical Density
+				if (tab[0] == "Ni")
+				{
+					if (tab.size() != 2)
+						error_exit(1, "Bad number of argument in Ni construction");
+
+					material->ni = stof(tab[1]);
+				}
+				// Dissolve
+				if (tab[0] == "d")
+				{
+					if (tab.size() != 2)
+						error_exit(1, "Bad number of argument in D construction");
+
+					material->d = stof(tab[1]);
+				}
+				// Illumination
+				if (tab[0] == "illum")
+				{
+					if (tab.size() != 2)
+						error_exit(1, "Bad number of argument in illum construction");
+
+					material->illum = stoi(tab[1]);
+				}
+				// Ambient Texture Map
+				if (tab[0] == "map_Ka")
+				{
+					if (tab.size() != 2)
+						error_exit(1, "Bad number of argument in map Ka construction");
+
+					material->ambiant_texture_map = new Image(tab[1]);
+				}
+				// Diffuse Texture Map
+				if (tab[0] == "map_Kd")
+				{
+					if (tab.size() != 2)
+						error_exit(1, "Bad number of argument in map Kd construction");
+
+					material->diffuse_texture_map = new Image(tab[1]);
+				}
+				// Specular Texture Map
+				if (tab[0] == "map_Ks")
+				{
+					if (tab.size() != 2)
+						error_exit(1, "Bad number of argument in map Ks construction");
+
+					material->specular_texture_map = new Image(tab[1]);
+				}
+				// Specular Hightlight Map
+				if (tab[0] == "map_Ns")
+				{
+					if (tab.size() != 2)
+						error_exit(1, "Bad number of argument in map Ns construction");
+
+					material->specular_hight_light_map = new Image(tab[1]);
+				}
+				// Alpha Texture Map
+				if (tab[0] == "map_d")
+				{
+					if (tab.size() != 2)
+						error_exit(1, "Bad number of argument in map Kd construction");
+
+					material->alpha_texture_map = new Image(tab[1]);
+				}
+				// Bump Map
+				if (tab[0] == "map_Bump" || tab[0] == "map_bump" || tab[0] == "bump")
+				{
+					if (tab.size() != 2)
+						error_exit(1, "Bad number of argument in bump map construction");
+
+					material->bump_map = new Image(tab[1]);
+				}
+
+			}
+		}
+		if (material != nullptr)
+			_materials.push_back(material);
+
+		for (size_t i = 0; i < _materials.size(); i++)
+		{
+			Material* tmp = _materials[i];
+
+			std::cout << *tmp << std::endl;
+		}
+	}
+
+	Mesh::Mesh(jgl::String p_path, Vector3 p_pos, Vector3 p_rot, Vector3 p_size, Color color) : Mesh(p_pos, p_rot, p_size)
+	{
+		int tmp_part_index = -1;
 		jgl::String line;
 		std::vector<jgl::String> tab;
 		std::fstream file = open_file(p_path, std::ios_base::in | std::ios_base::out);
+		jgl::String address = create_address(p_path);
 
 		while (file.eof() == false)
 		{
@@ -72,21 +223,31 @@ namespace jgl
 			if (tab.size() != 0)
 			{
 				if (tab[0] == "v")
-					add_point(Vector3(stof(tab[1]), stof(tab[2]), stof(tab[3])));
+					add_point(Vector3(stof(tab[1]), stof(tab[2]), stof(tab[3])), tmp_part_index);
 				else if (tab[0] == "vt")
-					add_uv(Vector2(stof(tab[1]), stof(tab[2])));
+					add_uv(Vector2(stof(tab[1]), stof(tab[2])), tmp_part_index);
 				else if (tab[0] == "vn")
-					add_normale(Vector3(stof(tab[1]), stof(tab[2]), stof(tab[3])));
+					add_normale(Vector3(stof(tab[1]), stof(tab[2]), stof(tab[3])), tmp_part_index);
+				else if (tab[0] == "o")
+				{
+					add_new_part(tab[1]);
+					tmp_part_index++;
+				}
+				else if (tab[0] == "mtllib")
+				{
+					jgl::String to_send = address + tab[1];
+					parse_materials(to_send);
+				}
 				else if (tab[0] == "f")
 				{
 					if (tab.size() == 4)
 					{
-						compose_face(this, tab, 0, color);
+						compose_face(this, tab, 0, color, tmp_part_index);
 					}
 					else
 					{
-						compose_face(this, tab, 0, color);
-						compose_face(this, tab, 1, color);
+						compose_face(this, tab, 0, color, tmp_part_index);
+						compose_face(this, tab, 1, color, tmp_part_index);
 					}
 					//else
 					//	error_exit(1, "Error while parsing a mesh : facee with strange number of index\nLine = " + line);
@@ -94,34 +255,6 @@ namespace jgl
 			}
 		}
 		bake();
-	}
-
-	void Mesh::compute_normales()
-	{
-		Vector3 b;
-		Vector3 c;
-		Vector3 tmp;
-
-		for (size_t i = 0; i < _faces.size(); i++)
-		{
-			for (size_t j = 0; j < 3; j++)
-			{
-				if (_faces[i].index_normale[j] == -1)
-				{
-					b = _rot_matrix * (_vertices[_faces[i].index_vertices[0]] - _vertices[_faces[i].index_vertices[1]]);
-					c = _rot_matrix * (_vertices[_faces[i].index_vertices[2]] - _vertices[_faces[i].index_vertices[0]]);
-					tmp = b.cross(c).normalize();
-					_normales.insert(_normales.end(), tmp);
-					_faces[i].normale = tmp;
-				}
-				else
-				{
-					if (_normales.size() <= static_cast<size_t>(_faces[i].index_normale[j] + 1))
-						_normales.resize(_faces[i].index_normale[j] + 1);
-					_faces[i].normale = _normales[_faces[i].index_normale[j]];
-				}
-			}
-		}
 	}
 
 	void Mesh::compute_axis()
@@ -169,237 +302,171 @@ namespace jgl
 	void Mesh::compute_bubble_box()
 	{
 		Vector3 total;
+		size_t total_size;
 
 		total = 0;
-		for (size_t i = 0; i < _vertices.size(); i++)
-			total += _vertices[i];
-		_center = total / static_cast<int>(_vertices.size());
-		_radius = 0;
-		for (size_t i = 0; i < _vertices.size(); i++)
+		total_size = 0;
+		for (size_t j = 0; j < _parts.size(); j++)
 		{
-			float tmp_radius = _center.distance(_vertices[i]);
-			if (_radius < tmp_radius)
-				_radius = tmp_radius;
+			Mesh_part* tmp = check_part(j);
+			for (size_t i = 0; i < tmp->vertices().size(); i++)
+			{
+				total += tmp->vertices()[i];
+				total_size++;
+			}
+		}
+		_center = total / total_size;
+		_radius = 0;
+		for (size_t j = 0; j < _parts.size(); j++)
+		{
+			Mesh_part* tmp = check_part(j);
+			for (size_t i = 0; i < tmp->vertices().size(); i++)
+			{
+				float tmp_radius = _center.distance(tmp->vertices()[i]);
+				if (_radius < tmp_radius)
+					_radius = tmp_radius;
+			}
 		}
 	}
 
 	void Mesh::bake()
 	{
-		compute_bubble_box();
-
-		compute_normales();
-
-		_baked_vertices.clear();
-		_baked_uvs.clear();
-		_baked_colors.clear();
-		_baked_normales.clear();
-
-		_baked_vertices.resize(_faces.size() * 3);
-		_baked_uvs.resize(_faces.size() * 3);
-		_baked_normales.resize(_faces.size() * 3);
-		_baked_colors.resize(_faces.size() * 3);
-
-		for (size_t i = 0; i < _faces.size(); i++)
+		for (size_t i = 0; i < _parts.size(); i++)
 		{
-			for (size_t j = 0; j < 3; j++)
-			{
-				size_t tmp = i * 3 + j;
-				if (_faces[i].index_vertices[j] != -1)
-				{
-					if (size_t(_faces[i].index_vertices[j]) >= _vertices.size())
-						jgl::error_exit(1, "Error while baking a mesh with vertices = " + jgl::itoa(_faces[i].index_normale[j]) + " over " + jgl::itoa(_normales.size()) + " possibility");
-					_baked_vertices[tmp] = _vertices[_faces[i].index_vertices[j]];
-				}
-				else
-					_baked_vertices[tmp] = Vector3(-1, -1, -1);
-
-				if (_faces[i].index_uvs[j] != -1)
-				{
-					if (size_t(_faces[i].index_uvs[j]) >= _uvs.size())
-						jgl::error_exit(1, "Error while baking a mesh with uvs = " + jgl::itoa(_faces[i].index_normale[j]) + " over " + jgl::itoa(_normales.size()) + " possibility");
-					_baked_uvs[tmp] = _uvs[_faces[i].index_uvs[j]];
-				}
-				else
-					_baked_uvs[tmp] = Vector2(-1, -1);
-
-				if (_faces[i].index_normale[j] != -1)
-				{
-					if (size_t(_faces[i].index_normale[j]) >= _normales.size())
-						jgl::error_exit(1, "Error while baking a mesh with normales = " + jgl::itoa(_faces[i].index_normale[j]) + " over " + jgl::itoa(_normales.size()) + " possibility");
-					_baked_normales[tmp] = _normales[_faces[i].index_normale[j]];
-				}
-				else
-					_baked_normales[tmp] = _normales[tmp];
-
-				_baked_colors[tmp] = _faces[i].color;
-			}
+			_parts[i]->bake(_rot_matrix);
 		}
-
-		if (_baked_vertices.size() == 0)
-			return;
-
-		glBindBuffer(GL_ARRAY_BUFFER, _vertex_buffer);
-		glBufferData(GL_ARRAY_BUFFER, _baked_vertices.size() * 3 * sizeof(float), static_cast<float*>(&(_baked_vertices[0].x)), GL_STATIC_DRAW);
-
-		glBindBuffer(GL_ARRAY_BUFFER, _color_buffer);
-		glBufferData(GL_ARRAY_BUFFER, _baked_colors.size() * 4 * sizeof(float), static_cast<float*>(&(_baked_colors[0].r)), GL_STATIC_DRAW);
-
-		glBindBuffer(GL_ARRAY_BUFFER, _uv_buffer);
-		glBufferData(GL_ARRAY_BUFFER, _baked_uvs.size() * 2 * sizeof(float), static_cast<float*>(&(_baked_uvs[0].x)), GL_STATIC_DRAW);
-
-		glBindBuffer(GL_ARRAY_BUFFER, _normale_buffer);
-		glBufferData(GL_ARRAY_BUFFER, _baked_normales.size() * 3 * sizeof(float), static_cast<float*>(&(_baked_normales[0].x)), GL_STATIC_DRAW);
-
-	}
-
-	void Mesh::render_color_differed(Camera* camera, Vector3 p_pos)
-	{
-		if (_baked_vertices.size() == 0)
-			return;
-
-		glUseProgram(g_application->program_color_model());
-
-		glUniformMatrix4fv(g_application->matrix_colorID(), 1, GL_FALSE, &(camera->MVP().value[0][0]));
-		glUniform3f(g_application->pos_colorID(), p_pos.x, p_pos.y, p_pos.z);
-		glUniformMatrix4fv(g_application->rot_colorID(), 1, GL_FALSE, &(_rot_matrix.value[0][0]));
-		glUniform4f(g_application->dir_light_colorID(), camera->dir_light().x, camera->dir_light().y, camera->dir_light().z, 0.0f);
-
-		// 1rst attribute buffer : vertices
-		glEnableVertexAttribArray(0);
-		glBindBuffer(GL_ARRAY_BUFFER, _vertex_buffer);
-		glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 0, (void*)0);
-
-		// 2rst attribute buffer : vertices
-		glEnableVertexAttribArray(1);
-		glBindBuffer(GL_ARRAY_BUFFER, _color_buffer);
-		glVertexAttribPointer(1, 4, GL_FLOAT, GL_FALSE, 0, (void*)0);
-
-		// 3rst attribute buffer : vertices
-		glEnableVertexAttribArray(2);
-		glBindBuffer(GL_ARRAY_BUFFER, _normale_buffer);
-		glVertexAttribPointer(2, 3, GL_FLOAT, GL_FALSE, 0, (void*)0);
-
-		// Draw the triangle !
-		//glEnable(GL_CULL_FACE);
-		// glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
-		glDrawArrays(GL_TRIANGLES, 0, static_cast<GLsizei>(_baked_vertices.size() * 3)); // 3 indices starting at 0 -> 1 triangle
-		// glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
-		//glDisable(GL_CULL_FACE);
-
-		glDisableVertexAttribArray(0);
-		glDisableVertexAttribArray(1);
-		glDisableVertexAttribArray(2);
-	}
-
-	void Mesh::render_texture_differed(Camera* camera, Vector3 p_pos)
-	{
-		if (_baked_vertices.size() == 0)
-			return;
-
-		glUseProgram(g_application->program_texture_model());
-
-		glBindTexture(GL_TEXTURE_2D, _texture->texture_id());
-
-		glUniformMatrix4fv(g_application->matrix_textureID(), 1, GL_FALSE, &(camera->MVP().value[0][0]));
-		glUniform3f(g_application->pos_textureID(), p_pos.x, p_pos.y, p_pos.z);
-		glUniformMatrix4fv(g_application->rot_textureID(), 1, GL_FALSE, &(_rot_matrix.value[0][0]));
-		glUniform4f(g_application->dir_light_textureID(), camera->dir_light().x, camera->dir_light().y, camera->dir_light().z, 0.0f);
-		glUniform1f(g_application->alpha_textureID(), _transparency);
-
-		// 1rst attribute buffer : vertices
-		glEnableVertexAttribArray(0);
-		glBindBuffer(GL_ARRAY_BUFFER, _vertex_buffer);
-		glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 0, (void*)0);
-
-		// 2rst attribute buffer : uv
-		glEnableVertexAttribArray(1);
-		glBindBuffer(GL_ARRAY_BUFFER, _uv_buffer);
-		glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 0, (void*)0);
-
-		// 3rst attribute buffer : normales
-		glEnableVertexAttribArray(2);
-		glBindBuffer(GL_ARRAY_BUFFER, _normale_buffer);
-		glVertexAttribPointer(2, 3, GL_FLOAT, GL_FALSE, 0, (void*)0);
-
-		// Draw the triangle !
-		// glFrontFace(GL_CW);
-		// glEnable(GL_CULL_FACE);
-		// glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
-		glDrawArrays(GL_TRIANGLES, 0, static_cast<GLsizei>(_baked_vertices.size() * 3)); // 3 indices starting at 0 -> 1 triangle
-		// glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
-		// glDisable(GL_CULL_FACE);
-		// glFrontFace(GL_CW);
-
-		glDisableVertexAttribArray(0);
-		glDisableVertexAttribArray(1);
-		glDisableVertexAttribArray(2);
 	}
 
 	void Mesh::render_differed(Camera* camera, Vector3 p_pos)
 	{
-		if (_texture == nullptr)
-			render_color_differed(camera, p_pos);
-		else
-			render_texture_differed(camera, p_pos);
+		for (size_t i = 0; i < _parts.size(); i++)
+			_parts[i]->render(this, camera, p_pos);
 	}
 
-	void Mesh::add_component(Mesh* mesh, Vector3 p_pos)
+	void Mesh::add_component(Mesh* mesh, Vector3 p_pos, int index)
 	{
-		size_t index_actual_vertices;
-		size_t index_actual_uvs;
-		size_t index_actual_normales;
-
-		index_actual_vertices = _vertices.size();
-		index_actual_uvs = _uvs.size();
-		index_actual_normales = _normales.size();
-		for (size_t i = 0; i < mesh->vertices().size(); i++)
-			add_point(mesh->vertices()[i] + p_pos);
-		for (size_t i = 0; i < mesh->uvs().size(); i++)
-			add_uv(mesh->uvs()[i]);
-		for (size_t i = 0; i < mesh->normales().size(); i++)
-			add_normale(mesh->normales()[i]);
-
-		for (size_t i = 0; i < mesh->faces().size(); i++)
+		for (size_t tmp_index = 0; tmp_index < mesh->parts().size(); tmp_index++)
 		{
-			Face* actual;
+			Mesh_part* tmp = check_part((index < 0 ? -1 : index + tmp_index));
+			Mesh_part* other = mesh->check_part(tmp_index);
+			size_t index_actual_vertices;
+			size_t index_actual_uvs;
+			size_t index_actual_normales;
 
-			actual = mesh->faces(i);
-			add_face(Face(new int[3]{
-				actual->index_vertices[0] + static_cast<int>(index_actual_vertices),
-				actual->index_vertices[1] + static_cast<int>(index_actual_vertices),
-				actual->index_vertices[2] + static_cast<int>(index_actual_vertices)
-				}, new int[3]{
-					(actual->index_uvs[0] == -1 ? -1 : actual->index_uvs[0] + static_cast<int>(index_actual_uvs)),
-					(actual->index_uvs[1] == -1 ? -1 : actual->index_uvs[1] + static_cast<int>(index_actual_uvs)),
-					(actual->index_uvs[2] == -1 ? -1 : actual->index_uvs[2] + static_cast<int>(index_actual_uvs))
-				}, new int[3]{
-					(actual->index_normale[0] == -1 ? -1 : actual->index_normale[0] + static_cast<int>(index_actual_normales)),
-					(actual->index_normale[1] == -1 ? -1 : actual->index_normale[1] + static_cast<int>(index_actual_normales)),
-					(actual->index_normale[2] == -1 ? -1 : actual->index_normale[2] + static_cast<int>(index_actual_normales))
-				}, actual->color));
+			index_actual_vertices = tmp->vertices().size();
+			index_actual_uvs = tmp->uvs().size();
+			index_actual_normales = tmp->normales().size();
+
+			for (size_t i = 0; i < other->vertices().size(); i++)
+				add_point(other->vertices()[i] + p_pos);
+			for (size_t i = 0; i < other->uvs().size(); i++)
+				add_uv(other->uvs()[i]);
+			for (size_t i = 0; i < other->normales().size(); i++)
+				add_normale(other->normales()[i]);
+
+			for (size_t i = 0; i < other->faces().size(); i++)
+			{
+				Face* actual;
+
+				actual = other->faces(i);
+				add_face(Face(new int[3]{
+					actual->index_vertices[0] + static_cast<int>(index_actual_vertices),
+					actual->index_vertices[1] + static_cast<int>(index_actual_vertices),
+					actual->index_vertices[2] + static_cast<int>(index_actual_vertices)
+					}, new int[3]{
+						(actual->index_uvs[0] == -1 ? -1 : actual->index_uvs[0] + static_cast<int>(index_actual_uvs)),
+						(actual->index_uvs[1] == -1 ? -1 : actual->index_uvs[1] + static_cast<int>(index_actual_uvs)),
+						(actual->index_uvs[2] == -1 ? -1 : actual->index_uvs[2] + static_cast<int>(index_actual_uvs))
+					}, new int[3]{
+						(actual->index_normale[0] == -1 ? -1 : actual->index_normale[0] + static_cast<int>(index_actual_normales)),
+						(actual->index_normale[1] == -1 ? -1 : actual->index_normale[1] + static_cast<int>(index_actual_normales)),
+						(actual->index_normale[2] == -1 ? -1 : actual->index_normale[2] + static_cast<int>(index_actual_normales))
+					}, actual->color), (index == -1 ? -1 : index + tmp_index));
+			}
+		}	
+	}
+
+	Mesh_part* Mesh::check_part(int index)
+	{
+		if (index < 0)
+			index = 0;
+		if (static_cast<size_t>(index) >= _parts.size())
+		{
+			Mesh_part* tmp = new Mesh_part();
+			_parts.push_back(tmp);
 		}
+		return (_parts[index]);
+	}
+
+	Mesh_part* Mesh::control_part(int index)
+	{
+		if (index < 0)
+			index = 0;
+		if (static_cast<size_t>(index) >= _parts.size())
+			error_exit(1, "Bad index in control_part");
+		return (_parts[index]);
+	}
+
+	void Mesh::add_point(Vector3 p_point, int index)
+	{
+		Mesh_part* tmp = check_part(index);
+		tmp->add_point(p_point);
+	}
+
+	void Mesh::add_uv(Vector2 p_uv, int index)
+	{
+		Mesh_part* tmp = check_part(index);
+		tmp->add_uv(p_uv);
+	}
+
+	void Mesh::add_normale(Vector3 p_normale, int index)
+	{
+		Mesh_part* tmp = check_part(index);
+		tmp->add_normale(p_normale);
+	}
+
+	void Mesh::add_face(Face p_face, int index)
+	{
+		Mesh_part* tmp = check_part(index);
+		tmp->add_face(p_face);
+	}
+
+	void Mesh::set_texture(Image* p_texture, int index)
+	{
+		if (index == -1)
+		{
+			if (_parts.size() == 0)
+				add_new_part();
+			for (size_t i = 0; i < _parts.size(); i++)
+			{
+				_parts[i]->set_texture(p_texture);
+			}
+		}
+		else
+		{
+			Mesh_part* tmp = check_part(index);
+			tmp->set_texture(p_texture);
+		}
+	}
+
+	void Mesh::set_texture(Sprite_sheet* p_texture, int index)
+	{
+		set_texture(p_texture->image(), index);
 	}
 
 	void Mesh::clear()
 	{
 		_rotation = 0;
-		_faces.clear();
-
-		_vertices.clear();
-		_uvs.clear();
-		_normales.clear();
-
-		_baked_vertices.clear();
-		_baked_uvs.clear();
-		_baked_colors.clear();
-		_baked_normales.clear();
+		for (size_t i = 0; i < _parts.size(); i++)
+		{
+			_parts[i]->clear();
+		}
 	}
 	void Mesh::clear_baked()
 	{
-		_faces.clear();
-		_baked_vertices.clear();
-		_baked_uvs.clear();
-		_baked_colors.clear();
-		_baked_normales.clear();
+		for (size_t i = 0; i < _parts.size(); i++)
+		{
+			_parts[i]->clear_baked();
+		}
 	}
 }

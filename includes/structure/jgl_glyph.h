@@ -34,7 +34,6 @@ namespace jgl
 	bool operator <= (const Glyph& tmp, const Glyph& other);
 }
 
-std::ostream& operator<<(std::ostream& os, jgl::Glyph& value);
-std::ostream& operator<<(std::ostream& os, const jgl::Glyph& value);
+std::ostream& operator<<(std::ostream& os, jgl::Glyph value);
 
 #endif

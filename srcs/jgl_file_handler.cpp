@@ -6,6 +6,8 @@ namespace jgl
 	{
 		std::fstream file;
 		file.open(path.std(), mode);
+		if (file.fail() == true)
+			error_exit(1, "Error while openning " + path + " file");
 		return (file);
 	}
 

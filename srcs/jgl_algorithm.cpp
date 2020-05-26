@@ -2,13 +2,13 @@
 
 namespace jgl
 {
-	Triangle3D		calc_face_triangle(Face* face, Mesh* mesh)
+	Triangle3D		calc_face_triangle(Face* face, jgl::Matrix4x4 rot_matrix, Mesh_part* mesh_part, Vector3 delta)
 	{
 		Triangle3D	result;
 
-		result.a = (mesh->rot_matrix() * mesh->vertices()[face->index_vertices[0]]) + mesh->pos() + mesh->velocity();
-		result.b = (mesh->rot_matrix() * mesh->vertices()[face->index_vertices[1]]) + mesh->pos() + mesh->velocity();
-		result.c = (mesh->rot_matrix() * mesh->vertices()[face->index_vertices[2]]) + mesh->pos() + mesh->velocity();
+		result.a = (rot_matrix * mesh_part->vertices()[face->index_vertices[0]]) + delta;
+		result.b = (rot_matrix * mesh_part->vertices()[face->index_vertices[1]]) + delta;
+		result.c = (rot_matrix * mesh_part->vertices()[face->index_vertices[2]]) + delta;
 		return (result);
 	}
 
@@ -112,25 +112,29 @@ namespace jgl
 		return (false);
 	}
 
-	bool compare_faces(Face* face, Mesh* to_move, Mesh* to_check)
+	bool compare_faces(Face* face, Mesh* base, Mesh_part *base_part, Mesh* to_check)
 	{
 		Triangle3D	tri_comp;
 		Triangle3D	tri_tar;
 		Face* actual;
 		float		dist;
 
-		tri_tar = calc_face_triangle(face, to_move);
+		tri_tar = calc_face_triangle(face, base->rot_matrix(), base_part, base->pos() + base->velocity());
 		dist = abs(to_check->pos().distance(triangle_center(tri_tar)));
 		if (dist < abs(tri_tar.a.distance(tri_tar.b)) ||
 			dist < abs(tri_tar.a.distance(tri_tar.c)) ||
 			dist < abs(tri_tar.c.distance(tri_tar.b)))
 		{
-			for (size_t i = 0; i < to_check->faces().size(); i++)
+			for (size_t tmp_index = 0; tmp_index < to_check->parts().size(); tmp_index++)
 			{
-				actual = to_check->faces(i);
-				tri_comp = calc_face_triangle(actual, to_check);
-				if (triangles_intersection(tri_comp, tri_tar) == true)
-					return (true);
+				Mesh_part* tmp = to_check->control_part(tmp_index);
+				for (size_t i = 0; i < tmp->faces().size(); i++)
+				{
+					actual = tmp->faces(i);
+					tri_comp = calc_face_triangle(actual, to_check->rot_matrix(), tmp, to_check->pos() + to_check->velocity());
+					if (triangles_intersection(tri_comp, tri_tar) == true)
+						return (true);
+				}
 			}
 		}
 		return (false);
@@ -140,11 +144,16 @@ namespace jgl
 	{
 		Face* tmp;
 
-		for (size_t i = 0; i < to_check->faces().size(); i++)
+		for (size_t tmp_index = 0; tmp_index < to_check->parts().size(); tmp_index++)
 		{
-			tmp = to_check->faces(i);
-			if (triangles_line_intersection(Line3D(pos, direction), calc_face_triangle(tmp, to_check), intersection) == true)
-				return (true);
+			Mesh_part* tmp_part = to_check->control_part(tmp_index);
+			for (size_t i = 0; i < tmp_part->faces().size(); i++)
+			{
+				tmp = tmp_part->faces(i);
+				if (triangles_line_intersection(Line3D(pos, direction),
+					calc_face_triangle(tmp, to_check->rot_matrix(), tmp_part, to_check->pos()), intersection) == true)
+					return (true);
+			}
 		}
 		return (false);
 	}
@@ -152,12 +161,15 @@ namespace jgl
 	bool intersect_mesh(Mesh* to_move, Mesh* to_check)
 	{
 		Face* tmp;
-
-		for (size_t i = 0; i < to_check->faces().size(); i++)
+		for (size_t tmp_index = 0; tmp_index < to_check->parts().size(); tmp_index++)
 		{
-			tmp = to_check->faces(i);
-			if (compare_faces(tmp, to_check, to_move) == true)
-				return (true);
+			Mesh_part* tmp_part = to_check->control_part(tmp_index);
+			for (size_t i = 0; i < tmp_part->faces().size(); i++)
+			{
+				tmp = tmp_part->faces(i);
+				if (compare_faces(tmp, to_check, tmp_part, to_move) == true)
+					return (true);
+			}
 		}
 		return (false);
 	}

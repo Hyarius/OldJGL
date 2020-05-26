@@ -2,7 +2,7 @@
 
 namespace jgl
 {
-	Image::Image() : _surface(nullptr), _texture_id(0) {}
+	Image::Image() : _path("unknow"), _surface(nullptr), _texture_id(0) {}
 
 	void Image::upload_texture()
 	{
@@ -40,6 +40,7 @@ namespace jgl
 
 	Image::Image(jgl::String path)
 	{
+		_path = path;
 		_surface = IMG_Load(path.std().c_str());
 		if (_surface == NULL)
 			error_exit(1, "Can't load " + path + " file");
@@ -50,6 +51,7 @@ namespace jgl
 
 	Image::Image(size_t width, size_t height, Color p_color)
 	{
+		_path = "unknow";
 		_surface = create_surface_color(p_color);
 		if (_surface == NULL)
 			error_exit(1, "Can't create a surface of color " + std::to_string((int)(p_color.r * 255)) + "/" +
@@ -61,6 +63,7 @@ namespace jgl
 
 	Image::Image(SDL_Surface* p_surface)
 	{
+		_path = "unknow";
 		_surface = p_surface;
 		if (_surface == NULL)
 			error_exit(1, "bouh");

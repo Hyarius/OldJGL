@@ -12,6 +12,7 @@ namespace jgl
 	class				Image
 	{
 	protected:
+		jgl::String _path;
 		SDL_Surface* _surface;
 		Vector2 _size;
 		GLenum _format;
@@ -28,6 +29,7 @@ namespace jgl
 		void upload_texture();
 		void save(jgl::String file_path);
 
+		jgl::String path() { return (_path); }
 		SDL_Surface* surface() { return (_surface); }
 		Vector2 size() { return (_size); }
 		GLenum format() { return (_format); }

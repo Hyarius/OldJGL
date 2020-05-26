@@ -104,11 +104,13 @@ namespace jgl
 		_matrix_colorID = glGetUniformLocation(_program_color_model, "MVP");
 		_pos_colorID = glGetUniformLocation(_program_color_model, "pos");
 		_rot_colorID = glGetUniformLocation(_program_color_model, "rot");
+		_size_colorID = glGetUniformLocation(_program_color_model, "size");
 		_dir_light_colorID = glGetUniformLocation(_program_color_model, "dir_light");
 
 		_matrix_textureID = glGetUniformLocation(_program_texture_model, "MVP");
 		_pos_textureID = glGetUniformLocation(_program_texture_model, "pos");
 		_rot_textureID = glGetUniformLocation(_program_texture_model, "rot");
+		_size_textureID = glGetUniformLocation(_program_texture_model, "size");
 		_alpha_textureID = glGetUniformLocation(_program_texture_model, "alpha_value");
 		_texture_textureID = glGetUniformLocation(_program_texture_model, "textureID");
 		_dir_light_textureID = glGetUniformLocation(_program_texture_model, "dir_light");

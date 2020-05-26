@@ -47,6 +47,7 @@ namespace jgl
 		void compute_projection();
 		void compute() {compute_model(); compute_view(); compute_projection(); bake(); }
 
+		void set_direction_light(Vector3 p_dir_light) { _dir_light = p_dir_light; }
 		void set_yaw(float p_yaw) { _yaw = p_yaw; }
 		void set_pitch(float p_pitch) { _pitch = p_pitch; }
 		void set_viewport(Viewport* p_viewport) { _viewport = p_viewport; }
