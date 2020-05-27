@@ -11,6 +11,7 @@ namespace jgl
 	bool string_is_numeric(jgl::String text);
 	std::vector<jgl::String> strsplit(jgl::String input, jgl::String c, bool regroup = true);
 	void error_exit(int num, jgl::String error);
+	void error_exit(int num, char* error);
 	void reverse(jgl::String& base);
 	jgl::String itoa(int x, int d = -1);
 	jgl::String ftoa(float n, int afterpoint = -1, int lenght = -1);

@@ -143,18 +143,18 @@ std::ostream& operator<<(std::ostream& os, jgl::Material to_print)
 	os << "		ni : " << to_print.ni << std::endl;
 	os << "		d : " << to_print.d << std::endl;
 	os << "		illum : " << to_print.illum << std::endl;
-	if (to_print.ambiant_texture_map != nullptr)
-	os << "		ambiant texture : " << to_print.ambiant_texture_map->path() << std::endl;
-	if (to_print.diffuse_texture_map != nullptr)
-	os << "		diffuse texture : " << to_print.diffuse_texture_map->path() << std::endl;
-	if (to_print.specular_texture_map != nullptr)
-	os << "		specular texture : " << to_print.specular_texture_map->path() << std::endl;
-	if (to_print.specular_hight_light_map != nullptr)
-	os << "		specular hight light : " << to_print.specular_hight_light_map->path() << std::endl;
-	if (to_print.alpha_texture_map != nullptr)
-	os << "		alpha texture : " << to_print.alpha_texture_map->path() << std::endl;
-	if (to_print.bump_map != nullptr)
-	os << "		bump map : " << to_print.bump_map->path() << std::endl;
+	if (to_print.ambiant_texture != nullptr)
+		os << "		ambiant texture : " << to_print.ambiant_texture->path() << std::endl;
+	if (to_print.diffuse_texture != nullptr)
+		os << "		diffuse texture : " << to_print.diffuse_texture->path() << std::endl;
+	if (to_print.specular_texture != nullptr)
+		os << "		specular texture : " << to_print.specular_texture->path() << std::endl;
+	if (to_print.specular_hight_light != nullptr)
+		os << "		specular hight light : " << to_print.specular_hight_light->path() << std::endl;
+	if (to_print.alpha_texture != nullptr)
+		os << "		alpha texture : " << to_print.alpha_texture->path() << std::endl;
+	if (to_print.bump != nullptr)
+		os << "		bump map : " << to_print.bump->path() << std::endl;
 
 	return os;
 }

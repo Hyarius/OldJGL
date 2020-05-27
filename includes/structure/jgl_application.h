@@ -41,20 +41,52 @@ namespace jgl
 		GLuint _color_buffer;
 		GLuint _texture_buffer;
 
-		GLuint _matrix_colorID;
 		GLuint _pos_colorID;
-		GLuint _dir_light_colorID;
 		GLuint _rot_colorID;
 		GLuint _size_colorID;
+		GLuint _MVP_colorID;
+		GLuint _view_matrix_colorID;
+		GLuint _model_matrix_colorID;
+		GLuint _alpha_colorID;
+		GLuint _light_pos_colorID;
+		GLuint _light_dir_colorID;
+		GLuint _light_color_colorID;
+		GLuint _camera_dir_colorID;
+		GLuint _material_ka_colorID;
+		GLuint _material_kd_colorID;
+		GLuint _material_ks_colorID;
+		GLuint _material_ke_colorID;
+		GLuint _material_ns_colorID;
+		GLuint _material_ni_colorID;
+		GLuint _material_d_colorID;
+		GLuint _material_illum_colorID;
 
-		GLuint _matrix_textureID;
 		GLuint _pos_textureID;
 		GLuint _rot_textureID;
 		GLuint _size_textureID;
-		GLuint _dir_light_textureID;
-		GLuint _texture_textureID;
-
+		GLuint _MVP_textureID;
+		GLuint _view_matrix_textureID;
+		GLuint _model_matrix_textureID;
 		GLuint _alpha_textureID;
+		GLuint _light_pos_textureID;
+		GLuint _light_dir_textureID;
+		GLuint _light_color_textureID;
+		GLuint _camera_dir_textureID;
+		GLuint _material_ka_textureID;
+		GLuint _material_kd_textureID;
+		GLuint _material_ks_textureID;
+		GLuint _material_ke_textureID;
+		GLuint _material_ns_textureID;
+		GLuint _material_ni_textureID;
+		GLuint _material_d_textureID;
+		GLuint _material_illum_textureID;
+		GLuint _material_ambiant_texture_textureID;
+		GLuint _material_normal_texture_textureID;
+		GLuint _material_diffuse_texture_textureID;
+		GLuint _material_specular_texture_textureID;
+		GLuint _material_specular_hight_light_textureID;
+		GLuint _material_alpha_texture_textureID;
+		GLuint _material_bump_texture_textureID;
 
 		GLuint _textureID;
 		GLuint _alphaID;
@@ -93,19 +125,52 @@ namespace jgl
 		GLuint textureID() { return (_textureID); }
 		GLuint alphaID() { return (_alphaID); }
 
-		GLuint matrix_colorID() { return (_matrix_colorID); }
 		GLuint pos_colorID() { return (_pos_colorID); }
-		GLuint dir_light_colorID() { return (_dir_light_colorID); }
 		GLuint rot_colorID() { return (_rot_colorID); }
 		GLuint size_colorID() { return (_size_colorID); }
+		GLuint MVP_colorID() { return (_MVP_colorID); }
+		GLuint view_matrix_colorID() { return (_view_matrix_colorID); }
+		GLuint model_matrix_colorID() { return (_model_matrix_colorID); }
+		GLuint alpha_colorID() { return (_alpha_colorID); }
+		GLuint light_pos_colorID() { return (_light_pos_colorID); }
+		GLuint light_dir_colorID() { return (_light_dir_colorID); }
+		GLuint light_color_colorID() { return (_light_color_colorID); }
+		GLuint camera_dir_colorID() { return (_camera_dir_colorID); }
+		GLuint material_ka_colorID() { return (_material_ka_colorID); }
+		GLuint material_kd_colorID() { return (_material_kd_colorID); }
+		GLuint material_ks_colorID() { return (_material_ks_colorID); }
+		GLuint material_ke_colorID() { return (_material_ke_colorID); }
+		GLuint material_ns_colorID() { return (_material_ns_colorID); }
+		GLuint material_ni_colorID() { return (_material_ni_colorID); }
+		GLuint material_d_colorID() { return (_material_d_colorID); }
+		GLuint material_illum_colorID() { return (_material_illum_colorID); }
 
-		GLuint matrix_textureID() { return (_matrix_textureID); }
 		GLuint pos_textureID() { return (_pos_textureID); }
 		GLuint rot_textureID() { return (_rot_textureID); }
 		GLuint size_textureID() { return (_size_textureID); }
-		GLuint dir_light_textureID() { return (_dir_light_textureID); }
-		GLuint texture_textureID() { return (_texture_textureID); }
+		GLuint MVP_textureID() { return (_MVP_textureID); }
+		GLuint view_matrix_textureID() { return (_view_matrix_textureID); }
+		GLuint model_matrix_textureID() { return (_model_matrix_textureID); }
 		GLuint alpha_textureID() { return (_alpha_textureID); }
+		GLuint light_pos_textureID() { return (_light_pos_textureID); }
+		GLuint light_dir_textureID() { return (_light_dir_textureID); }
+		GLuint light_color_textureID() { return (_light_color_textureID); }
+		GLuint camera_dir_textureID() { return (_camera_dir_textureID); }
+		GLuint material_ka_textureID() { return (_material_ka_textureID); }
+		GLuint material_kd_textureID() { return (_material_kd_textureID); }
+		GLuint material_ks_textureID() { return (_material_ks_textureID); }
+		GLuint material_ke_textureID() { return (_material_ke_textureID); }
+		GLuint material_ns_textureID() { return (_material_ns_textureID); }
+		GLuint material_ni_textureID() { return (_material_ni_textureID); }
+		GLuint material_d_textureID() { return (_material_d_textureID); }
+		GLuint material_illum_textureID() { return (_material_illum_textureID); }
+		GLuint material_ambiant_texture_textureID() { return (_material_ambiant_texture_textureID); }
+		GLuint material_normal_texture_textureID() { return (_material_normal_texture_textureID); }
+		GLuint material_diffuse_texture_textureID() { return (_material_diffuse_texture_textureID); }
+		GLuint material_specular_texture_textureID() { return (_material_specular_texture_textureID); }
+		GLuint material_specular_hight_light_textureID() { return (_material_specular_hight_light_textureID); }
+		GLuint material_alpha_texture_textureID() { return (_material_alpha_texture_textureID); }
+		GLuint material_bump_texture_textureID() { return (_material_bump_texture_textureID); }
 
 		size_t max_fps() { return (_max_fps); }
 		float fps_ratio() { return (_fps_ratio); }

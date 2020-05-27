@@ -40,6 +40,12 @@ namespace jgl
 		}
 	}
 
+	void				error_exit(int num, char *error)
+	{
+		std::cout << error << std::endl;
+		exit(num);
+	}
+
 	void				error_exit(int num, jgl::String error)
 	{
 		std::cout << error << std::endl;

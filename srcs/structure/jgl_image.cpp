@@ -81,6 +81,7 @@ namespace jgl
 	{
 		if (_surface != NULL)
 		{
+			glActiveTexture(GL_TEXTURE0);
 			glBindTexture(GL_TEXTURE_2D, _texture_id);
 			draw_image(p_pos, p_size, p_alpha);
 		}

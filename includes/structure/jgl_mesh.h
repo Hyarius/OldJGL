@@ -3,6 +3,8 @@
 
 namespace jgl
 {
+	extern Image* jgl_empty_texture;
+
 	struct Material
 	{
 		jgl::String name;
@@ -10,17 +12,18 @@ namespace jgl
 		Color ka = Color(255, 255, 255);
 		Color kd = Color(180, 180, 180);
 		Color ks = Color(0, 0, 0);
-		Color ke = Color(0, 0, 0);
+		Color ke = ka;
 		float ns = 1;
 		float ni = 1;
 		float d = 1;
 		int illum = 2;
-		jgl::Image* ambiant_texture_map = nullptr;
-		jgl::Image* diffuse_texture_map = nullptr;
-		jgl::Image* specular_texture_map = nullptr;
-		jgl::Image* specular_hight_light_map = nullptr;
-		jgl::Image* alpha_texture_map = nullptr;
-		jgl::Image* bump_map = nullptr;
+		jgl::Image* ambiant_texture = jgl_empty_texture;
+		jgl::Image* normal_texture = jgl_empty_texture;
+		jgl::Image* diffuse_texture = jgl_empty_texture;
+		jgl::Image* specular_texture = jgl_empty_texture;
+		jgl::Image* specular_hight_light = jgl_empty_texture;
+		jgl::Image* alpha_texture = jgl_empty_texture;
+		jgl::Image* bump = jgl_empty_texture;
 
 		Material(jgl::String p_name)
 		{
@@ -28,9 +31,10 @@ namespace jgl
 		}
 	};
 
+	extern Material* jgl_base_material;
+
 	struct Face
 	{
-		Color color;
 		Vector3 normale;
 		int index_vertices[3];
 		int index_uvs[3];
@@ -42,9 +46,8 @@ namespace jgl
 			index_vertices[0] = 0;
 			index_uvs[0] = 0;
 			index_normale[0] = 0;
-			color = Color(255, 255, 255);
 		}
-		Face(int p_index_vertices[3], int p_index_uvs[3], int p_index_normale[3], Color p_color = Color(190, 190, 190))
+		Face(int p_index_vertices[3], int p_index_uvs[3], int p_index_normale[3])
 		{
 			normale = 0;
 			for (size_t i = 0; i < 3; i++)
@@ -53,7 +56,6 @@ namespace jgl
 				index_uvs[i] = p_index_uvs[i];
 				index_normale[i] = p_index_normale[i];
 			}
-			color = p_color;
 		}
 	};
 
@@ -63,10 +65,8 @@ namespace jgl
 		jgl::String _name;
 
 		GLuint _vertex_buffer;
-		GLuint _color_buffer;
 		GLuint _uv_buffer;
 		GLuint _normale_buffer;
-		GLuint _alpha_buffer;
 
 		std::vector<Face>	_faces;
 
@@ -76,28 +76,30 @@ namespace jgl
 
 		std::vector<Vector3>	_baked_vertices;
 		std::vector<Vector2>	_baked_uvs;
-		std::vector<Color>		_baked_colors;
 		std::vector<Vector3>	_baked_normales;
 
-		Image* _texture;
+		Material* _material;
 
 	public:
 		Mesh_part(jgl::String p_name = "unnamed");
 
 		jgl::String name() { return (_name); }
 		std::vector<Vector3>& vertices() { return (_vertices); }
+		Vector3 vertices(size_t index) { if (index >= _vertices.size())return (-1); return (_vertices[index]); }
 		std::vector<Vector2>& uvs() { return (_uvs); }
+		Vector2 uvs(size_t index) { if (index >= _uvs.size())return (-1); return (_uvs[index]); }
 		std::vector<Vector3>& normales() { return (_normales); }
+		Vector3 normales(size_t index) { if (index >= _normales.size())return (-1); return (_normales[index]); }
 		std::vector<Face>& faces() { return (_faces); }
 		Face* faces(size_t i) { if (i >= _faces.size())return (NULL); return (&(_faces[i])); }
+		Material* material() { return (_material); }
 
 		void set_name(jgl::String p_name) { _name = p_name; }
 		void add_point(Vector3 p_point) { _vertices.push_back(p_point); }
 		void add_uv(Vector2 p_uv) { _uvs.push_back(p_uv); }
 		void add_normale(Vector3 p_normale) { _normales.push_back(p_normale); }
 		void add_face(Face p_face) { _faces.push_back(p_face); }
-		void set_texture(Image* p_texture) { _texture = p_texture; }
-		void set_texture(Sprite_sheet* p_texture) { if (p_texture == nullptr)_texture = nullptr; else set_texture(p_texture->image()); }
+		void set_material(Material* p_material) { if (p_material == nullptr)_material = jgl_base_material;else _material = p_material; }
 		void compute_normales(jgl::Matrix4x4 rot_matrix);
 
 		void bake(jgl::Matrix4x4 rot_matrix);
@@ -147,6 +149,8 @@ namespace jgl
 		Vector3 right() { return (_right); }
 		Vector3 up() { return (_up); }
 
+		Material* find_material(jgl::String);
+		Material* material(size_t index = 0) { if (index >= _materials.size())return (nullptr); return (_materials[index]); }
 		std::vector<Mesh_part*>& parts() { return (_parts); }
 		Mesh_part* parts(size_t index) { if (index >= _parts.size())return (nullptr); return (_parts[index]); }
 		Mesh_part* check_part(int index);
@@ -162,8 +166,8 @@ namespace jgl
 		void add_uv(Vector2 p_uv, int index = -1);
 		void add_normale(Vector3 p_normale, int index = -1);
 		void add_face(Face p_face, int index = -1);
-		void set_texture(Image* p_texture, int index = -1);
-		void set_texture(Sprite_sheet* p_texture, int index = -1);
+		void set_diffuse_texture(Image* p_texture, int index = -1);
+		void set_diffuse_texture(Sprite_sheet* p_texture, int index = -1);
 		void set_transparency(float p_transparency) { _transparency = p_transparency; }
 		void compute_bubble_box();
 		void compute_axis();
@@ -197,7 +201,6 @@ namespace jgl
 	Mesh *primitive_voxel(Vector3 pos, Sprite_sheet *tileset, Vector2 top_sprite, Vector2 side_sprite, Vector2 down_sprite, float p_transparency = 1.0f, bool should_bake = false, Vector3 rot = 0, Vector3 size = 1);
 	Mesh *primitive_voxel(Vector3 pos, Sprite_sheet *tileset, size_t type, float p_transparency = 1.0f, bool should_bake = false, Vector3 rot = 0, Vector3 size = 1);
 	Mesh *primitive_plane(Vector3 pos, Vector3 rot, Vector2 size, jgl::Color color, bool should_bake = true);
-	Mesh *primitive_plane(Vector3 pos, Vector3 rot, Vector3 size, jgl::Color color, bool should_bake = true);
 }
 
 std::ostream& operator<<(std::ostream& os, jgl::Material to_print);

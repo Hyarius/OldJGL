@@ -55,6 +55,7 @@ namespace jgl
 
 	void Sprite_sheet::draw(int id, Vector2 pos, Vector2 size, float p_alpha, Viewport* viewport)
 	{
+		glActiveTexture(GL_TEXTURE0);
 		glBindTexture(GL_TEXTURE_2D, _image->texture_id());
 
 		Vector2 value[] = {
@@ -102,6 +103,7 @@ namespace jgl
 
 	void Sprite_sheet::draw(Vector2 coord, Vector2 pos, Vector2 size, float p_alpha, Viewport* viewport)
 	{
+		glActiveTexture(GL_TEXTURE0);
 		glBindTexture(GL_TEXTURE_2D, _image->texture_id());
 
 		Vector2 value[] = {

@@ -14,7 +14,9 @@ namespace jgl
 		Matrix4x4 _MVP;
 		Matrix4x4 _MVP_pos;
 
-		Vector3 _dir_light;
+		Vector3 _light_pos;
+		Vector3 _light_dir;
+		Color _light_color;
 
 		Vector3 _pos;
 		float _yaw;
@@ -47,7 +49,8 @@ namespace jgl
 		void compute_projection();
 		void compute() {compute_model(); compute_view(); compute_projection(); bake(); }
 
-		void set_direction_light(Vector3 p_dir_light) { _dir_light = p_dir_light; }
+		void set_light_position(Vector3 p_light_pos) { _light_pos = p_light_pos; }
+		void set_light_direction(Vector3 p_light_dir) { _light_dir = p_light_dir.normalize(); }
 		void set_yaw(float p_yaw) { _yaw = p_yaw; }
 		void set_pitch(float p_pitch) { _pitch = p_pitch; }
 		void set_viewport(Viewport* p_viewport) { _viewport = p_viewport; }
@@ -68,7 +71,9 @@ namespace jgl
 		Matrix4x4 projection() { return (_projection); }
 		void bake() { _MVP = _projection * _view * _model; }
 		Matrix4x4& MVP() { return (_MVP); }
-		Vector3 dir_light() { return (_dir_light); }
+		Vector3 light_dir() { return (_light_dir); }
+		Vector3 light_pos() { return (_light_pos); }
+		Color light_color() { return (_light_color); }
 		Vector3 pos() { return (_pos); }
 		Vector3 direction() { return (_direction); }
 		Vector3 forward() { return (_forward); }

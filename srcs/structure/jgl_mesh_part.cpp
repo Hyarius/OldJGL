@@ -2,15 +2,16 @@
 
 namespace jgl
 {
+	Image* jgl_empty_texture = new Image(1, 1, Color(255, 255, 255));
+	Material* jgl_base_material = new Material("No material");
+
 	Mesh_part::Mesh_part(jgl::String p_name)
 	{
 		_name = p_name;
 
 		glGenBuffers(1, &_vertex_buffer);
-		glGenBuffers(1, &_color_buffer);
 		glGenBuffers(1, &_normale_buffer);
 		glGenBuffers(1, &_uv_buffer);
-		glGenBuffers(1, &_alpha_buffer);
 
 		_faces.clear();
 
@@ -20,10 +21,9 @@ namespace jgl
 
 		_baked_vertices.clear();
 		_baked_uvs.clear();
-		_baked_colors.clear();
 		_baked_normales.clear();
 
-		_texture = nullptr;
+		_material = jgl_base_material;
 	}
 
 	void Mesh_part::compute_normales(jgl::Matrix4x4 rot_matrix)
@@ -38,7 +38,7 @@ namespace jgl
 			{
 				if (_faces[i].index_normale[j] == -1)
 				{
-					b = rot_matrix * (_vertices[_faces[i].index_vertices[0]] - _vertices[_faces[i].index_vertices[1]]);
+					b = rot_matrix * (_vertices[_faces[i].index_vertices[1]] - _vertices[_faces[i].index_vertices[0]]);
 					c = rot_matrix * (_vertices[_faces[i].index_vertices[2]] - _vertices[_faces[i].index_vertices[0]]);
 					tmp = b.cross(c).normalize();
 					_normales.insert(_normales.end(), tmp);
@@ -60,13 +60,11 @@ namespace jgl
 
 		_baked_vertices.clear();
 		_baked_uvs.clear();
-		_baked_colors.clear();
 		_baked_normales.clear();
 
 		_baked_vertices.resize(_faces.size() * 3);
 		_baked_uvs.resize(_faces.size() * 3);
 		_baked_normales.resize(_faces.size() * 3);
-		_baked_colors.resize(_faces.size() * 3);
 
 		for (size_t i = 0; i < _faces.size(); i++)
 		{
@@ -99,8 +97,6 @@ namespace jgl
 				}
 				else
 					_baked_normales[tmp] = _normales[tmp];
-
-				_baked_colors[tmp] = _faces[i].color;
 			}
 		}
 
@@ -109,9 +105,6 @@ namespace jgl
 
 		glBindBuffer(GL_ARRAY_BUFFER, _vertex_buffer);
 		glBufferData(GL_ARRAY_BUFFER, _baked_vertices.size() * 3 * sizeof(float), static_cast<float*>(&(_baked_vertices[0].x)), GL_STATIC_DRAW);
-
-		glBindBuffer(GL_ARRAY_BUFFER, _color_buffer);
-		glBufferData(GL_ARRAY_BUFFER, _baked_colors.size() * 4 * sizeof(float), static_cast<float*>(&(_baked_colors[0].r)), GL_STATIC_DRAW);
 
 		glBindBuffer(GL_ARRAY_BUFFER, _uv_buffer);
 		glBufferData(GL_ARRAY_BUFFER, _baked_uvs.size() * 2 * sizeof(float), static_cast<float*>(&(_baked_uvs[0].x)), GL_STATIC_DRAW);
@@ -128,11 +121,29 @@ namespace jgl
 
 		glUseProgram(g_application->program_color_model());
 
-		glUniformMatrix4fv(g_application->matrix_colorID(), 1, GL_FALSE, &(camera->MVP().value[0][0]));
 		glUniform3f(g_application->pos_colorID(), p_pos.x, p_pos.y, p_pos.z);
-		glUniform3f(g_application->size_colorID(), parent->size().x, parent->size().y, parent->size().z);
 		glUniformMatrix4fv(g_application->rot_colorID(), 1, GL_FALSE, &(parent->rot_matrix().value[0][0]));
-		glUniform4f(g_application->dir_light_colorID(), camera->dir_light().x, camera->dir_light().y, camera->dir_light().z, 0.0f);
+		glUniform3f(g_application->size_colorID(), parent->size().x, parent->size().y, parent->size().z);
+		glUniformMatrix4fv(g_application->MVP_colorID(), 1, GL_FALSE, &(camera->MVP().value[0][0]));
+		glUniformMatrix4fv(g_application->view_matrix_colorID(), 1, GL_FALSE, &(camera->view().value[0][0]));
+		glUniformMatrix4fv(g_application->model_matrix_colorID(), 1, GL_FALSE, &(camera->model().value[0][0]));
+
+		glUniform3f(g_application->light_pos_colorID(), camera->light_pos().x, camera->light_pos().y, camera->light_pos().z);
+		glUniform4f(g_application->light_dir_colorID(), camera->light_dir().x, camera->light_dir().y, camera->light_dir().z, 0.0f);
+		glUniform3f(g_application->camera_dir_colorID(), camera->direction().x, camera->direction().y, camera->direction().z);
+
+		glUniform4f(g_application->material_ka_colorID(), _material->ka.r, _material->ka.g, _material->ka.b, _material->ka.a);
+		glUniform4f(g_application->material_kd_colorID(), _material->kd.r, _material->kd.g, _material->kd.b, _material->kd.a);
+		glUniform4f(g_application->material_ks_colorID(), _material->ks.r, _material->ks.g, _material->ks.b, _material->ks.a);
+		glUniform4f(g_application->material_ke_colorID(), _material->ke.r, _material->ke.g, _material->ke.b, _material->ke.a);
+		
+		glUniform1f(g_application->material_ns_colorID(), _material->ns);
+		glUniform1f(g_application->material_ni_colorID(), _material->ni);
+		glUniform1f(g_application->material_d_colorID(), _material->d);
+
+		glUniform1f(g_application->alpha_colorID(), parent->transparency());
+
+		glUniform1i(g_application->material_illum_colorID(), _material->illum);
 
 		// 1rst attribute buffer : vertices
 		glEnableVertexAttribArray(0);
@@ -140,14 +151,11 @@ namespace jgl
 		glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 0, (void*)0);
 
 		// 2rst attribute buffer : vertices
-		glEnableVertexAttribArray(1);
-		glBindBuffer(GL_ARRAY_BUFFER, _color_buffer);
-		glVertexAttribPointer(1, 4, GL_FLOAT, GL_FALSE, 0, (void*)0);
 
 		// 3rst attribute buffer : vertices
-		glEnableVertexAttribArray(2);
+		glEnableVertexAttribArray(1);
 		glBindBuffer(GL_ARRAY_BUFFER, _normale_buffer);
-		glVertexAttribPointer(2, 3, GL_FLOAT, GL_FALSE, 0, (void*)0);
+		glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 0, (void*)0);
 
 		// Draw the triangle !
 		//glEnable(GL_CULL_FACE);
@@ -158,7 +166,6 @@ namespace jgl
 
 		glDisableVertexAttribArray(0);
 		glDisableVertexAttribArray(1);
-		glDisableVertexAttribArray(2);
 	}
 
 	void Mesh_part::render_texture(Mesh *parent, Camera* camera, Vector3 p_pos)
@@ -168,14 +175,43 @@ namespace jgl
 
 		glUseProgram(g_application->program_texture_model());
 
-		glBindTexture(GL_TEXTURE_2D, _texture->texture_id());
-
-		glUniformMatrix4fv(g_application->matrix_textureID(), 1, GL_FALSE, &(camera->MVP().value[0][0]));
 		glUniform3f(g_application->pos_textureID(), p_pos.x, p_pos.y, p_pos.z);
-		glUniform3f(g_application->size_textureID(), parent->size().x, parent->size().y, parent->size().z);
 		glUniformMatrix4fv(g_application->rot_textureID(), 1, GL_FALSE, &(parent->rot_matrix().value[0][0]));
-		glUniform4f(g_application->dir_light_textureID(), camera->dir_light().x, camera->dir_light().y, camera->dir_light().z, 0.0f);
+		glUniform3f(g_application->size_textureID(), parent->size().x, parent->size().y, parent->size().z);
+		glUniformMatrix4fv(g_application->MVP_textureID(), 1, GL_FALSE, &(camera->MVP().value[0][0]));
+		glUniformMatrix4fv(g_application->view_matrix_textureID(), 1, GL_FALSE, &(camera->view().value[0][0]));
+		glUniformMatrix4fv(g_application->model_matrix_textureID(), 1, GL_FALSE, &(camera->model().value[0][0]));
+
+		glUniform3f(g_application->light_pos_textureID(), camera->light_pos().x, camera->light_pos().y, camera->light_pos().z);
+		glUniform4f(g_application->light_dir_textureID(), camera->light_dir().x, camera->light_dir().y, camera->light_dir().z, 0.0f);
+		glUniform3f(g_application->camera_dir_textureID(), camera->direction().x, camera->direction().y, camera->direction().z);
+
+		glUniform4f(g_application->material_ka_textureID(), _material->ka.r, _material->ka.g, _material->ka.b, _material->ka.a);
+		glUniform4f(g_application->material_kd_textureID(), _material->kd.r, _material->kd.g, _material->kd.b, _material->kd.a);
+		glUniform4f(g_application->material_ks_textureID(), _material->ks.r, _material->ks.g, _material->ks.b, _material->ks.a);
+		glUniform4f(g_application->material_ke_textureID(), _material->ke.r, _material->ke.g, _material->ke.b, _material->ke.a);
+
+		glUniform1f(g_application->material_ns_textureID(), _material->ns);
+		glUniform1f(g_application->material_ni_textureID(), _material->ni);
+		glUniform1f(g_application->material_d_textureID(), _material->d);
+
 		glUniform1f(g_application->alpha_textureID(), parent->transparency());
+
+		glUniform1i(g_application->material_illum_textureID(), _material->illum);
+
+		glBindTexture(GL_TEXTURE_2D, _material->diffuse_texture->texture_id());
+
+		glActiveTexture(GL_TEXTURE0);
+		glBindTexture(GL_TEXTURE_2D, _material->diffuse_texture->texture_id());
+		glUniform1i(g_application->material_diffuse_texture_textureID(), 0);
+
+		glActiveTexture(GL_TEXTURE1);
+		glBindTexture(GL_TEXTURE_2D, _material->normal_texture->texture_id());
+		glUniform1i(g_application->material_normal_texture_textureID(), 1);
+
+		glActiveTexture(GL_TEXTURE2);
+		glBindTexture(GL_TEXTURE_2D, _material->specular_texture->texture_id());
+		glUniform1i(g_application->material_specular_texture_textureID(), 2);
 
 		// 1rst attribute buffer : vertices
 		glEnableVertexAttribArray(0);
@@ -208,7 +244,7 @@ namespace jgl
 
 	void Mesh_part::render(Mesh* parent, Camera* camera, Vector3 p_pos)
 	{
-		if (_texture == nullptr)
+		if (_material->diffuse_texture == jgl_empty_texture || _uvs.size() == 0)
 			render_color(parent, camera, p_pos);
 		else
 			render_texture(parent, camera, p_pos);
@@ -224,7 +260,6 @@ namespace jgl
 
 		_baked_vertices.clear();
 		_baked_uvs.clear();
-		_baked_colors.clear();
 		_baked_normales.clear();
 	}
 	void Mesh_part::clear_baked()
@@ -232,7 +267,6 @@ namespace jgl
 		_faces.clear();
 		_baked_vertices.clear();
 		_baked_uvs.clear();
-		_baked_colors.clear();
 		_baked_normales.clear();
 	}
 }

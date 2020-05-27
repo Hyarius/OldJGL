@@ -88,10 +88,6 @@ namespace jgl
 
 		glBindVertexArray(_vertex_array);
 
-		glGenBuffers(1, &_vertex_buffer);
-		glGenBuffers(1, &_color_buffer);
-		glGenBuffers(1, &_texture_buffer);
-
 		_custom_program.clear();
 		_program_color = load_shaders(color_shader_vert, color_shader_frag);
 		_program_texture = load_shaders(texture_shader_vert, texture_shader_frag);
@@ -99,21 +95,58 @@ namespace jgl
 		_program_texture_model = load_shaders(texture_model_shader_vert, texture_model_shader_frag);
 
 		_textureID = glGetUniformLocation(_program_texture, "textureID");
+		if (_textureID == -1)
+			error_exit(1, "Error on _textureID");
 		_alphaID = glGetUniformLocation(_program_texture, "alpha_value");
+		if (_alphaID == -1)
+			error_exit(1, "Error on _alphaID");
 
-		_matrix_colorID = glGetUniformLocation(_program_color_model, "MVP");
 		_pos_colorID = glGetUniformLocation(_program_color_model, "pos");
 		_rot_colorID = glGetUniformLocation(_program_color_model, "rot");
 		_size_colorID = glGetUniformLocation(_program_color_model, "size");
-		_dir_light_colorID = glGetUniformLocation(_program_color_model, "dir_light");
+		_MVP_colorID = glGetUniformLocation(_program_color_model, "MVP");
+		_view_matrix_colorID = glGetUniformLocation(_program_color_model, "view_matrix");
+		_model_matrix_colorID = glGetUniformLocation(_program_color_model, "model_matrix");
+		_alpha_colorID = glGetUniformLocation(_program_color_model, "alpha");
+		_light_pos_colorID = glGetUniformLocation(_program_color_model, "light_pos");
+		_light_dir_colorID = glGetUniformLocation(_program_color_model, "light_dir");
+		_light_color_colorID = glGetUniformLocation(_program_color_model, "light_color");
+		_camera_dir_colorID = glGetUniformLocation(_program_color_model, "camera_dir");
+		_material_ka_colorID = glGetUniformLocation(_program_color_model, "material_ka");
+		_material_kd_colorID = glGetUniformLocation(_program_color_model, "material_kd");
+		_material_ks_colorID = glGetUniformLocation(_program_color_model, "material_ks");
+		_material_ke_colorID = glGetUniformLocation(_program_color_model, "material_ke");
+		_material_ns_colorID = glGetUniformLocation(_program_color_model, "material_ns");
+		_material_ni_colorID = glGetUniformLocation(_program_color_model, "material_ni");
+		_material_d_colorID = glGetUniformLocation(_program_color_model, "material_d");
+		_material_illum_colorID = glGetUniformLocation(_program_color_model, "material_illum");
 
-		_matrix_textureID = glGetUniformLocation(_program_texture_model, "MVP");
 		_pos_textureID = glGetUniformLocation(_program_texture_model, "pos");
 		_rot_textureID = glGetUniformLocation(_program_texture_model, "rot");
 		_size_textureID = glGetUniformLocation(_program_texture_model, "size");
-		_alpha_textureID = glGetUniformLocation(_program_texture_model, "alpha_value");
-		_texture_textureID = glGetUniformLocation(_program_texture_model, "textureID");
-		_dir_light_textureID = glGetUniformLocation(_program_texture_model, "dir_light");
+		_MVP_textureID = glGetUniformLocation(_program_texture_model, "MVP");
+		_view_matrix_textureID = glGetUniformLocation(_program_texture_model, "view_matrix");
+		_model_matrix_textureID = glGetUniformLocation(_program_texture_model, "model_matrix");
+		_alpha_textureID = glGetUniformLocation(_program_texture_model, "alpha");
+		_light_pos_textureID = glGetUniformLocation(_program_texture_model, "light_pos");
+		_light_dir_textureID = glGetUniformLocation(_program_texture_model, "light_dir");
+		_light_color_textureID = glGetUniformLocation(_program_texture_model, "light_color");
+		_camera_dir_textureID = glGetUniformLocation(_program_texture_model, "camera_dir");
+		_material_ka_textureID = glGetUniformLocation(_program_texture_model, "material_ka");
+		_material_kd_textureID = glGetUniformLocation(_program_texture_model, "material_kd");
+		_material_ks_textureID = glGetUniformLocation(_program_texture_model, "material_ks");
+		_material_ke_textureID = glGetUniformLocation(_program_texture_model, "material_ke");
+		_material_ns_textureID = glGetUniformLocation(_program_texture_model, "material_ns");
+		_material_ni_textureID = glGetUniformLocation(_program_texture_model, "material_ni");
+		_material_d_textureID = glGetUniformLocation(_program_texture_model, "material_d");
+		_material_illum_textureID = glGetUniformLocation(_program_texture_model, "material_illum");
+		_material_ambiant_texture_textureID = glGetUniformLocation(_program_texture_model, "ambiant_texture");
+		_material_normal_texture_textureID = glGetUniformLocation(_program_texture_model, "normal_texture");
+		_material_diffuse_texture_textureID = glGetUniformLocation(_program_texture_model, "diffuse_texture");
+		_material_specular_texture_textureID = glGetUniformLocation(_program_texture_model, "specular_texture");
+		_material_specular_hight_light_textureID = glGetUniformLocation(_program_texture_model, "specular_hight_light");
+		_material_alpha_texture_textureID = glGetUniformLocation(_program_texture_model, "alpha_texture");
+		_material_bump_texture_textureID = glGetUniformLocation(_program_texture_model, "bump_texture");
 
 		glGenTextures(1, &_textureID);
 		glBindTexture(GL_TEXTURE_2D, _textureID);
@@ -131,7 +164,13 @@ namespace jgl
 		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 		glFrontFace(GL_CW);
 
+
 		glBindVertexArray(_vertex_array);
+
+		glGenBuffers(1, &_vertex_buffer);
+		glGenBuffers(1, &_color_buffer);
+		glGenBuffers(1, &_texture_buffer);
+
 		glBindBuffer(GL_ARRAY_BUFFER, _vertex_buffer);
 		glBufferData(GL_ARRAY_BUFFER, static_cast<GLuint>(sizeof(GLfloat) * _size.x * _size.y * 3), NULL, GL_STATIC_DRAW);
 		glBindBuffer(GL_ARRAY_BUFFER, _color_buffer);

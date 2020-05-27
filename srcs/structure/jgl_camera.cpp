@@ -12,8 +12,9 @@ namespace jgl
 		_right = Vector3(1, 0, 0);
 		_up = Vector3(0, 1, 0);
 
-		_dir_light = Vector3(0.0f, -1.0f, 0.0f);
-		_dir_light = _dir_light.normalize();
+		set_light_direction(Vector3(-0.3f, -1.0f, 0.3f));
+		_light_pos = Vector3(0, 10, 0);
+		_light_color = jgl::Color(255, 255, 255);
 
 		_fov = p_fov;
 		_ratio = p_ratio;

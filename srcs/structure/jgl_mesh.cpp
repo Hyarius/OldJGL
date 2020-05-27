@@ -16,8 +16,8 @@ namespace jgl
 	}
 
 	int face_index_value[2][3] = {
-		{1, 2, 3},
-		{1, 3, 4}
+		{3, 2, 1},
+		{4, 3, 1}
 	};
 
 	static void compose_face(jgl::Mesh *target, std::vector<jgl::String> tab, int type, Color color, size_t index)
@@ -38,14 +38,14 @@ namespace jgl
 
 		for (size_t i = 0; i < 3; i++)
 		{
-			face_content = strsplit(tab[face_index_value[type][2 - i]], "/", false);
+			face_content = strsplit(tab[face_index_value[type][i]], "/", false);
 			index_vertices[i] = stoi(face_content[0]) - 1 - delta_vertice_index;
 			if (face_content.size() >= 2)
 				index_uvs[i] = (face_content[1].size() == 0 ? -1 : stoi(face_content[1]) - 1 - delta_uvs_index);
 			if (face_content.size() >= 3)
 				index_normales[i] = (face_content[2].size() == 0 ? -1 : stoi(face_content[2]) - 1 - delta_normale_index);
 		}
-		target->add_face(Face(index_vertices, index_uvs, index_normales, color), index);
+		target->add_face(Face(index_vertices, index_uvs, index_normales), index);
 	}
 
 	static jgl::String create_address(jgl::String path)
@@ -152,7 +152,7 @@ namespace jgl
 					if (tab.size() != 2)
 						error_exit(1, "Bad number of argument in map Ka construction");
 
-					material->ambiant_texture_map = new Image(tab[1]);
+					material->ambiant_texture = new Image(tab[1]);
 				}
 				// Diffuse Texture Map
 				if (tab[0] == "map_Kd")
@@ -160,7 +160,7 @@ namespace jgl
 					if (tab.size() != 2)
 						error_exit(1, "Bad number of argument in map Kd construction");
 
-					material->diffuse_texture_map = new Image(tab[1]);
+					material->diffuse_texture = new Image(tab[1]);
 				}
 				// Specular Texture Map
 				if (tab[0] == "map_Ks")
@@ -168,7 +168,7 @@ namespace jgl
 					if (tab.size() != 2)
 						error_exit(1, "Bad number of argument in map Ks construction");
 
-					material->specular_texture_map = new Image(tab[1]);
+					material->specular_texture = new Image(tab[1]);
 				}
 				// Specular Hightlight Map
 				if (tab[0] == "map_Ns")
@@ -176,7 +176,7 @@ namespace jgl
 					if (tab.size() != 2)
 						error_exit(1, "Bad number of argument in map Ns construction");
 
-					material->specular_hight_light_map = new Image(tab[1]);
+					material->specular_hight_light = new Image(tab[1]);
 				}
 				// Alpha Texture Map
 				if (tab[0] == "map_d")
@@ -184,7 +184,7 @@ namespace jgl
 					if (tab.size() != 2)
 						error_exit(1, "Bad number of argument in map Kd construction");
 
-					material->alpha_texture_map = new Image(tab[1]);
+					material->alpha_texture = new Image(tab[1]);
 				}
 				// Bump Map
 				if (tab[0] == "map_Bump" || tab[0] == "map_bump" || tab[0] == "bump")
@@ -192,7 +192,7 @@ namespace jgl
 					if (tab.size() != 2)
 						error_exit(1, "Bad number of argument in bump map construction");
 
-					material->bump_map = new Image(tab[1]);
+					material->bump = new Image(tab[1]);
 				}
 
 			}
@@ -206,6 +206,16 @@ namespace jgl
 
 			std::cout << *tmp << std::endl;
 		}
+	}
+
+	Material* Mesh::find_material(jgl::String p_name)
+	{
+		for (size_t i = 0; i < _materials.size(); i++)
+		{
+			if (_materials[i]->name == p_name)
+				return (_materials[i]);
+		}
+		return (jgl_base_material);
 	}
 
 	Mesh::Mesh(jgl::String p_path, Vector3 p_pos, Vector3 p_rot, Vector3 p_size, Color color) : Mesh(p_pos, p_rot, p_size)
@@ -225,7 +235,7 @@ namespace jgl
 				if (tab[0] == "v")
 					add_point(Vector3(stof(tab[1]), stof(tab[2]), stof(tab[3])), tmp_part_index);
 				else if (tab[0] == "vt")
-					add_uv(Vector2(stof(tab[1]), stof(tab[2])), tmp_part_index);
+					add_uv(Vector2(stof(tab[1]), 1.0f - stof(tab[2])), tmp_part_index);
 				else if (tab[0] == "vn")
 					add_normale(Vector3(stof(tab[1]), stof(tab[2]), stof(tab[3])), tmp_part_index);
 				else if (tab[0] == "o")
@@ -237,6 +247,11 @@ namespace jgl
 				{
 					jgl::String to_send = address + tab[1];
 					parse_materials(to_send);
+				}
+				else if (tab[0] == "usemtl")
+				{
+					Material* tmp_material = find_material(tab[1]);
+					_parts[tmp_part_index]->set_material(tmp_material);
 				}
 				else if (tab[0] == "f")
 				{
@@ -381,7 +396,7 @@ namespace jgl
 						(actual->index_normale[0] == -1 ? -1 : actual->index_normale[0] + static_cast<int>(index_actual_normales)),
 						(actual->index_normale[1] == -1 ? -1 : actual->index_normale[1] + static_cast<int>(index_actual_normales)),
 						(actual->index_normale[2] == -1 ? -1 : actual->index_normale[2] + static_cast<int>(index_actual_normales))
-					}, actual->color), (index == -1 ? -1 : index + tmp_index));
+					}), (index == -1 ? -1 : index + tmp_index));
 			}
 		}	
 	}
@@ -431,7 +446,7 @@ namespace jgl
 		tmp->add_face(p_face);
 	}
 
-	void Mesh::set_texture(Image* p_texture, int index)
+	void Mesh::set_diffuse_texture(Image* p_texture, int index)
 	{
 		if (index == -1)
 		{
@@ -439,19 +454,23 @@ namespace jgl
 				add_new_part();
 			for (size_t i = 0; i < _parts.size(); i++)
 			{
-				_parts[i]->set_texture(p_texture);
+				if (_parts[i]->material() == jgl_base_material)
+					_parts[i]->set_material(new Material(*jgl_base_material));
+				_parts[i]->material()->diffuse_texture = p_texture;
 			}
 		}
 		else
 		{
 			Mesh_part* tmp = check_part(index);
-			tmp->set_texture(p_texture);
+			if (tmp->material() == jgl_base_material)
+				tmp->set_material(new Material(*jgl_base_material));
+			tmp->material()->diffuse_texture = p_texture;
 		}
 	}
 
-	void Mesh::set_texture(Sprite_sheet* p_texture, int index)
+	void Mesh::set_diffuse_texture(Sprite_sheet* p_texture, int index)
 	{
-		set_texture(p_texture->image(), index);
+		set_diffuse_texture(p_texture->image(), index);
 	}
 
 	void Mesh::clear()
