@@ -422,6 +422,31 @@ namespace jgl
 		return (_parts[index]);
 	}
 
+	bool Mesh::remove_part(Mesh_part* p_part)
+	{
+		for (size_t i = 0; i < _parts.size(); i++)
+		{
+			if (p_part == _parts[i])
+			{
+				_parts.erase(_parts.begin() + i);
+				return (true);
+			}
+		}
+		return (false);
+	}
+	bool Mesh::remove_part(jgl::String p_name)
+	{
+		for (size_t i = 0; i < _parts.size(); i++)
+		{
+			if (_parts[i]->name() == p_name)
+			{
+				_parts.erase(_parts.begin() + i);
+				return (true);
+			}
+		}
+		return (false);
+	}
+
 	void Mesh::add_point(Vector3 p_point, int index)
 	{
 		Mesh_part* tmp = check_part(index);

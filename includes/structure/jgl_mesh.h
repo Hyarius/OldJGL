@@ -151,6 +151,7 @@ namespace jgl
 
 		Material* find_material(jgl::String);
 		Material* material(size_t index = 0) { if (index >= _materials.size())return (nullptr); return (_materials[index]); }
+
 		std::vector<Mesh_part*>& parts() { return (_parts); }
 		Mesh_part* parts(size_t index) { if (index >= _parts.size())return (nullptr); return (_parts[index]); }
 		Mesh_part* check_part(int index);
@@ -159,7 +160,9 @@ namespace jgl
 		void parse_materials(jgl::String p_path);
 		void add_material(Material* p_material) { _materials.push_back(p_material); }
 		void add_part(Mesh_part* p_part) { _parts.push_back(p_part); }
-		void add_new_part(jgl::String name = "unnamed") { add_part(new Mesh_part(name)); }
+		bool remove_part(Mesh_part* p_part);
+		bool remove_part(jgl::String p_name);
+		void add_new_part(jgl::String p_name = "unnamed") { add_part(new Mesh_part(p_name)); }
 		void add_component(Mesh* mesh, int index = -1) { add_component(mesh, mesh->pos(), index); }
 		void add_component(Mesh* mesh, Vector3 pos, int index = -1);
 		void add_point(Vector3 p_point, int index = -1);

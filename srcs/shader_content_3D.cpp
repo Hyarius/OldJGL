@@ -13,19 +13,11 @@ std::string color_model_shader_vert = {
 	"uniform mat4 MVP;"
 	"uniform mat4 view_matrix;"
 	"uniform mat4 model_matrix;"
-	"uniform vec3 light_pos;"
-	"uniform vec4 light_dir;"
-	"uniform vec4 light_color;"
-	"uniform vec3 camera_dir;"
 	//	---	tmp variable ---
 	"vec4 tmp_pos;"
 	"vec4 tmp_normale;"
 	//	--- output value ---
 	"out vec4 computed_normal;"
-	"out vec3 Position_worldspace;"
-	"out vec3 Normal_cameraspace;"
-	"out vec3 EyeDirection_cameraspace;"
-	"out vec3 LightDirection_cameraspace;"
 	""
 	"void main()"
 	"{"
@@ -35,12 +27,6 @@ std::string color_model_shader_vert = {
 		"gl_Position = MVP * tmp_pos;"
 		// Light computing
 		"computed_normal = rot * vec4(model_normal, 1);"
-		"Position_worldspace = (model_matrix * vec4(model_space,1)).xyz;"
-		"vec3 vertexPosition_cameraspace = (view_matrix * model_matrix * vec4(model_space,1)).xyz;"
-		"EyeDirection_cameraspace = vec3(0,0,0) - vertexPosition_cameraspace;"
-		"vec3 LightPosition_cameraspace = (view_matrix * vec4(light_pos,1)).xyz;"
-		"LightDirection_cameraspace = LightPosition_cameraspace + EyeDirection_cameraspace;"
-		"Normal_cameraspace = ( view_matrix * model_matrix * vec4(model_normal,0)).xyz;"
 	"}"
 };
 
@@ -69,8 +55,6 @@ std::string color_model_shader_frag = {
 	""
 	"void main()"
 	"{"
-		"vec4 n = normalize(computed_normal);"
-		"vec4 l = normalize(light_dir);"
 		"float value = (((dot(computed_normal, light_dir) + 1) / 2) - 1) * -1;"
 		"vec4 source_color = material_ka;"
 		"color = source_color * value;"
