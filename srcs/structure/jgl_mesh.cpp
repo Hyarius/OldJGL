@@ -358,48 +358,48 @@ namespace jgl
 			_parts[i]->render(this, camera, p_pos);
 	}
 
-	void Mesh::add_component(Mesh* mesh, Vector3 p_pos, int index)
+void Mesh::add_component(Mesh* mesh, Vector3 p_pos, int index)
+{
+	for (size_t tmp_index = 0; tmp_index < mesh->parts().size(); tmp_index++)
 	{
-		for (size_t tmp_index = 0; tmp_index < mesh->parts().size(); tmp_index++)
+		Mesh_part* tmp = check_part((index < 0 ? -1 : index + tmp_index));
+		Mesh_part* other = mesh->check_part(tmp_index);
+		size_t index_actual_vertices;
+		size_t index_actual_uvs;
+		size_t index_actual_normales;
+
+		index_actual_vertices = tmp->vertices().size();
+		index_actual_uvs = tmp->uvs().size();
+		index_actual_normales = tmp->normales().size();
+
+		for (size_t i = 0; i < other->vertices().size(); i++)
+			add_point(other->vertices()[i] + p_pos);
+		for (size_t i = 0; i < other->uvs().size(); i++)
+			add_uv(other->uvs()[i]);
+		for (size_t i = 0; i < other->normales().size(); i++)
+			add_normale(other->normales()[i]);
+
+		for (size_t i = 0; i < other->faces().size(); i++)
 		{
-			Mesh_part* tmp = check_part((index < 0 ? -1 : index + tmp_index));
-			Mesh_part* other = mesh->check_part(tmp_index);
-			size_t index_actual_vertices;
-			size_t index_actual_uvs;
-			size_t index_actual_normales;
+			Face* actual;
 
-			index_actual_vertices = tmp->vertices().size();
-			index_actual_uvs = tmp->uvs().size();
-			index_actual_normales = tmp->normales().size();
-
-			for (size_t i = 0; i < other->vertices().size(); i++)
-				add_point(other->vertices()[i] + p_pos);
-			for (size_t i = 0; i < other->uvs().size(); i++)
-				add_uv(other->uvs()[i]);
-			for (size_t i = 0; i < other->normales().size(); i++)
-				add_normale(other->normales()[i]);
-
-			for (size_t i = 0; i < other->faces().size(); i++)
-			{
-				Face* actual;
-
-				actual = other->faces(i);
-				add_face(Face(new int[3]{
-					actual->index_vertices[0] + static_cast<int>(index_actual_vertices),
-					actual->index_vertices[1] + static_cast<int>(index_actual_vertices),
-					actual->index_vertices[2] + static_cast<int>(index_actual_vertices)
-					}, new int[3]{
-						(actual->index_uvs[0] == -1 ? -1 : actual->index_uvs[0] + static_cast<int>(index_actual_uvs)),
-						(actual->index_uvs[1] == -1 ? -1 : actual->index_uvs[1] + static_cast<int>(index_actual_uvs)),
-						(actual->index_uvs[2] == -1 ? -1 : actual->index_uvs[2] + static_cast<int>(index_actual_uvs))
-					}, new int[3]{
-						(actual->index_normale[0] == -1 ? -1 : actual->index_normale[0] + static_cast<int>(index_actual_normales)),
-						(actual->index_normale[1] == -1 ? -1 : actual->index_normale[1] + static_cast<int>(index_actual_normales)),
-						(actual->index_normale[2] == -1 ? -1 : actual->index_normale[2] + static_cast<int>(index_actual_normales))
-					}), (index == -1 ? -1 : index + tmp_index));
-			}
-		}	
-	}
+			actual = other->faces(i);
+			add_face(Face(new int[3]{
+				actual->index_vertices[0] + static_cast<int>(index_actual_vertices),
+				actual->index_vertices[1] + static_cast<int>(index_actual_vertices),
+				actual->index_vertices[2] + static_cast<int>(index_actual_vertices)
+				}, new int[3]{
+					(actual->index_uvs[0] == -1 ? -1 : actual->index_uvs[0] + static_cast<int>(index_actual_uvs)),
+					(actual->index_uvs[1] == -1 ? -1 : actual->index_uvs[1] + static_cast<int>(index_actual_uvs)),
+					(actual->index_uvs[2] == -1 ? -1 : actual->index_uvs[2] + static_cast<int>(index_actual_uvs))
+				}, new int[3]{
+					(actual->index_normale[0] == -1 ? -1 : actual->index_normale[0] + static_cast<int>(index_actual_normales)),
+					(actual->index_normale[1] == -1 ? -1 : actual->index_normale[1] + static_cast<int>(index_actual_normales)),
+					(actual->index_normale[2] == -1 ? -1 : actual->index_normale[2] + static_cast<int>(index_actual_normales))
+				}), (index == -1 ? -1 : index + tmp_index));
+		}
+	}	
+}
 
 	Mesh_part* Mesh::check_part(int index)
 	{

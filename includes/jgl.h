@@ -28,6 +28,7 @@
 #include "jgl_engine.h"
 #include "jgl_widgets.h"
 
+#include "jgl_contener.h"
 #include "jgl_text_label.h"
 #include "jgl_value_label.h"
 #include "jgl_frame.h"

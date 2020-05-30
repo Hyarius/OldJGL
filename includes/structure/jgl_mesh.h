@@ -84,12 +84,19 @@ namespace jgl
 		Mesh_part(jgl::String p_name = "unnamed");
 
 		jgl::String name() { return (_name); }
+
 		std::vector<Vector3>& vertices() { return (_vertices); }
+		void set_vertices(std::vector<Vector3>& p_vertice) { _vertices = p_vertice; }
 		Vector3 vertices(size_t index) { if (index >= _vertices.size())return (-1); return (_vertices[index]); }
+
 		std::vector<Vector2>& uvs() { return (_uvs); }
+		void set_uvs(std::vector<Vector2>& p_uvs) { _uvs = p_uvs; }
 		Vector2 uvs(size_t index) { if (index >= _uvs.size())return (-1); return (_uvs[index]); }
+
 		std::vector<Vector3>& normales() { return (_normales); }
+		void set_normales(std::vector<Vector3>& p_normale) { _normales = p_normale; }
 		Vector3 normales(size_t index) { if (index >= _normales.size())return (-1); return (_normales[index]); }
+
 		std::vector<Face>& faces() { return (_faces); }
 		Face* faces(size_t i) { if (i >= _faces.size())return (NULL); return (&(_faces[i])); }
 		Material* material() { return (_material); }
@@ -169,6 +176,11 @@ namespace jgl
 		void add_uv(Vector2 p_uv, int index = -1);
 		void add_normale(Vector3 p_normale, int index = -1);
 		void add_face(Face p_face, int index = -1);
+
+		void set_vertices(std::vector<Vector3>& p_vertices, int index = -1) { Mesh_part* tmp = check_part(index); tmp->set_vertices(p_vertices); }
+		void set_uvs(std::vector<Vector2>& p_uvs, int index = -1) { Mesh_part* tmp = check_part(index); tmp->set_uvs(p_uvs); }
+		void set_normales(std::vector<Vector3>& p_normales, int index = -1) { Mesh_part* tmp = check_part(index); tmp->set_normales(p_normales); }
+
 		void set_diffuse_texture(Image* p_texture, int index = -1);
 		void set_diffuse_texture(Sprite_sheet* p_texture, int index = -1);
 		void set_transparency(float p_transparency) { _transparency = p_transparency; }
@@ -206,6 +218,8 @@ namespace jgl
 	Mesh *primitive_plane(Vector3 pos, Vector3 rot, Vector2 size, jgl::Color color, bool should_bake = true);
 }
 
+
+std::ostream& operator<<(std::ostream& os, jgl::Face to_print);
 std::ostream& operator<<(std::ostream& os, jgl::Material to_print);
 
 #endif

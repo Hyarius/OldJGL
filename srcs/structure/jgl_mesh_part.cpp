@@ -232,7 +232,9 @@ namespace jgl
 		// glFrontFace(GL_CW);
 		// glEnable(GL_CULL_FACE);
 		// glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+		// glDepthFunc(GL_ALWAYS);
 		glDrawArrays(GL_TRIANGLES, 0, static_cast<GLsizei>(_baked_vertices.size() * 3)); // 3 indices starting at 0 -> 1 triangle
+		// glDepthFunc(GL_LEQUAL);
 		// glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
 		// glDisable(GL_CULL_FACE);
 		// glFrontFace(GL_CW);

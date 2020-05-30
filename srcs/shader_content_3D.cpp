@@ -80,6 +80,7 @@ std::string texture_model_shader_vert = {
 	"vec4 tmp_pos;"
 	"vec4 tmp_normale;"
 	//	--- output value ---
+	"out vec4 result_position;"
 	"out vec4 computed_normal;"
 	"out vec2 UV;"
 	""
@@ -88,7 +89,8 @@ std::string texture_model_shader_vert = {
 	// Calcul of the world position
 		"tmp_pos = rot * vec4(model_space * size, 1);"
 		"tmp_pos = tmp_pos + vec4(pos, 1);"
-		"gl_Position = MVP * tmp_pos;"
+		"result_position = MVP * tmp_pos;"
+		"gl_Position = result_position;"
 		// Light computing
 		"computed_normal = rot * vec4(model_normal, 1);"
 		"UV = model_uv;"
@@ -98,6 +100,7 @@ std::string texture_model_shader_vert = {
 std::string texture_model_shader_frag = {
 	"#version 330 core\n"
 	//	---	Input variable ---
+	"in vec4 result_position;"
 	"in vec4 computed_normal;"
 	"in vec2 UV;"
 	//	--- Model information ---
@@ -107,6 +110,8 @@ std::string texture_model_shader_frag = {
 	"uniform vec4 light_dir;"
 	"uniform vec4 light_color;"
 	"uniform vec3 camera_dir;"
+	"float near = 0.1;"
+	"float far = 100.0;"
 	//	---	Material information ---
 	"uniform vec4 material_ka;"
 	"uniform vec4 material_kd;"
@@ -125,6 +130,15 @@ std::string texture_model_shader_frag = {
 	//	---	Output variable ---
 	"out vec4 color;"
 	""
+	"float linearize_depth(float depth)"
+	"{"
+		"float z = depth * 2.0 - 1.0;" // back to NDC
+		"return (2.0 * near * far) / (far + near - z * (far - near));"
+	"}"
+	"float calc_depth(float depth)"
+	"{"
+		"return (linearize_depth(depth) / far);"
+	"}"
 	"void main()"
 	"{"
 		"float value = (((dot(computed_normal, light_dir) + 1) / 2) - 1) * -1;"

@@ -132,9 +132,19 @@ std::ostream& operator<<(std::ostream& os, jgl::Camera camera)
 	return os;
 }
 
+std::ostream& operator<<(std::ostream& os, jgl::Face to_print)
+{
+	os << "Normal : " << to_print.normale << std::endl;
+	os << "Index vertices : [" << to_print.index_vertices[0] << "][" << to_print.index_vertices[1] << "][" << to_print.index_vertices[2] << "]" << std::endl;
+	os << "Index uvs : [" << to_print.index_uvs[0] << "][" << to_print.index_uvs[1] << "][" << to_print.index_uvs[2] << "]" << std::endl;
+	os << "Index normales : [" << to_print.index_normale[0] << "][" << to_print.index_normale[1] << "][" << to_print.index_normale[2] << "]" << std::endl;
+
+	return (os);
+}
+
 std::ostream& operator<<(std::ostream& os, jgl::Material to_print)
 {
-	os << "Material : " << to_print.name << std::endl;;
+	os << "Material : " << to_print.name << std::endl;
 	os << "		ka : " << to_print.ka << std::endl;
 	os << "		kd : " << to_print.kd << std::endl;
 	os << "		ks : " << to_print.ks << std::endl;

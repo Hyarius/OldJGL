@@ -88,6 +88,7 @@ namespace jgl
 		space = 73,
 		left_shift = 74,
 		right_shift = 75,
+		tab = 76,
 		count
 	};
 

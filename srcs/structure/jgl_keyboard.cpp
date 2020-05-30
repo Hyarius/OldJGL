@@ -9,7 +9,7 @@ namespace jgl
 	{
 		state = SDL_GetKeyboardState(nullptr);
 
-		for (size_t i = 0; i < 69; i++)
+		for (size_t i = 0; i < static_cast<size_t>(jgl::key::count); i++)
 			keys[i] = key_state::up;
 	}
 
@@ -89,7 +89,8 @@ namespace jgl
 		SDL_SCANCODE_DELETE,
 		SDL_SCANCODE_SPACE,
 		SDL_SCANCODE_LSHIFT,
-		SDL_SCANCODE_RSHIFT
+		SDL_SCANCODE_RSHIFT,
+		SDL_SCANCODE_TAB
 	};
 
 	jgl::String key_name_value[] = {
@@ -168,6 +169,7 @@ namespace jgl
 		"key DELETE",
 		"key SPACE",
 		"key LEFT SHIFT",
+		"key TABULATION",
 		"key RIGHT SHIFT"
 	};
 
