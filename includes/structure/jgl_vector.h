@@ -21,10 +21,10 @@ namespace jgl
 		Vector4& operator = (int p_value);
 		Vector4& operator = (float p_value);
 
-		Vector4 operator + (const Vector4 delta);
-		Vector4 operator - (const Vector4 delta);
-		Vector4 operator * (const Vector4 delta);
-		Vector4 operator / (const Vector4 delta);
+		Vector4 operator + (const Vector4 delta) const;
+		Vector4 operator - (const Vector4 delta) const;
+		Vector4 operator * (const Vector4 delta) const;
+		Vector4 operator / (const Vector4 delta) const;
 		void operator += (const Vector4 delta);
 		void operator -= (const Vector4 delta);
 		void operator *= (const Vector4 delta);
@@ -33,15 +33,15 @@ namespace jgl
 		bool operator != (const Vector4 delta) const;
 		bool operator < (const Vector4 other) const;
 		bool operator > (const Vector4 other) const;
-		float* decompose();
-		float distance(Vector4 point);
-		Vector4 normalize();
-		Vector4 cross(Vector4 other);
-		float dot(Vector4 other);
-		jgl::String str();
-		jgl::String text();
-		Vector4 floor();
-		Vector4 invert();
+		const float* decompose() const;
+		float distance(Vector4 point) const;
+		Vector4 normalize() const;
+		Vector4 cross(Vector4 other) const;
+		float dot(Vector4 other) const;
+		jgl::String str() const;
+		jgl::String text() const;
+		Vector4 floor() const;
+		Vector4 invert() const;
 	};
 
 	typedef Vector4 Vector3w;
@@ -71,10 +71,10 @@ namespace jgl
 		Vector3& operator = (int p_value);
 		Vector3& operator = (float  p_value);
 
-		Vector3 operator + (const Vector3 delta);
-		Vector3 operator - (const Vector3 delta);
-		Vector3 operator * (const Vector3 delta);
-		Vector3 operator / (const Vector3 delta);
+		Vector3 operator + (const Vector3 delta) const;
+		Vector3 operator - (const Vector3 delta) const;
+		Vector3 operator * (const Vector3 delta) const;
+		Vector3 operator / (const Vector3 delta) const;
 		void operator += (const Vector3 delta);
 		void operator -= (const Vector3 delta);
 		void operator *= (const Vector3 delta);
@@ -83,18 +83,18 @@ namespace jgl
 		bool operator != (const Vector3 delta) const;
 		bool operator < (const Vector3 other) const;
 		bool operator > (const Vector3 other) const;
-		float* decompose();
-		float length();
-		float distance(Vector3 point);
-		Vector3 normalize();
-		Vector3 cross(Vector3 other);
-		float dot(Vector3 other);
-		jgl::String str();
-		jgl::String text();
-		Vector3 floor();
-		Vector3 invert();
-		Vector4 convert(int p_value);
-		Vector4 convert(float p_value = 0);
+		const float* decompose() const;
+		float length() const;
+		float distance(Vector3 point) const;
+		Vector3 normalize() const;
+		Vector3 cross(Vector3 other) const;
+		float dot(Vector3 other) const;
+		jgl::String str() const;
+		jgl::String text() const;
+		Vector3 floor() const;
+		Vector3 invert() const;
+		Vector4 convert(int p_value) const;
+		Vector4 convert(float p_value = 0) const;
 	};
 
 	struct Vector2
@@ -114,10 +114,10 @@ namespace jgl
 		Vector2& operator = (int p_value);
 		Vector2& operator = (float  p_value);
 
-		Vector2 operator + (const Vector2 delta);
-		Vector2	operator - (const Vector2 delta);
-		Vector2	operator * (const Vector2 delta);
-		Vector2	operator / (const Vector2 delta);
+		Vector2 operator + (const Vector2 delta) const;
+		Vector2	operator - (const Vector2 delta) const;
+		Vector2	operator * (const Vector2 delta) const;
+		Vector2	operator / (const Vector2 delta) const;
 		void operator += (const Vector2 delta);
 		void operator -= (const Vector2 delta);
 		void operator *= (const Vector2 delta);
@@ -126,18 +126,18 @@ namespace jgl
 		bool operator != (const Vector2 delta) const;
 		bool operator < (const Vector2 other) const;
 		bool operator > (const Vector2 other) const;
-		float* decompose();
-		float distance(Vector2 point);
-		Vector2 cross(Vector2 other);
-		Vector2 normalize();
-		float dot(Vector2 other);
-		jgl::String str();
-		jgl::String text();
-		Vector2 floor();
-		Vector2 ceiling();
-		Vector2 invert();
-		Vector3 convert(int p_value);
-		Vector3 convert(float p_value = 0);
+		const float* decompose() const;
+		float distance(Vector2 point) const;
+		Vector2 cross(Vector2 other) const;
+		Vector2 normalize() const;
+		float dot(Vector2 other) const;
+		jgl::String str() const;
+		jgl::String text() const;
+		Vector2 floor() const;
+		Vector2 ceiling() const;
+		Vector2 invert() const;
+		Vector3 convert(int p_value) const;
+		Vector3 convert(float p_value = 0) const;
 	};
 }
 

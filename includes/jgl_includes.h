@@ -13,6 +13,7 @@
 #include <wchar.h>
 #include <stdio.h>
 #include <map>
+#include <filesystem>
 #include <stdint.h>
 #include <time.h>
 #include <tuple>

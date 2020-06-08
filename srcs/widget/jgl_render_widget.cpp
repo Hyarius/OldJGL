@@ -17,7 +17,6 @@ namespace jgl
 	void Render_widget::render()
 	{
 		_viewport->use();
-		glClear(GL_DEPTH_BUFFER_BIT);
 
 		for (size_t i = 0; i < _engine->meshes().size(); i++)
 			if (_engine->mesh(i)->transparency() == 1.0f)

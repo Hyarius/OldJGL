@@ -44,32 +44,27 @@ namespace jgl
 		return tab;
 	}
 
-	std::vector<jgl::String>		list_files(jgl::String path, jgl::String extension)
+	std::vector<jgl::File>		list_files(jgl::String path, jgl::String extension)
 	{
-		std::vector<jgl::String> brut_files;
-		std::vector<jgl::String> files;
+		std::vector<jgl::File> files;
 		jgl::String line;
 		jgl::String test;
-		size_t i = 2;
 		dirent* dirent_ptr;
 		DIR* dir = opendir(path.std().c_str());
 
+		files.clear();
 		if (dir == NULL)
-			error_exit(1, get_file_info(__FILE__, __LINE__) + " - Folder " + path + " didn't exist");
+			return (files);
 
 		while ((dirent_ptr = readdir(dir)) != NULL)
 		{
-			jgl::String tmp = dirent_ptr->d_name;
-			brut_files.insert(brut_files.end(), tmp);
-		}
-		while (i < brut_files.size())
-		{
-			if (brut_files[i].contain(extension) == true)
-			{
-				test = strsplit(brut_files[i], extension)[0];
-				files.insert(files.end(), test);
-			}
-			i++;
+			jgl::String tmp_name = dirent_ptr->d_name;
+			jgl::File tmp = jgl::File(path, tmp_name, static_cast<jgl::File_type>(dirent_ptr->d_type));
+			if (extension == "*")
+				files.push_back(tmp);
+			else if ((tmp.type == jgl::File_type::file && tmp.extension == extension) ||
+					(tmp.type == jgl::File_type::directory && tmp.name != "."))
+				files.push_back(tmp);
 		}
 		return files;
 	}

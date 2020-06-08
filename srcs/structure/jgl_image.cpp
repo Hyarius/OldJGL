@@ -65,11 +65,19 @@ namespace jgl
 	{
 		_path = "unknow";
 		_surface = p_surface;
-		if (_surface == NULL)
-			error_exit(1, "bouh");
 		_size = Vector2(_surface->w, _surface->h);
 
 		upload_texture();
+	}
+	
+	Image::~Image()
+	{
+		if (_surface != nullptr)
+		{
+			SDL_FreeSurface(_surface);
+			glDeleteTextures(1, &_texture_id);
+		}
+
 	}
 
 	void Image::save(jgl::String file_path)

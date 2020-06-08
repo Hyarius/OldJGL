@@ -44,19 +44,19 @@ namespace jgl
 		return *this;
 	}
 
-	Vector4		Vector4::operator + (const Vector4 delta) {
+	Vector4		Vector4::operator + (const Vector4 delta) const {
 		return (Vector4(x + delta.x, y + delta.y, z + delta.z, 1.0f));
 	}
 
-	Vector4		Vector4::operator - (const Vector4 delta) {
+	Vector4		Vector4::operator - (const Vector4 delta) const {
 		return (Vector4(x - delta.x, y - delta.y, z - delta.z, 1.0f));
 	}
 
-	Vector4		Vector4::operator * (const Vector4 delta) {
+	Vector4		Vector4::operator * (const Vector4 delta) const {
 		return (Vector4(x * delta.x, y * delta.y, z * delta.z, 1.0f));
 	}
 
-	Vector4		Vector4::operator / (const Vector4 delta) {
+	Vector4		Vector4::operator / (const Vector4 delta) const {
 		return (Vector4(x / delta.x, y / delta.y, z / delta.z, 1.0f));
 	}
 
@@ -104,11 +104,11 @@ namespace jgl
 		return (true);
 	}
 
-	float* Vector4::decompose() {
+	const float* Vector4::decompose() const {
 		return (&x);
 	}
 
-	float Vector4::distance(Vector4 point)
+	float Vector4::distance(Vector4 point) const
 	{
 		return (sqrt(pow(point.x - x, 2.0f)
 			+ pow(point.y - y, 2.0f)
@@ -116,7 +116,7 @@ namespace jgl
 		));
 	}
 
-	Vector4		Vector4::normalize()
+	Vector4		Vector4::normalize() const
 	{
 		float		length;
 
@@ -127,7 +127,7 @@ namespace jgl
 		return (Vector4(x / length, y / length, z / length, 1.0f));
 	}
 
-	float			Vector4::dot(Vector4 b)
+	float			Vector4::dot(Vector4 b) const
 	{
 		float		result;
 
@@ -136,7 +136,7 @@ namespace jgl
 		return (result);
 	}
 
-	Vector4		Vector4::cross(Vector4 other) //Produit vectoriel / cross product
+	Vector4		Vector4::cross(Vector4 other) const //Produit vectoriel / cross product
 	{
 		Vector4	result = Vector4(
 			y * other.z - z * other.y,
@@ -148,21 +148,21 @@ namespace jgl
 		return (result);
 	}
 
-	jgl::String Vector4::str()
+	jgl::String Vector4::str() const
 	{
 		jgl::String result = "(" + ftoa(x, 2) + " / " + ftoa(y, 2) + " / " + ftoa(z, 2) + " / " + ftoa(w, 2) + ")";
 
 		return (result);
 	}
 
-	jgl::String Vector4::text()
+	jgl::String Vector4::text() const
 	{
 		jgl::String result = ftoa(x, 2) + " " + ftoa(y, 2) + " " + ftoa(z, 2) + " " + ftoa(w, 2);
 
 		return (result);
 	}
 
-	Vector4 Vector4::floor()
+	Vector4 Vector4::floor() const
 	{
 		Vector4 result;
 
@@ -174,12 +174,15 @@ namespace jgl
 		return (result);
 	}
 
-	Vector4 Vector4::invert()
+	Vector4 Vector4::invert() const
 	{
-		x *= -1;
-		y *= -1;
-		z *= -1;
-		w *= -1;
-		return (*this);
+		Vector4 result;
+
+		result.x = x * -1;
+		result.y = y * -1;
+		result.z = z * -1;
+		result.w = w * -1;
+
+		return (result);
 	}
 }

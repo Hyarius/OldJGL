@@ -5,32 +5,50 @@ namespace jgl
 	static void up_widget(Data data)
 	{
 		Vscroll_bar* bar = (data.acces<Vscroll_bar*>(0));
-		Widget* parent = bar->parent();
-
-		if (parent != nullptr)
+		if (bar != nullptr && (bar->max_pos() == -1 || (bar->actual_pos().y < bar->max_pos().y)))
 		{
-			for (size_t i = 0; i < parent->childrens().size(); i++)
-				parent->childrens()[i]->move(Vector2(0, 10));
+			Vector2 delta = Vector2(0, 10);
+			if (bar->max_pos() != -1 && bar->actual_pos().y + delta.y > bar->max_pos().y)
+				delta.y = bar->max_pos().y - bar->actual_pos().y;
+			Widget* parent = bar->parent();
+
+			if (parent != nullptr)
+			{
+				for (size_t i = 0; i < parent->childrens().size(); i++)
+					parent->childrens()[i]->move(delta);
+			}
+			bar->move_pos(delta);
 		}
 	}
 
 	static void down_widget(Data data)
 	{
 		Vscroll_bar* bar = (data.acces<Vscroll_bar*>(0));
-		Widget* parent = bar->parent();
-
-		if (parent != nullptr)
+		if (bar != nullptr && (bar->min_pos() == -1 || (bar->actual_pos().y > bar->min_pos().y)))
 		{
-			for (size_t i = 0; i < parent->childrens().size(); i++)
-				parent->childrens()[i]->move(Vector2(0, -10));
+			Vector2 delta = Vector2(0, -10);
+			if (bar->min_pos() != -1 && bar->actual_pos().y + delta.y < bar->min_pos().y)
+				delta.y = -bar->actual_pos().y;
+
+			Widget* parent = bar->parent();
+
+			if (parent != nullptr)
+			{
+				for (size_t i = 0; i < parent->childrens().size(); i++)
+					parent->childrens()[i]->move(delta);
+			}
+			bar->move_pos(delta);
 		}
 	}
 
 	Vscroll_bar::Vscroll_bar(Widget* p_parent) : Widget(p_parent)
 	{
-		viewport()->set_active(true);
 		scroll_bar = new Frame(this);
 		scroll_bar->activate();
+
+		_actual_pos = 0;
+		_min_pos = -1;
+		_max_pos = -1;
 
 		up_button = new Button(up_widget, this, this);
 		up_button->set_text("^");
@@ -50,6 +68,11 @@ namespace jgl
 	Vscroll_bar::~Vscroll_bar()
 	{
 
+	}
+
+	void Vscroll_bar::move_pos(Vector2 delta)
+	{
+		_actual_pos += delta;
 	}
 
 	bool Vscroll_bar::handle_mouse()

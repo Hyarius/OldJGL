@@ -495,7 +495,8 @@ void Mesh::add_component(Mesh* mesh, Vector3 p_pos, int index)
 
 	void Mesh::set_diffuse_texture(Sprite_sheet* p_texture, int index)
 	{
-		set_diffuse_texture(p_texture->image(), index);
+		if (p_texture != nullptr)
+			set_diffuse_texture(p_texture->image(), index);
 	}
 
 	void Mesh::clear()

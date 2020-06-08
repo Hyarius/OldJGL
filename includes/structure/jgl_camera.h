@@ -33,7 +33,7 @@ namespace jgl
 		float _far;
 
 	public:
-		Camera(Vector3 p_pos = Vector3(), float p_fov = 45, float p_ratio = 4.0f / 3.0f, float p_near = 0.01f, float p_far = 50.0f);
+		Camera(Vector3 p_pos = Vector3(), float p_fov = 45, float p_ratio = 4.0f / 3.0f, float p_near = 0.1f, float p_far = 50.0f);
 
 		Vector3 mouse_direction();
 

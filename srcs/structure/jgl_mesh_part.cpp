@@ -38,7 +38,7 @@ namespace jgl
 			{
 				if (_faces[i].index_normale[j] == -1)
 				{
-					b = rot_matrix * (_vertices[_faces[i].index_vertices[1]] - _vertices[_faces[i].index_vertices[0]]);
+					b = rot_matrix * (_vertices[_faces[i].index_vertices[0]] - _vertices[_faces[i].index_vertices[1]]);
 					c = rot_matrix * (_vertices[_faces[i].index_vertices[2]] - _vertices[_faces[i].index_vertices[0]]);
 					tmp = b.cross(c).normalize();
 					_normales.insert(_normales.end(), tmp);
@@ -74,7 +74,7 @@ namespace jgl
 				if (_faces[i].index_vertices[j] != -1)
 				{
 					if (size_t(_faces[i].index_vertices[j]) >= _vertices.size())
-						jgl::error_exit(1, "Error while baking a Mesh_part with vertices = " + jgl::itoa(_faces[i].index_normale[j]) + " over " + jgl::itoa(_normales.size()) + " possibility");
+						jgl::error_exit(1, "Error while baking a Mesh_part with vertices = " + jgl::itoa(_faces[i].index_vertices[j]) + " over " + jgl::itoa(_vertices.size()) + " possibility");
 					_baked_vertices[tmp] = _vertices[_faces[i].index_vertices[j]];
 				}
 				else
@@ -83,7 +83,7 @@ namespace jgl
 				if (_faces[i].index_uvs[j] != -1)
 				{
 					if (size_t(_faces[i].index_uvs[j]) >= _uvs.size())
-						jgl::error_exit(1, "Error while baking a Mesh_part with uvs = " + jgl::itoa(_faces[i].index_normale[j]) + " over " + jgl::itoa(_normales.size()) + " possibility");
+						jgl::error_exit(1, "Error while baking a Mesh_part with uvs = " + jgl::itoa(_faces[i].index_uvs[j]) + " over " + jgl::itoa(_uvs.size()) + " possibility");
 					_baked_uvs[tmp] = _uvs[_faces[i].index_uvs[j]];
 				}
 				else

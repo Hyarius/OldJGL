@@ -15,22 +15,30 @@ namespace jgl
 		std::vector<Widget*> _childrens;
 		Viewport* _viewport;
 		bool _activated;
+		bool _frozen;
 
 	public:
 		Widget(Widget* p_parent = nullptr);
 		virtual ~Widget();
 
-		std::vector<Widget*> childrens() { return (_childrens); }
+		std::vector<Widget*>& childrens() { return (_childrens); }
 		Widget* parent() { return (_parent); }
 		Vector2 area() { return (_viewport->area()); }
 		Vector2 anchor() { if (_parent == nullptr)return(_viewport->anchor()); return (_viewport->anchor() + _parent->anchor()); }
 		Vector2 self_anchor() { if (_parent == nullptr)return(_viewport->anchor()); return (_viewport->anchor() - _parent->anchor()); }
 		Viewport* viewport() { return (_viewport); }
 
+		void send_front();
+		void send_back();
+		void raise();
+		void lower();
+		void set_layer(size_t index);
+		bool is_frozen() { return (_frozen); }
 		bool is_active() { return (_activated); }
 		bool is_pointed(Vector2 point = g_mouse->pos);
 		void activate() { _activated = true; }
 		void desactivate() { _activated = false; }
+		void set_frozen(bool new_frozen) { _frozen = new_frozen; }
 		void set_active(bool new_state) { _activated = new_state; }
 		void set_parent(Widget* p_parent);
 		void add_children(Widget* p_children) { _childrens.push_back(p_children); }
@@ -42,7 +50,7 @@ namespace jgl
 		void set_anchor(Vector2 p_anchor) { _viewport->set_anchor(p_anchor); }
 		void set_area(Vector2 p_area) { _viewport->set_area(p_area); }
 		virtual void set_geometry(Vector2 p_anchor, Vector2 p_area);
-		virtual void move(Vector2 delta) { std::cout << "Warning : Need creation of a function void move(Vector2) in your new widget to allow scroll_bar to work on it" << std::endl; }
+		virtual void move(Vector2 delta) { std::cout << "Warning : Need creation of a function void move(Vector2) in your " << typeid(this).name() << std::endl; }
 
 		virtual void quit() {};
 		virtual void update() {};

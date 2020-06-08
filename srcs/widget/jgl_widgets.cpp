@@ -11,6 +11,7 @@ namespace jgl
 		_viewport = new Viewport();
 		_viewport->set_owner(this);
 		_activated = false;
+		_frozen = false;
 	}
 
 	Widget::~Widget()
@@ -36,11 +37,7 @@ namespace jgl
 
 	void Widget::set_geometry(Vector2 p_anchor, Vector2 p_area)
 	{
-		if (_parent == nullptr)
-			_viewport->resize(p_anchor, p_area);
-		else
-			_viewport->resize(p_anchor + _parent->anchor(), p_area);
-
+		_viewport->resize(p_anchor, p_area);
 		set_geometry_imp(p_anchor, p_area);
 	}
 
@@ -60,7 +57,7 @@ namespace jgl
 
 	bool Widget::handle_event()
 	{
-		if (is_active() == false || area() == -1)
+		if (is_active() == false || area() == -1 || is_frozen() == true)
 			return (false);
 
 		for (size_t i = 0; i < _childrens.size(); i++)
@@ -79,7 +76,7 @@ namespace jgl
 	{
 		Vector2 pos1, pos2;
 
-		pos1 = _viewport->anchor();
+		pos1 = anchor();
 
 		pos2 = pos1 + _viewport->area();
 		if (point.x < pos1.x || point.x > pos2.x || point.y < pos1.y || point.y > pos2.y)
@@ -99,7 +96,7 @@ namespace jgl
 		
 		render();
 
-		for (size_t i = 0; i < _childrens.size(); i++)
+		for (int i = _childrens.size() - 1; i >= 0; i--)
 		{
 			_childrens[i]->render_children();
 		}
@@ -129,5 +126,74 @@ namespace jgl
 		{
 			_childrens[i]->quit_children();
 		}
+	}
+	void Widget::send_back()
+	{
+		if (_parent == nullptr)
+			return;
+		std::vector<Widget*>& children_list = _parent->childrens();
+
+		auto tmp = std::find(children_list.begin(), children_list.end(), this);
+		if (tmp == children_list.end())
+			return;
+		jgl::Widget* front = children_list.front();
+		children_list.front() = this;
+		*tmp = front;
+	}
+
+	void Widget::send_front()
+	{
+		if (_parent == nullptr)
+			return;
+		std::vector<Widget*>& children_list = _parent->childrens();
+
+		auto tmp = std::find(children_list.begin(), children_list.end(), this);
+		if (tmp == children_list.end())
+			return;
+		jgl::Widget* tail = children_list.back();
+		children_list.back() = this;
+		*tmp = tail;
+	}
+
+	void Widget::raise()
+	{
+		if (_parent == nullptr)
+			return;
+		std::vector<Widget*>& children_list = _parent->childrens();
+		auto tmp = std::find(children_list.begin(), children_list.end(), this);
+		if (tmp == children_list.end() || *tmp == children_list.back())
+			return;
+		auto tmp2 = tmp + 1;
+		jgl::Widget* other = *tmp2;
+		*tmp2 = this;
+		*tmp = *tmp2;
+	}
+
+	void Widget::lower()
+	{
+		if (_parent == nullptr)
+			return;
+		std::vector<Widget*>& children_list = _parent->childrens();
+		auto tmp = std::find(children_list.begin(), children_list.end(), this);
+		if (tmp == children_list.end() || tmp == children_list.begin())
+			return;
+		auto tmp2 = tmp - 1;
+		jgl::Widget* other = *tmp2;
+		*tmp2 = this;
+		*tmp = *tmp2;
+	}
+
+	void Widget::set_layer(size_t index)
+	{
+		if (_parent == nullptr || _parent->childrens().size() >= index)
+			return;
+		std::vector<Widget*>& children_list = _parent->childrens();
+
+		auto tmp = std::find(children_list.begin(), children_list.end(), this);
+		if (tmp == children_list.end())
+			return;
+		jgl::Widget* other = children_list[index];
+		children_list[index] = this;
+		*tmp = other;
 	}
 }

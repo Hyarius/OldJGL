@@ -39,7 +39,7 @@ namespace jgl
 	void Viewport::use()
 	{
 		g_application->set_active_viewport(this);
-		glClear(GL_DEPTH_BUFFER_BIT);
+		//glClear(GL_DEPTH_BUFFER_BIT);
 		
 		jgl::Vector2 pos, size;
 		jgl::Vector2 tmp;

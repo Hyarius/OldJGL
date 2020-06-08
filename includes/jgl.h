@@ -48,6 +48,8 @@
 #include "jgl_json_handler.h"
 #include "jgl_fps_handler.h"
 
+#include "jgl_file_menu.h"
+
 #include "jgl_window.h"
 #include "jgl_plot.h"
 

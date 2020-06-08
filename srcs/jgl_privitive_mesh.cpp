@@ -57,6 +57,10 @@ namespace jgl
 		result->add_face(Face(new int[3]{ 3, 4, 7 }, new int[3]{ 8, 4, 7 }, new int[3]{ -1, -1, -1 }));
 		result->add_face(Face(new int[3]{ 4, 3, 0 }, new int[3]{ 3, 7, 4 }, new int[3]{ -1, -1, -1 }));
 
+		jgl::Material* tmp_material = new Material("New material");
+		tmp_material->ka = color;
+		result->check_part(0)->set_material(tmp_material);
+
 		if (should_bake == true)
 			result->bake();
 

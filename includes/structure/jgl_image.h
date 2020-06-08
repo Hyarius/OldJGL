@@ -25,6 +25,8 @@ namespace jgl
 		Image(size_t width, size_t height, Color p_color);
 		Image(SDL_Surface* p_surface);
 
+		~Image();
+
 		void draw(Vector2 p_pos, Vector2 p_size, float p_alpha = 1.0f, Viewport* viewport = nullptr);
 		void upload_texture();
 		void save(jgl::String file_path);

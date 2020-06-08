@@ -204,10 +204,6 @@ namespace jgl
 		void set_velocity(Vector3 p_velocity) { _velocity = p_velocity; }
 		void place(Vector3 p_pos) { _pos = p_pos; }
 
-		void render_color(Camera* camera) { render_color_differed(camera, pos()); }
-		void render_texture(Camera* camera) { render_texture_differed(camera, pos()); }
-		void render_color_differed(Camera* camera, Vector3 p_pos);
-		void render_texture_differed(Camera* camera, Vector3 p_pos);
 		void render(Camera* camera) { render_differed(camera, pos()); }
 		void render_differed(Camera* camera, Vector3 p_pos);
 	};
@@ -215,7 +211,6 @@ namespace jgl
 
 	Mesh *primitive_voxel(Vector3 pos, Sprite_sheet *tileset, Vector2 top_sprite, Vector2 side_sprite, Vector2 down_sprite, float p_transparency = 1.0f, bool should_bake = false, Vector3 rot = 0, Vector3 size = 1);
 	Mesh *primitive_voxel(Vector3 pos, Sprite_sheet *tileset, size_t type, float p_transparency = 1.0f, bool should_bake = false, Vector3 rot = 0, Vector3 size = 1);
-	Mesh *primitive_plane(Vector3 pos, Vector3 rot, Vector2 size, jgl::Color color, bool should_bake = true);
 }
 
 

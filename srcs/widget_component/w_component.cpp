@@ -5,7 +5,7 @@ namespace jgl
 	w_component::w_component(Widget* p_owner)
 	{
 		_owner = p_owner;
-		_anchor = Vector2() + owner_anchor();
+		_anchor = Vector2();// +owner_anchor();
 		_area = Vector2();
 	}
 

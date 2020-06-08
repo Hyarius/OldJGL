@@ -166,5 +166,14 @@ std::ostream& operator<<(std::ostream& os, jgl::Material to_print)
 	if (to_print.bump != nullptr)
 		os << "		bump map : " << to_print.bump->path() << std::endl;
 
-	return os;
+	return (os);
+}
+
+std::ostream& operator<<(std::ostream& os, jgl::File value)
+{
+	os << "File : " << value.path << "\\" << value.name << "\\" << value.extension << " - "
+		<< "Path : " << value.path << " - Name : " << value.name << " - Extension : " << value.extension
+		<< " - File type : " << (value.type == jgl::File_type::file ? "File" : "Directory");
+
+	return (os);
 }

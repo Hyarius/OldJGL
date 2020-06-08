@@ -40,19 +40,19 @@ namespace jgl
 		return *this;
 	}
 
-	Vector2		Vector2::operator + (const Vector2 delta) {
+	Vector2		Vector2::operator + (const Vector2 delta) const {
 		return (Vector2(x + delta.x, y + delta.y));
 	}
 
-	Vector2		Vector2::operator - (const Vector2 delta) {
+	Vector2		Vector2::operator - (const Vector2 delta) const {
 		return (Vector2(x - delta.x, y - delta.y));
 	}
 
-	Vector2		Vector2::operator * (const Vector2 delta) {
+	Vector2		Vector2::operator * (const Vector2 delta) const {
 		return (Vector2(x * delta.x, y * delta.y));
 	}
 
-	Vector2		Vector2::operator / (const Vector2 delta) {
+	Vector2		Vector2::operator / (const Vector2 delta) const {
 		return (Vector2(x / delta.x, y / delta.y));
 	}
 
@@ -98,18 +98,18 @@ namespace jgl
 		return (true);
 	}
 
-	float* Vector2::decompose()
+	const float* Vector2::decompose() const
 	{
 		return (&x);
 	}
 
-	float Vector2::distance(Vector2 point)
+	float Vector2::distance(Vector2 point) const
 	{
 		return (sqrt(pow(point.x - x, 2.0f)
 			+ pow(point.y - y, 2.0f)));
 	}
 
-	Vector2		Vector2::normalize()
+	Vector2		Vector2::normalize() const
 	{
 		float		length;
 
@@ -118,7 +118,7 @@ namespace jgl
 		return (Vector2(x / length, y / length));
 	}
 
-	Vector2 Vector2::cross(Vector2 other)
+	Vector2 Vector2::cross(Vector2 other) const
 	{
 		Vector2 result;
 
@@ -127,7 +127,7 @@ namespace jgl
 		return (result);
 	}
 
-	float Vector2::dot(Vector2 other)
+	float Vector2::dot(Vector2 other) const
 	{
 		float		result;
 
@@ -136,21 +136,21 @@ namespace jgl
 		return (result);
 	}
 
-	jgl::String Vector2::str()
+	jgl::String Vector2::str() const
 	{
 		jgl::String result = "(" + ftoa(x, 2) + " / " + ftoa(y, 2) + ")";
 
 		return (result);
 	}
 
-	jgl::String Vector2::text()
+	jgl::String Vector2::text() const
 	{
 		jgl::String result = ftoa(x, 2) + " " + ftoa(y, 2);
 
 		return (result);
 	}
 
-	Vector2 Vector2::floor()
+	Vector2 Vector2::floor() const
 	{
 		Vector2 result;
 
@@ -160,7 +160,7 @@ namespace jgl
 		return (result);
 	}
 
-	Vector2 Vector2::ceiling()
+	Vector2 Vector2::ceiling() const
 	{
 		Vector2 result;
 
@@ -170,19 +170,22 @@ namespace jgl
 		return (result);
 	}
 
-	Vector2 Vector2::invert()
+	Vector2 Vector2::invert() const
 	{
-		x *= -1;
-		y *= -1;
-		return (*this);
+		Vector2 result;
+
+		result.x = x * -1;
+		result.y = y * -1;
+
+		return (result);
 	}
 
-	Vector3 Vector2::convert(int p_value)
+	Vector3 Vector2::convert(int p_value) const
 	{
 		return (Vector3(x, y, (float)p_value));
 	}
 
-	Vector3 Vector2::convert(float p_value)
+	Vector3 Vector2::convert(float p_value) const
 	{
 		return (Vector3(x, y, p_value));
 	}

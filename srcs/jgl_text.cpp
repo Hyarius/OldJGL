@@ -145,6 +145,11 @@ namespace jgl
 
 		TTF_SetFontStyle(tmp, static_cast<int>(text_style::normal));
 
+		if (surface == nullptr)
+		{
+			error_exit(1, "Can't create a text with the string : " + str);
+			return (nullptr);
+		}
 		return (new Image(surface));
 	}
 

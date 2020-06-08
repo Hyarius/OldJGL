@@ -56,19 +56,19 @@ namespace jgl
 		return *this;
 	}
 
-	Vector3		Vector3::operator + (const Vector3 delta) {
+	Vector3		Vector3::operator + (const Vector3 delta) const {
 		return (Vector3(x + delta.x, y + delta.y, z + delta.z));
 	}
 
-	Vector3		Vector3::operator - (const Vector3 delta) {
+	Vector3		Vector3::operator - (const Vector3 delta) const {
 		return (Vector3(x - delta.x, y - delta.y, z - delta.z));
 	}
 
-	Vector3		Vector3::operator * (const Vector3 delta) {
+	Vector3		Vector3::operator * (const Vector3 delta) const {
 		return (Vector3(x * delta.x, y * delta.y, z * delta.z));
 	}
 
-	Vector3		Vector3::operator / (const Vector3 delta) {
+	Vector3		Vector3::operator / (const Vector3 delta) const {
 		return (Vector3(x / delta.x, y / delta.y, z / delta.z));
 	}
 
@@ -116,24 +116,24 @@ namespace jgl
 		return (true);
 	}
 
-	float* Vector3::decompose() {
+	const float* Vector3::decompose() const {
 		return (&x);
 	}
-	float Vector3::length()
+	float Vector3::length() const
 	{
 		return (sqrt(pow(x, 2.0f)
 			+ pow(y, 2.0f)
 			+ pow(z, 2.0f)));
 	}
 
-	float Vector3::distance(Vector3 point)
+	float Vector3::distance(Vector3 point) const
 	{
 		return (sqrt(pow(point.x - x, 2.0f)
 			+ pow(point.y - y, 2.0f)
 			+ pow(point.z - z, 2.0f)));
 	}
 
-	Vector3		Vector3::normalize()
+	Vector3		Vector3::normalize() const
 	{
 		float		length;
 
@@ -144,7 +144,7 @@ namespace jgl
 		return (Vector3(x / length, y / length, z / length));
 	}
 
-	float			Vector3::dot(Vector3 b)
+	float			Vector3::dot(Vector3 b) const
 	{
 		float		result;
 
@@ -153,7 +153,7 @@ namespace jgl
 		return (result);
 	}
 
-	Vector3		Vector3::cross(Vector3 other) //Produit vectoriel / cross product
+	Vector3		Vector3::cross(Vector3 other) const //Produit vectoriel / cross product
 	{
 		Vector3	result = Vector3(
 			y * other.z - z * other.y,
@@ -164,21 +164,21 @@ namespace jgl
 		return (result);
 	}
 
-	jgl::String Vector3::str()
+	jgl::String Vector3::str() const
 	{
-		jgl::String result = "(" + ftoa(x, 2) + " / " + ftoa(y, 2) + " / " + ftoa(z, 2) + ")";
+		jgl::String result = "(" + jgl::ftoa(x, 3) + " / " + jgl::ftoa(y, 3) + " / " + jgl::ftoa(z, 3) + ")";
 
 		return (result);
 	}
 
-	jgl::String Vector3::text()
+	jgl::String Vector3::text() const
 	{
-		jgl::String result = ftoa(x, 2) + " " + ftoa(y, 2) + " " + ftoa(z, 2);
+		jgl::String result = jgl::ftoa(x, 2) + " " + jgl::ftoa(y, 2) + " " + jgl::ftoa(z, 2);
 
 		return (result);
 	}
 
-	Vector3 Vector3::floor()
+	Vector3 Vector3::floor() const
 	{
 		Vector3 result;
 
@@ -189,20 +189,23 @@ namespace jgl
 		return (result);
 	}
 
-	Vector3 Vector3::invert()
+	Vector3 Vector3::invert() const
 	{
-		x *= -1;
-		y *= -1;
-		z *= -1;
-		return (*this);
+		Vector3 result;
+
+		result.x = x * -1;
+		result.y = y * -1;
+		result.z = z * -1;
+
+		return (result);
 	}
 
-	Vector4 Vector3::convert(int p_value)
+	Vector4 Vector3::convert(int p_value) const
 	{
 		return (Vector4(x, y, z, (float)p_value));
 	}
 
-	Vector4 Vector3::convert(float p_value)
+	Vector4 Vector3::convert(float p_value) const
 	{
 		return (Vector4(x, y, z, p_value));
 	}
