@@ -70,6 +70,7 @@ namespace jgl
 		std::fstream file = open_file(p_path, std::ios_base::in | std::ios_base::out);
 		jgl::String line;
 		std::vector<jgl::String> tab;
+		jgl::String address = create_address(p_path);
 
 		while (file.eof() == false)
 		{
@@ -79,6 +80,7 @@ namespace jgl
 				tab = strsplit(line, " ");
 				if (tab[0] == "newmtl")
 				{
+					std::cout << "Here" << std::endl;
 					if (material != nullptr)
 						_materials.push_back(material);
 					material = new Material(tab[1]);
@@ -160,7 +162,7 @@ namespace jgl
 					if (tab.size() != 2)
 						error_exit(1, "Bad number of argument in map Kd construction");
 
-					material->diffuse_texture = new Image(tab[1]);
+					material->diffuse_texture = new Image(address + tab[1]);
 				}
 				// Specular Texture Map
 				if (tab[0] == "map_Ks")
@@ -168,7 +170,7 @@ namespace jgl
 					if (tab.size() != 2)
 						error_exit(1, "Bad number of argument in map Ks construction");
 
-					material->specular_texture = new Image(tab[1]);
+					material->specular_texture = new Image(address + tab[1]);
 				}
 				// Specular Hightlight Map
 				if (tab[0] == "map_Ns")
@@ -176,7 +178,7 @@ namespace jgl
 					if (tab.size() != 2)
 						error_exit(1, "Bad number of argument in map Ns construction");
 
-					material->specular_hight_light = new Image(tab[1]);
+					material->specular_hight_light = new Image(address + tab[1]);
 				}
 				// Alpha Texture Map
 				if (tab[0] == "map_d")
@@ -184,7 +186,7 @@ namespace jgl
 					if (tab.size() != 2)
 						error_exit(1, "Bad number of argument in map Kd construction");
 
-					material->alpha_texture = new Image(tab[1]);
+					material->alpha_texture = new Image(address + tab[1]);
 				}
 				// Bump Map
 				if (tab[0] == "map_Bump" || tab[0] == "map_bump" || tab[0] == "bump")
@@ -192,26 +194,20 @@ namespace jgl
 					if (tab.size() != 2)
 						error_exit(1, "Bad number of argument in bump map construction");
 
-					material->bump = new Image(tab[1]);
+					material->bump = new Image(address + tab[1]);
 				}
 
 			}
 		}
 		if (material != nullptr)
 			_materials.push_back(material);
-
-		for (size_t i = 0; i < _materials.size(); i++)
-		{
-			Material* tmp = _materials[i];
-
-			std::cout << *tmp << std::endl;
-		}
 	}
 
 	Material* Mesh::find_material(jgl::String p_name)
 	{
 		for (size_t i = 0; i < _materials.size(); i++)
 		{
+
 			if (_materials[i]->name == p_name)
 				return (_materials[i]);
 		}
@@ -240,7 +236,7 @@ namespace jgl
 					add_normale(Vector3(stof(tab[1]), stof(tab[2]), stof(tab[3])), tmp_part_index);
 				else if (tab[0] == "o")
 				{
-					add_new_part(tab[1]);
+					add_new_part((tab.size() == 2 ? tab[1] : "Unnamed"));
 					tmp_part_index++;
 				}
 				else if (tab[0] == "mtllib")

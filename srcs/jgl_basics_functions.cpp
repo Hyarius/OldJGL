@@ -90,30 +90,19 @@ namespace jgl
 
 	jgl::String itoa(int x, int d)
 	{
-		char c;
-		std::string result;
+		std::string result = std::to_string(x);
+		size_t i = result.size();
 
-		int i = 0;
-		while (x)
+		if (d > 0)
 		{
-			c = (x % 10) + '0';
-			result.push_back(c);
-			x = x / 10;
-			i++;
+			while (i < d)
+			{
+				result.insert(0, " ");
+				i++;
+			}
 		}
-
-		while (i < d)
-		{
-			result.append(" ");
-			i++;
-		}
-
-		if (result.size() == 0)
-			return ("0");
 
 		jgl::String tmp = String(result);
-
-		reverse(tmp);
 
 		return (tmp);
 	}

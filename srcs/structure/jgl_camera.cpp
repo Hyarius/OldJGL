@@ -6,10 +6,10 @@ namespace jgl
 	{
 		_pitch = 0;
 		_yaw = 0;
-		_direction = Vector3(0, 0, 1);
+		_direction = Vector3(1, 0, 0);
 		_pos = p_pos;
-		_forward = Vector3(0, 0, 1);
-		_right = Vector3(1, 0, 0);
+		_forward = Vector3(1, 0, 0);
+		_right = Vector3(0, 0, 1);
 		_up = Vector3(0, 1, 0);
 
 		set_light_direction(Vector3(-0.3f, -1.0f, 0.3f));
