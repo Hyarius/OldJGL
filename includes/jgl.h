@@ -8,6 +8,7 @@
 #include "jgl_enum.h"
 #include "jgl_glyph.h"
 #include "jgl_string.h"
+#include "jgl_array.h"
 #include "jgl_data.h"
 #include "jgl_vector.h"
 #include "jgl_matrix.h"

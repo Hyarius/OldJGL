@@ -80,7 +80,6 @@ namespace jgl
 				tab = strsplit(line, " ");
 				if (tab[0] == "newmtl")
 				{
-					std::cout << "Here" << std::endl;
 					if (material != nullptr)
 						_materials.push_back(material);
 					material = new Material(tab[1]);

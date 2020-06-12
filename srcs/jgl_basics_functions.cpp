@@ -5,24 +5,41 @@ namespace jgl
 	std::vector<jgl::String>		strsplit(jgl::String input, jgl::String delim, bool regroup)
 	{
 		std::vector<jgl::String>	tab;
-		jgl::String			word;
-		size_t 			start = 0;
-		size_t 			end = 0;
+		jgl::String word = jgl::String();
 
-		std::string std_input = input.std();
-		std::string std_delim = delim.std();
-
-		tab.clear();
-		while (end != -1)
+		if (delim == "")
 		{
-			end = std_input.find(std_delim, start);
-			word = std_input.substr(start, end - start);
-			if (word.size() > 0 && regroup == true)
-				tab.insert(tab.end(), word);
-			else if (regroup == false)
-				tab.insert(tab.end(), word);
-			start = end + delim.size();
+			tab.push_back(input);
+			return (tab);
 		}
+
+		for (size_t i = 0; i < input.size(); i++)
+		{
+			if (input[i] == delim[0])
+			{
+				size_t j = 0;
+				while (	j < delim.size() &&
+						i + j < input.size() &&
+						input[i + j] == delim[j])
+					j++;
+				if (j == delim.size())
+				{
+					tab.push_back(word);
+					word = jgl::String();
+				}
+				else
+				{
+					for (size_t h = 0; h < j; h++)
+						word.push_back(input[i + h]);
+				}
+				i += j - 1;
+			}
+			else
+				word.push_back(input[i]);
+		}
+
+		if (word.size() != 0)
+			tab.push_back(word);
 		return (tab);
 	}
 
