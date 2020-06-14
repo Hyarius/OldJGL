@@ -38,7 +38,7 @@ namespace jgl
 
 		for (size_t i = 0; i < 3; i++)
 		{
-			face_content = strsplit(tab[face_index_value[type][i]], "/", false);
+			strsplit(face_content, tab[face_index_value[type][i]], "/", false);
 			index_vertices[i] = stoi(face_content[0]) - 1 - delta_vertice_index;
 			if (face_content.size() >= 2)
 				index_uvs[i] = (face_content[1].size() == 0 ? -1 : stoi(face_content[1]) - 1 - delta_uvs_index);
@@ -77,7 +77,7 @@ namespace jgl
 			line = get_str(file);
 			if (line.size() != 0 && line[0] != '#')
 			{
-				tab = strsplit(line, " ");
+				strsplit(tab, line, " ");
 				if (tab[0] == "newmtl")
 				{
 					if (material != nullptr)
@@ -85,7 +85,7 @@ namespace jgl
 					material = new Material(tab[1]);
 				}
 				// Ambient Color
-				if (tab[0] == "Ka")
+				else if (tab[0] == "Ka")
 				{
 					if (tab.size() != 4)
 						error_exit(1, "Bad number of argument in Ka construction");
@@ -93,7 +93,7 @@ namespace jgl
 					material->ka = create_color_from_tab(tab);
 				}
 				// Diffuse Color
-				if (tab[0] == "Kd")
+				else if (tab[0] == "Kd")
 				{
 					if (tab.size() != 4)
 						error_exit(1, "Bad number of argument in Kd construction");
@@ -101,7 +101,7 @@ namespace jgl
 					material->kd = create_color_from_tab(tab);
 				}
 				// Specular Color
-				if (tab[0] == "Ks")
+				else if (tab[0] == "Ks")
 				{
 					if (tab.size() != 4)
 						error_exit(1, "Bad number of argument in Ks construction");
@@ -109,14 +109,14 @@ namespace jgl
 					material->ks = create_color_from_tab(tab);
 				}
 				// Specular Exponent
-				if (tab[0] == "Ns")
+				else if (tab[0] == "Ns")
 				{
 					if (tab.size() != 2)
 						error_exit(1, "Bad number of argument in Ns construction");
 
 					material->ns = stof(tab[1]);
 				}
-				if (tab[0] == "Ke")
+				else if (tab[0] == "Ke")
 				{
 					if (tab.size() != 4)
 						error_exit(1, "Bad number of argument in Ke construction");
@@ -124,7 +124,7 @@ namespace jgl
 					material->ke = create_color_from_tab(tab);
 				}
 				// Optical Density
-				if (tab[0] == "Ni")
+				else if (tab[0] == "Ni")
 				{
 					if (tab.size() != 2)
 						error_exit(1, "Bad number of argument in Ni construction");
@@ -132,7 +132,7 @@ namespace jgl
 					material->ni = stof(tab[1]);
 				}
 				// Dissolve
-				if (tab[0] == "d")
+				else if (tab[0] == "d")
 				{
 					if (tab.size() != 2)
 						error_exit(1, "Bad number of argument in D construction");
@@ -140,7 +140,7 @@ namespace jgl
 					material->d = stof(tab[1]);
 				}
 				// Illumination
-				if (tab[0] == "illum")
+				else if (tab[0] == "illum")
 				{
 					if (tab.size() != 2)
 						error_exit(1, "Bad number of argument in illum construction");
@@ -148,7 +148,7 @@ namespace jgl
 					material->illum = stoi(tab[1]);
 				}
 				// Ambient Texture Map
-				if (tab[0] == "map_Ka")
+				else if (tab[0] == "map_Ka")
 				{
 					if (tab.size() != 2)
 						error_exit(1, "Bad number of argument in map Ka construction");
@@ -156,7 +156,7 @@ namespace jgl
 					material->ambiant_texture = new Image(tab[1]);
 				}
 				// Diffuse Texture Map
-				if (tab[0] == "map_Kd")
+				else if (tab[0] == "map_Kd")
 				{
 					if (tab.size() != 2)
 						error_exit(1, "Bad number of argument in map Kd construction");
@@ -164,7 +164,7 @@ namespace jgl
 					material->diffuse_texture = new Image(address + tab[1]);
 				}
 				// Specular Texture Map
-				if (tab[0] == "map_Ks")
+				else if (tab[0] == "map_Ks")
 				{
 					if (tab.size() != 2)
 						error_exit(1, "Bad number of argument in map Ks construction");
@@ -172,7 +172,7 @@ namespace jgl
 					material->specular_texture = new Image(address + tab[1]);
 				}
 				// Specular Hightlight Map
-				if (tab[0] == "map_Ns")
+				else if (tab[0] == "map_Ns")
 				{
 					if (tab.size() != 2)
 						error_exit(1, "Bad number of argument in map Ns construction");
@@ -180,7 +180,7 @@ namespace jgl
 					material->specular_hight_light = new Image(address + tab[1]);
 				}
 				// Alpha Texture Map
-				if (tab[0] == "map_d")
+				else if (tab[0] == "map_d")
 				{
 					if (tab.size() != 2)
 						error_exit(1, "Bad number of argument in map Kd construction");
@@ -188,7 +188,7 @@ namespace jgl
 					material->alpha_texture = new Image(address + tab[1]);
 				}
 				// Bump Map
-				if (tab[0] == "map_Bump" || tab[0] == "map_bump" || tab[0] == "bump")
+				else if (tab[0] == "map_Bump" || tab[0] == "map_bump" || tab[0] == "bump")
 				{
 					if (tab.size() != 2)
 						error_exit(1, "Bad number of argument in bump map construction");
@@ -224,7 +224,7 @@ namespace jgl
 		while (file.eof() == false)
 		{
 			line = get_str(file);
-			tab = strsplit(line, " ");
+			strsplit(tab, line, " ");
 			if (tab.size() != 0)
 			{
 				if (tab[0] == "v")

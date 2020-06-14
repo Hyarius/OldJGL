@@ -2,45 +2,72 @@
 
 namespace jgl
 {
-	std::vector<jgl::String>		strsplit(jgl::String input, jgl::String delim, bool regroup)
+	static size_t count_word(jgl::String& input, jgl::String& delim)
 	{
-		std::vector<jgl::String>	tab;
-		jgl::String word = jgl::String();
-
-		if (delim == "")
-		{
-			tab.push_back(input);
-			return (tab);
-		}
+		size_t result = 1;
 
 		for (size_t i = 0; i < input.size(); i++)
 		{
 			if (input[i] == delim[0])
 			{
 				size_t j = 0;
-				while (	j < delim.size() &&
-						i + j < input.size() &&
-						input[i + j] == delim[j])
+				while (j < delim.size() &&
+					i + j < input.size() &&
+					input[i + j] == delim[j])
 					j++;
 				if (j == delim.size())
-				{
-					tab.push_back(word);
-					word = jgl::String();
-				}
-				else
-				{
-					for (size_t h = 0; h < j; h++)
-						word.push_back(input[i + h]);
-				}
+					result++;
 				i += j - 1;
 			}
-			else
-				word.push_back(input[i]);
 		}
+		return (result);
+	}
 
-		if (word.size() != 0)
-			tab.push_back(word);
+	static size_t count_word_len(jgl::String& input, jgl::String& delim, size_t start)
+	{
+		size_t result = 0;
+
+		for (result = start; result < input.size(); result++)
+		{
+			if (input[result] == delim[0])
+			{
+				size_t j = 0;
+				while (j < delim.size() &&
+					result + j < input.size() &&
+					input[result + j] == delim[j])
+					j++;
+				if (j == delim.size())
+					return (result - start);
+				result += j - 1;
+			}
+		}
+		return (result - start);
+	}
+
+	std::vector<jgl::String>		strsplit(jgl::String input, jgl::String delim, bool regroup)
+	{
+		std::vector<jgl::String>	tab;
+		
+		strsplit(tab, input, delim, regroup);
+
 		return (tab);
+	}
+
+	void strsplit(std::vector<jgl::String>&	tab, jgl::String input, jgl::String delim, bool regroup)
+	{
+		size_t index = 0;
+		size_t nb_word = 0;
+		tab.clear();
+		tab.resize(count_word(input, delim));
+
+		while (index < input.size())
+		{
+			size_t word_len = count_word_len(input, delim, index);
+			if (word_len != 0 || regroup == true)
+				input.substr(tab[nb_word], index, index + word_len);
+			index += word_len + delim.size();
+			nb_word++;
+		}
 	}
 
 	void check_sdl_error(const char* file, int line)
@@ -112,7 +139,7 @@ namespace jgl
 
 		if (d > 0)
 		{
-			while (i < d)
+			while (i < (size_t)d)
 			{
 				result.insert(0, " ");
 				i++;

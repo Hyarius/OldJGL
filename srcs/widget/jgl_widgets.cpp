@@ -27,9 +27,7 @@ namespace jgl
 
 	void Widget::remove_children(Widget* p_target)
 	{
-		std::vector<Widget*>::iterator it;
-
-		it = find(_childrens.begin(), _childrens.end(), p_target);
+		auto it = find(_childrens.begin(), _childrens.end(), p_target);
 
 		if (it != _childrens.end())
 			_childrens.erase(it);
@@ -136,7 +134,7 @@ namespace jgl
 		auto tmp = std::find(children_list.begin(), children_list.end(), this);
 		if (tmp == children_list.end())
 			return;
-		jgl::Widget* front = children_list.front();
+		auto front = children_list.front();
 		children_list.front() = this;
 		*tmp = front;
 	}
@@ -150,7 +148,7 @@ namespace jgl
 		auto tmp = std::find(children_list.begin(), children_list.end(), this);
 		if (tmp == children_list.end())
 			return;
-		jgl::Widget* tail = children_list.back();
+		auto tail = children_list.back();
 		children_list.back() = this;
 		*tmp = tail;
 	}

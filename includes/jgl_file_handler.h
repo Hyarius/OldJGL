@@ -26,6 +26,13 @@ namespace jgl
 		jgl::String extension;
 		jgl::File_type type;
 
+		File()
+		{
+			path = "";
+			name = "";
+			extension = "";
+			type = File_type::error;
+		}
 		File(jgl::String p_path, jgl::String p_name, jgl::File_type p_type){
 			std::vector<jgl::String> tmp;
 

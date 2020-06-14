@@ -2,8 +2,8 @@
 
 jgl::String font_path = "";
 
-std::vector<TTF_Font*>font;
-std::vector<TTF_Font *>font_outline;
+std::vector<TTF_Font *> font;
+std::vector<TTF_Font *> font_outline;
 
 size_t tmp_index = 0;
 std::vector <std::vector <std::vector <std::vector <std::map <size_t, jgl::Image *> > > > > char_list;
@@ -98,7 +98,7 @@ namespace jgl
 		if (font_path == "")
 			error_exit(1, "Can't load a font : no font file given");
 
-		if (font_outline.size() <= size)
+		if (font_outline.size() <= size + 2)
 			font_outline.resize(size + 2);
 
 		if (font_outline[size] == nullptr)

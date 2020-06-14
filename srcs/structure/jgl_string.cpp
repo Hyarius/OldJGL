@@ -142,6 +142,17 @@ namespace jgl
 		return (_content[line][index]);
 	}
 
+	void String::resize(size_t new_size)
+	{
+		while (_max_size <= new_size)
+			add_line();
+		while (_size < new_size)
+		{
+			this->operator[](_size) = '\0';
+			_size++;
+		}
+	}
+
 	void String::clear()
 	{
 		_size = 0;
@@ -309,15 +320,27 @@ namespace jgl
 	String String::substr(size_t start, size_t end)
 	{
 		String result;
+		
+		this->substr(result, start, end);
+
+		return (result);
+	}
+
+	void String::substr(String& result, size_t start, size_t end)
+	{
+		size_t size = end - start;
 
 		if (start >= _size)
-			return (result);
-
-		for (size_t i = start; i < end; i++)
 		{
-			result.push_back(this->operator[](i));
+			result.clear();
+			return ;
 		}
-		return (result);
+
+		result.clear();
+		if (result.max_size() <= size)
+			result.resize(size);
+		for (size_t i = 0; i < size; i++)
+			result[i] = this->operator[](i + start);
 	}
 
 }

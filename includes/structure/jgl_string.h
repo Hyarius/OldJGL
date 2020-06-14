@@ -55,6 +55,8 @@ namespace jgl
 		const Glyph& operator[](size_t i) const;
 		void clear();
 
+		void resize(size_t new_size);
+
 		String operator + (const String delta);
 		String operator += (const String delta);
 		String operator = (const String delta);
@@ -68,6 +70,7 @@ namespace jgl
 		void erase(size_t index);
 
 		jgl::String substr(size_t start, size_t end);
+		void substr(jgl::String& result, size_t start, size_t end);
 
 		void insert(size_t index, Glyph insert_value);
 		void insert(size_t index, String insert_value);

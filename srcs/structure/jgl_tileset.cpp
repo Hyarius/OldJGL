@@ -10,13 +10,13 @@ namespace jgl
 		_unit = Vector2(1.0f / _size.x, 1.0f / _size.y);
 		Vector2	tmp = 0;
 		if (p_size == 1)
-			_sprites.insert(_sprites.end(), 0);
+			_sprites.push_back(0);
 		else
 		{
 			while (tmp.y != _size.y)
 			{
 				Vector2 result = Vector2(tmp.x / _size.x, tmp.y / _size.y);
-				_sprites.insert(_sprites.end(), result);
+				_sprites.push_back(result);
 				tmp.x++;
 				if (tmp.x >= _size.x)
 				{
@@ -35,13 +35,13 @@ namespace jgl
 		_unit = Vector2(1.0f / _size.x, 1.0f / _size.y);
 		Vector2	tmp = 0;
 		if (p_size == 1)
-			_sprites.insert(_sprites.end(), 0);
+			_sprites.push_back(0);
 		else
 		{
 			while (tmp.y != _size.y)
 			{
 				Vector2 result = Vector2(tmp.x / _size.x, tmp.y / _size.y);
-				_sprites.insert(_sprites.end(), result);
+				_sprites.push_back(result);
 				tmp.x++;
 				if (tmp.x >= _size.x)
 				{

@@ -10,6 +10,7 @@ namespace jgl
 	void check_sdl_error(const char* file, int line);
 	bool string_is_numeric(jgl::String text);
 	std::vector<jgl::String> strsplit(jgl::String input, jgl::String c, bool regroup = true);
+	void strsplit(std::vector<jgl::String>& tab, jgl::String input, jgl::String delim, bool regroup = true);
 	void error_exit(int num, jgl::String error);
 	void error_exit(int num, char* error);
 	void reverse(jgl::String& base);

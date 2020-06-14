@@ -86,7 +86,7 @@ namespace jgl
 		jgl::String name() { return (_name); }
 
 		std::vector<Vector3>& vertices() { return (_vertices); }
-		void set_vertices(std::vector<Vector3>& p_vertice) { _vertices = p_vertice; }
+		void set_vertices(std::vector<Vector3>& p_vertice) { _vertices = p_vertice;	}
 		Vector3 vertices(size_t index) { if (index >= _vertices.size())return (-1); return (_vertices[index]); }
 
 		std::vector<Vector2>& uvs() { return (_uvs); }
