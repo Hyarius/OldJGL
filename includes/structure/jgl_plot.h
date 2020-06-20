@@ -5,13 +5,13 @@ namespace jgl
 	struct Plot_data
 	{
 		jgl::String name;
-		jgl::String (*funct)(float);
+		jgl::String(*funct)(float);
 		float min;
 		float max;
 		size_t precision;
 		float delta;
 
-		Plot_data(jgl::String p_name = "Value", float p_min = 0.0f, float p_max = 100.0f, jgl::String (*p_funct)(float) = nullptr)
+		Plot_data(jgl::String p_name = "Value", float p_min = 0.0f, float p_max = 100.0f, jgl::String(*p_funct)(float) = nullptr)
 		{
 			name = jgl::String(p_name);
 			funct = p_funct;
@@ -26,7 +26,7 @@ namespace jgl
 		}
 		void set_min(float p_min){min = p_min;delta = (max - min) / 10;}
 		void set_max(float p_max){max = p_max;delta = (max - min) / 10;}
-		void set_funct(jgl::String (*p_funct)(float)){funct = p_funct;}
+		void set_funct(jgl::String(*p_funct)(float)){funct = p_funct;}
 		void divide(size_t nb_division){delta = (max - min) / nb_division;}
 		void set_gap(float p_delta){delta = p_delta;}
 		float range(){return (max - min);}
@@ -113,7 +113,7 @@ namespace jgl
 		void set_ordinate(Plot_data p_ordinate){_ordinate = p_ordinate;calc_axis_unit();}
 
 		void set_absciss_name(jgl::String p_name){absciss().name = jgl::String(p_name);}
-		void set_absciss_funct(jgl::String (*p_funct)(float)){absciss().set_funct(p_funct);}
+		void set_absciss_funct(jgl::String(*p_funct)(float)){absciss().set_funct(p_funct);}
 		void set_absciss_min(float p_min){absciss().set_min(p_min);calc_axis_unit();}
 		void set_absciss_max(float p_max){absciss().set_max(p_max);calc_axis_unit();}
 		void set_absciss_gap(float p_gap){absciss().set_gap(p_gap);calc_axis_unit();}
@@ -121,7 +121,7 @@ namespace jgl
 		void set_absciss_precision(int p_precision){absciss().precision = p_precision;}
 
 		void set_ordinate_name(jgl::String p_name){ordinate().name = jgl::String(p_name);}
-		void set_ordinate_funct(jgl::String (*p_funct)(float)){ordinate().set_funct(p_funct);}
+		void set_ordinate_funct(jgl::String(*p_funct)(float)){ordinate().set_funct(p_funct);}
 		void set_ordinate_min(float p_min){ordinate().set_min(p_min);calc_axis_unit();}
 		void set_ordinate_max(float p_max){ordinate().set_max(p_max);calc_axis_unit();}
 		void set_ordinate_gap(float p_gap){ordinate().set_gap(p_gap);calc_axis_unit();}

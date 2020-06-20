@@ -26,18 +26,16 @@ namespace jgl
 	Vector2::Vector2(double p_x, double p_y) :
 		x(static_cast<float>(p_x)), y(static_cast<float>(p_y)) {}
 
-	Vector2& Vector2::operator = (int p_value)
+	void Vector2::operator = (int p_value)
 	{
 		x = static_cast<float>(p_value);
 		y = static_cast<float>(p_value);
-		return *this;
 	}
 
-	Vector2& Vector2::operator = (float  p_value)
+	void Vector2::operator = (float  p_value)
 	{
 		x = p_value;
 		y = p_value;
-		return *this;
 	}
 
 	Vector2		Vector2::operator + (const Vector2 delta) const {

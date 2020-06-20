@@ -52,7 +52,7 @@ namespace jgl
 		void 		set_size(int p_size) { _label.set_size(p_size); }
 		void 		set_color(text_color p_color) { _label.set_color(p_color); }
 		void 		set_style(text_style p_style) { _label.set_style(p_style); }
-		jgl::String 		text() { return (_label.text()); }
+		jgl::String text() { return (_label.text()); }
 		alignment 	align() { return (_label.align()); }
 		int 		size() { return (_label.size()); }
 		text_color 	color() { return (_label.color()); }

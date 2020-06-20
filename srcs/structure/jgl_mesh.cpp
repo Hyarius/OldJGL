@@ -31,6 +31,8 @@ namespace jgl
 		for (size_t i = 0; i < index; i++)
 		{
 			Mesh_part* tmp = target->parts(i);
+			if (tmp == nullptr)
+				error_exit(1, "No part inside mesh");
 			delta_vertice_index += tmp->vertices().size();
 			delta_uvs_index += tmp->uvs().size();
 			delta_normale_index += tmp->normales().size();

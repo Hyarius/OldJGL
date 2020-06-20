@@ -156,7 +156,7 @@ namespace jgl
 		Vector3 right() { return (_right); }
 		Vector3 up() { return (_up); }
 
-		Material* find_material(jgl::String);
+		Material* find_material(jgl::String name);
 		Material* material(size_t index = 0) { if (index >= _materials.size())return (nullptr); return (_materials[index]); }
 
 		std::vector<Mesh_part*>& parts() { return (_parts); }

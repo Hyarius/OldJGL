@@ -7,18 +7,20 @@
 
 namespace jgl
 {
-	void check_sdl_error(const char* file, int line);
+	void check_sdl_error(jgl::String file, int line);
 	bool string_is_numeric(jgl::String text);
-	std::vector<jgl::String> strsplit(jgl::String input, jgl::String c, bool regroup = true);
+	std::vector<jgl::String> strsplit(jgl::String input, jgl::String delim, bool regroup = true);
 	void strsplit(std::vector<jgl::String>& tab, jgl::String input, jgl::String delim, bool regroup = true);
+	std::vector<jgl::Unique_string> unique_strsplit(jgl::Unique_string input, jgl::Unique_string delim, bool regroup);
+	void unique_strsplit(std::vector<jgl::Unique_string>& tab, jgl::Unique_string input, jgl::Unique_string delim, bool regroup);
 	void error_exit(int num, jgl::String error);
 	void error_exit(int num, char* error);
 	void reverse(jgl::String& base);
 	jgl::String itoa(int x, int d = -1);
 	jgl::String ftoa(float n, int afterpoint = -1, int lenght = -1);
 	jgl::String ftoa(double n, int afterpoint = -1, int lenght = -1);
-	float stof(String text);
-	int stoi(String text);
+	float stof(jgl::String text);
+	int stoi(jgl::String text);
 	jgl::String normalize_string(jgl::String str, char c, size_t size);
 	jgl::String normalize_float(float num, int after_point, char c, size_t size);
 	bool is_middle(float min, float value, float max);

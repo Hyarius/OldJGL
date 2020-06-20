@@ -79,10 +79,10 @@ namespace jgl
 		_hour.set_value(static_cast<float>(static_cast<int>(_hour.value()) % 24));
 		_minute.set_value(static_cast<float>(static_cast<int>(_minute.value()) % 60));
 
-		while (_hour.text().size() < 2)
+		while (_hour.text()->size() < 2)
 			_hour.set_text("0" + _hour.text());
 
-		while (_minute.text().size() < 2)
+		while (_minute.text()->size() < 2)
 			_minute.set_text("0" + _minute.text());
 
 		_minute.set_cursor(0);
@@ -172,7 +172,7 @@ namespace jgl
 		{
 			static Glyph last_char = '\0';
 			Uint32 time = SDL_GetTicks();
-			jgl::String text = g_application->event()->text.text;
+			jgl::Unique_string text = g_application->event()->text.text;
 			if (text[0] != last_char || time >= _next_input)
 			{
 				last_char = text[0];

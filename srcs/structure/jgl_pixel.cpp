@@ -130,9 +130,9 @@ namespace jgl
 		return (result);
 	}
 
-	jgl::String Pixel::str()
+	jgl::Unique_string Pixel::str()
 	{
-		jgl::String result = "(" + std::to_string(x) + " / " + std::to_string(y) + " / " + std::to_string(z) + ")";
+		jgl::Unique_string result = "(" + std::to_string(x) + " / " + std::to_string(y) + " / " + std::to_string(z) + ")";
 
 		return (result);
 	}

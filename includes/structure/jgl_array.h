@@ -3,7 +3,7 @@
 
 namespace jgl
 {
-	static void error_exit_tmp(int error, jgl::String msg)
+	static void error_exit_tmp(int error, const char* msg)
 	{
 		std::cout << "Error [" << error << "] : " << msg << std::endl;
 		exit(1);
@@ -38,6 +38,21 @@ namespace jgl
 				delete old_content;
 		}
 
+		void clear_computed()
+		{
+			if (_computed_content != nullptr)
+				delete _computed_content;
+			_computed = false;
+			_computed_content = nullptr;
+		}
+		void delete_content()
+		{
+			for (size_t i = 0; i < _max_size / _push_size; i++)
+			{
+				delete _content[i];
+			}
+			delete _content;
+		}
 	public:
 		class Iterator
 		{
@@ -49,7 +64,7 @@ namespace jgl
 			void calc_element()
 			{
 				if (_parent == nullptr)
-					error_exit_tmp(1, "No parent in std::vector : segfault");
+					error_exit_tmp(1, "No parent in jgl::Array : segfault");
 				if (_index >= _parent->size())
 					_element = nullptr;
 				else
@@ -82,9 +97,9 @@ namespace jgl
 			{
 				Iterator result = *this;
 				if (_parent == nullptr)
-					error_exit_tmp(1, "No parent in std::vector : segfault");
+					error_exit_tmp(1, "No parent in jgl::Array : segfault");
 				if (other.parent() != _parent)
-					error_exit_tmp(1, "Bad interaction between two std::vector::Iterator from different array");
+					error_exit_tmp(1, "Bad interaction between two jgl::Array::Iterator from different array");
 
 				if (result.index() + other.index() >= result.parent()->size())
 					result.set_index(result.parent()->size());
@@ -97,9 +112,9 @@ namespace jgl
 			{
 				Iterator result = *this;
 				if (_parent == nullptr)
-					error_exit_tmp(1, "No parent in std::vector : segfault");
+					error_exit_tmp(1, "No parent in jgl::Array : segfault");
 				if (other.parent() != _parent)
-					error_exit_tmp(1, "Bad interaction between two std::vector::Iterator from different array");
+					error_exit_tmp(1, "Bad interaction between two jgl::Array::Iterator from different array");
 				if (result.index() <= other.index())
 					result.set_index(0);
 				else
@@ -111,7 +126,7 @@ namespace jgl
 			{
 				Iterator result = *this;
 				if (_parent == nullptr)
-					error_exit_tmp(1, "No parent in std::vector : segfault");
+					error_exit_tmp(1, "No parent in jgl::Array : segfault");
 				if (result.index() + static_cast<size_t>(delta) >= result.parent()->size())
 					result.set_index(result.parent()->size());
 				else
@@ -124,7 +139,7 @@ namespace jgl
 				Iterator result = *this;
 
 				if (_parent == nullptr)
-					error_exit_tmp(1, "No parent in std::vector : segfault");
+					error_exit_tmp(1, "No parent in jgl::Array : segfault");
 				if (result.index() <= static_cast<size_t>(delta))
 					result.set_index(0);
 				else
@@ -135,7 +150,7 @@ namespace jgl
 			void operator ++ ()
 			{
 				if (_parent == nullptr)
-					error_exit_tmp(1, "No parent in std::vector : segfault");
+					error_exit_tmp(1, "No parent in jgl::Array : segfault");
 				if (_index + 1 >= _parent->size())
 					_index = _parent->size();
 				else
@@ -145,7 +160,7 @@ namespace jgl
 			void operator -- ()
 			{
 				if (_parent == nullptr)
-					error_exit_tmp(1, "No parent in std::vector : segfault");
+					error_exit_tmp(1, "No parent in jgl::Array : segfault");
 				if (_index == 0)
 					return;
 				_index--;
@@ -155,7 +170,7 @@ namespace jgl
 			Iterator& operator = (size_t p_value)
 			{
 				if (_parent == nullptr)
-					error_exit_tmp(1, "No parent in std::vector : segfault");
+					error_exit_tmp(1, "No parent in jgl::Array : segfault");
 				_index = p_value;
 				calc_element();
 				return (*this);
@@ -163,16 +178,16 @@ namespace jgl
 			Iterator& operator = (T p_value)
 			{
 				if (_parent == nullptr)
-					error_exit_tmp(1, "No parent in std::vector : segfault");
+					error_exit_tmp(1, "No parent in jgl::Array : segfault");
 				_parent->operator[](_index) = p_value;
 				return (*this);
 			}
 			T& operator*()
 			{
 				if (_parent == nullptr)
-					error_exit_tmp(1, "No parent in std::vector : segfault");
+					error_exit_tmp(1, "No parent in jgl::Array : segfault");
 				if (_element == nullptr)
-					error_exit_tmp(1, "Dereferencing an empty std::vector::Iterator");
+					error_exit_tmp(1, "Dereferencing an empty jgl::Array::Iterator");
 				return (*_element);
 			}
 
@@ -180,7 +195,7 @@ namespace jgl
 			bool operator == (const Iterator other) const
 			{
 				if (_parent == nullptr)
-					error_exit_tmp(1, "No parent in std::vector : segfault");
+					error_exit_tmp(1, "No parent in jgl::Array : segfault");
 				if (_parent != other.parent())
 					return (false);
 				return (_index == other.index());
@@ -188,7 +203,7 @@ namespace jgl
 			bool operator != (const Iterator other) const
 			{
 				if (_parent == nullptr)
-					error_exit_tmp(1, "No parent in std::vector : segfault");
+					error_exit_tmp(1, "No parent in jgl::Array : segfault");
 				if (_parent != other.parent())
 					return (false);
 				return (_index != other.index());
@@ -196,7 +211,7 @@ namespace jgl
 			bool operator < (const Iterator other) const
 			{
 				if (_parent == nullptr)
-					error_exit_tmp(1, "No parent in std::vector : segfault");
+					error_exit_tmp(1, "No parent in jgl::Array : segfault");
 				if (_parent != other.parent())
 					return (false);
 				return (_index < other.index());
@@ -204,7 +219,7 @@ namespace jgl
 			bool operator > (const Iterator other) const
 			{
 				if (_parent == nullptr)
-					error_exit_tmp(1, "No parent in std::vector : segfault");
+					error_exit_tmp(1, "No parent in jgl::Array : segfault");
 				if (_parent != other.parent())
 					return (false);
 				return (_index > other.index());
@@ -212,7 +227,7 @@ namespace jgl
 			bool operator <= (const Iterator other) const
 			{
 				if (_parent == nullptr)
-					error_exit_tmp(1, "No parent in std::vector : segfault");
+					error_exit_tmp(1, "No parent in jgl::Array : segfault");
 				if (_parent != other.parent())
 					return (false);
 				return (_index <= other.index());
@@ -220,7 +235,7 @@ namespace jgl
 			bool operator >= (const Iterator other) const
 			{
 				if (_parent == nullptr)
-					error_exit_tmp(1, "No parent in std::vector : segfault");
+					error_exit_tmp(1, "No parent in jgl::Array : segfault");
 				if (_parent != other.parent())
 					return (false);
 				return (_index >= other.index());
@@ -241,7 +256,12 @@ namespace jgl
 			_computed = false;
 			_computed_content = nullptr;
 		}
-		void push_back(T& elem)
+		~Array()
+		{
+			clear_computed();
+			delete_content();
+		}
+		void push_back(const T& elem)
 		{
 			if (_size + 1 >= _max_size)
 			{
@@ -251,9 +271,9 @@ namespace jgl
 			size_t nb_index = _size % _push_size;
 			_content[nb_line][nb_index] = elem;
 			_size++;
-			_computed = false;
+			clear_computed();
 		}
-		void push_front(T elem)
+		void push_front(const T& elem)
 		{
 			insert(0, elem);
 		}
@@ -263,7 +283,7 @@ namespace jgl
 		{
 			if (index >= _max_size)
 			{
-				std::cout << "Segfault in std::vector - Invalid acces" << std::endl;
+				std::cout << "Segfault in jgl::Array - Invalid acces" << std::endl;
 				exit(1);
 			}
 			size_t nb_line = index / _push_size;
@@ -274,7 +294,7 @@ namespace jgl
 		{
 			if (index >= _size + 1)
 			{
-				std::cout << "Segfault in std::vector - Invalid acces" << std::endl;
+				std::cout << "Segfault in jgl::Array - Invalid acces" << std::endl;
 				exit(1);
 			}
 
@@ -287,13 +307,13 @@ namespace jgl
 				i--;
 			}
 			this->operator[](index) = elem;
-			_computed = false;
+			clear_computed();
 		}
 		void insert(Iterator iter, T elem)
 		{
 			if (iter.index() >= _size + 1)
 			{
-				std::cout << "Segfault in std::vector - Invalid acces" << std::endl;
+				std::cout << "Segfault in jgl::Array - Invalid acces" << std::endl;
 				exit(1);
 			}
 
@@ -306,11 +326,11 @@ namespace jgl
 				i--;
 			}
 			this->operator[](iter.index()) = elem;
-			_computed = false;
+			clear_computed();
 		}
-		std::vector<T> operator + (const T delta)
+		jgl::Array<T> operator + (const T delta)
 		{
-			std::vector<T> result = std::vector<T>(push_size());
+			jgl::Array<T> result = jgl::Array<T>(push_size());
 
 			for (size_t i = 0; i < this->size(); i++)
 				result.push_back(this->operator[](i));
@@ -319,9 +339,9 @@ namespace jgl
 
 			return (result);
 		}
-		std::vector<T> operator + (const std::vector<T> other)
+		jgl::Array<T> operator + (const jgl::Array<T> other)
 		{
-			std::vector<T> result = std::vector<T>(other.push_size());
+			jgl::Array<T> result = jgl::Array<T>(other.push_size());
 
 			for (size_t i = 0; i < this->size(); i++)
 				result.push_back(this->operator[](i));
@@ -334,13 +354,13 @@ namespace jgl
 		void operator += (const T delta)
 		{
 			push_back(delta);
-			_computed = false;
+			clear_computed();
 		}
-		void operator += (const std::vector<T> other)
+		void operator += (const jgl::Array<T> other)
 		{
 			for (size_t i = 0; i < this->size(); i++)
 				push_back(other[i]);
-			_computed = false;
+			clear_computed();
 		}
 		void resize(size_t new_size)
 		{
@@ -355,7 +375,7 @@ namespace jgl
 		void clear()
 		{
 			_size = 0;
-			_computed = false;
+			clear_computed();
 		}
 		bool empty() const
 		{
@@ -372,7 +392,11 @@ namespace jgl
 		{
 			if (_size > 0)
 				_size--;
-			_computed = false;
+			clear_computed();
+		}
+		void pop_front()
+		{
+			erase(0);
 		}
 		void erase(size_t index)
 		{
@@ -381,7 +405,7 @@ namespace jgl
 			for (size_t i = index; i < _size - 1; i++)
 				this->operator[](i) = this->operator[](i + 1);
 			_size--;
-			_computed = false;
+			clear_computed();
 
 		}
 		void erase(Iterator iter)
@@ -391,7 +415,7 @@ namespace jgl
 			for (size_t i = iter.index(); i < _size - 1; i++)
 				this->operator[](i) = this->operator[](i + 1);
 			_size--;
-			_computed = false;
+			clear_computed();
 			iter = size();
 		}
 		bool computed() const { return (_computed); }
@@ -404,6 +428,8 @@ namespace jgl
 		{
 			if (_computed == false)
 			{
+				if (_computed_content != nullptr)
+					delete _computed_content;
 				_computed_content = new T[_size];
 
 				for (size_t i = 0; i < _size; i++)

@@ -93,7 +93,7 @@ namespace jgl
 		SDL_SCANCODE_TAB
 	};
 
-	jgl::String key_name_value[] = {
+	jgl::Unique_string key_name_value[] = {
 		"Key A",
 		"key B",
 		"key C",
@@ -205,7 +205,7 @@ namespace jgl
 		return (g_keyboard);
 	}
 
-	jgl::String key_name(key type)
+	jgl::Unique_string key_name(key type)
 	{
 		return (key_name_value[static_cast<size_t>(type)]);
 	}

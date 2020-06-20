@@ -36,24 +36,21 @@ namespace jgl
 		x(static_cast<float>(p_x)), y(static_cast<float>(p_y)),
 		z(static_cast<float>(p_z)) {}
 
-	Vector3& Vector3::operator = (Vector4 other){
+	void Vector3::operator = (Vector4 other){
 		x = other.x;
 		y = other.y;
 		z = other.z;
-		return *this;
 	}
-	Vector3& Vector3::operator = (int p_value) {
+	void Vector3::operator = (int p_value) {
 		x = static_cast<float>(p_value);
 		y = static_cast<float>(p_value);
 		z = static_cast<float>(p_value);
-		return *this;
 	}
 
-	Vector3& Vector3::operator = (float  p_value) {
+	void Vector3::operator = (float  p_value) {
 		x = p_value;
 		y = p_value;
 		z = p_value;
-		return *this;
 	}
 
 	Vector3		Vector3::operator + (const Vector3 delta) const {

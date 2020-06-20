@@ -2,28 +2,7 @@
 
 namespace jgl
 {
-	static size_t count_word(jgl::String& input, jgl::String& delim)
-	{
-		size_t result = 1;
-
-		for (size_t i = 0; i < input.size(); i++)
-		{
-			if (input[i] == delim[0])
-			{
-				size_t j = 0;
-				while (j < delim.size() &&
-					i + j < input.size() &&
-					input[i + j] == delim[j])
-					j++;
-				if (j == delim.size())
-					result++;
-				i += j - 1;
-			}
-		}
-		return (result);
-	}
-
-	static size_t count_word_len(jgl::String& input, jgl::String& delim, size_t start)
+	static size_t count_word_len(jgl::String input, jgl::String delim, size_t start)
 	{
 		size_t result = 0;
 
@@ -44,44 +23,93 @@ namespace jgl
 		return (result - start);
 	}
 
-	std::vector<jgl::String>		strsplit(jgl::String input, jgl::String delim, bool regroup)
+	static size_t unique_count_word_len(jgl::Unique_string input, jgl::Unique_string delim, size_t start)
+	{
+		size_t result = 0;
+
+		for (result = start; result < input.size(); result++)
+		{
+			if (input[result] == delim[0])
+			{
+				size_t j = 0;
+				while (j < delim.size() &&
+					result + j < input.size() &&
+					input[result + j] == delim[j])
+					j++;
+				if (j == delim.size())
+					return (result - start);
+				result += j - 1;
+			}
+		}
+		return (result - start);
+	}
+
+	std::vector<jgl::String> strsplit(jgl::String input, jgl::String delim, bool regroup)
 	{
 		std::vector<jgl::String>	tab;
-		
+
 		strsplit(tab, input, delim, regroup);
 
 		return (tab);
 	}
 
-	void strsplit(std::vector<jgl::String>&	tab, jgl::String input, jgl::String delim, bool regroup)
+	void strsplit(std::vector<jgl::String>& tab, jgl::String input, jgl::String delim, bool regroup)
 	{
 		size_t index = 0;
 		size_t nb_word = 0;
 		tab.clear();
-		tab.resize(count_word(input, delim));
 
 		while (index < input.size())
 		{
 			size_t word_len = count_word_len(input, delim, index);
 			if (word_len != 0 || regroup == true)
-				input.substr(tab[nb_word], index, index + word_len);
+			{
+				jgl::String new_word = input.substr(index, index + word_len);
+				if (new_word.size() == 0)
+					jgl::error_exit(1, "Bad len here");
+				tab.push_back(new_word);
+			}
+			index += word_len + delim.size();
+			nb_word++;
+		}
+	}
+	std::vector<jgl::Unique_string> unique_strsplit(jgl::Unique_string input, jgl::Unique_string c, bool regroup)
+	{
+		std::vector<jgl::Unique_string> tab;
+
+		unique_strsplit(tab, input, c, regroup);
+
+		return (tab);
+	}
+
+	void unique_strsplit(std::vector<jgl::Unique_string>& tab, jgl::Unique_string input, jgl::Unique_string delim, bool regroup)
+	{
+		size_t index = 0;
+		size_t nb_word = 0;
+		tab.clear();
+
+		while (index < input.size())
+		{
+			size_t word_len = unique_count_word_len(input, delim, index);
+			if (word_len != 0 || regroup == true)
+			{
+				jgl::Unique_string new_word = input.substr(index, index + word_len);
+				tab.push_back(new_word);
+			}
 			index += word_len + delim.size();
 			nb_word++;
 		}
 	}
 
-	void check_sdl_error(const char* file, int line)
+	void check_sdl_error(jgl::String file, int line)
 	{
-		std::vector<jgl::String>tab = strsplit(file, "\\");
+		std::vector<jgl::String>tab = file.split("\\");
 		if (tab.size() == 1)
-			std::vector<jgl::String>tab = strsplit(file, "/");
+			tab = file.split("/");
 		jgl::String file_name = tab[tab.size() - 1];
 		jgl::String text = SDL_GetError();
 		if (text.size() != 0)
-		{
-			jgl::String error = file_name + " - line [" + std::to_string(line) + "] : " + text;
-			error_exit(1, error);
-		}
+			error_exit(1, file_name + " - line [" + std::to_string(line) + "] : " + text);
 	}
 
 	void				error_exit(int num, char *error)
@@ -146,7 +174,7 @@ namespace jgl
 			}
 		}
 
-		jgl::String tmp = String(result);
+		jgl::String tmp = jgl::String(result);
 
 		return (tmp);
 	}
@@ -174,20 +202,20 @@ namespace jgl
 	}
 
 
-	float stof(String text)
+	float stof(jgl::String text)
 	{
-		std::string tmp = text.std();
+		std::string tmp = text->std();
 		return (std::stof(tmp));
 	}
-	int stoi(String text)
+	int stoi(jgl::String text)
 	{
-		std::string tmp = text.std();
+		std::string tmp = text->std();
 		return (std::stoi(tmp));
 	}
 
 	bool string_is_numeric(jgl::String text)
 	{
-		return (text.contain("0123456789."));
+		return (text->contain("0123456789."));
 	}
 
 	bool is_middle(float min, float value, float max)

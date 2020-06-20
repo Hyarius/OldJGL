@@ -18,8 +18,8 @@ namespace jgl
 		Vector4(size_t p_x, size_t p_y, size_t p_z, size_t p_w);
 		Vector4(double p_x, double p_y, double p_z, double p_w);
 
-		Vector4& operator = (int p_value);
-		Vector4& operator = (float p_value);
+		void operator = (int p_value);
+		void operator = (float p_value);
 
 		Vector4 operator + (const Vector4 delta) const;
 		Vector4 operator - (const Vector4 delta) const;
@@ -67,9 +67,9 @@ namespace jgl
 		Vector3(size_t p_x, size_t p_y, size_t p_z);
 		Vector3(double p_x, double p_y, double p_z);
 
-		Vector3& operator = (Vector4 p_other);
-		Vector3& operator = (int p_value);
-		Vector3& operator = (float  p_value);
+		void operator = (Vector4 p_other);
+		void operator = (int p_value);
+		void operator = (float  p_value);
 
 		Vector3 operator + (const Vector3 delta) const;
 		Vector3 operator - (const Vector3 delta) const;
@@ -111,8 +111,8 @@ namespace jgl
 		Vector2(size_t p_x, size_t p_y);
 		Vector2(double p_x, double p_y);
 
-		Vector2& operator = (int p_value);
-		Vector2& operator = (float  p_value);
+		void operator = (int p_value);
+		void operator = (float  p_value);
 
 		Vector2 operator + (const Vector2 delta) const;
 		Vector2	operator - (const Vector2 delta) const;

@@ -104,7 +104,7 @@ namespace jgl
 
 	public:
 		w_entry_component(jgl::String p_text = "", class Widget* p_owner = nullptr);
-		void		set_text(jgl::String new_text) { _text = new_text; _cursor = new_text.size(); calc_text_to_draw(); }
+		void		set_text(jgl::String new_text) { _text = new_text; _cursor = new_text->size(); calc_text_to_draw(); }
 		void 		set_selected(bool p_selected) { _selected = p_selected; }
 		void		set_cursor(size_t p_cursor) { _cursor = p_cursor; }
 		//Getter

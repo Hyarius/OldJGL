@@ -74,7 +74,7 @@ namespace jgl
 		Pixel normalize();
 		Pixel cross(Pixel& other);
 		float dot(Pixel& other);
-		jgl::String str();
+		jgl::Unique_string str();
 		Pixel floor();
 	};
 }

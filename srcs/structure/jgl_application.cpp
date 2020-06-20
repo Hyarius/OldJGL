@@ -41,7 +41,7 @@ namespace jgl
 
 		check_sdl_error(__FILE__, __LINE__);
 
-		_window = SDL_CreateWindow(tmp.std().c_str(),
+		_window = SDL_CreateWindow(tmp->std().c_str(),
 			SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED,
 			static_cast<int>(_size.x), static_cast<int>(_size.y),
 			SDL_WINDOW_SHOWN | SDL_WINDOW_OPENGL);
@@ -280,7 +280,7 @@ namespace jgl
 
 	GLuint Application::add_custom_shader(jgl::String p_vertex_content, jgl::String p_fragment_content)
 	{
-		GLuint result = load_shaders(p_vertex_content.std(), p_fragment_content.std());
+		GLuint result = load_shaders(p_vertex_content->std(), p_fragment_content->std());
 		_custom_program.push_back(result);
 
 		return (result);
@@ -293,6 +293,6 @@ namespace jgl
 	}
 	GLuint Application::get_custom_uniform(GLuint p_program, jgl::String p_param)
 	{
-		return (glGetUniformLocation(p_program, p_param.std().c_str()));
+		return (glGetUniformLocation(p_program, p_param->std().c_str()));
 	}
 }

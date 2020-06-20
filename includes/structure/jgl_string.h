@@ -1,86 +1,97 @@
-#ifndef JGL_String_H
-#define JGL_String_H
+#ifndef JGL_STRING_H
+#define JGL_STRING_H
 
-#include "jgl_includes.h"
-#include "jgl_define.h"
-#include "jgl_glyph.h"
+#include "jgl_pool.h"
+#include "jgl_unique_string.h"
 
 namespace jgl
 {
-	extern Glyph nullchar;
-
 	class String
 	{
-	protected:
-		Glyph** _content;
-		size_t _size;
-		size_t _nb_line;
-		size_t _max_size;
-		size_t _push_size;
-
 	private:
-		void add_line();
-		Glyph* create_line();
-		int calc_line(size_t index);
-		int calc_index(size_t index);
-		int calc_line(size_t index) const ;
-		int calc_index(size_t index) const ;
-		void initialize();
-
+		jgl::Reusable<jgl::Unique_string> _content;
 	public:
-		String(const Glyph value);
-		String(const char* str);
-		String(const std::string str);
-		String(const String& old);
-		String();
-		~String();
+		String()
+		{
+			_content = jgl::Reusable<jgl::Unique_string>();
+			_content->clear();
+		}
+		String(const char* base) : String()
+		{
+			for (size_t i = 0; base[i] != '\0'; i++)
+				_content->push_back(base[i]);
+		}
+		String(const jgl::Glyph base) : String()
+		{
+			_content->push_back(base);
+		}
+		String(const std::string base) : String()
+		{
+			for (size_t i = 0; i < base.size(); i++)
+				_content->push_back(base[i]);
+		}
+		String(jgl::Unique_string base) : String()
+		{
+			for (size_t i = 0; i < base.size(); i++)
+				_content->push_back(base[i]);
+		}
+		String(jgl::Unique_string* base) : String()
+		{
+			_content = base;
+		}
+		String(const jgl::String& base) : String()
+		{
+			for (size_t i = 0; i < base.size(); i++)
+				_content->push_back(base[i]);
+		}
+		~String() {}
+		const jgl::Reusable<jgl::Unique_string>& content() { return (_content); }
+		const jgl::Reusable<jgl::Unique_string>& content() const { return (_content); }
+		void obtain() {_content.obtain();}
+		void release() {_content.release();}
+		jgl::Unique_string& operator* () { return ((_content.operator*())); }
+		jgl::Unique_string* operator-> () { return ((_content.operator->())); }
+		const jgl::Unique_string& operator* () const  { return ((_content.operator*())); }
+		const jgl::Unique_string* operator-> () const { return ((_content.operator->())); }
+		jgl::Glyph& operator [] (size_t index) { return (_content->operator[](index)); }
+		const jgl::Glyph& operator [] (size_t index) const { return (_content->operator[](index)); }
+		jgl::String operator + (const jgl::String other) { return (_content->operator+(*other)); }
+		jgl::String operator += (const jgl::String other) { return (_content->operator+=((*other))); }
+		bool operator==(const jgl::String other) { return (_content->operator==((*other))); }
+		bool operator!=(const jgl::String other) { return (_content->operator!=((*other))); }
 
-		size_t size() { return (_size); }
-		size_t push_size() { return (_push_size); }
-		size_t nb_line() { return (_nb_line); }
-		size_t max_size() { return (_max_size); }
-
-		size_t size() const { return (_size); }
-		size_t push_size() const { return (_push_size); }
-		size_t nb_line() const { return (_nb_line); }
-		size_t max_size() const { return (_max_size); }
-
-		Glyph** content() { return (_content); }
-
-		void push_back(const Glyph element);
-		void push_front(const Glyph element);
-		void append(const Glyph element) { push_back(element); }
-		void append(const String element) { for (size_t i = 0; i < element.size(); i++)push_back(element[i]); }
-		Glyph& operator[](const size_t i);
-		const Glyph& operator[](size_t i) const;
-		void clear();
-
-		void resize(size_t new_size);
-
-		String operator + (const String delta);
-		String operator += (const String delta);
-		String operator = (const String delta);
-
-		void print_info();
-
-		bool empty() { return (_size == 0 ? true : false); }
-		bool find(Glyph to_find);
-		bool contain(String to_find);
-		void pop_back() { if (_size > 0)_size--; }
-		void erase(size_t index);
-
+		//Redirection for simplicity
+		size_t size() const { return (_content->size()); }
+		size_t push_size() const { return (_content->push_size()); }
+		size_t max_size() const { return (_content->max_size()); }
+		void push_back(const jgl::Glyph element) { _content->push_back(element); }
+		void push_front(const jgl::Glyph element) { _content->insert(0, element); }
+		void append(const jgl::Glyph element) { push_back(element); }
+		void append(const jgl::String element) { for (size_t i = 0; i < element.size(); i++)push_back(element[i]); }
+		void clear() { _content->clear(); }
+		void resize(size_t new_size) { _content->resize(new_size); }
+		void print_info() {_content->print_info(); }
+		bool empty() { return (_content->empty()); }
+		bool find(jgl::Glyph to_find) { return (_content->find(to_find)); }
+		bool contain(jgl::String to_find) { return (_content->contain(*(to_find.content().element()))); }
+		void pop_back() { _content->pop_back(); }
+		void erase(size_t index) { _content->erase(index); }
+		std::vector<jgl::String> split(jgl::String delim, bool regroup = true);
 		jgl::String substr(size_t start, size_t end);
 		void substr(jgl::String& result, size_t start, size_t end);
-
-		void insert(size_t index, Glyph insert_value);
-		void insert(size_t index, String insert_value);
-
-		std::string std();
-
-		bool operator == (String other);
-		bool operator != (String other);
+		void insert(size_t index, jgl::Glyph insert_value) { _content->insert(index, insert_value); }
+		void insert(size_t index, jgl::Unique_string insert_value) {
+			for (size_t i = 0; i < insert_value.size(); i++)
+				_content->insert(index, insert_value[i]);
+		}
+		void insert(size_t index, jgl::String insert_value) {
+			for (size_t i = 0; i < insert_value.size(); i++)
+				_content->insert(index, insert_value[i]);
+		}
+		std::string std() { return (_content->std()); }
 	};
-	String operator + (const char* str, String delta);
+
+	jgl::String operator + (const char* str, jgl::String delta);
 }
 
 std::ostream& operator<<(std::ostream& os, jgl::String value);

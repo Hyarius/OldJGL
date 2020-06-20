@@ -39,7 +39,7 @@ public:
 	}
 	void set_path(jgl::String p_path)
 	{
-		std::filesystem::path p = p_path.std().c_str();
+		std::filesystem::path p = p_path->std().c_str();
 		_path = std::filesystem::absolute(p).string();
 	}
 
@@ -159,7 +159,7 @@ public:
 							std::vector<jgl::String> tmp = strsplit(_path, "\\");
 							if (tmp.size() >= 1)
 							{
-								_path.clear();
+								_path->clear();
 								for (size_t i = 0; i < tmp.size() - 1; i++)
 								{
 									if (i != 0)

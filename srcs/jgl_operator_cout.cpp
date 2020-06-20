@@ -108,7 +108,7 @@ std::ostream& operator<<(std::ostream& os, jgl::Glyph value)
 	return os;
 }
 
-std::ostream& operator<<(std::ostream& os, jgl::String value)
+std::ostream& operator<<(std::ostream& os, jgl::Unique_string value)
 {
 	for (size_t i = 0; i < value.size(); i++)
 	{
@@ -176,4 +176,10 @@ std::ostream& operator<<(std::ostream& os, jgl::File value)
 		<< " - File type : " << (value.type == jgl::File_type::file ? "File" : "Directory");
 
 	return (os);
+}
+
+std::ostream& operator<<(std::ostream& os, jgl::String value)
+{
+	os << *value;
+	return os;
 }
