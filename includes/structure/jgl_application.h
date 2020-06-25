@@ -26,6 +26,8 @@ namespace jgl
 		Viewport* _active_viewport;
 		Vector2 _size;
 
+		jgl::String _font_path;
+
 		Uint32 _time;
 
 		GLuint _program_color;
@@ -108,7 +110,7 @@ namespace jgl
 		Viewport* viewport() { return (_viewport); }
 		Viewport* active_viewport() { return (_active_viewport); }
 		Vector2 size() { return (_size); }
-
+		jgl::String font_path() { return (_font_path); }
 		GLuint add_custom_shader(jgl::String p_vertex_content, jgl::String p_fragment_content);
 		GLuint get_custom_program(size_t index);
 		GLuint get_custom_uniform(GLuint p_program, jgl::String p_param);

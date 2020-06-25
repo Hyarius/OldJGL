@@ -20,9 +20,9 @@ namespace jgl
 		{4, 3, 1}
 	};
 
-	static void compose_face(jgl::Mesh *target, std::vector<jgl::String> tab, int type, Color color, size_t index)
+	static void compose_face(jgl::Mesh *target, jgl::Array<jgl::String>& tab, int type, Color color, size_t index)
 	{
-		std::vector<jgl::String> face_content;
+		jgl::Array<jgl::String> face_content;
 		int index_vertices[3] = { -1, -1, -1 }, index_uvs[3] = { -1, -1, -1 }, index_normales[3] = { -1, -1, -1 };
 		int delta_vertice_index = 0;
 		int delta_uvs_index = 0;
@@ -52,7 +52,7 @@ namespace jgl
 
 	static jgl::String create_address(jgl::String path)
 	{
-		std::vector<jgl::String> tab = strsplit(path, "/");
+		jgl::Array<jgl::String> tab = strsplit(path, "/");
 		jgl::String result = "";
 
 		for (size_t i = 0; i < tab.size() - 1; i++)
@@ -61,9 +61,30 @@ namespace jgl
 		return (result);
 	}
 
-	jgl::Color create_color_from_tab(std::vector<jgl::String> tab)
+	jgl::Color create_color_from_tab(jgl::Array<jgl::String>& tab)
 	{
 		return (Color(stof(tab[1]), stof(tab[2]), stof(tab[3])));
+	}
+
+	static size_t count_word_len(jgl::String& input, jgl::String& delim, size_t start)
+	{
+		size_t result = 0;
+
+		for (result = start; result < input.size(); result++)
+		{
+			if (input[result] == delim[0])
+			{
+				size_t j = 0;
+				while (j < delim.size() &&
+					result + j < input.size() &&
+					input[result + j] == delim[j])
+					j++;
+				if (j == delim.size())
+					return (result - start);
+				result += j - 1;
+			}
+		}
+		return (result - start);
 	}
 
 	void Mesh::parse_materials(jgl::String p_path)
@@ -71,7 +92,7 @@ namespace jgl
 		Material* material = nullptr;
 		std::fstream file = open_file(p_path, std::ios_base::in | std::ios_base::out);
 		jgl::String line;
-		std::vector<jgl::String> tab;
+		jgl::Array<jgl::String> tab;
 		jgl::String address = create_address(p_path);
 
 		while (file.eof() == false)
@@ -80,6 +101,8 @@ namespace jgl
 			if (line.size() != 0 && line[0] != '#')
 			{
 				strsplit(tab, line, " ");
+				//tab.print();
+				//std::cout << std::endl;
 				if (tab[0] == "newmtl")
 				{
 					if (material != nullptr)
@@ -202,6 +225,8 @@ namespace jgl
 		}
 		if (material != nullptr)
 			_materials.push_back(material);
+		for (size_t i = 0; i < tab.size(); i++)
+			tab[i].release();
 	}
 
 	Material* Mesh::find_material(jgl::String p_name)
@@ -212,14 +237,14 @@ namespace jgl
 			if (_materials[i]->name == p_name)
 				return (_materials[i]);
 		}
-		return (jgl_base_material);
+		return (base_material());
 	}
 
 	Mesh::Mesh(jgl::String p_path, Vector3 p_pos, Vector3 p_rot, Vector3 p_size, Color color) : Mesh(p_pos, p_rot, p_size)
 	{
 		int tmp_part_index = -1;
 		jgl::String line;
-		std::vector<jgl::String> tab;
+		jgl::Array<jgl::String> tab;
 		std::fstream file = open_file(p_path, std::ios_base::in | std::ios_base::out);
 		jgl::String address = create_address(p_path);
 
@@ -266,6 +291,8 @@ namespace jgl
 				}
 			}
 		}
+		for (size_t i = 0; i < tab.size(); i++)
+			tab[i].release();
 		bake();
 	}
 
@@ -476,16 +503,16 @@ void Mesh::add_component(Mesh* mesh, Vector3 p_pos, int index)
 				add_new_part();
 			for (size_t i = 0; i < _parts.size(); i++)
 			{
-				if (_parts[i]->material() == jgl_base_material)
-					_parts[i]->set_material(new Material(*jgl_base_material));
+				if (_parts[i]->material() == base_material())
+					_parts[i]->set_material(new Material(*_base_material));
 				_parts[i]->material()->diffuse_texture = p_texture;
 			}
 		}
 		else
 		{
 			Mesh_part* tmp = check_part(index);
-			if (tmp->material() == jgl_base_material)
-				tmp->set_material(new Material(*jgl_base_material));
+			if (tmp->material() == base_material())
+				tmp->set_material(new Material(*_base_material));
 			tmp->material()->diffuse_texture = p_texture;
 		}
 	}

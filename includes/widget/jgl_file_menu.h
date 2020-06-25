@@ -15,13 +15,13 @@ class File_menu : public jgl::Widget
 private:
 	jgl::String _path;
 	jgl::String _extension;
-	std::vector<jgl::File> _list_file;
+	jgl::Array<jgl::File> _list_file;
 
 	jgl::Frame* _frame;
 
 	jgl::Frame* _file_frame;
 	jgl::Vscroll_bar* _scroll_bar;
-	std::vector<jgl::Text_label*> _files_labels;
+	jgl::Array<jgl::Text_label*> _files_labels;
 
 	jgl::Text_label* _name_indicator;
 	jgl::Text_entry* _name_entry;
@@ -156,7 +156,7 @@ public:
 
 						if (_list_file[i + 1].name == "..")
 						{
-							std::vector<jgl::String> tmp = strsplit(_path, "\\");
+							jgl::Array<jgl::String> tmp = strsplit(_path, "\\");
 							if (tmp.size() >= 1)
 							{
 								_path->clear();

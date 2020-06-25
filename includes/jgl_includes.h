@@ -1,11 +1,7 @@
 #ifndef JGL_INCLUDES_H
 #define JGL_INCLUDES_H
 
-#ifdef __APPLE__
-#	include <stdlib.h>
-#elif defined _WIN32
-#	include <io.h>
-#endif
+#include <io.h>
 #include <iostream>
 #include <fstream>
 #include <fcntl.h>
@@ -27,15 +23,15 @@
 #include <sys/types.h>
 #include <sys/stat.h>
 #include <SDL.h>
-#ifdef __APPLE__
-#	include <OpenGL/gl3.h>
-#	include <OpenGL/gl3ext.h>
-#else
-#	include <glew.h>
-#	include <SDL_opengl.h>
-#endif
+#include <glew.h>
+#include <SDL_opengl.h>
 #include <SDL_image.h>
 #include <SDL_ttf.h>
 #include <SDL_mixer.h>
+#include <iostream>
+#include <string>
+#include <algorithm>
+#include <iterator>
+#include <vld.h>
 
 #endif

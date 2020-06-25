@@ -2,7 +2,7 @@
 
 namespace jgl
 {
-	static size_t count_word_len(jgl::String input, jgl::String delim, size_t start)
+	static size_t count_word_len(jgl::String& input, jgl::String& delim, size_t start)
 	{
 		size_t result = 0;
 
@@ -23,7 +23,7 @@ namespace jgl
 		return (result - start);
 	}
 
-	static size_t unique_count_word_len(jgl::Unique_string input, jgl::Unique_string delim, size_t start)
+	static size_t unique_count_word_len(jgl::Unique_string& input, jgl::Unique_string& delim, size_t start)
 	{
 		size_t result = 0;
 
@@ -44,17 +44,18 @@ namespace jgl
 		return (result - start);
 	}
 
-	std::vector<jgl::String> strsplit(jgl::String input, jgl::String delim, bool regroup)
+	jgl::Array<jgl::String> strsplit(jgl::String input, jgl::String delim, bool regroup)
 	{
-		std::vector<jgl::String>	tab;
+		jgl::Array<jgl::String>	tab;
 
 		strsplit(tab, input, delim, regroup);
 
 		return (tab);
 	}
 
-	void strsplit(std::vector<jgl::String>& tab, jgl::String input, jgl::String delim, bool regroup)
+	void strsplit(jgl::Array<jgl::String>& tab, jgl::String input, jgl::String delim, bool regroup)
 	{
+		jgl::String new_word;
 		size_t index = 0;
 		size_t nb_word = 0;
 		tab.clear();
@@ -64,7 +65,8 @@ namespace jgl
 			size_t word_len = count_word_len(input, delim, index);
 			if (word_len != 0 || regroup == true)
 			{
-				jgl::String new_word = input.substr(index, index + word_len);
+				new_word = jgl::String();
+				input.substr(new_word, index, index + word_len);
 				if (new_word.size() == 0)
 					jgl::error_exit(1, "Bad len here");
 				tab.push_back(new_word);
@@ -73,17 +75,18 @@ namespace jgl
 			nb_word++;
 		}
 	}
-	std::vector<jgl::Unique_string> unique_strsplit(jgl::Unique_string input, jgl::Unique_string c, bool regroup)
+	jgl::Array<jgl::Unique_string> unique_strsplit(jgl::Unique_string input, jgl::Unique_string c, bool regroup)
 	{
-		std::vector<jgl::Unique_string> tab;
+		jgl::Array<jgl::Unique_string> tab;
 
 		unique_strsplit(tab, input, c, regroup);
 
 		return (tab);
 	}
 
-	void unique_strsplit(std::vector<jgl::Unique_string>& tab, jgl::Unique_string input, jgl::Unique_string delim, bool regroup)
+	void unique_strsplit(jgl::Array<jgl::Unique_string>& tab, jgl::Unique_string input, jgl::Unique_string delim, bool regroup)
 	{
+		jgl::Unique_string new_word;
 		size_t index = 0;
 		size_t nb_word = 0;
 		tab.clear();
@@ -93,7 +96,7 @@ namespace jgl
 			size_t word_len = unique_count_word_len(input, delim, index);
 			if (word_len != 0 || regroup == true)
 			{
-				jgl::Unique_string new_word = input.substr(index, index + word_len);
+				input.substr(new_word, index, index + word_len);
 				tab.push_back(new_word);
 			}
 			index += word_len + delim.size();
@@ -103,7 +106,7 @@ namespace jgl
 
 	void check_sdl_error(jgl::String file, int line)
 	{
-		std::vector<jgl::String>tab = file.split("\\");
+		jgl::Array<jgl::String>tab = file.split("\\");
 		if (tab.size() == 1)
 			tab = file.split("/");
 		jgl::String file_name = tab[tab.size() - 1];
@@ -174,9 +177,7 @@ namespace jgl
 			}
 		}
 
-		jgl::String tmp = jgl::String(result);
-
-		return (tmp);
+		return (jgl::String(result));
 	}
 
 	// Converts a floating point number tostring.
@@ -243,9 +244,9 @@ namespace jgl
 		src = result;
 	}
 
-	std::vector<Vector2> 		calc_line_2d(float x1, float y1, float x2, float y2)
+	jgl::Array<Vector2> 		calc_line_2d(float x1, float y1, float x2, float y2)
 	{
-		std::vector<Vector2> result;
+		jgl::Array<Vector2> result;
 		const bool steep = (fabs(y2 - y1) > fabs(x2 - x1));
 		if (steep)
 		{

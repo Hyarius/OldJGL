@@ -9,6 +9,7 @@
 
 namespace jgl
 {
+	void clear_font_path();
 	SDL_Color get_color(int i);
 	TTF_Font* get_font(size_t size);
 	TTF_Font* get_font_outline(size_t size);

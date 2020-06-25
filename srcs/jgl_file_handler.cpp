@@ -25,9 +25,9 @@ namespace jgl
 		return (line);
 	}
 
-	std::vector<jgl::String>			get_strsplit(std::fstream& file, const jgl::String c, int size)
+	jgl::Array<jgl::String>			get_strsplit(std::fstream& file, const jgl::String c, int size)
 	{
-		std::vector<jgl::String> tab;
+		jgl::Array<jgl::String> tab;
 		jgl::String line;
 
 		line = get_str(file);
@@ -44,9 +44,9 @@ namespace jgl
 		return tab;
 	}
 
-	std::vector<jgl::File>		list_files(jgl::String path, jgl::String extension)
+	jgl::Array<jgl::File>		list_files(jgl::String path, jgl::String extension)
 	{
-		std::vector<jgl::File> files;
+		jgl::Array<jgl::File> files;
 		jgl::String line;
 		jgl::String test;
 		dirent* dirent_ptr;

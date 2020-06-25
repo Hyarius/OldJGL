@@ -30,9 +30,9 @@ namespace jgl
 
 	jgl::String get_file_info(jgl::String file_info, int line)
 	{
-		std::vector<jgl::String>tab = strsplit(file_info, "\\");
+		jgl::Array<jgl::String>tab = strsplit(file_info, "\\");
 		if (tab.size() == 1)
-			std::vector<jgl::String>tab = strsplit(file_info, "/");
+			jgl::Array<jgl::String>tab = strsplit(file_info, "/");
 		jgl::String file_name = tab[tab.size() - 1];
 		return("[" + file_name + "][" + std::to_string(line) + "]");
 	}

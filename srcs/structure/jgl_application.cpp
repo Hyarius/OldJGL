@@ -10,7 +10,7 @@ namespace jgl
 		SDL_Init(SDL_INIT_EVERYTHING);
 		IMG_Init(IMG_INIT_JPG | IMG_INIT_PNG);
 
-		check_sdl_error(__FILE__, __LINE__);
+		//check_sdl_error(__FILE__, __LINE__);
 
 		SDL_GL_SetAttribute(SDL_GL_CONTEXT_MAJOR_VERSION, 4);
 		SDL_GL_SetAttribute(SDL_GL_CONTEXT_MINOR_VERSION, 1);
@@ -22,7 +22,7 @@ namespace jgl
 		srand(static_cast<unsigned int>(std::time(NULL)));
 		TTF_Init();
 
-		check_sdl_error(__FILE__, __LINE__);
+		//check_sdl_error(__FILE__, __LINE__);
 
 		_size = p_size;
 		if (p_size.x <= 1 && p_size.y <= 1)
@@ -30,46 +30,48 @@ namespace jgl
 			SDL_DisplayMode current;
 			SDL_GetDesktopDisplayMode(0, &current);
 
-			check_sdl_error(__FILE__, __LINE__);
+			//check_sdl_error(__FILE__, __LINE__);
 			if (p_size == Vector2())
 				_size = Vector2(current.w * 0.8f, current.h * 0.8f);
 			else
 				_size = Vector2(current.w * p_size.x, current.h * p_size.y);
 		}
 
-		jgl::String tmp = name;
+		//check_sdl_error(__FILE__, __LINE__);
 
-		check_sdl_error(__FILE__, __LINE__);
-
-		_window = SDL_CreateWindow(tmp->std().c_str(),
+		_window = SDL_CreateWindow(name->std().c_str(),
 			SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED,
 			static_cast<int>(_size.x), static_cast<int>(_size.y),
 			SDL_WINDOW_SHOWN | SDL_WINDOW_OPENGL);
 
-		check_sdl_error(__FILE__, __LINE__);
+		//check_sdl_error(__FILE__, __LINE__);
+
 		if (_window == nullptr)
 		{
 			error_exit(1, "Error with window creation");
 		}
 		_context = SDL_GL_CreateContext(_window);
 
-		check_sdl_error(__FILE__, __LINE__);
+		//check_sdl_error(__FILE__, __LINE__);
+
 		if (_context == nullptr)
 		{
 			error_exit(1, "Error with context creation");
 		}
 
 		std::cout << "Graphical info :\n" << std::endl;
-		std::cout << jgl::String((char*)(glGetString(GL_VENDOR))) + "\n" << std::endl;
-		std::cout << jgl::String((char*)(glGetString(GL_RENDERER))) + "\n" << std::endl;
-		std::cout << jgl::String((char*)(glGetString(GL_VERSION))) + "\n" << std::endl;
-		std::cout << jgl::String((char*)(glGetString(GL_SHADING_LANGUAGE_VERSION))) + "\n" << std::endl;
+		std::cout << glGetString(GL_VENDOR) << "\n" << std::endl;
+		std::cout << glGetString(GL_RENDERER) << "\n" << std::endl;
+		std::cout << glGetString(GL_VERSION) << "\n" << std::endl;
+		std::cout << glGetString(GL_SHADING_LANGUAGE_VERSION) << "\n" << std::endl;
 		std::cout << "\n" << std::endl;
+
 
 		//_renderer = SDL_CreateRenderer(_window, -1, SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC);
 		//SDL_SetRenderDrawBlendMode(_renderer, SDL_BLENDMODE_BLEND);
 
 		SDL_WarpMouseInWindow(_window, static_cast<int>(_size.x / 2), static_cast<int>(_size.y / 2));
+
 
 		_max_fps = 60;
 		_fps_ratio = 1.0f;
@@ -81,6 +83,7 @@ namespace jgl
 			std::cout << "bug : " << glewGetErrorString(err) << std::endl;
 			exit(1);
 		}
+
 
 		glClearColor((GLclampf)p_color.r, (GLclampf)p_color.g, (GLclampf)p_color.b, 1.0f);
 
@@ -101,6 +104,7 @@ namespace jgl
 		if (_alphaID == -1)
 			error_exit(1, "Error on _alphaID");
 
+
 		_pos_colorID = glGetUniformLocation(_program_color_model, "pos");
 		_rot_colorID = glGetUniformLocation(_program_color_model, "rot");
 		_size_colorID = glGetUniformLocation(_program_color_model, "size");
@@ -120,6 +124,7 @@ namespace jgl
 		_material_ni_colorID = glGetUniformLocation(_program_color_model, "material_ni");
 		_material_d_colorID = glGetUniformLocation(_program_color_model, "material_d");
 		_material_illum_colorID = glGetUniformLocation(_program_color_model, "material_illum");
+
 
 		_pos_textureID = glGetUniformLocation(_program_texture_model, "pos");
 		_rot_textureID = glGetUniformLocation(_program_texture_model, "rot");
@@ -148,6 +153,7 @@ namespace jgl
 		_material_alpha_texture_textureID = glGetUniformLocation(_program_texture_model, "alpha_texture");
 		_material_bump_texture_textureID = glGetUniformLocation(_program_texture_model, "bump_texture");
 
+
 		glGenTextures(1, &_textureID);
 		glBindTexture(GL_TEXTURE_2D, _textureID);
 
@@ -155,6 +161,7 @@ namespace jgl
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
 		glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
 		glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+
 
 		glEnable(GL_DEPTH_TEST);
 		glDepthFunc(GL_LEQUAL);
@@ -202,7 +209,11 @@ namespace jgl
 		SDL_StartTextInput();
 		//set_max_fps(6000);
 		_time = SDL_GetTicks();
-}
+
+		_font_path = "";
+
+		Mesh::set_base_material(new Material("No material"));
+	}
 
 	void Application::resize(Vector2 p_size)
 	{
@@ -274,6 +285,17 @@ namespace jgl
 		}
 
 		_central_widget->quit_children();
+
+		if (Mesh::base_material() != nullptr)
+			delete Mesh::base_material();
+		if (Material::empty_texture() != nullptr)
+			delete Material::empty_texture();
+
+		delete g_mouse;
+		delete g_keyboard;
+
+		delete _viewport;
+		delete _central_widget;
 
 		return (0);
 	}

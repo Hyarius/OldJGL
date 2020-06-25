@@ -1,7 +1,5 @@
 #include "jgl.h"
 
-jgl::String font_path = "";
-
 std::vector<TTF_Font *> font;
 std::vector<TTF_Font *> font_outline;
 
@@ -55,7 +53,7 @@ namespace jgl
 {
 	void Application::set_font_path(jgl::String p_font_path)
 	{
-		font_path = p_font_path;
+		_font_path = p_font_path;
 		font.clear();
 		tmp_index = 0;
 		for (size_t i = 0; i < char_list.size(); i++)
@@ -75,7 +73,7 @@ namespace jgl
 	{
 		if (size < 2)
 			error_exit(1, "Can't load a font of size < 2");
-		if (font_path == "")
+		if (g_application == nullptr || g_application->font_path() == "")
 			error_exit(1, "Can't load a font : no font file given");
 
 		if (font.size() <= size)
@@ -83,7 +81,7 @@ namespace jgl
 
 		if (font[size] == nullptr)
 		{
-			font[size] = TTF_OpenFont(font_path.std().c_str(), static_cast<int>(size));
+			font[size] = TTF_OpenFont(g_application->font_path().std().c_str(), static_cast<int>(size));
 			if (font[size] == nullptr)
 				error_exit(1, "Can't load a font");
 		}
@@ -95,7 +93,7 @@ namespace jgl
 	{
 		if (size < 2)
 			error_exit(1, "Can't load a font of size < 2");
-		if (font_path == "")
+		if (g_application == nullptr || g_application->font_path() == "")
 			error_exit(1, "Can't load a font : no font file given");
 
 		if (font_outline.size() <= size + 2)
@@ -103,7 +101,7 @@ namespace jgl
 
 		if (font_outline[size] == nullptr)
 		{
-			font_outline[size] = TTF_OpenFont(font_path.std().c_str(), static_cast<int>(size));
+			font_outline[size] = TTF_OpenFont(g_application->font_path().std().c_str(), static_cast<int>(size));
 			if (font_outline[size] == nullptr)
 				error_exit(1, "Can't load a font");
 		}

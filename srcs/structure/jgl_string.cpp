@@ -2,9 +2,14 @@
 
 namespace jgl
 {
-	std::vector<jgl::String> String::split(jgl::String delim, bool regroup)
+	jgl::Array<jgl::String> String::split(jgl::String delim, bool regroup)
 	{
 		return (strsplit(*this, delim, regroup));
+	}
+	
+	void String::operator = (const jgl::String other)
+	{
+		_content = other.content();
 	}
 
 	jgl::String operator + (const char* str, const jgl::String delta)
@@ -38,8 +43,12 @@ namespace jgl
 			return;
 		}
 
-		result.clear();
+		result.resize(size);
 		for (size_t i = 0; i < size; i++)
-			result.push_back(this->operator[](i + start));
+			result[i] = this->operator[](i + start);
+	}
+	void String::print_info()
+	{
+		std::cout << "String : " << *this << "(ref : " << this->content().reference()->value() << ")" << std::endl;
 	}
 }

@@ -34,7 +34,7 @@ namespace jgl
 			type = File_type::error;
 		}
 		File(jgl::String p_path, jgl::String p_name, jgl::File_type p_type){
-			std::vector<jgl::String> tmp;
+			jgl::Array<jgl::String> tmp;
 
 			path = p_path;
 
@@ -56,8 +56,8 @@ namespace jgl
 
 	std::fstream open_file(jgl::String path, std::ios_base::openmode mode = std::ios_base::in | std::ios_base::out);
 	jgl::String get_str(std::fstream& file);
-	std::vector<jgl::String> get_strsplit(std::fstream& file, const jgl::String c, int size = -1);
-	std::vector<jgl::File> list_files(jgl::String path, jgl::String extension = "*");
+	jgl::Array<jgl::String> get_strsplit(std::fstream& file, const jgl::String c, int size = -1);
+	jgl::Array<jgl::File> list_files(jgl::String path, jgl::String extension = "*");
 	bool check_file_exist(jgl::String path);
 	void copy_file(jgl::String src_path, jgl::String dest_path);
 	void write_on_file(jgl::String path, jgl::String text);

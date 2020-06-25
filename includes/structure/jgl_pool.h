@@ -8,9 +8,17 @@ namespace jgl {
 	class Pool
 	{
 	private:
-		std::vector<T*>_content;
+		jgl::Array<T*>_content;
 	public:
 		Pool() {}
+		~Pool()
+		{
+			for (size_t i = 0; i < _content.size(); i++)
+			{
+				delete _content[i];
+			}
+			_content.~Array();
+		}
 		size_t size() const { return (_content.size()); }
 		T* obtain()
 		{
@@ -21,15 +29,15 @@ namespace jgl {
 			}
 			else
 			{
-				T* result = _content.back();
+				typename jgl::Array<T*>::Iterator tmp = _content.back();
+				T* result = _content[tmp.index()];
 				_content.pop_back();
 				return (result);
 			}
 		}
 		void release(T* object)
 		{
-			T* release_object = object;
-			_content.push_back(release_object);
+			_content.push_back(object);
 		}
 		T* operator[](size_t index)
 		{
@@ -48,25 +56,27 @@ namespace jgl {
 		jgl::Reference_count* _reference = nullptr;
 
 	public:
-		static const jgl::Pool<T> elem_pool() { return (_elem_pool); } const
+		static const jgl::Pool<T>& elem_pool() { return (_elem_pool); } const
 		Reusable()
 		{
 			obtain();
-			_reference = new Reference_count();
-			_reference->increment();
 		}
 		Reusable(T* value)
 		{
+			obtain();
 			_element = value;
 			_reference = new Reference_count();
 			_reference->increment();
 		}
-		Reusable(T value) : Reusable()
+		Reusable(T value)
 		{
+			obtain();
 			*_element = value;
 		}
 		Reusable(const Reusable& value)
 		{
+			release();
+
 			_element = value._element;
 			_reference = value._reference;
 			_reference->increment();
@@ -77,17 +87,22 @@ namespace jgl {
 		}
 		void obtain()
 		{
-			if (_element != nullptr)
-				release();
+			release();
 			_element = _elem_pool.obtain();
+			_reference = new Reference_count();
+			_reference->increment();
 		}
 		void release()
 		{
-			_reference->decrement();
-			if (_reference->value() == 0 && _element != nullptr)
+			if (_reference != nullptr)
 			{
-				_elem_pool.release(_element);
-				delete _reference;
+				_reference->decrement();
+				if (_reference->value() == 0 && _element != nullptr)
+				{
+					_elem_pool.release(_element);
+					delete _reference;
+					_reference = nullptr;
+				}
 			}
 			_element = nullptr;
 		}
@@ -95,29 +110,24 @@ namespace jgl {
 		const jgl::Reference_count* reference() const { return (_reference); }
 		jgl::Reusable<T>& operator = (const jgl::Reusable<T>& other)
 		{
-			if (this != &other && _element != nullptr)
+			if (this != &other)
 			{
-				if (_element != nullptr)
-					release();
-
+				release();
 				_element = other._element;
 				_reference = other._reference;
 				_reference->increment();
 			}
 			return (*this);
 		}
-		jgl::Reusable<T>& operator = (const T other)
+		/*jgl::Reusable<T>& operator = (const T other)
 		{
-			if (_element != nullptr)
-				release();
-
-			_element = _elem_pool.obtain();
+			obtain();
 			*_element = other;
 			_reference = new jgl::Reference_count();
 			_reference->increment();
 
 			return (*this);
-		}
+		}*/
 		T& operator* ()
 		{
 			return (*_element);

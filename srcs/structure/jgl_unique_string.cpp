@@ -19,7 +19,7 @@ namespace jgl
 		for (size_t i = 0; str[i] != '\0'; i++)
 			push_back(str[i]);
 	}
-	Unique_string::Unique_string(const Unique_string& old) : Unique_string()
+	Unique_string::Unique_string(const Unique_string& old)
 	{
 		clear();
 		for (size_t i = 0; i < old.size(); i++)
@@ -28,8 +28,10 @@ namespace jgl
 			push_back(tmp);
 		}
 	}
-	Unique_string::Unique_string(const std::string str) : Unique_string()
+	Unique_string::Unique_string(const std::string str)
 	{
+		clear();
+
 		char tmp[4] = { 0, 0, 0, 0 };
 		size_t i = 0;
 		while (i < str.size())
@@ -58,6 +60,7 @@ namespace jgl
 
 	void Unique_string::operator = (const Unique_string p_value)
 	{
+		std::cout << std::string("Unique string operator = ") << std::endl;
 		clear();
 
 		for (size_t i = 0; i < p_value.size(); i++)
@@ -74,15 +77,10 @@ namespace jgl
 
 	Unique_string Unique_string::operator + (const Unique_string delta)
 	{
-		Unique_string result;
-
-		for (size_t i = 0; i < this->size(); i++)
-			result.push_back(this->operator[](i));
-
 		for (size_t i = 0; i < delta.size(); i++)
-			result.push_back(delta[i]);
+			push_back(delta[i]);
 
-		return (result);
+		return (*this);
 	}
 
 	void Unique_string::print_info()

@@ -14,44 +14,49 @@ namespace jgl
 		
 	private:
 		bool _computed;
-		T* _computed_content;
+		T* _computed_result;
 
-		T** _content;
+		T** _array_content;
 		size_t _size;
 		size_t _max_size;
 		size_t _push_size;
 
 		void add_new_line()
 		{
-			T** old_content = _content;
+			T** old_array_content = _array_content;
 
 			size_t nb_line = _max_size / _push_size;
 			_max_size += _push_size;
-			_content = new T*[nb_line + 1];
+			_array_content = new T*[nb_line + 1];
 
 			for (size_t i = 0; i < nb_line; i++)
-				_content[i] = old_content[i];
+					_array_content[i] = old_array_content[i];
 
-			_content[nb_line] = new T[_push_size];
+			delete [] old_array_content;
+			
+			_array_content[nb_line] = new T[_push_size];
 
-			if (old_content != nullptr)
-				delete old_content;
 		}
 
 		void clear_computed()
 		{
-			if (_computed_content != nullptr)
-				delete _computed_content;
+			if (_computed == true)
+				delete _computed_result;
 			_computed = false;
-			_computed_content = nullptr;
+			_computed_result = nullptr;
 		}
-		void delete_content()
+		void delete_array_content()
 		{
-			for (size_t i = 0; i < _max_size / _push_size; i++)
+			if (_max_size == 0)
+				return ;
+
+			if (_array_content != nullptr)
 			{
-				delete _content[i];
+				for (size_t i = 0; i < _max_size / _push_size; i++)
+					delete _array_content[i];
+				delete [] _array_content;
+				_array_content = nullptr;
 			}
-			delete _content;
 		}
 	public:
 		class Iterator
@@ -81,6 +86,7 @@ namespace jgl
 			{
 				_parent = nullptr;
 				_index = 0;
+				_element = nullptr;
 			}
 			Iterator(Array<T>* p_parent, size_t p_index)
 			{
@@ -240,6 +246,17 @@ namespace jgl
 					return (false);
 				return (_index >= other.index());
 			}
+			std::string str()
+			{
+				std::string result;
+				std::ostringstream oss;
+				oss << (void*)parent();
+				std::ostringstream oss2;
+				oss2 << (void*)element();
+
+				result = std::string("Iterator [") + std::to_string(index()) + std::string("] in array [") + oss.str() + std::string("] = ") + oss2.str();
+				return (result);
+			}
 		};
 
 		Array(std::initializer_list<T> init) : Array(100)
@@ -249,17 +266,47 @@ namespace jgl
 		}
 		Array(size_t p_push_size = 100)
 		{
-			_content = nullptr;
+			_array_content = nullptr;
 			_push_size = p_push_size;
 			_size = 0;
 			_max_size = 0;
 			_computed = false;
-			_computed_content = nullptr;
+			_computed_result = nullptr;
+		}
+		Array(const Array<T>& other) : Array(other.push_size())
+		{
+			resize(other.size());
+
+			for (size_t i = 0; i < other.size(); i++)
+				this->operator[](i) = other[i];
 		}
 		~Array()
 		{
 			clear_computed();
-			delete_content();
+			delete_array_content();
+		}
+		void print()
+		{
+			std::cout << (char*)("Size : ") << _size << (char*)("/") << _max_size << (char*)("(") << _push_size << (char*)(")") << std::endl;
+			std::cout << (char*)("Array content : ") << std::endl;
+			for (size_t i = 0; i < _size; i++)
+			{
+				if (i != 0)
+					std::cout << (char*)(" - ");
+				std::cout << this->operator[](i);
+			}
+			std::cout << std::endl;
+		}
+		void print_content()
+		{
+			std::cout << (char*)("Array content : ");
+			for (size_t i = 0; i < _size; i++)
+			{
+				if (i != 0)
+					std::cout << (char*)(" - ");
+				std::cout << this->operator[](i);
+			}
+			std::cout << std::endl;
 		}
 		void push_back(const T& elem)
 		{
@@ -269,7 +316,7 @@ namespace jgl
 			}
 			size_t nb_line = _size / _push_size;
 			size_t nb_index = _size % _push_size;
-			_content[nb_line][nb_index] = elem;
+			_array_content[nb_line][nb_index] = elem;
 			_size++;
 			clear_computed();
 		}
@@ -279,6 +326,17 @@ namespace jgl
 		}
 		Iterator front() { return (Iterator(this, 0)); }
 		Iterator back() { if (size() == 0)return (end()); return (Iterator(this, _size - 1)); }
+		void operator = (const jgl::Array<T> other)
+		{
+			clear_computed();
+			delete_array_content();
+			
+			Array(other.push_size());
+			resize(other.size());
+			for (size_t i = 0; i < other.size(); i++)
+				this->operator[](i) = other[i];
+
+		}
 		T& operator [](size_t index) const
 		{
 			if (index >= _max_size)
@@ -288,7 +346,7 @@ namespace jgl
 			}
 			size_t nb_line = index / _push_size;
 			size_t nb_index = index % _push_size;
-			return (_content[nb_line][nb_index]);
+			return (_array_content[nb_line][nb_index]);
 		}
 		void insert(size_t index, T elem)
 		{
@@ -404,6 +462,7 @@ namespace jgl
 				return;
 			for (size_t i = index; i < _size - 1; i++)
 				this->operator[](i) = this->operator[](i + 1);
+			this->operator[](_size - 1) = nullptr;
 			_size--;
 			clear_computed();
 
@@ -414,13 +473,14 @@ namespace jgl
 				return;
 			for (size_t i = iter.index(); i < _size - 1; i++)
 				this->operator[](i) = this->operator[](i + 1);
+			this->operator[](_size - 1) = nullptr;
 			_size--;
 			clear_computed();
 			iter = size();
 		}
 		bool computed() const { return (_computed); }
-		T* computed_content() const { return (_computed_content); }
-		T** content() const { return (_content); }
+		T* computed_content() const { return (_computed_result); }
+		T** content() const { return (_array_content); }
 		size_t size() const { return (_size); }
 		size_t max_size() const { return (_max_size); }
 		size_t push_size() const { return (_push_size); }
@@ -428,16 +488,16 @@ namespace jgl
 		{
 			if (_computed == false)
 			{
-				if (_computed_content != nullptr)
-					delete _computed_content;
-				_computed_content = new T[_size];
+				if (_computed_result != nullptr)
+					delete _computed_result;
+				_computed_result = new T[_size];
 
 				for (size_t i = 0; i < _size; i++)
-					_computed_content[i] = this->operator[](i);
+					_computed_result[i] = this->operator[](i);
 				_computed = true;
 			}
 
-			return (_computed_content);
+			return (_computed_result);
 		}
 		Iterator find(T to_find) {
 			for (size_t i = 0; i < size(); i++)

@@ -9,7 +9,7 @@ namespace jgl
 {
 	extern Glyph nullchar;
 
-	std::vector<class Unique_string> unique_strsplit(class Unique_string input, class Unique_string c, bool regroup);
+	jgl::Array<class Unique_string> unique_strsplit(class Unique_string input, class Unique_string c, bool regroup);
 
 	class Unique_string
 	{
@@ -52,7 +52,7 @@ namespace jgl
 		void pop_back() { _content.pop_back(); }
 		void erase(size_t index) { _content.erase(index); }
 
-		std::vector<jgl::Unique_string> split(jgl::Unique_string delim, bool regroup = true) { return (unique_strsplit(*this, delim, regroup)); }
+		jgl::Array<jgl::Unique_string> split(jgl::Unique_string delim, bool regroup = true) { return (unique_strsplit(*this, delim, regroup)); }
 		jgl::Unique_string substr(size_t start, size_t end);
 		void substr(jgl::Unique_string& result, size_t start, size_t end);
 

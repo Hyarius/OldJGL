@@ -3,10 +3,11 @@
 
 namespace jgl
 {
-	extern Image* jgl_empty_texture;
-
 	struct Material
 	{
+	private:
+		static Image* _empty_texture;// new const Image(1, 1, Color(255, 255, 255));
+	public:
 		jgl::String name;
 
 		Color ka = Color(255, 255, 255);
@@ -17,21 +18,30 @@ namespace jgl
 		float ni = 1;
 		float d = 1;
 		int illum = 2;
-		jgl::Image* ambiant_texture = jgl_empty_texture;
-		jgl::Image* normal_texture = jgl_empty_texture;
-		jgl::Image* diffuse_texture = jgl_empty_texture;
-		jgl::Image* specular_texture = jgl_empty_texture;
-		jgl::Image* specular_hight_light = jgl_empty_texture;
-		jgl::Image* alpha_texture = jgl_empty_texture;
-		jgl::Image* bump = jgl_empty_texture;
+		jgl::Image* ambiant_texture = empty_texture();
+		jgl::Image* normal_texture = empty_texture();
+		jgl::Image* diffuse_texture = empty_texture();
+		jgl::Image* specular_texture = empty_texture();
+		jgl::Image* specular_hight_light = empty_texture();
+		jgl::Image* alpha_texture = empty_texture();
+		jgl::Image* bump = empty_texture();
 
+		static Image* empty_texture() { return (_empty_texture); }
 		Material(jgl::String p_name)
 		{
+			if (_empty_texture == nullptr)
+				_empty_texture = new Image(1, 1, Color(255, 255, 255));
 			name = p_name;
+			ambiant_texture = empty_texture();
+			normal_texture = empty_texture();
+			diffuse_texture = empty_texture();
+			specular_texture = empty_texture();
+			specular_hight_light = empty_texture();
+			alpha_texture = empty_texture();
+			bump = empty_texture();
 		}
 	};
 
-	extern Material* jgl_base_material;
 
 	struct Face
 	{
@@ -62,42 +72,45 @@ namespace jgl
 	class Mesh_part
 	{
 	protected:
+		static Material* _base_material;
 		jgl::String _name;
 
 		GLuint _vertex_buffer;
 		GLuint _uv_buffer;
 		GLuint _normale_buffer;
 
-		std::vector<Face>	_faces;
+		jgl::Array<Face>	_faces;
 
-		std::vector<Vector3>	_vertices;
-		std::vector<Vector2>	_uvs;
-		std::vector<Vector3>	_normales;
+		jgl::Array<Vector3>	_vertices;
+		jgl::Array<Vector2>	_uvs;
+		jgl::Array<Vector3>	_normales;
 
-		std::vector<Vector3>	_baked_vertices;
-		std::vector<Vector2>	_baked_uvs;
-		std::vector<Vector3>	_baked_normales;
+		jgl::Array<Vector3>	_baked_vertices;
+		jgl::Array<Vector2>	_baked_uvs;
+		jgl::Array<Vector3>	_baked_normales;
 
 		Material* _material;
 
 	public:
+		static void set_base_material(Material* p_material) { _base_material = p_material;}
+		static Material* base_material() { return (_base_material); }
 		Mesh_part(jgl::String p_name = "unnamed");
 
 		jgl::String name() { return (_name); }
 
-		std::vector<Vector3>& vertices() { return (_vertices); }
-		void set_vertices(std::vector<Vector3>& p_vertice) { _vertices = p_vertice;	}
+		jgl::Array<Vector3>& vertices() { return (_vertices); }
+		void set_vertices(jgl::Array<Vector3>& p_vertice) { _vertices = p_vertice;	}
 		Vector3 vertices(size_t index) { if (index >= _vertices.size())return (-1); return (_vertices[index]); }
 
-		std::vector<Vector2>& uvs() { return (_uvs); }
-		void set_uvs(std::vector<Vector2>& p_uvs) { _uvs = p_uvs; }
+		jgl::Array<Vector2>& uvs() { return (_uvs); }
+		void set_uvs(jgl::Array<Vector2>& p_uvs) { _uvs = p_uvs; }
 		Vector2 uvs(size_t index) { if (index >= _uvs.size())return (-1); return (_uvs[index]); }
 
-		std::vector<Vector3>& normales() { return (_normales); }
-		void set_normales(std::vector<Vector3>& p_normale) { _normales = p_normale; }
+		jgl::Array<Vector3>& normales() { return (_normales); }
+		void set_normales(jgl::Array<Vector3>& p_normale) { _normales = p_normale; }
 		Vector3 normales(size_t index) { if (index >= _normales.size())return (-1); return (_normales[index]); }
 
-		std::vector<Face>& faces() { return (_faces); }
+		jgl::Array<Face>& faces() { return (_faces); }
 		Face* faces(size_t i) { if (i >= _faces.size())return (NULL); return (&(_faces[i])); }
 		Material* material() { return (_material); }
 
@@ -106,7 +119,7 @@ namespace jgl
 		void add_uv(Vector2 p_uv) { _uvs.push_back(p_uv); }
 		void add_normale(Vector3 p_normale) { _normales.push_back(p_normale); }
 		void add_face(Face p_face) { _faces.push_back(p_face); }
-		void set_material(Material* p_material) { if (p_material == nullptr)_material = jgl_base_material;else _material = p_material; }
+		void set_material(Material* p_material) { if (p_material == nullptr)_material = _base_material;else _material = p_material; }
 		void compute_normales(jgl::Matrix4x4 rot_matrix);
 
 		void bake(jgl::Matrix4x4 rot_matrix);
@@ -121,6 +134,8 @@ namespace jgl
 	class Mesh
 	{
 	protected:
+		static Material* _base_material;
+
 		Vector3 _pos;
 		Vector3 _center;
 		float _radius;
@@ -136,10 +151,12 @@ namespace jgl
 
 		float _transparency;
 
-		std::vector<Material*> _materials;
-		std::vector<Mesh_part*> _parts;
+		jgl::Array<Material*> _materials;
+		jgl::Array<Mesh_part*> _parts;
 
 	public:
+		static void set_base_material(Material* p_material) { _base_material = p_material; Mesh_part::set_base_material(p_material); };
+		static Material* base_material() { return (_base_material); }
 		Mesh(Vector3 p_pos, Vector3 p_rot = 0, Vector3 p_size = 1);
 		Mesh(jgl::String path, Vector3 p_pos, Vector3 p_rot, Vector3 p_size, Color color = Color(190, 190, 190));
 
@@ -159,7 +176,7 @@ namespace jgl
 		Material* find_material(jgl::String name);
 		Material* material(size_t index = 0) { if (index >= _materials.size())return (nullptr); return (_materials[index]); }
 
-		std::vector<Mesh_part*>& parts() { return (_parts); }
+		jgl::Array<Mesh_part*>& parts() { return (_parts); }
 		Mesh_part* parts(size_t index) { if (index >= _parts.size())return (nullptr); return (_parts[index]); }
 		Mesh_part* check_part(int index);
 		Mesh_part* control_part(int index);
@@ -177,9 +194,9 @@ namespace jgl
 		void add_normale(Vector3 p_normale, int index = -1);
 		void add_face(Face p_face, int index = -1);
 
-		void set_vertices(std::vector<Vector3>& p_vertices, int index = -1) { Mesh_part* tmp = check_part(index); tmp->set_vertices(p_vertices); }
-		void set_uvs(std::vector<Vector2>& p_uvs, int index = -1) { Mesh_part* tmp = check_part(index); tmp->set_uvs(p_uvs); }
-		void set_normales(std::vector<Vector3>& p_normales, int index = -1) { Mesh_part* tmp = check_part(index); tmp->set_normales(p_normales); }
+		void set_vertices(jgl::Array<Vector3>& p_vertices, int index = -1) { Mesh_part* tmp = check_part(index); tmp->set_vertices(p_vertices); }
+		void set_uvs(jgl::Array<Vector2>& p_uvs, int index = -1) { Mesh_part* tmp = check_part(index); tmp->set_uvs(p_uvs); }
+		void set_normales(jgl::Array<Vector3>& p_normales, int index = -1) { Mesh_part* tmp = check_part(index); tmp->set_normales(p_normales); }
 
 		void set_diffuse_texture(Image* p_texture, int index = -1);
 		void set_diffuse_texture(Sprite_sheet* p_texture, int index = -1);

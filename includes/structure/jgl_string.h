@@ -11,9 +11,10 @@ namespace jgl
 	private:
 		jgl::Reusable<jgl::Unique_string> _content;
 	public:
+		jgl::Pool< jgl::Unique_string> pool() { return (_content.elem_pool()); }
 		String()
 		{
-			_content = jgl::Reusable<jgl::Unique_string>();
+			_content.obtain();
 			_content->clear();
 		}
 		String(const char* base) : String()
@@ -39,24 +40,24 @@ namespace jgl
 		{
 			_content = base;
 		}
-		String(const jgl::String& base) : String()
+		String(const jgl::String& base)
 		{
-			for (size_t i = 0; i < base.size(); i++)
-				_content->push_back(base[i]);
+			_content = base._content;
 		}
-		~String() {}
+		void print_info();
 		const jgl::Reusable<jgl::Unique_string>& content() { return (_content); }
 		const jgl::Reusable<jgl::Unique_string>& content() const { return (_content); }
 		void obtain() {_content.obtain();}
 		void release() {_content.release();}
+		void operator = (const jgl::String other);
 		jgl::Unique_string& operator* () { return ((_content.operator*())); }
 		jgl::Unique_string* operator-> () { return ((_content.operator->())); }
 		const jgl::Unique_string& operator* () const  { return ((_content.operator*())); }
 		const jgl::Unique_string* operator-> () const { return ((_content.operator->())); }
 		jgl::Glyph& operator [] (size_t index) { return (_content->operator[](index)); }
 		const jgl::Glyph& operator [] (size_t index) const { return (_content->operator[](index)); }
-		jgl::String operator + (const jgl::String other) { return (_content->operator+(*other)); }
-		jgl::String operator += (const jgl::String other) { return (_content->operator+=((*other))); }
+		jgl::String operator + (const jgl::String other) { _content->operator+(*other); return (*this); }
+		jgl::String operator += (const jgl::String other) { _content->operator+=((*other)); return (*this);}
 		bool operator==(const jgl::String other) { return (_content->operator==((*other))); }
 		bool operator!=(const jgl::String other) { return (_content->operator!=((*other))); }
 
@@ -70,13 +71,13 @@ namespace jgl
 		void append(const jgl::String element) { for (size_t i = 0; i < element.size(); i++)push_back(element[i]); }
 		void clear() { _content->clear(); }
 		void resize(size_t new_size) { _content->resize(new_size); }
-		void print_info() {_content->print_info(); }
+		void print_content_info() {_content->print_info(); }
 		bool empty() { return (_content->empty()); }
 		bool find(jgl::Glyph to_find) { return (_content->find(to_find)); }
 		bool contain(jgl::String to_find) { return (_content->contain(*(to_find.content().element()))); }
 		void pop_back() { _content->pop_back(); }
 		void erase(size_t index) { _content->erase(index); }
-		std::vector<jgl::String> split(jgl::String delim, bool regroup = true);
+		jgl::Array<jgl::String> split(jgl::String delim, bool regroup = true);
 		jgl::String substr(size_t start, size_t end);
 		void substr(jgl::String& result, size_t start, size_t end);
 		void insert(size_t index, jgl::Glyph insert_value) { _content->insert(index, insert_value); }

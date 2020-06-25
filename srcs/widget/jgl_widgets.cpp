@@ -23,6 +23,7 @@ namespace jgl
 		{
 			delete _childrens[i];
 		}
+		delete _viewport;
 	}
 
 	void Widget::remove_children(Widget* p_target)

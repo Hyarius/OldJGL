@@ -2,11 +2,14 @@
 
 namespace jgl
 {
-	Image* jgl_empty_texture = new Image(1, 1, Color(255, 255, 255));
-	Material* jgl_base_material = new Material("No material");
+	Image* Material::_empty_texture = nullptr;
+
+	Material* Mesh::_base_material = nullptr;
+	Material* Mesh_part::_base_material = nullptr;
 
 	Mesh_part::Mesh_part(jgl::String p_name)
 	{
+
 		_name = p_name;
 
 		glGenBuffers(1, &_vertex_buffer);
@@ -23,7 +26,7 @@ namespace jgl
 		_baked_uvs.clear();
 		_baked_normales.clear();
 
-		_material = jgl_base_material;
+		_material = _base_material;
 	}
 
 	void Mesh_part::compute_normales(jgl::Matrix4x4 rot_matrix)
@@ -100,17 +103,21 @@ namespace jgl
 			}
 		}
 
+		Vector3* tmp = _baked_vertices.all();
+		Vector2* tmp2 = _baked_uvs.all();
+		Vector3* tmp3 = _baked_normales.all();
+
 		if (_baked_vertices.size() == 0)
 			return;
 
 		glBindBuffer(GL_ARRAY_BUFFER, _vertex_buffer);
-		glBufferData(GL_ARRAY_BUFFER, _baked_vertices.size() * 3 * sizeof(float), static_cast<float*>(&(_baked_vertices[0].x)), GL_STATIC_DRAW);
+		glBufferData(GL_ARRAY_BUFFER, _baked_vertices.size() * 3 * sizeof(float), static_cast<float*>(&(tmp[0].x)), GL_STATIC_DRAW);
 
 		glBindBuffer(GL_ARRAY_BUFFER, _uv_buffer);
-		glBufferData(GL_ARRAY_BUFFER, _baked_uvs.size() * 2 * sizeof(float), static_cast<float*>(&(_baked_uvs[0].x)), GL_STATIC_DRAW);
+		glBufferData(GL_ARRAY_BUFFER, _baked_uvs.size() * 2 * sizeof(float), static_cast<float*>(&(tmp2[0].x)), GL_STATIC_DRAW);
 
 		glBindBuffer(GL_ARRAY_BUFFER, _normale_buffer);
-		glBufferData(GL_ARRAY_BUFFER, _baked_normales.size() * 3 * sizeof(float), static_cast<float*>(&(_baked_normales[0].x)), GL_STATIC_DRAW);
+		glBufferData(GL_ARRAY_BUFFER, _baked_normales.size() * 3 * sizeof(float), static_cast<float*>(&(tmp3[0].x)), GL_STATIC_DRAW);
 
 	}
 
@@ -246,7 +253,7 @@ namespace jgl
 
 	void Mesh_part::render(Mesh* parent, Camera* camera, Vector3 p_pos)
 	{
-		if (_material->diffuse_texture == jgl_empty_texture || _uvs.size() == 0)
+		if (_material->diffuse_texture == Material::empty_texture() || _uvs.size() == 0)
 			render_color(parent, camera, p_pos);
 		else
 			render_texture(parent, camera, p_pos);

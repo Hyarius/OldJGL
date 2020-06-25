@@ -13,7 +13,7 @@ namespace jgl
 			keys[i] = key_state::up;
 	}
 
-	int converted_key[] = {
+	int converted_key[]{
 		SDL_SCANCODE_A,
 		SDL_SCANCODE_B,
 		SDL_SCANCODE_C,
@@ -93,7 +93,7 @@ namespace jgl
 		SDL_SCANCODE_TAB
 	};
 
-	jgl::Unique_string key_name_value[] = {
+	jgl::Unique_string key_name_value[]{
 		"Key A",
 		"key B",
 		"key C",

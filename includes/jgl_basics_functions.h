@@ -9,10 +9,10 @@ namespace jgl
 {
 	void check_sdl_error(jgl::String file, int line);
 	bool string_is_numeric(jgl::String text);
-	std::vector<jgl::String> strsplit(jgl::String input, jgl::String delim, bool regroup = true);
-	void strsplit(std::vector<jgl::String>& tab, jgl::String input, jgl::String delim, bool regroup = true);
-	std::vector<jgl::Unique_string> unique_strsplit(jgl::Unique_string input, jgl::Unique_string delim, bool regroup);
-	void unique_strsplit(std::vector<jgl::Unique_string>& tab, jgl::Unique_string input, jgl::Unique_string delim, bool regroup);
+	jgl::Array<jgl::String> strsplit(jgl::String input, jgl::String delim, bool regroup = true);
+	void strsplit(jgl::Array<jgl::String>& tab, jgl::String input, jgl::String delim, bool regroup = true);
+	jgl::Array<jgl::Unique_string> unique_strsplit(jgl::Unique_string input, jgl::Unique_string delim, bool regroup);
+	void unique_strsplit(jgl::Array<jgl::Unique_string>& tab, jgl::Unique_string input, jgl::Unique_string delim, bool regroup);
 	void error_exit(int num, jgl::String error);
 	void error_exit(int num, char* error);
 	void reverse(jgl::String& base);
@@ -24,7 +24,7 @@ namespace jgl
 	jgl::String normalize_string(jgl::String str, char c, size_t size);
 	jgl::String normalize_float(float num, int after_point, char c, size_t size);
 	bool is_middle(float min, float value, float max);
-	std::vector<jgl::Vector2> calc_line_2d(float x1, float y1, float x2, float y2);
+	jgl::Array<jgl::Vector2> calc_line_2d(float x1, float y1, float x2, float y2);
 	int generate_nbr(int min, int max);
 
 	void remove_char(jgl::String& src, jgl::String to_remove);
