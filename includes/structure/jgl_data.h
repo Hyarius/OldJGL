@@ -9,7 +9,8 @@ namespace jgl
 	{
 		std::vector<void*> content;
 
-		Data(void* p_data = NULL);
+		Data();
+		Data(void* p_data);
 		Data(int nb_param, ...);
 
 		void operator = (void* p_data);

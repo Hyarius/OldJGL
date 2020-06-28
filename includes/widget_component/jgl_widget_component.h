@@ -14,8 +14,6 @@ namespace jgl
 	public:
 		w_component(class Widget* p_owner);
 
-		~w_component();
-
 		void 		set_anchor(Vector2 p_anchor) { _anchor = p_anchor; }
 		void 		set_area(Vector2 p_area) { _area = p_area; }
 		void 		resize(Vector2 p_anchor, Vector2 p_area)

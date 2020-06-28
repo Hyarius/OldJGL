@@ -22,7 +22,6 @@ namespace jgl
 		Unique_string(const char* str);
 		Unique_string(const std::string str);
 		Unique_string(const Unique_string& old);
-		~Unique_string();
 
 		size_t size() const { return (_content.size()); }
 		size_t push_size() const { return (_content.push_size()); }
@@ -32,8 +31,6 @@ namespace jgl
 
 		void push_back(const Glyph element) { _content.push_back(element); }
 		void push_front(const Glyph element) { _content.insert(0, element); }
-		void append(const Glyph element) { push_back(element); }
-		void append(const Unique_string element) { for (size_t i = 0; i < element.size(); i++)push_back(element[i]); }
 		Glyph& operator[](const size_t i);
 		const Glyph& operator[](size_t i) const;
 		void clear() { _content.clear(); }
@@ -62,14 +59,14 @@ namespace jgl
 				_content.insert(index, insert_value[i]);
 		}
 
-		std::string std();
+		std::string std() const;
 
-		bool operator == (const Unique_string other);
-		bool operator != (const Unique_string other);
+		bool operator == (const Unique_string other) const;
+		bool operator != (const Unique_string other) const;
 	};
 	Unique_string operator + (const char* str, Unique_string delta);
 }
 
-std::ostream& operator<<(std::ostream& os, jgl::Unique_string value);
+std::ostream& operator<<(std::ostream& os, const jgl::Unique_string value);
 
 #endif

@@ -11,7 +11,7 @@ namespace jgl
 			if (bar->max_pos() != -1 && bar->actual_pos().y + delta.y > bar->max_pos().y)
 				delta.y = bar->max_pos().y - bar->actual_pos().y;
 			Widget* parent = bar->parent();
-
+			 
 			if (parent != nullptr)
 			{
 				for (size_t i = 0; i < parent->childrens().size(); i++)
@@ -63,11 +63,6 @@ namespace jgl
 		down_button->activate();
 
 		set_geometry(-1, -1);
-	}
-
-	Vscroll_bar::~Vscroll_bar()
-	{
-
 	}
 
 	void Vscroll_bar::move_pos(Vector2 delta)

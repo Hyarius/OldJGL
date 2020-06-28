@@ -4,7 +4,6 @@ jgl::Application* g_application;
 
 namespace jgl
 {
-
 	Application::Application(jgl::String name, Vector2 p_size, Color p_color)
 	{
 		SDL_Init(SDL_INIT_EVERYTHING);
@@ -19,7 +18,6 @@ namespace jgl
 		SDL_GL_SetAttribute(SDL_GL_DOUBLEBUFFER, 1);
 		SDL_GL_SetAttribute(SDL_GL_DEPTH_SIZE, 16);
 
-		srand(static_cast<unsigned int>(std::time(NULL)));
 		TTF_Init();
 
 		//check_sdl_error(__FILE__, __LINE__);
@@ -188,8 +186,6 @@ namespace jgl
 		_play = true;
 		_poll_ret = 0;
 		_event = SDL_Event();
-		g_mouse = new Mouse();
-		g_keyboard = new Keyboard();
 
 		if (g_application == nullptr)
 			select();
@@ -205,14 +201,8 @@ namespace jgl
 		_central_widget->set_color(p_color);
 		_central_widget->activate();
 		//_viewport->use();
-
-		SDL_StartTextInput();
-		//set_max_fps(6000);
-		_time = SDL_GetTicks();
-
-		_font_path = "";
-
-		Mesh::set_base_material(new Material("No material"));
+		g_font_path = "";
+		start_jgl();
 	}
 
 	void Application::resize(Vector2 p_size)
@@ -245,9 +235,50 @@ namespace jgl
 		SDL_GL_SwapWindow(_window);
 	}
 
+	void start_jgl()
+	{
+		if (SDL_WasInit(SDL_INIT_EVERYTHING) == SDL_FALSE)
+		{
+			SDL_Init(SDL_INIT_EVERYTHING);
+			IMG_Init(IMG_INIT_JPG | IMG_INIT_PNG);
+			TTF_Init();
+			SDL_StartTextInput();
+		}
+		srand(static_cast<unsigned int>(std::time(NULL)));
+		g_mouse = new Mouse();
+		g_keyboard = new Keyboard();
+		g_time = SDL_GetTicks();
+	}
+
+	void quit_jgl()
+	{
+		Mesh::delete_base_material();
+		Material::delete_empty_texture();
+
+		if (g_mouse != nullptr)
+		{
+			delete g_mouse;
+			g_mouse = nullptr;
+		}
+		if (g_keyboard != nullptr)
+		{
+			delete g_keyboard;
+			g_keyboard = nullptr;
+		}
+
+		delete_loaded_char();
+	}
+
 	void Application::quit()
 	{
 		_play = false;
+		_central_widget->quit_children();
+
+		delete _viewport;
+		_central_widget->destroy_widget();
+		delete _central_widget;
+
+		quit_jgl();
 	}
 
 	int Application::run()
@@ -263,11 +294,14 @@ namespace jgl
 
 			//_central_widget->render();
 
-			_central_widget->render_children();
+			if (_central_widget != nullptr)
+				_central_widget->render_children();
 
-			_central_widget->handle_event();
+			if (_central_widget != nullptr)
+				_central_widget->handle_event();
 
-			_central_widget->update_children();
+			if (_central_widget != nullptr)
+				_central_widget->update_children();
 
 			check_frame(true);
 
@@ -277,25 +311,12 @@ namespace jgl
 
 			_poll_ret = SDL_PollEvent(&_event);
 
-			if (_poll_ret != 0)
+			if (_central_widget != nullptr && _poll_ret != 0)
 			{
 				if (_event.type == SDL_QUIT)
 					quit();
 			}
 		}
-
-		_central_widget->quit_children();
-
-		if (Mesh::base_material() != nullptr)
-			delete Mesh::base_material();
-		if (Material::empty_texture() != nullptr)
-			delete Material::empty_texture();
-
-		delete g_mouse;
-		delete g_keyboard;
-
-		delete _viewport;
-		delete _central_widget;
 
 		return (0);
 	}

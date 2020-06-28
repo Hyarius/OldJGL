@@ -9,11 +9,6 @@ namespace jgl
 		set_geometry(-1, -1);
 	}
 
-	Frame::~Frame()
-	{
-
-	}
-
 	void Frame::move(Vector2 delta)
 	{
 		_box.set_anchor(_box.anchor() + delta);

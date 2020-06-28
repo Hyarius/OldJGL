@@ -14,15 +14,15 @@ namespace jgl
 	jgl::Array<jgl::Unique_string> unique_strsplit(jgl::Unique_string input, jgl::Unique_string delim, bool regroup);
 	void unique_strsplit(jgl::Array<jgl::Unique_string>& tab, jgl::Unique_string input, jgl::Unique_string delim, bool regroup);
 	void error_exit(int num, jgl::String error);
-	void error_exit(int num, char* error);
+	void error_exit(int num, const char* str);
 	void reverse(jgl::String& base);
 	jgl::String itoa(int x, int d = -1);
 	jgl::String ftoa(float n, int afterpoint = -1, int lenght = -1);
 	jgl::String ftoa(double n, int afterpoint = -1, int lenght = -1);
 	float stof(jgl::String text);
 	int stoi(jgl::String text);
-	jgl::String normalize_string(jgl::String str, char c, size_t size);
-	jgl::String normalize_float(float num, int after_point, char c, size_t size);
+	jgl::String normalize_string(jgl::String str, jgl::Glyph c, size_t size);
+	jgl::String normalize_float(float num, int after_point, jgl::Glyph c, size_t size);
 	bool is_middle(float min, float value, float max);
 	jgl::Array<jgl::Vector2> calc_line_2d(float x1, float y1, float x2, float y2);
 	int generate_nbr(int min, int max);

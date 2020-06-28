@@ -30,7 +30,7 @@ namespace jgl
 			_array_content = new T*[nb_line + 1];
 
 			for (size_t i = 0; i < nb_line; i++)
-					_array_content[i] = old_array_content[i];
+				_array_content[i] = old_array_content[i];
 
 			delete [] old_array_content;
 			
@@ -53,8 +53,10 @@ namespace jgl
 			if (_array_content != nullptr)
 			{
 				for (size_t i = 0; i < _max_size / _push_size; i++)
-					delete _array_content[i];
-				delete [] _array_content;
+				{
+					delete[] _array_content[i];
+				}
+				delete[] _array_content;
 				_array_content = nullptr;
 			}
 		}
@@ -259,7 +261,7 @@ namespace jgl
 			}
 		};
 
-		Array(std::initializer_list<T> init) : Array(100)
+		Array(std::initializer_list<T> init) : Array<T>()
 		{
 			for (size_t i = 0; i < init.size(); i++)
 				push_back(init.begin()[i]);
@@ -273,12 +275,10 @@ namespace jgl
 			_computed = false;
 			_computed_result = nullptr;
 		}
-		Array(const Array<T>& other) : Array(other.push_size())
+		Array(const Array<T>& other) : Array<T>(other.push_size())
 		{
-			resize(other.size());
-
 			for (size_t i = 0; i < other.size(); i++)
-				this->operator[](i) = other[i];
+				push_back(other[i]);
 		}
 		~Array()
 		{
@@ -293,9 +293,14 @@ namespace jgl
 			{
 				if (i != 0)
 					std::cout << (char*)(" - ");
-				std::cout << this->operator[](i);
+				const T& element = this->operator[](i);
+				std::cout << element;
 			}
 			std::cout << std::endl;
+		}
+		void print_info()
+		{
+			std::cout << (char*)("Size : ") << _size << (char*)("/") << _max_size << (char*)("(") << _push_size << (char*)(")") << std::endl;
 		}
 		void print_content()
 		{
@@ -308,7 +313,7 @@ namespace jgl
 			}
 			std::cout << std::endl;
 		}
-		void push_back(const T& elem)
+		void push_back(const T elem)
 		{
 			if (_size + 1 >= _max_size)
 			{
@@ -326,16 +331,14 @@ namespace jgl
 		}
 		Iterator front() { return (Iterator(this, 0)); }
 		Iterator back() { if (size() == 0)return (end()); return (Iterator(this, _size - 1)); }
-		void operator = (const jgl::Array<T> other)
+		jgl::Array<T>& operator = (const jgl::Array<T>& other)
 		{
-			clear_computed();
-			delete_array_content();
-			
-			Array(other.push_size());
-			resize(other.size());
-			for (size_t i = 0; i < other.size(); i++)
-				this->operator[](i) = other[i];
+			this->clear();
 
+			for (size_t i = 0; i < other.size(); i++)
+				push_back(other[i]);
+
+			return (*this);
 		}
 		T& operator [](size_t index) const
 		{
@@ -422,13 +425,16 @@ namespace jgl
 		}
 		void resize(size_t new_size)
 		{
-			while (_max_size <= new_size)
-				add_new_line();
-			for (size_t i = _size; i < new_size; i++)
+			if (_size > new_size)
 			{
-				this->operator[](i) = T{};
+				while (_size < new_size)
+					pop_back();
 			}
-			_size = new_size;
+			else if (_size < new_size)
+			{
+				while (_size < new_size)
+					push_back(T());
+			}
 		}
 		void clear()
 		{
@@ -501,6 +507,14 @@ namespace jgl
 		}
 		Iterator find(T to_find) {
 			for (size_t i = 0; i < size(); i++)
+			{
+				if (this->operator[](i) == to_find)
+					return (Iterator(this, i));
+			}
+			return (end());
+		}
+		Iterator find(T to_find, size_t start) {
+			for (size_t i = start; i < size(); i++)
 			{
 				if (this->operator[](i) == to_find)
 					return (Iterator(this, i));

@@ -14,7 +14,6 @@ namespace jgl
 
 	public:
 		Text_label(jgl::String p_text = "", Widget* p_parent = nullptr);
-		~Text_label();
 
 		w_box_component& box() { return (_box); }
 		w_text_component& label() { return (_label); }

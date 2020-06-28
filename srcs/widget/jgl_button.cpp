@@ -18,11 +18,6 @@ namespace jgl
 		set_geometry(-1, -1);
 	}
 
-	Button::~Button()
-	{
-
-	}
-
 	void Button::move(Vector2 delta)
 	{
 		_box.set_anchor(_box.anchor() + delta);

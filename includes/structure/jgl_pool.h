@@ -3,7 +3,10 @@
 
 #include "jgl_array.h"
 
-namespace jgl {
+namespace jgl
+{
+	void error_exit(int num, const char* str);
+
 	template <typename T>
 	class Pool
 	{
@@ -19,17 +22,19 @@ namespace jgl {
 			}
 			_content.~Array();
 		}
-		size_t size() const { return (_content.size()); }
+		const jgl::Array<T*> content() const { return (_content); }
+		const size_t size() const { return (_content.size()); }
 		T* obtain()
 		{
 			if (_content.size() == 0)
 			{
-				T* new_elem = new T();
-				return (new_elem);
+				T* new_element = new T();
+				return (new_element);
 			}
 			else
 			{
-				typename jgl::Array<T*>::Iterator tmp = _content.back();
+				//typename jgl::Array<T*>::Iterator tmp = _content.back();
+				auto tmp = _content.back();
 				T* result = _content[tmp.index()];
 				_content.pop_back();
 				return (result);
@@ -47,33 +52,35 @@ namespace jgl {
 
 
 	template<typename T>
-	class Reusable
+	class Pool_object
 	{
 	protected:
 		static inline jgl::Pool<T> _elem_pool = jgl::Pool<T>();
 
 		T* _element = nullptr;
 		jgl::Reference_count* _reference = nullptr;
+		void create_reference()
+		{
+			_reference = new Reference_count();
+		}
 
 	public:
 		static const jgl::Pool<T>& elem_pool() { return (_elem_pool); } const
-		Reusable()
+		Pool_object()
 		{
 			obtain();
 		}
-		Reusable(T* value)
+		Pool_object(T* value)
 		{
 			obtain();
 			_element = value;
-			_reference = new Reference_count();
-			_reference->increment();
 		}
-		Reusable(T value)
+		Pool_object(T value)
 		{
 			obtain();
 			*_element = value;
 		}
-		Reusable(const Reusable& value)
+		Pool_object(const Pool_object& value)
 		{
 			release();
 
@@ -81,7 +88,7 @@ namespace jgl {
 			_reference = value._reference;
 			_reference->increment();
 		}
-		~Reusable()
+		~Pool_object()
 		{
 			release();
 		}
@@ -89,7 +96,7 @@ namespace jgl {
 		{
 			release();
 			_element = _elem_pool.obtain();
-			_reference = new Reference_count();
+			create_reference();
 			_reference->increment();
 		}
 		void release()
@@ -108,7 +115,7 @@ namespace jgl {
 		}
 		const T* element() const { return (_element); }
 		const jgl::Reference_count* reference() const { return (_reference); }
-		jgl::Reusable<T>& operator = (const jgl::Reusable<T>& other)
+		jgl::Pool_object<T>& operator = (const jgl::Pool_object<T>& other)
 		{
 			if (this != &other)
 			{
@@ -119,15 +126,6 @@ namespace jgl {
 			}
 			return (*this);
 		}
-		/*jgl::Reusable<T>& operator = (const T other)
-		{
-			obtain();
-			*_element = other;
-			_reference = new jgl::Reference_count();
-			_reference->increment();
-
-			return (*this);
-		}*/
 		T& operator* ()
 		{
 			return (*_element);

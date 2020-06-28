@@ -59,28 +59,29 @@ namespace jgl
 		void set_near(float p_near) { _near = p_near; }
 		void set_far(float p_far) { _far = p_far; }
 
-		Viewport* viewport() { return (_viewport); }
-		float pitch() { return (_pitch); }
-		float yaw() { return (_yaw); }
-		float fov() { return (_fov); }
-		float ratio() { return (_ratio); }
-		float view_near() { return (_near); }
-		float view_far() { return (_far); }
-		Matrix4x4 model() { return (_model); }
-		Matrix4x4 view() { return (_view); }
-		Matrix4x4 projection() { return (_projection); }
+		const Viewport* viewport() const { return (_viewport); }
+		const float pitch() const { return (_pitch); }
+		const float yaw() const { return (_yaw); }
+		float fov() const { return (_fov); }
+		float ratio() const { return (_ratio); }
+		float view_near() const { return (_near); }
+		float view_far() const { return (_far); }
+		const Matrix4x4& model() const { return (_model); }
+		const Matrix4x4& view() const { return (_view); }
+		const Matrix4x4& projection()const { return (_projection); }
+		const Matrix4x4& MVP() const { return (_MVP); }
+		const Vector3 light_dir() const { return (_light_dir); }
+		const Vector3 light_pos() const { return (_light_pos); }
+		const Color light_color() const { return (_light_color); }
+		const Vector3 pos() const { return (_pos); }
+		const Vector3 direction() const { return (_direction); }
+		const Vector3 forward() const { return (_forward); }
+		const Vector3 right() const { return (_right); }
+		const Vector3 up() const { return (_up); }
+
 		void bake() { _MVP = _projection * _view * _model; }
-		Matrix4x4& MVP() { return (_MVP); }
-		Vector3 light_dir() { return (_light_dir); }
-		Vector3 light_pos() { return (_light_pos); }
-		Color light_color() { return (_light_color); }
-		Vector3 pos() { return (_pos); }
-		Vector3 direction() { return (_direction); }
-		Vector3 forward() { return (_forward); }
-		Vector3 right() { return (_right); }
-		Vector3 up() { return (_up); }
 	};
 }
 
-std::ostream& operator<<(std::ostream& os, jgl::Camera camera);
+std::ostream& operator<<(std::ostream& os, const jgl::Camera camera);
 #endif

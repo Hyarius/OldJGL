@@ -19,7 +19,12 @@ namespace jgl
 
 	public:
 		Widget(Widget* p_parent = nullptr);
-		virtual ~Widget();
+		virtual ~Widget()
+		{
+			delete _viewport;
+		}
+
+		void destroy_widget();
 
 		std::vector<Widget*>& childrens() { return (_childrens); }
 		Widget* parent() { return (_parent); }

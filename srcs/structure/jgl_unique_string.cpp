@@ -44,11 +44,6 @@ namespace jgl
 		}
 	}
 
-	Unique_string::~Unique_string()
-	{
-
-	}
-
 	Glyph& Unique_string::operator[](size_t i)
 	{
 		return (_content[i]);
@@ -60,7 +55,6 @@ namespace jgl
 
 	void Unique_string::operator = (const Unique_string p_value)
 	{
-		std::cout << std::string("Unique string operator = ") << std::endl;
 		clear();
 
 		for (size_t i = 0; i < p_value.size(); i++)
@@ -90,14 +84,15 @@ namespace jgl
 		std::cout << "Push size : " << _content.push_size() << std::endl;
 	}
 
-	std::string Unique_string::std()
+	std::string Unique_string::std() const
 	{
 		std::string result;
 
 		for (size_t i = 0; i < size(); i++)
 		{
 			Glyph tmp_glyph = this->operator[](i);
-			result.append(tmp_glyph.content());
+			for (size_t i = 0; tmp_glyph.content()[i] != '\0'; i++)
+				result.push_back(tmp_glyph.content()[i]);
 		}
 
 		return (result);
@@ -151,7 +146,7 @@ namespace jgl
 		return (true);
 	}
 
-	bool Unique_string::operator == (const Unique_string other)
+	bool Unique_string::operator == (const Unique_string other) const 
 	{
 		if (size() != other.size())
 			return (false);
@@ -161,7 +156,7 @@ namespace jgl
 		return (true);
 	}
 
-	bool Unique_string::operator != (const Unique_string other)
+	bool Unique_string::operator != (const Unique_string other) const 
 	{
 		return (!(*this == other));
 	}

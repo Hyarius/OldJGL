@@ -3,7 +3,10 @@
 std::vector<TTF_Font *> font;
 std::vector<TTF_Font *> font_outline;
 
+jgl::String g_font_path;
+
 size_t tmp_index = 0;
+std::vector<jgl::Image*> char_direct_list;
 std::vector <std::vector <std::vector <std::vector <std::map <size_t, jgl::Image *> > > > > char_list;
 
 int text_compared_value[] = {
@@ -51,9 +54,9 @@ SDL_Color color_tab[NB_COLOR] = {
 
 namespace jgl
 {
-	void Application::set_font_path(jgl::String p_font_path)
+	void set_font_path(jgl::String p_font_path)
 	{
-		_font_path = p_font_path;
+		g_font_path = p_font_path;
 		font.clear();
 		tmp_index = 0;
 		for (size_t i = 0; i < char_list.size(); i++)
@@ -73,7 +76,7 @@ namespace jgl
 	{
 		if (size < 2)
 			error_exit(1, "Can't load a font of size < 2");
-		if (g_application == nullptr || g_application->font_path() == "")
+		if (g_application == nullptr || g_font_path == "")
 			error_exit(1, "Can't load a font : no font file given");
 
 		if (font.size() <= size)
@@ -81,7 +84,7 @@ namespace jgl
 
 		if (font[size] == nullptr)
 		{
-			font[size] = TTF_OpenFont(g_application->font_path().std().c_str(), static_cast<int>(size));
+			font[size] = TTF_OpenFont(g_font_path.std().c_str(), static_cast<int>(size));
 			if (font[size] == nullptr)
 				error_exit(1, "Can't load a font");
 		}
@@ -93,7 +96,7 @@ namespace jgl
 	{
 		if (size < 2)
 			error_exit(1, "Can't load a font of size < 2");
-		if (g_application == nullptr || g_application->font_path() == "")
+		if (g_application == nullptr || g_font_path == "")
 			error_exit(1, "Can't load a font : no font file given");
 
 		if (font_outline.size() <= size + 2)
@@ -101,7 +104,7 @@ namespace jgl
 
 		if (font_outline[size] == nullptr)
 		{
-			font_outline[size] = TTF_OpenFont(g_application->font_path().std().c_str(), static_cast<int>(size));
+			font_outline[size] = TTF_OpenFont(g_font_path.std().c_str(), static_cast<int>(size));
 			if (font_outline[size] == nullptr)
 				error_exit(1, "Can't load a font");
 		}
@@ -196,7 +199,11 @@ namespace jgl
 			}
 
 			if (surface != nullptr)
-				char_list[size][static_cast<size_t>(style)][static_cast<size_t>(color)][outline][c.value()] = new Image(surface);
+			{
+				Image* tmp_image = new Image(surface);
+				char_direct_list.push_back(tmp_image);
+				char_list[size][static_cast<size_t>(style)][static_cast<size_t>(color)][outline][c.value()] = tmp_image;
+			}
 			else
 				error_exit(1, "Error while creating the char");
 
@@ -316,5 +323,11 @@ namespace jgl
 		int y = static_cast<int>(get_char('M', size, 0, color, style)->size().y);
 
 		return (draw_text(text, Vector2(coord.x - x / 2, coord.y - y / 2), size, outline, color, style, viewport));
+	}
+
+	void delete_loaded_char()
+	{
+		for (size_t i = 0; i < char_direct_list.size(); i++)
+			delete char_direct_list[i];
 	}
 }

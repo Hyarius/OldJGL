@@ -14,7 +14,6 @@ namespace jgl
 	public:
 		Image_label(jgl::String path, Widget* p_parent = nullptr);
 		Image_label(Image* image = nullptr, Widget* p_parent = nullptr);
-		~Image_label();
 
 		w_box_component& box() { return (_box); }
 

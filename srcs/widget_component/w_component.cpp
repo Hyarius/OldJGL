@@ -9,11 +9,6 @@ namespace jgl
 		_area = Vector2();
 	}
 
-	w_component::~w_component()
-	{
-		_owner = nullptr;
-	}
-
 	Vector2		w_component::owner_anchor()
 	{
 		if (_owner == nullptr || _owner->parent() == nullptr ||

@@ -141,10 +141,10 @@ namespace jgl
 	};
 }
 
-std::ostream& operator<<(std::ostream& os, jgl::Vector2 value);
+std::ostream& operator<<(std::ostream& os, const jgl::Vector2 value);
 
-std::ostream& operator<<(std::ostream& os, jgl::Vector3 value);
+std::ostream& operator<<(std::ostream& os, const jgl::Vector3 value);
 
-std::ostream& operator<<(std::ostream& os, jgl::Vector4 value);
+std::ostream& operator<<(std::ostream& os, const jgl::Vector4 value);
 
 #endif

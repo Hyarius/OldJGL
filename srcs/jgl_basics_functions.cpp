@@ -46,7 +46,7 @@ namespace jgl
 
 	jgl::Array<jgl::String> strsplit(jgl::String input, jgl::String delim, bool regroup)
 	{
-		jgl::Array<jgl::String>	tab;
+		jgl::Array<jgl::String>	tab(40);
 
 		strsplit(tab, input, delim, regroup);
 
@@ -65,8 +65,7 @@ namespace jgl
 			size_t word_len = count_word_len(input, delim, index);
 			if (word_len != 0 || regroup == true)
 			{
-				new_word = jgl::String();
-				input.substr(new_word, index, index + word_len);
+				new_word = input.substr(index, index + word_len);
 				if (new_word.size() == 0)
 					jgl::error_exit(1, "Bad len here");
 				tab.push_back(new_word);
@@ -115,19 +114,27 @@ namespace jgl
 			error_exit(1, file_name + " - line [" + std::to_string(line) + "] : " + text);
 	}
 
-	void				error_exit(int num, char *error)
-	{
-		std::cout << error << std::endl;
-		exit(num);
-	}
-
 	void				error_exit(int num, jgl::String error)
 	{
 		std::cout << error << std::endl;
+		if (g_application != nullptr)
+			g_application->quit();
+		jgl::quit_jgl();
+		VLDDisable();
 		exit(num);
 	}
 
-	jgl::String normalize_string(jgl::String str, char c, size_t size)
+	void error_exit(int num, const char* str)
+	{
+		std::cout << str << std::endl;
+		if (g_application != nullptr)
+			g_application->quit();
+		jgl::quit_jgl();
+		VLDDisable();
+		exit(num);
+	}
+
+	jgl::String normalize_string(jgl::String str, jgl::Glyph c, size_t size)
 	{
 		jgl::String result;
 
@@ -139,7 +146,7 @@ namespace jgl
 		return (result);
 	}
 
-	jgl::String normalize_float(float num, int after_point, char c, size_t size)
+	jgl::String normalize_float(float num, int after_point, jgl::Glyph c, size_t size)
 	{
 		jgl::String result;
 

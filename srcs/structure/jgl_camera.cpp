@@ -61,8 +61,8 @@ namespace jgl
 		float mouseY = 1.0f - g_mouse->pos.y / (g_application->size().y / 2);
 
 		jgl::Vector4 screen_pos = jgl::Vector4(mouseX, mouseY, -1.0f, 1.0f);
-		jgl::Matrix4x4 inv_proj = projection().inverse_matrix();
-		jgl::Matrix4x4 inv_view = view().inverse_matrix();
+		jgl::Matrix4x4 inv_proj = _projection.inverse_matrix();
+		jgl::Matrix4x4 inv_view = _view.inverse_matrix();
 
 		jgl::Vector4 ray_eye = inv_proj * screen_pos;
 		ray_eye.z = -1;

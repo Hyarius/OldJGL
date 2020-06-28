@@ -18,7 +18,6 @@ namespace jgl
 
 	public:
 		Text_entry(jgl::String p_text = "", Widget* p_parent = nullptr);
-		~Text_entry();
 
 		jgl::String text() { return (_entry.text()); }
 

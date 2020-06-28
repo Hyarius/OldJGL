@@ -23,8 +23,6 @@ namespace jgl
 	public:
 		Hour_entry(float p_hour = 12.0f, float p_minute = 0.0f, Widget* p_parent = nullptr);
 
-		~Hour_entry();
-
 		void select();
 		void unselect();
 

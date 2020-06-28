@@ -1,36 +1,36 @@
 #include "jgl.h"
 
-std::ostream& operator<<(std::ostream& os, jgl::Color value)
+std::ostream& operator<<(std::ostream& os, const jgl::Color value)
 {
 	os << "(r : " << std::to_string(value.r) << " / g : " << std::to_string(value.g) << " / b : " << std::to_string(value.b) << " / a : " << std::to_string(value.a) << ")";
 	return os;
 }
 
-std::ostream& operator<<(std::ostream& os, jgl::Vector2 value)
+std::ostream& operator<<(std::ostream& os, const jgl::Vector2 value)
 {
 	os << value.str();
 	return os;
 }
 
-std::ostream& operator<<(std::ostream& os, jgl::Vector3 value)
+std::ostream& operator<<(std::ostream& os, const jgl::Vector3 value)
 {
 	os << value.str();
 	return os;
 }
 
-std::ostream& operator<<(std::ostream& os, jgl::Vector4 value)
+std::ostream& operator<<(std::ostream& os, const jgl::Vector4 value)
 {
 	os << value.str();
 	return os;
 }
 
-std::ostream& operator<<(std::ostream& os, jgl::Pixel value)
+std::ostream& operator<<(std::ostream& os, const jgl::Pixel value)
 {
 	os << "(" << jgl::ftoa(value.x, 3) << " / " << jgl::ftoa(value.y, 3) << " / " << jgl::ftoa(value.z, 3) << ")";
 	return os;
 }
 
-std::ostream& operator<<(std::ostream& os, jgl::Mouse mouse)
+std::ostream& operator<<(std::ostream& os, const jgl::Mouse mouse)
 {
 	jgl::String left = (mouse.get_button(jgl::mouse_button::left) == jgl::mouse_state::up ? "Up" : (mouse.get_button(jgl::mouse_button::left) == jgl::mouse_state::down ? "Down" : "Null"));
 	jgl::String middle = (mouse.get_button(jgl::mouse_button::middle) == jgl::mouse_state::up ? "Up" : (mouse.get_button(jgl::mouse_button::middle) == jgl::mouse_state::down ? "Down" : "Null"));
@@ -39,7 +39,7 @@ std::ostream& operator<<(std::ostream& os, jgl::Mouse mouse)
 	return os;
 }
 
-std::ostream& operator<<(std::ostream& os, jgl::Matrix2x2 data)
+std::ostream& operator<<(std::ostream& os, const jgl::Matrix2x2 data)
 {
 	os << jgl::normalize_string("", '-', 6 * 2 + (3 * 1)) << std::endl;
 	for (int i = 0; i < 2; i++)
@@ -56,7 +56,7 @@ std::ostream& operator<<(std::ostream& os, jgl::Matrix2x2 data)
 	return os;
 }
 
-std::ostream& operator<<(std::ostream& os, jgl::Matrix3x3 data)
+std::ostream& operator<<(std::ostream& os, const jgl::Matrix3x3 data)
 {
 	os << jgl::normalize_string("", '-', 6 * 3 + (3 * 2)) << std::endl;
 	for (int i = 0; i < 3; i++)
@@ -73,7 +73,7 @@ std::ostream& operator<<(std::ostream& os, jgl::Matrix3x3 data)
 	return os;
 }
 
-std::ostream& operator<<(std::ostream& os, jgl::Matrix4x4 data)
+std::ostream& operator<<(std::ostream& os, const jgl::Matrix4x4 data)
 {
 	os << jgl::normalize_string("", '-', 6 * 4 + 9) << std::endl;
 	for (int i = 0; i < 4; i++)
@@ -90,25 +90,25 @@ std::ostream& operator<<(std::ostream& os, jgl::Matrix4x4 data)
 	return os;
 }
 
-std::ostream& operator<<(std::ostream& os, jgl::Line3D value)
+std::ostream& operator<<(std::ostream& os, const jgl::Line3D value)
 {
 	os << "(" << value.a << " / " << value.b << ")";
 	return os;
 }
 
-std::ostream& operator<<(std::ostream& os, jgl::Triangle3D value)
+std::ostream& operator<<(std::ostream& os, const jgl::Triangle3D value)
 {
 	os << "(" << value.a << " / " << value.b << " / " << value.c << ")";
 	return os;
 }
 
-std::ostream& operator<<(std::ostream& os, jgl::Glyph value)
+std::ostream& operator<<(std::ostream& os, const jgl::Glyph value)
 {
 	os << value.content();
 	return os;
 }
 
-std::ostream& operator<<(std::ostream& os, jgl::Unique_string value)
+std::ostream& operator<<(std::ostream& os, const jgl::Unique_string value)
 {
 	for (size_t i = 0; i < value.size(); i++)
 	{
@@ -117,7 +117,7 @@ std::ostream& operator<<(std::ostream& os, jgl::Unique_string value)
 	return os;
 }
 
-std::ostream& operator<<(std::ostream& os, jgl::Camera camera)
+std::ostream& operator<<(std::ostream& os, const jgl::Camera camera)
 {
 	os << "Camera pos : " << camera.pos() << std::endl;
 	os << "Camera forward : " << camera.forward() << std::endl;
@@ -132,7 +132,7 @@ std::ostream& operator<<(std::ostream& os, jgl::Camera camera)
 	return os;
 }
 
-std::ostream& operator<<(std::ostream& os, jgl::Face to_print)
+std::ostream& operator<<(std::ostream& os, const jgl::Face to_print)
 {
 	os << "Normal : " << to_print.normale << std::endl;
 	os << "Index vertices : [" << to_print.index_vertices[0] << "][" << to_print.index_vertices[1] << "][" << to_print.index_vertices[2] << "]" << std::endl;
@@ -142,7 +142,7 @@ std::ostream& operator<<(std::ostream& os, jgl::Face to_print)
 	return (os);
 }
 
-std::ostream& operator<<(std::ostream& os, jgl::Material to_print)
+std::ostream& operator<<(std::ostream& os, const jgl::Material to_print)
 {
 	os << "Material : " << to_print.name << std::endl;
 	os << "		ka : " << to_print.ka << std::endl;
@@ -169,7 +169,7 @@ std::ostream& operator<<(std::ostream& os, jgl::Material to_print)
 	return (os);
 }
 
-std::ostream& operator<<(std::ostream& os, jgl::File value)
+std::ostream& operator<<(std::ostream& os, const jgl::File value)
 {
 	os << "File : " << value.path << "\\" << value.name << "\\" << value.extension << " - "
 		<< "Path : " << value.path << " - Name : " << value.name << " - Extension : " << value.extension
@@ -178,7 +178,7 @@ std::ostream& operator<<(std::ostream& os, jgl::File value)
 	return (os);
 }
 
-std::ostream& operator<<(std::ostream& os, jgl::String value)
+std::ostream& operator<<(std::ostream& os, const jgl::String value)
 {
 	os << *value;
 	return os;

@@ -53,10 +53,14 @@ namespace jgl
 	static jgl::String create_address(jgl::String path)
 	{
 		jgl::Array<jgl::String> tab = strsplit(path, "/");
+
 		jgl::String result = "";
 
 		for (size_t i = 0; i < tab.size() - 1; i++)
-			result += tab[i] + "/";
+		{
+			result += tab[i];
+			result += "/";
+		}
 
 		return (result);
 	}
@@ -101,8 +105,6 @@ namespace jgl
 			if (line.size() != 0 && line[0] != '#')
 			{
 				strsplit(tab, line, " ");
-				//tab.print();
-				//std::cout << std::endl;
 				if (tab[0] == "newmtl")
 				{
 					if (material != nullptr)
@@ -225,8 +227,6 @@ namespace jgl
 		}
 		if (material != nullptr)
 			_materials.push_back(material);
-		for (size_t i = 0; i < tab.size(); i++)
-			tab[i].release();
 	}
 
 	Material* Mesh::find_material(jgl::String p_name)
@@ -251,7 +251,8 @@ namespace jgl
 		while (file.eof() == false)
 		{
 			line = get_str(file);
-			strsplit(tab, line, " ");
+			tab = line.split(" ");
+
 			if (tab.size() != 0)
 			{
 				if (tab[0] == "v")
@@ -291,9 +292,17 @@ namespace jgl
 				}
 			}
 		}
-		for (size_t i = 0; i < tab.size(); i++)
-			tab[i].release();
 		bake();
+	}
+	Mesh::~Mesh()
+	{
+		for (size_t i = 0; i < _materials.size(); i++)
+		{
+			if (_materials[i] != Mesh::base_material())
+				delete _materials[i];
+		}
+		for (size_t i = 0; i < _parts.size(); i++)
+			delete _parts[i];
 	}
 
 	void Mesh::compute_axis()
@@ -503,7 +512,7 @@ void Mesh::add_component(Mesh* mesh, Vector3 p_pos, int index)
 				add_new_part();
 			for (size_t i = 0; i < _parts.size(); i++)
 			{
-				if (_parts[i]->material() == base_material())
+				if (_parts[i]->material() == base_material() || _parts[i]->material() == nullptr)
 					_parts[i]->set_material(new Material(*_base_material));
 				_parts[i]->material()->diffuse_texture = p_texture;
 			}

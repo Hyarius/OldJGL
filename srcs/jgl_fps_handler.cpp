@@ -5,6 +5,7 @@ size_t			saved_fps = 0;
 int				nb_frame;
 int				beginsecond = 0;
 Uint32			old_time = 0;
+Uint32			g_time = 0;
 
 namespace jgl
 {
@@ -24,10 +25,10 @@ namespace jgl
 			print_fps = saved_fps;
 			framedelay = static_cast<unsigned int>(1000.0f / static_cast<float>(saved_fps));
 		}
-		_time = SDL_GetTicks();
+		g_time = SDL_GetTicks();
 		if (beginsecond == 0)
-			beginsecond = _time;
-		if (_time - beginsecond > 1000)
+			beginsecond = g_time;
+		if (g_time - beginsecond > 1000)
 		{
 			print_fps = nb_frame;
 			_fps_ratio = 60.0f / nb_frame;
@@ -36,8 +37,8 @@ namespace jgl
 		}
 		else
 			nb_frame++;
-		if (framedelay > _time - old_time)
-			SDL_Delay(framedelay - (_time - old_time));
-		old_time = _time;
+		if (framedelay > g_time - old_time)
+			SDL_Delay(framedelay - (g_time - old_time));
+		old_time = g_time;
 	}
 }

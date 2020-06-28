@@ -19,8 +19,6 @@ namespace jgl
 	public:
 		Vscroll_bar(Widget* p_parent);
 
-		~Vscroll_bar();
-
 		void set_min_pos(Vector2 p_min) { _min_pos = p_min; }
 		void set_max_pos(Vector2 p_max) { _max_pos = p_max; }
 		Vector2 actual_pos(){return (_actual_pos);}

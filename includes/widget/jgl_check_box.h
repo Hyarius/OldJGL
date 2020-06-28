@@ -15,7 +15,6 @@ namespace jgl
 
 	public:
 		Check_box(jgl::String p_text = "- Value -", bool p_state = false, Widget* p_parent = nullptr);
-		~Check_box();
 
 		w_box_component& box() { return (_box); }
 		w_check_component& check() { return (_check); }

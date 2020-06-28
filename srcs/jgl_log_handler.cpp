@@ -23,8 +23,8 @@ namespace jgl
 		size_t len = text.size() - 1;
 		text.clear();
 		for (size_t i = 0; i < len; i++)
-			text.append("=");
-		text.append("\n");
+			text.push_back('=');
+		text.push_back('\n');
 		log_file << text;
 	}
 
@@ -44,7 +44,7 @@ namespace jgl
 		static jgl::String text;
 		jgl::String text_line = std::to_string(line);
 		while (text_line.size() < 5)
-			text_line.insert(0, '0');
+			text_line.push_front('0');
 		text += (text.size() == 0 ? "[" + text_line + "] - " + msg : msg);
 		if (msg.find('\n') == true)
 		{

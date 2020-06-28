@@ -22,7 +22,6 @@ namespace jgl
 
 	public:
 		Button(Funct p_funct = nullptr, Data p_data = nullptr, Widget* p_parent = nullptr);
-		~Button();
 
 		w_box_component& box() { return (_box); }
 		w_text_component& label() { return (_label); }

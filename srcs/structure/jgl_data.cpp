@@ -2,6 +2,11 @@
 
 namespace jgl
 {
+	jgl::Data::Data()
+	{
+		content.clear();
+	}
+
 	jgl::Data::Data(void* p_data)
 	{
 		content.clear();

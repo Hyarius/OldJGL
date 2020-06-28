@@ -14,16 +14,13 @@ namespace jgl
 		_frozen = false;
 	}
 
-	Widget::~Widget()
+	void Widget::destroy_widget()
 	{
-		if (_parent != nullptr)
-			_parent->remove_children(this);
-
 		for (size_t i = 0; i < _childrens.size(); i++)
 		{
+			_childrens[i]->destroy_widget();
 			delete _childrens[i];
 		}
-		delete _viewport;
 	}
 
 	void Widget::remove_children(Widget* p_target)

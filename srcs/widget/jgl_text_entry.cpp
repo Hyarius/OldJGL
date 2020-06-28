@@ -15,11 +15,6 @@ namespace jgl
 		unselect();
 	}
 
-	Text_entry::~Text_entry()
-	{
-
-	}
-
 	void Text_entry::move(Vector2 delta)
 	{
 		_box.set_anchor(_box.anchor() + delta);

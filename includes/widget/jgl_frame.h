@@ -14,8 +14,6 @@ namespace jgl
 	public:
 		Frame(Widget* p_parent = nullptr);
 
-		~Frame();
-
 		w_box_component& box() { return (_box); }
 
 		// - box redirection function

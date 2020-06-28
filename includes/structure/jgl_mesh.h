@@ -27,6 +27,7 @@ namespace jgl
 		jgl::Image* bump = empty_texture();
 
 		static Image* empty_texture() { return (_empty_texture); }
+		static void delete_empty_texture() { if (_empty_texture != nullptr)delete _empty_texture; _empty_texture = nullptr; }
 		Material(jgl::String p_name)
 		{
 			if (_empty_texture == nullptr)
@@ -39,6 +40,23 @@ namespace jgl
 			specular_hight_light = empty_texture();
 			alpha_texture = empty_texture();
 			bump = empty_texture();
+		}
+		~Material()
+		{
+			if (ambiant_texture != empty_texture())
+				delete ambiant_texture;
+			if (normal_texture != empty_texture())
+				delete normal_texture;
+			if (diffuse_texture != empty_texture())
+				delete diffuse_texture;
+			if (specular_texture != empty_texture())
+				delete specular_texture;
+			if (specular_hight_light != empty_texture())
+				delete specular_hight_light;
+			if (alpha_texture != empty_texture())
+				delete alpha_texture;
+			if (bump != empty_texture())
+				delete bump;
 		}
 	};
 
@@ -156,10 +174,11 @@ namespace jgl
 
 	public:
 		static void set_base_material(Material* p_material) { _base_material = p_material; Mesh_part::set_base_material(p_material); };
-		static Material* base_material() { return (_base_material); }
+		static void delete_base_material() { if (_base_material != nullptr)delete _base_material; _base_material = nullptr; Mesh_part::set_base_material(nullptr);}
+		static Material* base_material() { if (_base_material == nullptr)set_base_material(new Material("No material")); return (_base_material); }
 		Mesh(Vector3 p_pos, Vector3 p_rot = 0, Vector3 p_size = 1);
 		Mesh(jgl::String path, Vector3 p_pos, Vector3 p_rot, Vector3 p_size, Color color = Color(190, 190, 190));
-
+		~Mesh();
 		float transparency() { return (_transparency); }
 		bool kinetic() { return (_kinetic); }
 		Vector3 pos() { return (_pos); }

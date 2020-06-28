@@ -4,12 +4,15 @@
 #include "jgl_includes.h"
 #include "jgl_image.h"
 
+extern jgl::String g_font_path;
+extern Uint32 g_time;
+
 #define NB_SIZE			150
 #define NB_COLOR		26
 
 namespace jgl
 {
-	void clear_font_path();
+	void set_font_path(jgl::String p_font_path);
 	SDL_Color get_color(int i);
 	TTF_Font* get_font(size_t size);
 	TTF_Font* get_font_outline(size_t size);
@@ -20,5 +23,6 @@ namespace jgl
 	int draw_centred_text(jgl::String text, Vector2 coord, size_t size = 16, size_t outline = 0, text_color color = text_color::black, text_style style = text_style::normal, Viewport* viewport = nullptr);
 	int calc_text_len(jgl::String text, size_t size = 16);
 	int	max_char_in_box(int space, size_t size = 16);
+	void delete_loaded_char();
 }
 #endif

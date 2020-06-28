@@ -79,9 +79,9 @@ namespace jgl
 	};
 }
 
-std::ostream& operator<<(std::ostream& os, jgl::Line3D& value);
-std::ostream& operator<<(std::ostream& os, jgl::Triangle3D& value);
-std::ostream& operator<<(std::ostream& os, jgl::Pixel& value);
+std::ostream& operator<<(std::ostream& os, const jgl::Line3D& value);
+std::ostream& operator<<(std::ostream& os, const jgl::Triangle3D& value);
+std::ostream& operator<<(std::ostream& os, const jgl::Pixel& value);
 
 
 #endif

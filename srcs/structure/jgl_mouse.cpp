@@ -85,7 +85,7 @@ namespace jgl
 		actualize_button(mousestate);
 	}
 
-	mouse_state			Mouse::get_button(mouse_button type)
+	mouse_state			Mouse::get_button(mouse_button type) const
 	{
 		return (button[static_cast<int>(type)]);
 	}

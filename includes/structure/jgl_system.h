@@ -22,7 +22,7 @@ namespace jgl
 		void actualize_pos(int x, int y);
 		void actualize_button(Uint32 mousestate);
 		void actualize();
-		mouse_state get_button(mouse_button type);
+		mouse_state get_button(mouse_button type) const ;
 		void place(Vector2 coord);
 		void update(int p_time = 20);
 	};

@@ -22,11 +22,6 @@ namespace jgl
 		set_geometry(-1, -1);
 	}
 
-	Image_label::~Image_label()
-	{
-
-	}
-
 	void Image_label::move(Vector2 delta)
 	{
 		_box.set_anchor(_box.anchor() + delta);

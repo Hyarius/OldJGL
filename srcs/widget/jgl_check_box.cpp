@@ -14,11 +14,6 @@ namespace jgl
 		set_geometry(-1, -1);
 	}
 
-	Check_box::~Check_box()
-	{
-
-	}
-
 	void Check_box::move(Vector2 delta)
 	{
 		_box.set_anchor(_box.anchor() + delta);

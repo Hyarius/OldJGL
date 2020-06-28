@@ -18,11 +18,6 @@ namespace jgl
 		unselect();
 	}
 
-	Hour_entry::~Hour_entry()
-	{
-
-	}
-
 	void Hour_entry::move(Vector2 delta)
 	{
 		_box.set_anchor(_box.anchor() + delta);

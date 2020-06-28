@@ -26,10 +26,6 @@ namespace jgl
 		Viewport* _active_viewport;
 		Vector2 _size;
 
-		jgl::String _font_path;
-
-		Uint32 _time;
-
 		GLuint _program_color;
 		GLuint _program_texture;
 		GLuint _program_color_model;
@@ -104,13 +100,11 @@ namespace jgl
 	public:
 		Application(jgl::String name, Vector2 p_size = Vector2(840, 680), Color p_color = Color(50, 50, 50));
 
-		Uint32 time(){return (_time);}
 		SDL_Window* window() { return (_window); }
 		SDL_GLContext* context() { return (&_context); }
 		Viewport* viewport() { return (_viewport); }
 		Viewport* active_viewport() { return (_active_viewport); }
 		Vector2 size() { return (_size); }
-		jgl::String font_path() { return (_font_path); }
 		GLuint add_custom_shader(jgl::String p_vertex_content, jgl::String p_fragment_content);
 		GLuint get_custom_program(size_t index);
 		GLuint get_custom_uniform(GLuint p_program, jgl::String p_param);
@@ -186,7 +180,6 @@ namespace jgl
 		void set_fps_ratio(float p_ratio) { _fps_ratio = p_ratio; }
 		void check_frame(bool draw = false);
 		void reset_viewport() { _active_viewport = _viewport; _viewport->use(); }
-		void set_font_path(jgl::String p_font_path);
 		void quit();
 		void set_background(Color p_color);
 		void resize(Vector2 p_size);
@@ -200,7 +193,11 @@ namespace jgl
 		std::string p_vertex_content,
 		std::string p_fragment_content
 	);
+
+	void start_jgl();
+	void quit_jgl();
 }
+
 
 extern jgl::Application *g_application;
 

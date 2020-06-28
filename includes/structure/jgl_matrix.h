@@ -263,8 +263,8 @@ namespace jgl
 		}
 	};
 }
-std::ostream& operator<<(std::ostream& os, jgl::Matrix2x2 data);
-std::ostream& operator<<(std::ostream& os, jgl::Matrix3x3 data);
-std::ostream& operator<<(std::ostream& os, jgl::Matrix4x4 data);
+std::ostream& operator<<(std::ostream& os, const jgl::Matrix2x2 data);
+std::ostream& operator<<(std::ostream& os, const jgl::Matrix3x3 data);
+std::ostream& operator<<(std::ostream& os, const jgl::Matrix4x4 data);
 
 #endif
