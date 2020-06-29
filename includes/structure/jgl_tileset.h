@@ -9,9 +9,9 @@ namespace jgl
 	class Sprite_sheet
 	{
 	protected:
-		Image* _image;
-		Vector2 _size;
-		Vector2 _unit;
+		Image* _image = nullptr;
+		Vector2 _size = 0;
+		Vector2 _unit = 1;
 		std::vector<Vector2> _sprites;
 
 	public:
@@ -21,8 +21,13 @@ namespace jgl
 			_unit = 1;
 			_sprites.clear();
 		}
-		Sprite_sheet(Image* p_image, Vector2 p_size = 1);
+		Sprite_sheet(jgl::Image *p_image, Vector2 p_size = 0);
 		Sprite_sheet(jgl::String path, Vector2 p_size = 0);
+		~Sprite_sheet()
+		{
+			if (_image != nullptr)
+				delete _image;
+		}
 
 		Image* image() { return (_image); }
 		Vector2 size() { return (_size); }

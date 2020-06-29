@@ -29,7 +29,7 @@ namespace jgl
 
 	Sprite_sheet::Sprite_sheet(Image* p_image, Vector2 p_size)
 	{
-		_image = p_image;
+		_image = new Image(p_image->path());
 		_sprites.clear();
 		_size = p_size;
 		_unit = Vector2(1.0f / _size.x, 1.0f / _size.y);

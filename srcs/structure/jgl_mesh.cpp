@@ -504,34 +504,6 @@ void Mesh::add_component(Mesh* mesh, Vector3 p_pos, int index)
 		tmp->add_face(p_face);
 	}
 
-	void Mesh::set_diffuse_texture(Image* p_texture, int index)
-	{
-		if (index == -1)
-		{
-			if (_parts.size() == 0)
-				add_new_part();
-			for (size_t i = 0; i < _parts.size(); i++)
-			{
-				if (_parts[i]->material() == base_material() || _parts[i]->material() == nullptr)
-					_parts[i]->set_material(new Material(*_base_material));
-				_parts[i]->material()->diffuse_texture = p_texture;
-			}
-		}
-		else
-		{
-			Mesh_part* tmp = check_part(index);
-			if (tmp->material() == base_material())
-				tmp->set_material(new Material(*_base_material));
-			tmp->material()->diffuse_texture = p_texture;
-		}
-	}
-
-	void Mesh::set_diffuse_texture(Sprite_sheet* p_texture, int index)
-	{
-		if (p_texture != nullptr)
-			set_diffuse_texture(p_texture->image(), index);
-	}
-
 	void Mesh::clear()
 	{
 		_rotation = 0;

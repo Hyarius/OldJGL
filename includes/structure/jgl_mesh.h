@@ -85,6 +85,18 @@ namespace jgl
 				index_normale[i] = p_index_normale[i];
 			}
 		}
+		Face(jgl::Array<int> p_index_vertices, jgl::Array<int> p_index_uvs, jgl::Array<int> p_index_normale)
+		{
+			if (p_index_vertices.size() != 3 || p_index_uvs.size() != 3 || p_index_normale.size() != 3)
+				error_exit(1, "Bad number of argument in face definition");
+			normale = 0;
+			for (size_t i = 0; i < 3; i++)
+			{
+				index_vertices[i] = p_index_vertices[i];
+				index_uvs[i] = p_index_uvs[i];
+				index_normale[i] = p_index_normale[i];
+			}
+		}
 	};
 
 	class Mesh_part
@@ -152,6 +164,24 @@ namespace jgl
 	class Mesh
 	{
 	protected:
+		void self_set_material(jgl::Array<jgl::Material*>& p_array, jgl::Material* p_material)
+		{
+			if (p_array.find(p_material) == p_array.end())
+				p_array.push_back(p_material);
+			for (size_t i = 0; i < _parts.size(); i++)
+			{
+				Mesh_part* tmp = check_part(i);
+				tmp->set_material(p_material);
+			}
+		}
+		void self_set_material(jgl::Array<jgl::Material*>& p_array, jgl::Material* p_material, int index)
+		{
+			if (p_array.find(p_material) == p_array.end())
+				p_array.push_back(p_material);
+			Mesh_part* tmp = check_part(index);
+			tmp->set_material(p_material);
+		}
+
 		static Material* _base_material;
 
 		Vector3 _pos;
@@ -169,6 +199,7 @@ namespace jgl
 
 		float _transparency;
 
+		jgl::Array<Material*> _shared_materials;
 		jgl::Array<Material*> _materials;
 		jgl::Array<Mesh_part*> _parts;
 
@@ -192,13 +223,14 @@ namespace jgl
 		Vector3 right() { return (_right); }
 		Vector3 up() { return (_up); }
 
-		Material* find_material(jgl::String name);
-		Material* material(size_t index = 0) { if (index >= _materials.size())return (nullptr); return (_materials[index]); }
+		jgl::Array<jgl::Material*>& materials() { return (_materials); }
+		jgl::Material* find_material(jgl::String name);
+		jgl::Material* material(size_t index = 0) { if (index >= _materials.size())return (nullptr); return (_materials[index]); }
 
-		jgl::Array<Mesh_part*>& parts() { return (_parts); }
-		Mesh_part* parts(size_t index) { if (index >= _parts.size())return (nullptr); return (_parts[index]); }
-		Mesh_part* check_part(int index);
-		Mesh_part* control_part(int index);
+		jgl::Array<jgl::Mesh_part*>& parts() { return (_parts); }
+		jgl::Mesh_part* parts(size_t index) { if (index >= _parts.size())return (nullptr); return (_parts[index]); }
+		jgl::Mesh_part* check_part(int index);
+		jgl::Mesh_part* control_part(int index);
 
 		void parse_materials(jgl::String p_path);
 		void add_material(Material* p_material) { _materials.push_back(p_material); }
@@ -217,8 +249,21 @@ namespace jgl
 		void set_uvs(jgl::Array<Vector2>& p_uvs, int index = -1) { Mesh_part* tmp = check_part(index); tmp->set_uvs(p_uvs); }
 		void set_normales(jgl::Array<Vector3>& p_normales, int index = -1) { Mesh_part* tmp = check_part(index); tmp->set_normales(p_normales); }
 
-		void set_diffuse_texture(Image* p_texture, int index = -1);
-		void set_diffuse_texture(Sprite_sheet* p_texture, int index = -1);
+		void set_material(jgl::Material* p_material, bool shared = false)
+		{
+			if (shared == true)
+				self_set_material(_shared_materials, p_material);
+			else
+				self_set_material(_materials, p_material);
+		}
+		void set_material(jgl::Material* p_material, int index, bool shared = false)
+		{
+			if (shared == true)
+				self_set_material(_shared_materials, p_material, index);
+			else
+				self_set_material(_materials, p_material, index);
+		}
+		
 		void set_transparency(float p_transparency) { _transparency = p_transparency; }
 		void compute_bubble_box();
 		void compute_axis();

@@ -34,32 +34,32 @@ namespace jgl
 		result->add_uv(Vector2(2.0f / 3.0f, 1.0f));
 
 		// FACE DOWN
-		result->add_face(Face(new int[3]{ 1, 3, 2 }, new int[3]{ 4, 3, 1 }, new int[3]{ -1, -1, -1 }));
-		result->add_face(Face(new int[3]{ 3, 1, 0 }, new int[3]{ 0, 1, 3 }, new int[3]{ -1, -1, -1 }));
+		result->add_face(Face({ 1, 3, 2 }, { 4, 3, 1 }, { -1, -1, -1 }));
+		result->add_face(Face({ 3, 1, 0 }, { 0, 1, 3 }, { -1, -1, -1 }));
 
 		// FACE TOP
-		result->add_face(Face(new int[3]{ 7, 5, 6 }, new int[3]{ 9, 5, 8 }, new int[3]{ -1, -1, -1 }));
-		result->add_face(Face(new int[3]{ 5, 7, 4 }, new int[3]{ 4, 8, 5 }, new int[3]{ -1, -1, -1 }));
+		result->add_face(Face({ 7, 5, 6 }, { 9, 5, 8 }, { -1, -1, -1 }));
+		result->add_face(Face({ 5, 7, 4 }, { 4, 8, 5 }, { -1, -1, -1 }));
 
 		// FACE FRONT
-		result->add_face(Face(new int[3]{ 4, 1, 5 }, new int[3]{ 5, 2, 4 }, new int[3]{ -1, -1, -1 }));
-		result->add_face(Face(new int[3]{ 1, 4, 0 }, new int[3]{ 1, 4, 2 }, new int[3]{ -1, -1, -1 }));
+		result->add_face(Face({ 4, 1, 5 }, { 5, 2, 4 }, { -1, -1, -1 }));
+		result->add_face(Face({ 1, 4, 0 }, { 1, 4, 2 }, { -1, -1, -1 }));
 
 		// FACE BACK
-		result->add_face(Face(new int[3]{ 2, 7, 6 }, new int[3]{ 9, 8, 12 }, new int[3]{ -1, -1, -1 }));
-		result->add_face(Face(new int[3]{ 7, 2, 3 }, new int[3]{ 11, 12, 8 }, new int[3]{ -1, -1, -1 }));
+		result->add_face(Face({ 2, 7, 6 }, { 9, 8, 12 }, { -1, -1, -1 }));
+		result->add_face(Face({ 7, 2, 3 }, { 11, 12, 8 }, { -1, -1, -1 }));
 
 		// FACE RIGHT
-		result->add_face(Face(new int[3]{ 5, 2, 6 }, new int[3]{ 9, 10, 5 }, new int[3]{ -1, -1, -1 }));
-		result->add_face(Face(new int[3]{ 2, 5, 1 }, new int[3]{ 6, 5, 10 }, new int[3]{ -1, -1, -1 }));
+		result->add_face(Face({ 5, 2, 6 }, { 9, 10, 5 }, { -1, -1, -1 }));
+		result->add_face(Face({ 2, 5, 1 }, { 6, 5, 10 }, { -1, -1, -1 }));
 
 		// FACE LEFT
-		result->add_face(Face(new int[3]{ 3, 4, 7 }, new int[3]{ 8, 4, 7 }, new int[3]{ -1, -1, -1 }));
-		result->add_face(Face(new int[3]{ 4, 3, 0 }, new int[3]{ 3, 7, 4 }, new int[3]{ -1, -1, -1 }));
+		result->add_face(Face({ 3, 4, 7 }, { 8, 4, 7 }, { -1, -1, -1 }));
+		result->add_face(Face({ 4, 3, 0 }, { 3, 7, 4 }, { -1, -1, -1 }));
 
 		jgl::Material* tmp_material = new Material("New material");
 		tmp_material->ka = color;
-		result->check_part(0)->set_material(tmp_material);
+		result->set_material(tmp_material);
 
 		if (should_bake == true)
 			result->bake();
@@ -112,28 +112,28 @@ namespace jgl
 		result->add_uv(tmp_pos + tmp_size * Vector2(0, 1)); // 3
 
 		// FACE DOWN
-		result->add_face(Face(new int[3]{ 1, 3, 2 }, new int[3]{ 2, 3, 1 }, new int[3]{ -1, -1, -1 }));
-		result->add_face(Face(new int[3]{ 3, 1, 0 }, new int[3]{ 0, 1, 3 }, new int[3]{ -1, -1, -1 }));
+		result->add_face(Face({ 1, 3, 2 }, { 2, 3, 1 }, { -1, -1, -1 }));
+		result->add_face(Face({ 3, 1, 0 }, { 0, 1, 3 }, { -1, -1, -1 }));
 
 		// FACE TOP
-		result->add_face(Face(new int[3]{ 7, 5, 6 }, new int[3]{ 10, 9, 11 }, new int[3]{ -1, -1, -1 }));
-		result->add_face(Face(new int[3]{ 5, 7, 4 }, new int[3]{ 8, 11, 9 }, new int[3]{ -1, -1, -1 }));
+		result->add_face(Face({ 7, 5, 6 }, { 10, 9, 11 }, { -1, -1, -1 }));
+		result->add_face(Face({ 5, 7, 4 }, { 8, 11, 9 }, { -1, -1, -1 }));
 
 		// FACE FRONT
-		result->add_face(Face(new int[3]{ 4, 1, 5 }, new int[3]{ 7, 5, 6 }, new int[3]{ -1, -1, -1 }));
-		result->add_face(Face(new int[3]{ 1, 4, 0 }, new int[3]{ 4, 6, 5 }, new int[3]{ -1, -1, -1 }));
+		result->add_face(Face({ 4, 1, 5 }, { 7, 5, 6 }, { -1, -1, -1 }));
+		result->add_face(Face({ 1, 4, 0 }, { 4, 6, 5 }, { -1, -1, -1 }));
 
 		// FACE BACK
-		result->add_face(Face(new int[3]{ 2, 7, 6 }, new int[3]{ 7, 5, 6 }, new int[3]{ -1, -1, -1 }));
-		result->add_face(Face(new int[3]{ 7, 2, 3 }, new int[3]{ 4, 6, 5 }, new int[3]{ -1, -1, -1 }));
+		result->add_face(Face({ 2, 7, 6 }, { 7, 5, 6 }, { -1, -1, -1 }));
+		result->add_face(Face({ 7, 2, 3 }, { 4, 6, 5 }, { -1, -1, -1 }));
 
 		// FACE RIGHT
-		result->add_face(Face(new int[3]{ 5, 2, 6 }, new int[3]{ 7, 5, 6 }, new int[3]{ -1, -1, -1 }));
-		result->add_face(Face(new int[3]{ 2, 5, 1 }, new int[3]{ 4, 6, 5 }, new int[3]{ -1, -1, -1 }));
+		result->add_face(Face({ 5, 2, 6 }, { 7, 5, 6 }, { -1, -1, -1 }));
+		result->add_face(Face({ 2, 5, 1 }, { 4, 6, 5 }, { -1, -1, -1 }));
 
 		// FACE LEFT
-		result->add_face(Face(new int[3]{ 3, 4, 7 }, new int[3]{ 7, 5, 6 }, new int[3]{ -1, -1, -1 }));
-		result->add_face(Face(new int[3]{ 4, 3, 0 }, new int[3]{ 4, 6, 5 }, new int[3]{ -1, -1, -1 }));
+		result->add_face(Face({ 3, 4, 7 }, { 7, 5, 6 }, { -1, -1, -1 }));
+		result->add_face(Face({ 4, 3, 0 }, { 4, 6, 5 }, { -1, -1, -1 }));
 
 		if (should_bake == true)
 			result->bake();
@@ -184,29 +184,29 @@ namespace jgl
 		result->add_uv(tmp_pos + tmp_size * Vector2(0, 1)); // 3
 
 		// FACE DOWN
-		result->add_face(Face(new int[3]{ 1, 3, 2 }, new int[3]{ 2, 3, 1 }, new int[3]{ -1, -1, -1 }));
-		result->add_face(Face(new int[3]{ 3, 1, 0 }, new int[3]{ 0, 1, 3 }, new int[3]{ -1, -1, -1 }));
+		result->add_face(Face({ 1, 3, 2 }, { 2, 3, 1 }, { -1, -1, -1 }));
+		result->add_face(Face({ 3, 1, 0 }, { 0, 1, 3 }, { -1, -1, -1 }));
 
 		// FACE TOP
-		result->add_face(Face(new int[3]{ 7, 5, 6 }, new int[3]{ 10, 9, 11 }, new int[3]{ -1, -1, -1 }));
-		result->add_face(Face(new int[3]{ 5, 7, 4 }, new int[3]{ 8, 11, 9 }, new int[3]{ -1, -1, -1 }));
+		result->add_face(Face({ 7, 5, 6 }, { 10, 9, 11 }, { -1, -1, -1 }));
+		result->add_face(Face({ 5, 7, 4 }, { 8, 11, 9 }, { -1, -1, -1 }));
 
 		// FACE FRONT
-		result->add_face(Face(new int[3]{ 4, 1, 5 }, new int[3]{ 6, 5, 7 }, new int[3]{ -1, -1, -1 }));
-		result->add_face(Face(new int[3]{ 1, 4, 0 }, new int[3]{ 4, 7, 5 }, new int[3]{ -1, -1, -1 }));
+		result->add_face(Face({ 4, 1, 5 }, { 6, 5, 7 }, { -1, -1, -1 }));
+		result->add_face(Face({ 1, 4, 0 }, { 4, 7, 5 }, { -1, -1, -1 }));
 
 		// FACE BACK
-		result->add_face(Face(new int[3]{ 2, 7, 6 }, new int[3]{ 6, 5, 7 }, new int[3]{ -1, -1, -1 }));
-		result->add_face(Face(new int[3]{ 7, 2, 3 }, new int[3]{ 4, 7, 5 }, new int[3]{ -1, -1, -1 }));
+		result->add_face(Face({ 2, 7, 6 }, { 6, 5, 7 }, { -1, -1, -1 }));
+		result->add_face(Face({ 7, 2, 3 }, { 4, 7, 5 }, { -1, -1, -1 }));
 
 		// FACE RIGHT
-		result->add_face(Face(new int[3]{ 5, 2, 6 }, new int[3]{ 6, 5, 7 }, new int[3]{ -1, -1, -1 }));
-		result->add_face(Face(new int[3]{ 2, 5, 1 }, new int[3]{ 4, 7, 5 }, new int[3]{ -1, -1, -1 }));
+		result->add_face(Face({ 5, 2, 6 }, { 6, 5, 7 }, { -1, -1, -1 }));
+		result->add_face(Face({ 2, 5, 1 }, { 4, 7, 5 }, { -1, -1, -1 }));
 
 
 		// FACE LEFT
-		result->add_face(Face(new int[3]{ 3, 4, 7 }, new int[3]{ 6, 5, 7 }, new int[3]{ -1, -1, -1 }));
-		result->add_face(Face(new int[3]{ 4, 3, 0 }, new int[3]{ 4, 7, 5 }, new int[3]{ -1, -1, -1 }));
+		result->add_face(Face({ 3, 4, 7 }, { 6, 5, 7 }, { -1, -1, -1 }));
+		result->add_face(Face({ 4, 3, 0 }, { 4, 7, 5 }, { -1, -1, -1 }));
 
 		if (should_bake == true)
 			result->bake();
@@ -233,12 +233,16 @@ namespace jgl
 		result->add_uv(Vector2(1.0f, 1.0f));
 
 		// FACE DOWN
-		result->add_face(Face(new int[3]{ 1, 3, 2 }, new int[3]{ 3, 2, 1 }, new int[3]{ -1, -1, -1 }));
-		result->add_face(Face(new int[3]{ 3, 1, 0 }, new int[3]{ 0, 1, 2 }, new int[3]{ -1, -1, -1 }));
+		result->add_face(Face({ 1, 3, 2 }, { 3, 2, 1 }, { -1, -1, -1 }));
+		result->add_face(Face({ 3, 1, 0 }, { 0, 1, 2 }, { -1, -1, -1 }));
 
 		// FACE TOP
-		result->add_face(Face(new int[3]{ 3, 1, 2 }, new int[3]{ 3, 1, 2 }, new int[3]{ -1, -1, -1 }));
-		result->add_face(Face(new int[3]{ 1, 3, 0 }, new int[3]{ 0, 2, 1 }, new int[3]{ -1, -1, -1 }));
+		result->add_face(Face({ 3, 1, 2 }, { 3, 1, 2 }, { -1, -1, -1 }));
+		result->add_face(Face({ 1, 3, 0 }, { 0, 2, 1 }, { -1, -1, -1 }));
+
+		jgl::Material* tmp_material = new Material("New material");
+		tmp_material->ka = color;
+		result->set_material(tmp_material);
 
 		if (should_bake == true)
 			result->bake();

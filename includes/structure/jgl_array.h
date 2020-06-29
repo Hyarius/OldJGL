@@ -40,7 +40,7 @@ namespace jgl
 
 		void clear_computed()
 		{
-			if (_computed == true)
+			if (_computed_result != nullptr)
 				delete _computed_result;
 			_computed = false;
 			_computed_result = nullptr;
@@ -313,7 +313,7 @@ namespace jgl
 			}
 			std::cout << std::endl;
 		}
-		void push_back(const T elem)
+		T& push_back(const T elem)
 		{
 			if (_size + 1 >= _max_size)
 			{
@@ -324,10 +324,11 @@ namespace jgl
 			_array_content[nb_line][nb_index] = elem;
 			_size++;
 			clear_computed();
+			return (_array_content[nb_line][nb_index]);
 		}
-		void push_front(const T& elem)
+		T& push_front(const T& elem)
 		{
-			insert(0, elem);
+			return (insert(0, elem));
 		}
 		Iterator front() { return (Iterator(this, 0)); }
 		Iterator back() { if (size() == 0)return (end()); return (Iterator(this, _size - 1)); }
@@ -351,7 +352,7 @@ namespace jgl
 			size_t nb_index = index % _push_size;
 			return (_array_content[nb_line][nb_index]);
 		}
-		void insert(size_t index, T elem)
+		T& insert(size_t index, T elem)
 		{
 			if (index >= _size + 1)
 			{
@@ -369,8 +370,9 @@ namespace jgl
 			}
 			this->operator[](index) = elem;
 			clear_computed();
+			return (this->operator[](index));
 		}
-		void insert(Iterator iter, T elem)
+		T& insert(Iterator iter, T elem)
 		{
 			if (iter.index() >= _size + 1)
 			{
@@ -388,6 +390,7 @@ namespace jgl
 			}
 			this->operator[](iter.index()) = elem;
 			clear_computed();
+			return (this->operator[](iter.index()));
 		}
 		jgl::Array<T> operator + (const T delta)
 		{
@@ -482,7 +485,6 @@ namespace jgl
 			this->operator[](_size - 1) = nullptr;
 			_size--;
 			clear_computed();
-			iter = size();
 		}
 		bool computed() const { return (_computed); }
 		T* computed_content() const { return (_computed_result); }

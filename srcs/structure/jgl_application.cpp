@@ -277,6 +277,7 @@ namespace jgl
 		delete _viewport;
 		_central_widget->destroy_widget();
 		delete _central_widget;
+		_central_widget = nullptr;
 
 		quit_jgl();
 	}
