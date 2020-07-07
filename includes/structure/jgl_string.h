@@ -22,8 +22,10 @@ namespace jgl
 		jgl::Glyph operator[](size_t index) const;
 		jgl::String operator + (const jgl::String other);
 		jgl::String operator += (const jgl::String other);
-		bool operator == (const jgl::String other);
-		bool operator != (const jgl::String other);
+		bool operator == (const jgl::String other) const;
+		bool equal (const jgl::String& other) const;
+		bool operator != (const jgl::String other) const;
+		bool different (const jgl::String& other) const;
 
 		void clear();
 		void append(jgl::String other);
@@ -34,17 +36,20 @@ namespace jgl
 		void erase(size_t index);
 		void pop_back();
 
-		size_t size();
-		bool empty() { return ((*this)->empty()); }
-		bool find(Glyph to_find);
-		bool contain(Unique_string to_find);
-		void print_info();
+		const size_t char_size() const;
+		const size_t size() const ;
+		const bool empty() const { return ((*this)->empty()); }
+		const bool find(Glyph to_find) const;
+		const bool contain(Unique_string to_find) const;
+		void print_info() const;
 
 		const char* str();
-		std::string std();
-		jgl::Array<jgl::String> split(jgl::String delim, bool regroup = true);
-		jgl::String substr(size_t start, size_t end);
-		void substr(jgl::String& result, size_t start, size_t end);
+
+		const std::string std() const;
+		jgl::Array<jgl::String> split(jgl::String delim, bool regroup = true) const;
+		jgl::String copy() const;
+		jgl::String substr(size_t start, size_t end) const;
+		void substr(jgl::String& result, size_t start, size_t end) const;
 	};
 
 	jgl::String operator + (const char* str, jgl::String other);

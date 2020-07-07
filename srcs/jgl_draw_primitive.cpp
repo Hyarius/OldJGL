@@ -2,7 +2,7 @@
 
 namespace jgl
 {
-	std::vector<Vector2> calc_point(size_t width)
+	std::vector<Vector2> calc_point(const size_t width)
 	{
 		std::vector<Vector2> result;
 		Vector2 center = 0;
@@ -20,10 +20,10 @@ namespace jgl
 		return (result);
 	}
 
-	void draw_line(Vector2 p1, Vector2 p2, size_t width, Color p_color, Viewport* viewport)
+	void draw_line(const Vector2 p1, const Vector2 p2, const size_t width, const Color p_color, const Viewport* viewport)
 	{
-		if (viewport == nullptr)
-			viewport = g_application->central_widget()->viewport();
+		if (viewport != nullptr)
+			viewport->use();
 
 		std::vector<Vector2> to_draw = calc_point(width);
 		Vector2 actual;
@@ -41,10 +41,10 @@ namespace jgl
 
 	}
 
-	void draw_point(Vector2 center, size_t width, Color p_color, Viewport* viewport)
+	void draw_point(const Vector2 center, const size_t width, const Color p_color, const Viewport* viewport)
 	{
-		if (viewport == nullptr)
-			viewport = g_application->central_widget()->viewport();
+		if (viewport != nullptr)
+			viewport->use();
 
 		Pixel tmp_center = 0;
 		Pixel actual;
@@ -59,10 +59,10 @@ namespace jgl
 		}
 	}
 
-	void draw_rectangle(Vector2 p_tl, Vector2 p_tr, Vector2 p_dl, Vector2 p_dr, Color p_color, Viewport* viewport)
+	void draw_rectangle(const Vector2 p_tl, const Vector2 p_tr, const Vector2 p_dl, const Vector2 p_dr, const Color p_color, const Viewport* viewport)
 	{
-		if (viewport == nullptr)
-			viewport = g_application->central_widget()->viewport();
+		if (viewport != nullptr)
+			viewport->use();
 
 		Pixel points[] = {
 				convert_screen_to_opengl(p_tl),
@@ -84,8 +84,11 @@ namespace jgl
 		draw_triangle_color(points, colors, 2);
 	}
 
-	void fill_rectangle(Vector2 p_tl, Vector2 p_tr, Vector2 p_dl, Vector2 p_dr, Color p_color, Viewport* viewport)
+	void fill_rectangle(const Vector2 p_tl, const Vector2 p_tr, const Vector2 p_dl, const Vector2 p_dr, const Color p_color, const Viewport* viewport)
 	{
+		if (viewport != nullptr)
+			viewport->use();
+
 		Pixel points[] = {
 			convert_screen_to_opengl(p_tl),
 			convert_screen_to_opengl(p_tr),
@@ -106,22 +109,22 @@ namespace jgl
 		fill_triangle_color(points, colors, 2);
 	}
 
-	void draw_rectangle(Vector2 pos, Vector2 size, Color p_color, Viewport* viewport)
+	void draw_rectangle(const Vector2 pos, const Vector2 size, const Color p_color, const Viewport* viewport)
 	{
 		draw_rectangle(pos, Vector2(pos.x + size.x, pos.y), Vector2(pos.x, pos.y + size.y), pos + size, p_color, viewport);
 	}
 
-	void fill_rectangle(Vector2 pos, Vector2 size, Color p_color, Viewport* viewport)
+	void fill_rectangle(const Vector2 pos, const Vector2 size, const Color p_color, const Viewport* viewport)
 	{
 		fill_rectangle(pos, Vector2(pos.x + size.x, pos.y), Vector2(pos.x, pos.y + size.y), pos + size, p_color, viewport);
 	}
 
-	void fill_centred_rectangle(Vector2 p_coord, Vector2 p_size, Color p_color, Viewport* viewport)
+	void fill_centred_rectangle(const Vector2 p_coord, const Vector2 p_size, const Color p_color, const Viewport* viewport)
 	{
 		fill_rectangle(p_coord - p_size / 2, p_size, p_color, viewport);
 	}
 
-	void draw_centred_rectangle(Vector2 p_coord, Vector2 p_size, Color p_color, Viewport* viewport)
+	void draw_centred_rectangle(const Vector2 p_coord, const Vector2 p_size, const Color p_color, const Viewport* viewport)
 	{
 		draw_rectangle(p_coord - p_size / 2, p_size, p_color, viewport);
 	}

@@ -4,8 +4,12 @@ namespace jgl
 {
 	void			draw_image(jgl::Vector2 p_tl, jgl::Vector2 p_tr, jgl::Vector2 p_dl, jgl::Vector2 p_dr,
 		float p_alpha,
-		jgl::Uv p_uv_tl, jgl::Uv p_uv_tr, jgl::Uv p_uv_dl, jgl::Uv p_uv_dr)
+		jgl::Uv p_uv_tl, jgl::Uv p_uv_tr, jgl::Uv p_uv_dl, jgl::Uv p_uv_dr,
+		const jgl::Viewport* viewport)
 	{
+		if (viewport != nullptr)
+			viewport->use();
+
 		jgl::Pixel points[] = {
 			convert_screen_to_opengl(p_tl),
 			convert_screen_to_opengl(p_tr),
@@ -28,10 +32,19 @@ namespace jgl
 
 	void			draw_image(jgl::Vector2 coord, jgl::Vector2 size,
 		float p_alpha,
-		jgl::Uv p_uv_tl, jgl::Uv p_uv_tr, jgl::Uv p_uv_dl, jgl::Uv p_uv_dr)
+		jgl::Uv p_uv_tl, jgl::Uv p_uv_tr, jgl::Uv p_uv_dl, jgl::Uv p_uv_dr,
+		const jgl::Viewport* viewport)
 	{
 		jgl::draw_image(coord, jgl::Vector2(coord.x + size.x, coord.y),
 			jgl::Vector2(coord.x, coord.y + size.y), jgl::Vector2(coord.x + size.x, coord.y + size.y), p_alpha,
-			p_uv_tl, p_uv_tr, p_uv_dl, p_uv_dr);
+			p_uv_tl, p_uv_tr, p_uv_dl, p_uv_dr, viewport);
+	}
+
+	void			draw_image(jgl::Vector2 coord, jgl::Vector2 size,
+		float p_alpha, const jgl::Viewport* viewport)
+	{
+		jgl::draw_image(coord, jgl::Vector2(coord.x + size.x, coord.y),
+			jgl::Vector2(coord.x, coord.y + size.y), jgl::Vector2(coord.x + size.x, coord.y + size.y), p_alpha,
+			Uv(0, 0), Uv(1, 0), Uv(0, 1), Uv(1, 1), viewport);
 	}
 }

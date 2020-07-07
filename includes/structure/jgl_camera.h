@@ -32,10 +32,15 @@ namespace jgl
 		float _near;
 		float _far;
 
+		void calc_variable();
+		void compute_model();
+		void compute_view();
+		void compute_projection();
+
 	public:
 		Camera(Vector3 p_pos = Vector3(), float p_fov = 45, float p_ratio = 4.0f / 3.0f, float p_near = 0.1f, float p_far = 50.0f);
 
-		Vector3 mouse_direction();
+		Vector3 mouse_direction(const jgl::Viewport* p_viewport = nullptr) const;
 
 		void look_at(Vector3 target);
 		void rotate_around_point(Vector3 target, float angle, Vector3 axis);
@@ -43,10 +48,6 @@ namespace jgl
 		void move(Vector3 delta);
 		void place(Vector3 p_pos);
 
-		void calc_variable();
-		void compute_model();
-		void compute_view();
-		void compute_projection();
 		void compute() {compute_model(); compute_view(); compute_projection(); bake(); }
 
 		void set_light_position(Vector3 p_light_pos) { _light_pos = p_light_pos; }

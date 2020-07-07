@@ -195,7 +195,7 @@ namespace jgl
 		}
 	}
 
-	key_state Keyboard::get_key(key key_type)
+	const key_state Keyboard::get_key(const key key_type) const
 	{
 		return (keys[static_cast<size_t>(key_type)]);
 	}
@@ -205,18 +205,14 @@ namespace jgl
 		return (g_keyboard);
 	}
 
-	jgl::Unique_string key_name(key type)
+	const jgl::Unique_string key_name(const key type)
 	{
 		return (key_name_value[static_cast<size_t>(type)]);
 	}
 
-	key_state get_key(key key_type)
+	const key_state get_key(const key key_type)
 	{
 		return (g_keyboard->get_key(key_type));
-	}
-	key_state get_key(size_t key_type)
-	{
-		return (get_key(static_cast<key>(key_type)));
 	}
 		
 }

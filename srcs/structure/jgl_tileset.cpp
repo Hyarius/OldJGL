@@ -2,7 +2,7 @@
 
 namespace jgl
 {
-	Sprite_sheet::Sprite_sheet(jgl::String path, Vector2 p_size)
+	Sprite_sheet::Sprite_sheet(const jgl::String path, const Vector2 p_size)
 	{
 		_image = new Image(path);
 		_sprites.clear();
@@ -27,33 +27,12 @@ namespace jgl
 		}
 	}
 
-	Sprite_sheet::Sprite_sheet(Image* p_image, Vector2 p_size)
+	Sprite_sheet::Sprite_sheet(const Image* p_image, const Vector2 p_size) : Sprite_sheet(p_image->path(), p_size)
 	{
-		_image = new Image(p_image->path());
-		_sprites.clear();
-		_size = p_size;
-		_unit = Vector2(1.0f / _size.x, 1.0f / _size.y);
-		Vector2	tmp = 0;
-		if (p_size == 1)
-			_sprites.push_back(0);
-		else
-		{
-			while (tmp.y != _size.y)
-			{
-				Vector2 result = Vector2(tmp.x / _size.x, tmp.y / _size.y);
-				_sprites.push_back(result);
-				tmp.x++;
-				if (tmp.x >= _size.x)
-				{
-					tmp.x = 0;
-					tmp.y++;
-				}
-			}
-		}
-
+		
 	}
 
-	void Sprite_sheet::draw(int id, Vector2 pos, Vector2 size, float p_alpha, Viewport* viewport)
+	void Sprite_sheet::draw(const int id, const Vector2 pos, const Vector2 size, const float p_alpha, const Viewport* viewport) const
 	{
 		glActiveTexture(GL_TEXTURE0);
 		glBindTexture(GL_TEXTURE_2D, _image->texture_id());
@@ -96,12 +75,12 @@ namespace jgl
 		draw_triangle_texture(points, uvs, p_alpha, 2);
 	}
 
-	void Sprite_sheet::draw_centred(int id, Vector2 pos, Vector2 size, float p_alpha, Viewport* viewport)
+	void Sprite_sheet::draw_centred(const int id, const Vector2 pos, const Vector2 size, const float p_alpha, const Viewport* viewport) const
 	{
 		draw(id, pos - size / 2, size, p_alpha, viewport);
 	}
 
-	void Sprite_sheet::draw(Vector2 coord, Vector2 pos, Vector2 size, float p_alpha, Viewport* viewport)
+	void Sprite_sheet::draw(const Vector2 coord, const Vector2 pos, const Vector2 size, const float p_alpha, const Viewport* viewport) const
 	{
 		glActiveTexture(GL_TEXTURE0);
 		glBindTexture(GL_TEXTURE_2D, _image->texture_id());
@@ -142,8 +121,8 @@ namespace jgl
 		draw_triangle_texture(points, uvs, p_alpha, 2);
 	}
 
-	void Sprite_sheet::draw_centred(Vector2 coord, Vector2 pos, Vector2 size, float p_alpha, Viewport* viewport)
+	void Sprite_sheet::draw_centred(const Vector2 coord, const Vector2 pos, const Vector2 size, const float p_alpha, const Viewport* viewport) const
 	{
-		draw(coord, pos - size / 2, size, p_alpha, viewport);
+		draw(coord, pos - size / 2, size, p_alpha, viewport); 
 	}
 }

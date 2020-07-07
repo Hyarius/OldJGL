@@ -112,11 +112,11 @@ namespace jgl
 
 		pos += _anchor;
 
-		draw_text(_text_to_draw, pos, _size, 0, _color, _style, viewport);
+		draw_text(_text_to_draw, pos, _size, 0, _color, _style);
 
 		pos.x += calc_text_len(_text_to_draw.substr(0, _cursor_to_draw), _size);
 
 		if (_selected == true && (SDL_GetTicks() / 400) % 2 == 0)
-			fill_rectangle(pos, Vector2(2, _size), Color(50, 50, 50), viewport);
+			fill_rectangle(pos, Vector2(2, _size), Color(50, 50, 50));
 	}
 }

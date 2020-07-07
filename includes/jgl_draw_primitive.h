@@ -8,20 +8,20 @@
 
 namespace jgl
 {
-	void draw_pixel_color(Pixel points, Color colors, size_t nb = 1);
-	void draw_line_color(Pixel* points, Color* colors, size_t nb = 1);
-	void draw_triangle_color(Pixel* points, Color* colors, size_t nb = 1);
-	void draw_triangle_texture(Pixel* points, Uv* uvs, float alpha, size_t nb = 1);
-	void fill_triangle_color(Pixel* points, Color* colors, size_t nb = 1);
+	void draw_pixel_color(const Pixel points, const Color colors, const size_t nb = 1);
+	void draw_line_color(const Pixel* points, const Color* colors, const size_t nb = 1);
+	void draw_triangle_color(const Pixel* points, const Color* colors, const size_t nb = 1);
+	void draw_triangle_texture(const Pixel* points, const Uv* uvs, float alpha, const size_t nb = 1);
+	void fill_triangle_color(const Pixel* points, const Color* colors, const size_t nb = 1);
 
-	std::vector<Vector2> calc_point(size_t width);
-	void draw_line(Vector2 p1, Vector2 p2, size_t width, Color p_color, Viewport* viewport = nullptr);
-	void draw_point(Vector2 center, size_t width, Color p_color, Viewport* viewport = nullptr);
-	void draw_rectangle(Vector2 p_tl, Vector2 p_tr, Vector2 p_dl, Vector2 p_dr, Color p_color, Viewport* viewport = nullptr);
-	void fill_rectangle(Vector2 p_tl, Vector2 p_tr, Vector2 p_dl, Vector2 p_dr, Color p_color, Viewport* viewport = nullptr);
-	void draw_rectangle(Vector2 pos, Vector2 size, Color p_color, Viewport* viewport = nullptr);
-	void fill_rectangle(Vector2 pos, Vector2 size, Color p_color, Viewport* viewport = nullptr);
-	void fill_centred_rectangle(Vector2 p_coord, Vector2 p_size, Color p_color, Viewport* viewport = nullptr);
-	void draw_centred_rectangle(Vector2 p_coord, Vector2 p_size, Color p_color, Viewport* viewport = nullptr);
+	std::vector<Vector2> calc_point(const size_t width);
+	void draw_line(const Vector2 p1, const Vector2 p2, const size_t width, const Color p_color, const Viewport* viewport = nullptr);
+	void draw_point(const Vector2 center, const size_t width, const Color p_color, const Viewport* viewport = nullptr);
+	void draw_rectangle(const Vector2 p_tl, const Vector2 p_tr, const Vector2 p_dl, const Vector2 p_dr, const Color p_color, const Viewport* viewport = nullptr);
+	void fill_rectangle(const Vector2 p_tl, const Vector2 p_tr, const Vector2 p_dl, const Vector2 p_dr, const Color p_color, const Viewport* viewport = nullptr);
+	void draw_rectangle(const Vector2 pos, const Vector2 size, const Color p_color, const Viewport* viewport = nullptr);
+	void fill_rectangle(const Vector2 pos, const Vector2 size, const Color p_color, const Viewport* viewport = nullptr);
+	void fill_centred_rectangle(const Vector2 p_coord, const Vector2 p_size, const Color p_color, const Viewport* viewport = nullptr);
+	void draw_centred_rectangle(const Vector2 p_coord, const Vector2 p_size, const Color p_color, const Viewport* viewport = nullptr);
 }
 #endif

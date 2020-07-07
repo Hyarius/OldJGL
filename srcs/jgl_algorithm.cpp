@@ -2,17 +2,17 @@
 
 namespace jgl
 {
-	Triangle3D		calc_face_triangle(Face* face, jgl::Matrix4x4 rot_matrix, Mesh_part* mesh_part, Vector3 delta)
+	Triangle3D		calc_face_triangle(const Face* face, const jgl::Matrix4x4 rot_matrix, const Mesh_part* mesh_part, const Vector3 delta)
 	{
 		Triangle3D	result;
 
-		result.a = (rot_matrix * mesh_part->vertices()[face->index_vertices[0]]) + delta;
-		result.b = (rot_matrix * mesh_part->vertices()[face->index_vertices[1]]) + delta;
-		result.c = (rot_matrix * mesh_part->vertices()[face->index_vertices[2]]) + delta;
+		result.a = (rot_matrix * mesh_part->vertices(face->index_vertices[0])) + delta;
+		result.b = (rot_matrix * mesh_part->vertices(face->index_vertices[1])) + delta;
+		result.c = (rot_matrix * mesh_part->vertices(face->index_vertices[2])) + delta;
 		return (result);
 	}
 
-	Vector3		triangle_center(Triangle3D tri)
+	Vector3		triangle_center(const Triangle3D tri)
 	{
 		Vector3	ret;
 
@@ -24,7 +24,7 @@ namespace jgl
 		return (ret);
 	}
 
-	float signed_volume(Vector3 a, Vector3 b, Vector3 c, Vector3 d)
+	float signed_volume(const jgl::Vector3 a, const jgl::Vector3 b, const jgl::Vector3 c, const jgl::Vector3 d)
 	{
 		return (((b - a).cross(c - a)).dot(d - a) / 6);
 	}
@@ -32,14 +32,14 @@ namespace jgl
 #define POSITIVE 1
 #define NEGATIVE 0
 
-	int get_sign(float value)
+	int get_sign(const float value)
 	{
 		if (value >= 0)
 			return (POSITIVE);
 		return (NEGATIVE);
 	}
 
-	bool		intersect_triangle_by_segment(Triangle3D triangle, Line3D line)
+	bool		intersect_triangle_by_segment(const Triangle3D triangle, const Line3D line)
 	{
 		int a = get_sign(signed_volume(line.a, triangle.a, triangle.b, triangle.c));
 		int b = get_sign(signed_volume(line.b, triangle.a, triangle.b, triangle.c));
@@ -52,7 +52,7 @@ namespace jgl
 		return (false);
 	}
 
-	bool triangles_intersection(Triangle3D tri1, Triangle3D tri2)
+	bool triangles_intersection(const Triangle3D tri1, const Triangle3D tri2)
 	{
 		Line3D	seg;
 
@@ -68,7 +68,7 @@ namespace jgl
 		return (false);
 	}
 
-	bool triangles_line_intersection(Line3D line, Triangle3D tri, Vector3* intersection)
+	bool triangles_line_intersection(const Line3D line, const Triangle3D tri, Vector3* intersection)
 	{
 		Vector3 end = line.a + line.b * 1000;
 		int s1 = get_sign(signed_volume(line.a, tri.a, tri.b, tri.c));
@@ -92,7 +92,7 @@ namespace jgl
 		return false;
 	}
 
-	bool is_triangle_parallele(Triangle3D tri1, Triangle3D tri2)
+	bool is_triangle_parallele(const Triangle3D tri1, const Triangle3D tri2)
 	{
 		Vector3 normale_a;
 		Vector3 normale_b;
@@ -112,7 +112,7 @@ namespace jgl
 		return (false);
 	}
 
-	bool compare_faces(Face* face, Mesh* base, Mesh_part *base_part, Mesh* to_check)
+	bool compare_faces(const Face* face, const Mesh* base, const Mesh_part *base_part, const Mesh* to_check)
 	{
 		Triangle3D	tri_comp;
 		Triangle3D	tri_tar;
@@ -158,7 +158,7 @@ namespace jgl
 		return (false);
 	}
 
-	bool intersect_mesh(Mesh* to_move, Mesh* to_check)
+	bool intersect_mesh(const Mesh* to_move, const Mesh* to_check)
 	{
 		Face* tmp;
 		for (size_t tmp_index = 0; tmp_index < to_check->parts().size(); tmp_index++)
@@ -174,7 +174,7 @@ namespace jgl
 		return (false);
 	}
 
-	bool intersect_bubble_box(Mesh* to_move, Mesh* to_check)
+	bool intersect_bubble_box(const Mesh* to_move, const Mesh* to_check)
 	{
 		Vector3 move_center;
 		Vector3 check_center;

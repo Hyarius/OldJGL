@@ -3,11 +3,11 @@
 
 namespace jgl
 {
-	void json_add_line(std::fstream& file, size_t tab, jgl::String type_name, jgl::String symbol);
-	void json_add_line(std::fstream& file, size_t tab, jgl::String text);
+	void json_add_line(std::fstream& file, const size_t tab, const jgl::String type_name, const jgl::String symbol);
+	void json_add_line(std::fstream& file, const size_t tab, const jgl::String text);
 
 	template <typename T>
-	void json_add_vector(std::fstream& file, size_t tab, jgl::String type_name, std::vector<T>& vector, Funct p_funct, Data p_data)
+	void json_add_vector(std::fstream& file, const size_t tab, const jgl::String type_name, const std::vector<T>& vector, const Funct p_funct, const Data p_data)
 	{
 		Data data;
 
@@ -29,7 +29,7 @@ namespace jgl
 	}
 
 	template <typename T, typename V>
-	void json_add_map(std::fstream& file, size_t tab, jgl::String type_name, std::map<T, V> map, Funct p_funct, Data p_data)
+	void json_add_map(std::fstream& file, const size_t tab, const jgl::String type_name, const std::map<T, V> map, const Funct p_funct, const Data p_data)
 	{
 		if (map.size() == 0)
 			return;

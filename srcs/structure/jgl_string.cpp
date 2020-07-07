@@ -66,29 +66,66 @@ namespace jgl
 
 		return (*this);
 	}
-	bool String::operator == (const jgl::String other)
+	bool String::operator == (const jgl::String other) const
 	{
-		return ((*this)->operator==(*other));
+		if (size() != other.size())
+			return (false);
+		for (size_t i = 0; i < size(); i++)
+			if (other[i] != this->operator[](i))
+				return (false);
+		return (true);
 	}
-	bool String::operator != (const jgl::String other)
+	bool String::operator != (const jgl::String other) const
 	{
-		return ((*this)->operator!=(*other));
+		if (size() != other.size())
+			return (false);
+		for (size_t i = 0; i < size(); i++)
+			if (other[i] != this->operator[](i))
+				return (false);
+		return (true);
+	}
+	bool String::equal (const jgl::String& other) const
+	{
+		if (size() != other.size())
+			return (false);
+		for (size_t i = 0; i < size(); i++)
+			if (other[i].value() != this->operator[](i).value())
+				return (false);
+		return (true);
+	}
+	bool String::different (const jgl::String& other) const
+	{
+		if (size() != other.size())
+			return (false);
+		for (size_t i = 0; i < size(); i++)
+			if (other[i].value() != this->operator[](i).value())
+				return (false);
+		return (true);
 	}
 	const char* String::str()
 	{
-		std::string tmp = std();
-		return (tmp.c_str());
+		return ((*this)->str());
 	}
-	std::string String::std()
+	const std::string String::std() const
 	{
 		return ((*this)->std());
 	}
-	jgl::Array<jgl::String> String::split(jgl::String delim, bool regroup)
+	jgl::Array<jgl::String> String::split(jgl::String delim, bool regroup) const
 	{
 		return (strsplit(*this, delim, regroup));
 	}
 
-	jgl::String String::substr(size_t start, size_t end)
+	jgl::String String::copy() const
+	{
+		jgl::String result = jgl::String();
+
+		for (size_t i = 0; i < size(); i++)
+			result.push_back(this->operator[](i));
+
+		return (result);
+	}
+
+	jgl::String String::substr(size_t start, size_t end) const
 	{
 		jgl::String result = jgl::String();
 
@@ -96,7 +133,7 @@ namespace jgl
 
 		return (result);
 	}
-	void String::substr(jgl::String& result, size_t start, size_t end)
+	void String::substr(jgl::String& result, size_t start, size_t end) const
 	{
 		size_t size = end - start;
 
@@ -110,7 +147,7 @@ namespace jgl
 		for (size_t i = 0; i < size; i++)
 			result[i] = this->operator[](i + start);
 	}
-	void String::print_info()
+	void String::print_info() const
 	{
 		std::cout << "String : " << *this << "(ref : " << this->reference()->value() << ")" << std::endl;
 	}
@@ -161,17 +198,40 @@ namespace jgl
 		(*this)->pop_back();
 	}
 
-	size_t String::size()
+	const size_t String::char_size() const
+	{
+		size_t result = 0;
+		for (size_t i = 0; i < size(); i++)
+		{
+			result += this->operator[](i).size();
+		}
+		return (result);
+	}
+
+	const size_t String::size() const
 	{
 		return ((*this)->size());
 	}
-	bool String::find(Glyph to_find)
+	const bool String::find(Glyph to_find) const
 	{
-		return ((*this)->find(to_find));
+		for (size_t i = 0; i < size(); i++)
+			if (this->operator[](i) == to_find)
+				return(true);
+		return (false);
 	}
-	bool String::contain(Unique_string to_find)
+	const bool String::contain(Unique_string to_find) const
 	{
-		return ((*this)->contain(to_find));
+		bool result = false;
+		for (size_t i = 0; i < size(); i++)
+		{
+			result = false;
+			for (size_t j = 0; j < to_find.size() && result == false; j++)
+				if (this->operator[](i) == to_find[j])
+					result = true;
+			if (result == false)
+				return (false);
+		}
+		return (true);
 	}
 	void String::clear()
 	{

@@ -2,6 +2,7 @@
 
 namespace jgl
 {
+
 	Mesh::Mesh(Vector3 p_pos, Vector3 p_rot, Vector3 p_size)
 	{
 		_pos = p_pos;
@@ -20,9 +21,30 @@ namespace jgl
 		{4, 3, 1}
 	};
 
+	void tmp_strsplit(jgl::Array<jgl::String>& tab, jgl::String& input, jgl::Glyph& delim, bool regroup = true)
+	{
+		size_t tmp = input.size();
+		size_t index = 0;
+		size_t nb_word = 0;
+
+		tab.resize(count_word(input, delim));
+		while (index < tmp)
+		{
+			size_t word_len = count_word_len(input, delim, index);
+			if (word_len != 0 || regroup == true)
+			{
+				tab[nb_word].clear();
+				input.substr(tab[nb_word], index, index + word_len);
+				nb_word++;
+			}
+			index += word_len + 1;
+		}
+	}
+
 	static void compose_face(jgl::Mesh *target, jgl::Array<jgl::String>& tab, int type, Color color, size_t index)
 	{
-		jgl::Array<jgl::String> face_content;
+		static jgl::Array<jgl::String> face_content;
+		static jgl::Glyph delim = '/';
 		int index_vertices[3] = { -1, -1, -1 }, index_uvs[3] = { -1, -1, -1 }, index_normales[3] = { -1, -1, -1 };
 		int delta_vertice_index = 0;
 		int delta_uvs_index = 0;
@@ -40,7 +62,7 @@ namespace jgl
 
 		for (size_t i = 0; i < 3; i++)
 		{
-			strsplit(face_content, tab[face_index_value[type][i]], "/", false);
+			tmp_strsplit(face_content, tab[face_index_value[type][i]], delim, false);
 			index_vertices[i] = stoi(face_content[0]) - 1 - delta_vertice_index;
 			if (face_content.size() >= 2)
 				index_uvs[i] = (face_content[1].size() == 0 ? -1 : stoi(face_content[1]) - 1 - delta_uvs_index);
@@ -52,7 +74,10 @@ namespace jgl
 
 	static jgl::String create_address(jgl::String path)
 	{
-		jgl::Array<jgl::String> tab = strsplit(path, "/");
+		jgl::Array<jgl::String> tab;
+		static jgl::Glyph delim = '/';
+			
+		tmp_strsplit(tab, path, delim);
 
 		jgl::String result = "";
 
@@ -70,33 +95,32 @@ namespace jgl
 		return (Color(stof(tab[1]), stof(tab[2]), stof(tab[3])));
 	}
 
-	static size_t count_word_len(jgl::String& input, jgl::String& delim, size_t start)
-	{
-		size_t result = 0;
-
-		for (result = start; result < input.size(); result++)
-		{
-			if (input[result] == delim[0])
-			{
-				size_t j = 0;
-				while (j < delim.size() &&
-					result + j < input.size() &&
-					input[result + j] == delim[j])
-					j++;
-				if (j == delim.size())
-					return (result - start);
-				result += j - 1;
-			}
-		}
-		return (result - start);
-	}
-
 	void Mesh::parse_materials(jgl::String p_path)
 	{
 		Material* material = nullptr;
 		std::fstream file = open_file(p_path, std::ios_base::in | std::ios_base::out);
 		jgl::String line;
-		jgl::Array<jgl::String> tab;
+		static jgl::Glyph delim = ' ';
+		static jgl::String controler[17] = {
+			"newmtl",
+			"Ka",
+			"Kd",
+			"Ks",
+			"Ns",
+			"Ke",
+			"Ni",
+			"d",
+			"illum",
+			"map_Ka",
+			"map_Kd",
+			"map_Ks",
+			"map_Ns",
+			"map_d",
+			"map_Bump",
+			"map_bump",
+			"bump"
+		};
+		static jgl::Array<jgl::String> tab;
 		jgl::String address = create_address(p_path);
 
 		while (file.eof() == false)
@@ -104,122 +128,150 @@ namespace jgl
 			line = get_str(file);
 			if (line.size() != 0 && line[0] != '#')
 			{
-				strsplit(tab, line, " ");
-				if (tab[0] == "newmtl")
+				tab.clear();
+				tmp_strsplit(tab, line, delim);
+				if (tab[0].equal(controler[0]) == true)
 				{
 					if (material != nullptr)
 						_materials.push_back(material);
 					material = new Material(tab[1]);
 				}
 				// Ambient Color
-				else if (tab[0] == "Ka")
+				else if (tab[0].equal(controler[1]) == true)
 				{
 					if (tab.size() != 4)
 						error_exit(1, "Bad number of argument in Ka construction");
-
+					if (material == nullptr)
+						material = new Material("Unnamed");
 					material->ka = create_color_from_tab(tab);
 				}
 				// Diffuse Color
-				else if (tab[0] == "Kd")
+				else if (tab[0].equal(controler[2]) == true)
 				{
 					if (tab.size() != 4)
 						error_exit(1, "Bad number of argument in Kd construction");
 
+					if (material == nullptr)
+						material = new Material("Unnamed");
 					material->kd = create_color_from_tab(tab);
 				}
 				// Specular Color
-				else if (tab[0] == "Ks")
+				else if (tab[0].equal(controler[3]) == true)
 				{
 					if (tab.size() != 4)
 						error_exit(1, "Bad number of argument in Ks construction");
 
+					if (material == nullptr)
+						material = new Material("Unnamed");
 					material->ks = create_color_from_tab(tab);
 				}
 				// Specular Exponent
-				else if (tab[0] == "Ns")
+				else if (tab[0].equal(controler[4]) == true)
 				{
 					if (tab.size() != 2)
 						error_exit(1, "Bad number of argument in Ns construction");
 
+					if (material == nullptr)
+						material = new Material("Unnamed");
 					material->ns = stof(tab[1]);
 				}
-				else if (tab[0] == "Ke")
+				else if (tab[0].equal(controler[5]) == true)
 				{
 					if (tab.size() != 4)
 						error_exit(1, "Bad number of argument in Ke construction");
 
+					if (material == nullptr)
+						material = new Material("Unnamed");
 					material->ke = create_color_from_tab(tab);
 				}
 				// Optical Density
-				else if (tab[0] == "Ni")
+				else if (tab[0].equal(controler[6]) == true)
 				{
 					if (tab.size() != 2)
 						error_exit(1, "Bad number of argument in Ni construction");
 
+					if (material == nullptr)
+						material = new Material("Unnamed");
 					material->ni = stof(tab[1]);
 				}
 				// Dissolve
-				else if (tab[0] == "d")
+				else if (tab[0].equal(controler[7]) == true)
 				{
 					if (tab.size() != 2)
 						error_exit(1, "Bad number of argument in D construction");
 
+					if (material == nullptr)
+						material = new Material("Unnamed");
 					material->d = stof(tab[1]);
 				}
 				// Illumination
-				else if (tab[0] == "illum")
+				else if (tab[0].equal(controler[8]) == true)
 				{
 					if (tab.size() != 2)
 						error_exit(1, "Bad number of argument in illum construction");
 
+					if (material == nullptr)
+						material = new Material("Unnamed");
 					material->illum = stoi(tab[1]);
 				}
 				// Ambient Texture Map
-				else if (tab[0] == "map_Ka")
+				else if (tab[0].equal(controler[9]) == true)
 				{
 					if (tab.size() != 2)
 						error_exit(1, "Bad number of argument in map Ka construction");
 
+					if (material == nullptr)
+						material = new Material("Unnamed");
 					material->ambiant_texture = new Image(tab[1]);
 				}
 				// Diffuse Texture Map
-				else if (tab[0] == "map_Kd")
+				else if (tab[0].equal(controler[10]) == true)
 				{
 					if (tab.size() != 2)
 						error_exit(1, "Bad number of argument in map Kd construction");
 
+					if (material == nullptr)
+						material = new Material("Unnamed");
 					material->diffuse_texture = new Image(address + tab[1]);
 				}
 				// Specular Texture Map
-				else if (tab[0] == "map_Ks")
+				else if (tab[0].equal(controler[11]) == true)
 				{
 					if (tab.size() != 2)
 						error_exit(1, "Bad number of argument in map Ks construction");
 
+					if (material == nullptr)
+						material = new Material("Unnamed");
 					material->specular_texture = new Image(address + tab[1]);
 				}
 				// Specular Hightlight Map
-				else if (tab[0] == "map_Ns")
+				else if (tab[0].equal(controler[12]) == true)
 				{
 					if (tab.size() != 2)
 						error_exit(1, "Bad number of argument in map Ns construction");
 
+					if (material == nullptr)
+						material = new Material("Unnamed");
 					material->specular_hight_light = new Image(address + tab[1]);
 				}
 				// Alpha Texture Map
-				else if (tab[0] == "map_d")
+				else if (tab[0].equal(controler[13]) == true)
 				{
 					if (tab.size() != 2)
 						error_exit(1, "Bad number of argument in map Kd construction");
 
+					if (material == nullptr)
+						material = new Material("Unnamed");
 					material->alpha_texture = new Image(address + tab[1]);
 				}
 				// Bump Map
-				else if (tab[0] == "map_Bump" || tab[0] == "map_bump" || tab[0] == "bump")
+				else if (tab[0].equal(controler[14]) == true || tab[0].equal(controler[15]) == true || tab[0].equal(controler[16]) == true)
 				{
 					if (tab.size() != 2)
 						error_exit(1, "Bad number of argument in bump map construction");
 
+					if (material == nullptr)
+						material = new Material("Unnamed");
 					material->bump = new Image(address + tab[1]);
 				}
 
@@ -233,7 +285,6 @@ namespace jgl
 	{
 		for (size_t i = 0; i < _materials.size(); i++)
 		{
-
 			if (_materials[i]->name == p_name)
 				return (_materials[i]);
 		}
@@ -244,51 +295,65 @@ namespace jgl
 	{
 		int tmp_part_index = -1;
 		jgl::String line;
-		jgl::Array<jgl::String> tab;
+		static jgl::Glyph delim = ' ';
+		static jgl::String controler[7] = {
+			"v",
+			"vt",
+			"vn",
+			"o",
+			"mtllib",
+			"usemtl",
+			"f"
+		};
+		static jgl::Array<jgl::String> tab;
 		std::fstream file = open_file(p_path, std::ios_base::in | std::ios_base::out);
 		jgl::String address = create_address(p_path);
 
 		while (file.eof() == false)
 		{
 			line = get_str(file);
-			tab = line.split(" ");
-
-			if (tab.size() != 0)
+			if (line.size() != 0)
 			{
-				if (tab[0] == "v")
-					add_point(Vector3(stof(tab[1]), stof(tab[2]), stof(tab[3])), tmp_part_index);
-				else if (tab[0] == "vt")
-					add_uv(Vector2(stof(tab[1]), 1.0f - stof(tab[2])), tmp_part_index);
-				else if (tab[0] == "vn")
-					add_normale(Vector3(stof(tab[1]), stof(tab[2]), stof(tab[3])), tmp_part_index);
-				else if (tab[0] == "o")
+				tab.clear();
+				tmp_strsplit(tab, line, delim);
+
+				if (tab.size() != 0)
 				{
-					add_new_part((tab.size() == 2 ? tab[1] : "Unnamed"));
-					tmp_part_index++;
-				}
-				else if (tab[0] == "mtllib")
-				{
-					jgl::String to_send = address + tab[1];
-					parse_materials(to_send);
-				}
-				else if (tab[0] == "usemtl")
-				{
-					Material* tmp_material = find_material(tab[1]);
-					_parts[tmp_part_index]->set_material(tmp_material);
-				}
-				else if (tab[0] == "f")
-				{
-					if (tab.size() == 4)
+					if (tab[0].equal(controler[0]) == true)
+						add_point(Vector3(stof(tab[1]), stof(tab[2]), stof(tab[3])), tmp_part_index);
+					else if (tab[0].equal(controler[1]) == true)
+						add_uv(Vector2(stof(tab[1]), 1.0f - stof(tab[2])), tmp_part_index);
+					else if (tab[0].equal(controler[2]) == true)
+						add_normale(Vector3(stof(tab[1]), stof(tab[2]), stof(tab[3])), tmp_part_index);
+					else if (tab[0].equal(controler[3]) == true)
 					{
-						compose_face(this, tab, 0, color, tmp_part_index);
+						add_new_part((tab.size() == 2 ? tab[1] : "Unnamed"));
+						tmp_part_index++;
 					}
-					else
+					else if (tab[0].equal(controler[4]) == true)
 					{
-						compose_face(this, tab, 0, color, tmp_part_index);
-						compose_face(this, tab, 1, color, tmp_part_index);
+						jgl::String to_send = address + tab[1];
+						parse_materials(to_send);
 					}
-					//else
-					//	error_exit(1, "Error while parsing a mesh : facee with strange number of index\nLine = " + line);
+					else if (tab[0].equal(controler[5]) == true)
+					{
+						Material* tmp_material = find_material(tab[1]);
+						_parts[tmp_part_index]->set_material(tmp_material);
+					}
+					else if (tab[0].equal(controler[6]) == true)
+					{
+						if (tab.size() == 4)
+						{
+							compose_face(this, tab, 0, color, tmp_part_index);
+						}
+						else
+						{
+							compose_face(this, tab, 0, color, tmp_part_index);
+							compose_face(this, tab, 1, color, tmp_part_index);
+						}
+						//else
+						//	error_exit(1, "Error while parsing a mesh : facee with strange number of index\nLine = " + line);
+					}
 				}
 			}
 		}
@@ -317,6 +382,11 @@ namespace jgl
 		_up = ((_forward).cross(_right)).normalize();
 	}
 
+	void Mesh::resize(Vector3 p_size)
+	{
+		_size = p_size;
+	}
+
 	void Mesh::look_at(Vector3 target)
 	{
 		Vector3	result;
@@ -329,12 +399,10 @@ namespace jgl
 		compute_axis();
 	}
 
-	void Mesh::rotate_around_point(Vector3 target, Vector3 delta)
+	void Mesh::rotate_around_point(Vector3 target, float angle, Vector3 axis)
 	{
 		Vector3 tmp;
-		Matrix4x4 rotation;
-
-		rotation = Matrix4x4(Matrix_type::rotation, delta.x, delta.y, delta.z);
+		Matrix4x4 rotation = jgl::Matrix4x4::matrix_custom_rotation(angle, axis);
 
 		tmp = _pos - target;
 		tmp = rotation * tmp;
@@ -385,18 +453,18 @@ namespace jgl
 		}
 	}
 
-	void Mesh::render_differed(Camera* camera, Vector3 p_pos)
+	void Mesh::render_differed(const Camera* camera, Vector3 p_pos, const jgl::Viewport* viewport)
 	{
 		for (size_t i = 0; i < _parts.size(); i++)
-			_parts[i]->render(this, camera, p_pos);
+			_parts[i]->render(this, camera, p_pos, viewport);
 	}
 
-void Mesh::add_component(Mesh* mesh, Vector3 p_pos, int index)
+void Mesh::add_component(const Mesh* mesh, const Vector3 p_pos, const int index)
 {
 	for (size_t tmp_index = 0; tmp_index < mesh->parts().size(); tmp_index++)
 	{
 		Mesh_part* tmp = check_part((index < 0 ? -1 : index + tmp_index));
-		Mesh_part* other = mesh->check_part(tmp_index);
+		Mesh_part* other = mesh->control_part(tmp_index);
 		size_t index_actual_vertices;
 		size_t index_actual_uvs;
 		size_t index_actual_normales;
@@ -446,7 +514,7 @@ void Mesh::add_component(Mesh* mesh, Vector3 p_pos, int index)
 		return (_parts[index]);
 	}
 
-	Mesh_part* Mesh::control_part(int index)
+	Mesh_part* Mesh::control_part(int index) const
 	{
 		if (index < 0)
 			index = 0;
@@ -455,7 +523,7 @@ void Mesh::add_component(Mesh* mesh, Vector3 p_pos, int index)
 		return (_parts[index]);
 	}
 
-	bool Mesh::remove_part(Mesh_part* p_part)
+	bool Mesh::remove_part(const Mesh_part* p_part)
 	{
 		for (size_t i = 0; i < _parts.size(); i++)
 		{

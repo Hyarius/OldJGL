@@ -69,22 +69,22 @@ namespace jgl
 							sprite = 4;
 						tmp_size = h_middle_size;
 					}
-					_tileset->draw(sprite, pos, tmp_size, 1.0f, viewport);
+					_tileset->draw(sprite, pos, tmp_size, 1.0f);
 					pos.x += tmp_size.x;
 				}
 				pos.y += (j == 0 || j == nb_sub_y + 1 ? corner_size : v_middle_size.y);
 			}
-			fill_rectangle(_anchor, _area, _delta, viewport);
+			fill_rectangle(_anchor, _area, _delta);
 		}
 		else
 		{
-			fill_rectangle(_anchor, _area, _back + _delta, viewport);
-			fill_rectangle(_anchor + _border, _area - _border * 2, _front + _delta, viewport);
+			fill_rectangle(_anchor, _area, _back + _delta);
+			fill_rectangle(_anchor + _border, _area - _border * 2, _front + _delta);
 		}
 		if (_tileset != nullptr && _tileset->image() != nullptr && _sprite != -1)
 		{
-			_image->draw(_sprite, _anchor, _area, 1.0f, viewport);
-			fill_rectangle(_anchor, _area, _delta, viewport);
+			_image->draw(_sprite, _anchor, _area, 1.0f);
+			fill_rectangle(_anchor, _area, _delta);
 		}
 	}
 }

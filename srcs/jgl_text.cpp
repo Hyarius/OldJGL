@@ -54,9 +54,9 @@ SDL_Color color_tab[NB_COLOR] = {
 
 namespace jgl
 {
-	void set_font_path(jgl::String p_font_path)
+	void set_font_path(const jgl::String p_font_path)
 	{
-		g_font_path = p_font_path;
+		g_font_path = p_font_path.copy();
 		font.clear();
 		tmp_index = 0;
 		for (size_t i = 0; i < char_list.size(); i++)
@@ -65,14 +65,14 @@ namespace jgl
 					char_list[i][j][k].clear();
 	}
 
-	SDL_Color			get_color(int i)
+	SDL_Color			get_color(const int i)
 	{
 		if (i < 0 || i >= NB_COLOR)
 			return (color_tab[0]);
 		return (color_tab[i]);
 	}
 
-	TTF_Font* get_font(size_t size)
+	TTF_Font* get_font(const size_t size)
 	{
 		if (size < 2)
 			error_exit(1, "Can't load a font of size < 2");
@@ -92,7 +92,7 @@ namespace jgl
 		return (font[size]);
 	}
 
-	TTF_Font* get_font_outline(size_t size)
+	TTF_Font* get_font_outline(const size_t size)
 	{
 		if (size < 2)
 			error_exit(1, "Can't load a font of size < 2");
@@ -112,7 +112,7 @@ namespace jgl
 		return (font_outline[size]);
 	}
 
-	Image* get_string_image(jgl::String str, size_t size, size_t outline, text_color color, text_style style)
+	Image* get_string_image(const jgl::String str, const size_t size, const size_t outline, const text_color color, const text_style style)
 	{
 		const char* text;
 
@@ -154,7 +154,7 @@ namespace jgl
 		return (new Image(surface));
 	}
 
-	Image* get_char(Glyph c, size_t size, size_t outline, text_color color, text_style style)
+	Image* get_char(const Glyph c, const size_t size, const size_t outline, const text_color color, const text_style style)
 	{
 		const char *text;
 
@@ -212,7 +212,23 @@ namespace jgl
 		return (char_list[size][static_cast<size_t>(style)][static_cast<size_t>(color)][outline][c.value()]);
 	}
 
-	int create_char_unicode(char* result, const char* base, size_t index)
+	int count_char_len(const char to_parse)
+	{
+		int limit = 0;
+
+		if ((to_parse & 0x80) == 0)
+			return (1);
+		else if ((to_parse & 0xE0) == 0xC0)
+			return (2);
+		else if ((to_parse & 0xF0) == 0xE0)
+			return (3);
+		else if ((to_parse & 0xF8) == 0xF0)
+			return (4);
+		else
+			return (-1);
+	}
+
+	int create_char_unicode(char* result, const char* base, const size_t index)
 	{
 		unsigned char to_parse = base[index];
 		int limit = 0;
@@ -247,15 +263,12 @@ namespace jgl
 		return (limit);
 	}
 
-	int				draw_text(jgl::String text, Vector2 coord, size_t size, size_t outline, text_color color, text_style style, Viewport* viewport)
+	int				draw_text(const jgl::String text, const Vector2 coord, const size_t size, const size_t outline, const text_color color, const text_style style, const Viewport* viewport)
 	{
 		Image* image;
 		size_t			i = 0;
 		Vector2			rel_coord;
 		int				delta = 0;
-
-		if (viewport == nullptr)
-			viewport = g_application->central_widget()->viewport();
 
 		if (size <= 2)
 			return 0;
@@ -276,7 +289,7 @@ namespace jgl
 		return (delta);
 	}
 
-	int				max_char_in_box(int space, size_t size)
+	int				max_char_in_box(const int space, const size_t size)
 	{
 		int nb_char = 0;
 		Image* image;
@@ -292,7 +305,7 @@ namespace jgl
 		return (nb_char);
 	}
 
-	int				calc_text_len(jgl::String text, size_t size)
+	int				calc_text_len(const jgl::String text, const size_t size)
 	{
 		Image* image;
 		size_t			i = 0;
@@ -311,11 +324,8 @@ namespace jgl
 		return (delta);
 	}
 
-	int				draw_centred_text(jgl::String text, Vector2 coord, size_t size, size_t outline, text_color color, text_style style, Viewport* viewport)
+	int				draw_centred_text(const jgl::String text, const Vector2 coord, const size_t size, const size_t outline, const text_color color, const text_style style, const Viewport* viewport)
 	{
-		if (viewport == nullptr)
-			viewport = g_application->central_widget()->viewport();
-
 		if (size <= 2)
 			return 0;
 

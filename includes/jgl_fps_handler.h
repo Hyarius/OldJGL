@@ -5,6 +5,6 @@ extern size_t			print_fps;
 
 namespace jgl
 {
-	int				get_frame_state(int div);
+	int				get_frame_state(const int div);
 }
 #endif

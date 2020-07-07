@@ -43,7 +43,7 @@ namespace jgl
 		_path = path;
 		_surface = IMG_Load(path.std().c_str());
 		if (_surface == NULL)
-			error_exit(1, "Can't load " + path + " file");
+			error_exit(1, "Can't load an image from " + path + " file");
 		_size = Vector2(_surface->w, _surface->h);
 
 		upload_texture();
@@ -86,18 +86,18 @@ namespace jgl
 		// https://www.codeproject.com/Questions/655714/How-to-write-openGl-offscreen-data-in-to-JPG-image
 	}
 
-	void Image::draw(Vector2 p_pos, Vector2 p_size, float p_alpha, Viewport* viewport)
+	void Image::draw(const Vector2 p_pos, const Vector2 p_size, const float p_alpha, const Viewport* viewport) const
 	{
 		if (_surface != NULL)
 		{
 			glActiveTexture(GL_TEXTURE0);
 			glBindTexture(GL_TEXTURE_2D, _texture_id);
-			draw_image(p_pos, p_size, p_alpha);
+			draw_image(p_pos, p_size, p_alpha, viewport);
 		}
 		else
 		{
-			draw_rectangle(p_pos, p_size, Color(0.2f, 0.2f, 0.2f));
-			draw_rectangle(p_pos + 4, p_size - 8, Color(0.4f, 0.4f, 0.4f));
+			draw_rectangle(p_pos, p_size, Color(0.2f, 0.2f, 0.2f), viewport);
+			draw_rectangle(p_pos + 4, p_size - 8, Color(0.4f, 0.4f, 0.4f), viewport);
 		}
 	}
 }

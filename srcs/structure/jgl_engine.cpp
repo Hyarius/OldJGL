@@ -37,4 +37,13 @@ namespace jgl
 				tmp->apply_velocity();
 		}
 	}
+
+	void Engine::render(const jgl::Camera *camera)
+	{
+		jgl::draw_rectangle(0, camera->viewport()->area(), jgl::Color(180, 180, 180), camera->viewport());
+		for (size_t i = 0; i < _meshes.size(); i++)
+		{
+			_meshes[i]->render(camera);
+		}
+	}
 }

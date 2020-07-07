@@ -3,8 +3,8 @@
 
 namespace jgl
 {
-	void open_log_file(jgl::String path, jgl::String log_name);
-	jgl::String get_file_info(jgl::String file_info, int line);
-	void write_in_log(jgl::String msg);
+	void open_log_file(const jgl::String path, const jgl::String log_name);
+	jgl::String get_file_info(const jgl::String file_info, const int line);
+	void write_in_log(const jgl::String msg);
 }
 #endif

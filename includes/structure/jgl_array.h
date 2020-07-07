@@ -35,6 +35,8 @@ namespace jgl
 			delete [] old_array_content;
 			
 			_array_content[nb_line] = new T[_push_size];
+			for (size_t i = 0; i < _push_size; i++)
+				_array_content[nb_line][i] = T();
 
 		}
 
@@ -64,7 +66,7 @@ namespace jgl
 		class Iterator
 		{
 		private:
-			Array<T>* _parent;
+			const Array<T>* _parent;
 			size_t _index;
 			T* _element;
 
@@ -90,15 +92,15 @@ namespace jgl
 				_index = 0;
 				_element = nullptr;
 			}
-			Iterator(Array<T>* p_parent, size_t p_index)
+			Iterator(const Array<T>* p_parent, const size_t p_index)
 			{
 				_parent = p_parent;
 				_index = p_index;
 				calc_element();
 			}
-			Array<T>* parent() const { return (_parent); }
-			size_t index() const { return (_index); }
-			T* element() const { return (_element); }
+			const Array<T>* parent() const { return (_parent); }
+			const size_t index() const { return (_index); }
+			const T* element() const { return (_element); }
 
 
 			Iterator operator + (const Iterator other)
@@ -175,7 +177,7 @@ namespace jgl
 				calc_element();
 			}
 
-			Iterator& operator = (size_t p_value)
+			Iterator& operator = (const size_t p_value)
 			{
 				if (_parent == nullptr)
 					error_exit_tmp(1, "No parent in jgl::Array : segfault");
@@ -248,7 +250,7 @@ namespace jgl
 					return (false);
 				return (_index >= other.index());
 			}
-			std::string str()
+			std::string str() const
 			{
 				std::string result;
 				std::ostringstream oss;
@@ -261,12 +263,12 @@ namespace jgl
 			}
 		};
 
-		Array(std::initializer_list<T> init) : Array<T>()
+		Array(const std::initializer_list<T> init) : Array<T>()
 		{
 			for (size_t i = 0; i < init.size(); i++)
 				push_back(init.begin()[i]);
 		}
-		Array(size_t p_push_size = 100)
+		Array(const size_t p_push_size = 100)
 		{
 			_array_content = nullptr;
 			_push_size = p_push_size;
@@ -285,7 +287,7 @@ namespace jgl
 			clear_computed();
 			delete_array_content();
 		}
-		void print()
+		void print() const
 		{
 			std::cout << (char*)("Size : ") << _size << (char*)("/") << _max_size << (char*)("(") << _push_size << (char*)(")") << std::endl;
 			std::cout << (char*)("Array content : ") << std::endl;
@@ -298,11 +300,11 @@ namespace jgl
 			}
 			std::cout << std::endl;
 		}
-		void print_info()
+		void print_info() const
 		{
 			std::cout << (char*)("Size : ") << _size << (char*)("/") << _max_size << (char*)("(") << _push_size << (char*)(")") << std::endl;
 		}
-		void print_content()
+		void print_content() const
 		{
 			std::cout << (char*)("Array content : ");
 			for (size_t i = 0; i < _size; i++)
@@ -330,8 +332,8 @@ namespace jgl
 		{
 			return (insert(0, elem));
 		}
-		Iterator front() { return (Iterator(this, 0)); }
-		Iterator back() { if (size() == 0)return (end()); return (Iterator(this, _size - 1)); }
+		const Iterator front() const { return (Iterator(this, 0)); }
+		const Iterator back() const { if (size() == 0)return (end()); return (Iterator(this, _size - 1)); }
 		jgl::Array<T>& operator = (const jgl::Array<T>& other)
 		{
 			this->clear();
@@ -341,7 +343,7 @@ namespace jgl
 
 			return (*this);
 		}
-		T& operator [](size_t index) const
+		T& operator [](const size_t index) const
 		{
 			if (index >= _max_size)
 			{
@@ -352,7 +354,7 @@ namespace jgl
 			size_t nb_index = index % _push_size;
 			return (_array_content[nb_line][nb_index]);
 		}
-		T& insert(size_t index, T elem)
+		T& insert(const size_t index, const T elem)
 		{
 			if (index >= _size + 1)
 			{
@@ -372,7 +374,7 @@ namespace jgl
 			clear_computed();
 			return (this->operator[](index));
 		}
-		T& insert(Iterator iter, T elem)
+		T& insert(const Iterator iter, const T elem)
 		{
 			if (iter.index() >= _size + 1)
 			{
@@ -426,18 +428,11 @@ namespace jgl
 				push_back(other[i]);
 			clear_computed();
 		}
-		void resize(size_t new_size)
+		void resize(const size_t new_size)
 		{
-			if (_size > new_size)
-			{
-				while (_size < new_size)
-					pop_back();
-			}
-			else if (_size < new_size)
-			{
-				while (_size < new_size)
-					push_back(T());
-			}
+			while (_max_size < new_size)
+				add_new_line();
+			_size = new_size;
 		}
 		void clear()
 		{
@@ -448,7 +443,7 @@ namespace jgl
 		{
 			return (_size == 0 ? true : false);
 		}
-		bool contain(T to_find) const
+		bool contain(const T to_find) const
 		{
 			for (size_t i = 0; i < size(); i++)
 				if (this->operator[](i) == to_find)
@@ -465,7 +460,7 @@ namespace jgl
 		{
 			erase(0);
 		}
-		void erase(size_t index)
+		void erase(const size_t index)
 		{
 			if (_size == 0)
 				return;
@@ -474,9 +469,9 @@ namespace jgl
 			this->operator[](_size - 1) = nullptr;
 			_size--;
 			clear_computed();
-
 		}
-		void erase(Iterator iter)
+
+		void erase(const Iterator iter)
 		{
 			if (_size == 0)
 				return;
@@ -486,13 +481,13 @@ namespace jgl
 			_size--;
 			clear_computed();
 		}
-		bool computed() const { return (_computed); }
-		T* computed_content() const { return (_computed_result); }
-		T** content() const { return (_array_content); }
-		size_t size() const { return (_size); }
-		size_t max_size() const { return (_max_size); }
-		size_t push_size() const { return (_push_size); }
-		T* all() 
+		const bool computed() const { return (_computed); }
+		const T* computed_content() const { return (_computed_result); }
+		const T** content() const { return (_array_content); }
+		const size_t size() const { return (_size); }
+		const size_t max_size() const { return (_max_size); }
+		const size_t push_size() const { return (_push_size); }
+		const T* all()
 		{
 			if (_computed == false)
 			{
@@ -507,7 +502,7 @@ namespace jgl
 
 			return (_computed_result);
 		}
-		Iterator find(T to_find) {
+		Iterator find(const T to_find) const {
 			for (size_t i = 0; i < size(); i++)
 			{
 				if (this->operator[](i) == to_find)
@@ -515,7 +510,7 @@ namespace jgl
 			}
 			return (end());
 		}
-		Iterator find(T to_find, size_t start) {
+		Iterator find(const T to_find, const size_t start) const {
 			for (size_t i = start; i < size(); i++)
 			{
 				if (this->operator[](i) == to_find)
@@ -523,11 +518,11 @@ namespace jgl
 			}
 			return (end());
 		}
-		Iterator begin()
+		Iterator begin() const
 		{
 			return (Iterator(this, 0));
 		}
-		Iterator end()
+		Iterator end() const
 		{
 			return (Iterator(this, size()));
 		}

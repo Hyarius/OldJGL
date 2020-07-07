@@ -169,6 +169,7 @@ namespace jgl
 		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 		glFrontFace(GL_CW);
 
+		glEnable(GL_SCISSOR_TEST);
 
 		glBindVertexArray(_vertex_array);
 
@@ -322,20 +323,20 @@ namespace jgl
 		return (0);
 	}
 
-	GLuint Application::add_custom_shader(jgl::String p_vertex_content, jgl::String p_fragment_content)
+	const GLuint Application::add_custom_shader(jgl::String p_vertex_content, jgl::String p_fragment_content)
 	{
 		GLuint result = load_shaders(p_vertex_content->std(), p_fragment_content->std());
 		_custom_program.push_back(result);
 
 		return (result);
 	}
-	GLuint Application::get_custom_program(size_t index)
+	const GLuint Application::get_custom_program(size_t index)
 	{
 		if (index >= _custom_program.size())
 			return (0);
 		return (_custom_program[index]);
 	}
-	GLuint Application::get_custom_uniform(GLuint p_program, jgl::String p_param)
+	const GLuint Application::get_custom_uniform(GLuint p_program, jgl::String p_param)
 	{
 		return (glGetUniformLocation(p_program, p_param->std().c_str()));
 	}

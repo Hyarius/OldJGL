@@ -143,7 +143,7 @@ namespace jgl
 	{
 		right = 0,
 		left = 1,
-		middle = 2,
+		center = 2,
 		count = 3
 	};
 

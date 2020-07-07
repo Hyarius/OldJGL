@@ -14,6 +14,15 @@ namespace jgl
 	class Unique_string
 	{
 	protected:
+		char* _str = nullptr;
+		void clear_str()
+		{
+			if (_str != nullptr)
+			{
+				delete _str;
+			}
+			_str = nullptr;
+		}
 		jgl::Array<Glyph> _content;
 
 	public:
@@ -22,44 +31,49 @@ namespace jgl
 		Unique_string(const char* str);
 		Unique_string(const std::string str);
 		Unique_string(const Unique_string& old);
+		~Unique_string()
+		{
+			clear_str();
+		}
 
-		size_t size() const { return (_content.size()); }
-		size_t push_size() const { return (_content.push_size()); }
-		size_t max_size() const { return (_content.max_size()); }
+		const size_t size() const { return (_content.size()); }
+		const size_t push_size() const { return (_content.push_size()); }
+		const size_t max_size() const { return (_content.max_size()); }
 
-		jgl::Array<Glyph>& content() { return (_content); }
+		const jgl::Array<Glyph>& content() const { return (_content); }
 
-		void push_back(const Glyph element) { _content.push_back(element); }
-		void push_front(const Glyph element) { _content.insert(0, element); }
+		void push_back(const Glyph element) { _content.push_back(element); clear_str(); }
+		void push_front(const Glyph element) { _content.insert(0, element); clear_str();}
 		Glyph& operator[](const size_t i);
 		const Glyph& operator[](size_t i) const;
-		void clear() { _content.clear(); }
+		void clear() { _content.clear(); clear_str();}
 
-		void resize(size_t new_size) { _content.resize(new_size); }
+		void resize(size_t new_size) { _content.resize(new_size); clear_str();}
 
 		Unique_string operator + (const Unique_string delta);
 		Unique_string operator += (const Unique_string delta);
 		void operator = (const Unique_string delta);
 
-		void print_info();
+		void print_info() const;
 
-		bool empty() { return (_content.empty()); }
-		bool find(Glyph to_find);
-		bool contain(Unique_string to_find);
+		const bool empty() const { return (_content.empty()); }
+		const bool find(Glyph to_find) const;
+		const bool contain(Unique_string to_find) const;
 		void pop_back() { _content.pop_back(); }
 		void erase(size_t index) { _content.erase(index); }
 
-		jgl::Array<jgl::Unique_string> split(jgl::Unique_string delim, bool regroup = true) { return (unique_strsplit(*this, delim, regroup)); }
-		jgl::Unique_string substr(size_t start, size_t end);
-		void substr(jgl::Unique_string& result, size_t start, size_t end);
+		jgl::Array<jgl::Unique_string> split(jgl::Unique_string delim, bool regroup = true) const { return (unique_strsplit(*this, delim, regroup)); }
+		jgl::Unique_string substr(const size_t start, const size_t end) const;
+		void substr(jgl::Unique_string& result, const size_t start, const size_t end) const;
 
-		void insert(size_t index, Glyph insert_value) { _content.insert(index, insert_value); }
-		void insert(size_t index, Unique_string insert_value) {
+		void insert(const size_t index, Glyph insert_value) { _content.insert(index, insert_value); }
+		void insert(const size_t index, Unique_string insert_value) {
 			for (size_t i = 0; i < insert_value.size(); i++)
 				_content.insert(index, insert_value[i]);
 		}
-
-		std::string std() const;
+		const char* str();
+		const char* str() const;
+		const std::string std() const;
 
 		bool operator == (const Unique_string other) const;
 		bool operator != (const Unique_string other) const;

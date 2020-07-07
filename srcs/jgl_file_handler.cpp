@@ -66,6 +66,7 @@ namespace jgl
 					(tmp.type == jgl::File_type::directory && tmp.name != "."))
 				files.push_back(tmp);
 		}
+		closedir(dir);
 		return files;
 	}
 

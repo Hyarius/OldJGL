@@ -11,7 +11,7 @@ namespace jgl
 		Reference_count() : _value(0) {}
 		void increment() { _value++; }
 		void decrement() { _value--; }
-		size_t value() const { return (_value); }
+		const size_t value() const { return (_value); }
 		void set_value(size_t p_value) { _value = p_value; }
 	};
 }

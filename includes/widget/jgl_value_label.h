@@ -57,7 +57,7 @@ namespace jgl
 
 		void set_geometry_imp(Vector2 p_anchor, Vector2 p_area)
 		{
-			//viewport()->resize(p_anchor, p_area);
+			//_viewport->resize(p_anchor, p_area);
 			_box.set_area(p_area);
 			_box.set_anchor(p_anchor);
 			_label.set_area(p_area - _box.border() * 4);

@@ -77,14 +77,34 @@ namespace jgl
 		return (*this);
 	}
 
-	void Unique_string::print_info()
+	void Unique_string::print_info() const
 	{
 		std::cout << "Size : " << _content.size() << std::endl;
 		std::cout << "Max size : " << _content.max_size() << std::endl;
 		std::cout << "Push size : " << _content.push_size() << std::endl;
 	}
+	const char* Unique_string::str()
+	{
+		size_t c = 0;
 
-	std::string Unique_string::std() const
+		if (_str == nullptr)
+		{
+			_str = new char[size()];
+
+			for (size_t i = 0; i < size(); i++)
+			{
+				jgl::Glyph tmp = this->operator[](i);
+				for (size_t j = 0; j < tmp.size(); j++)
+				{
+					_str[c] = tmp.content()[j];
+					c++;
+				}
+			}
+		}
+
+		return (_str);
+	}
+	const std::string Unique_string::std() const
 	{
 		std::string result;
 
@@ -123,7 +143,7 @@ namespace jgl
 		return (result);
 	}
 
-	bool Unique_string::find(const Glyph to_find)
+	const bool Unique_string::find(const Glyph to_find) const
 	{
 		for (size_t i = 0; i < size(); i++)
 			if (this->operator[](i) == to_find)
@@ -131,7 +151,7 @@ namespace jgl
 		return (false);
 	}
 
-	bool Unique_string::contain(Unique_string to_find)
+	const bool Unique_string::contain(const Unique_string to_find) const
 	{
 		bool result = false;
 		for (size_t i = 0; i < size(); i++)
@@ -161,7 +181,7 @@ namespace jgl
 		return (!(*this == other));
 	}
 
-	Unique_string Unique_string::substr(size_t start, size_t end)
+	Unique_string Unique_string::substr(const size_t start, const size_t end) const
 	{
 		Unique_string result;
 		
@@ -170,7 +190,7 @@ namespace jgl
 		return (result);
 	}
 
-	void Unique_string::substr(Unique_string& result, size_t start, size_t end)
+	void Unique_string::substr(Unique_string& result, const size_t start, const size_t end) const
 	{
 		size_t size = end - start;
 

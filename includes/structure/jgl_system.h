@@ -35,14 +35,12 @@ namespace jgl
 
 		Keyboard();
 		void actualize();
-		key_state get_key(key key_type);
-		key_state get_key(size_t key_type) { return (get_key(static_cast<key>(key_type))); }
+		const key_state get_key(const key key_type) const;
 	};
 
-	key_state get_key(key key_type);
-	key_state get_key(size_t key_type);
-	mouse_state get_button(mouse_button type);
-	Vector2 get_mouse_pos();
+	const key_state get_key(const key key_type);
+	const mouse_state get_button(const mouse_button type);
+	const Vector2 get_mouse_pos();
 }
 
 extern jgl::Keyboard *g_keyboard;

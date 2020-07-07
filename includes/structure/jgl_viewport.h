@@ -12,7 +12,7 @@ namespace jgl
 	class Viewport
 	{
 	protected:
-		class Widget* _owner;
+		const class Widget* _owner;
 		SDL_GLContext* _context;
 		Color _background;
 		bool _active;
@@ -34,18 +34,19 @@ namespace jgl
 
 		void set_background(Color p_color = Color(50, 50, 50)) { _background = p_color; }
 
-		void use();
-		void reset();
+		void use() const;
+		void reset() const;
 
 		void set_Color(Color Color);
 
 		void clear();
 
-		bool active() { return (_active); }
-		Vector2& area() { return (_area); }
-		Vector2& anchor() { return (_anchor); }
-		SDL_GLContext* context() { return (_context); }
-		Color background() { return (_background); }
+		const bool active() const { return (_active); }
+		const Vector2 area() const  { return (_area); }
+		const Vector2 anchor() const  { return (_anchor); }
+		const Vector2 cumuled_anchor() const;
+		const SDL_GLContext* context() const { return (_context); }
+		const Color background() const { return (_background); }
 	};
 }
 

@@ -37,13 +37,13 @@ namespace jgl
 		void set_border(int p_border) { _box.set_border(p_border); }
 		void set_sprite(int p_sprite) { _box.set_sprite(p_sprite); }
 		void set_corner_size(size_t p_corner_size) { _box.set_corner_size(p_corner_size); }
-		int sprite() { return (_box.sprite()); }
-		size_t corner_size() { return (_box.corner_size()); }
-		Sprite_sheet* tileset() { return (_box.tileset()); }
-		Sprite_sheet* image() { return (_box.image()); }
-		int border() { return (_box.border()); }
-		Color back() { return (_box.back()); }
-		Color front() { return (_box.front()); }
+		int sprite() const { return (_box.sprite()); }
+		size_t corner_size() const { return (_box.corner_size()); }
+		Sprite_sheet* tileset() const { return (_box.tileset()); }
+		Sprite_sheet* image() const { return (_box.image()); }
+		int border() const { return (_box.border()); }
+		Color back() const { return (_box.back()); }
+		Color front() const { return (_box.front()); }
 
 		// - label redirection function
 		void 		set_text(jgl::String p_text) { _label.set_text(p_text); }

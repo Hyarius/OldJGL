@@ -12,7 +12,7 @@ namespace jgl
 		Image* _image = nullptr;
 		Vector2 _size = 0;
 		Vector2 _unit = 1;
-		std::vector<Vector2> _sprites;
+		jgl::Array<Vector2> _sprites;
 
 	public:
 		Sprite_sheet() {
@@ -21,25 +21,25 @@ namespace jgl
 			_unit = 1;
 			_sprites.clear();
 		}
-		Sprite_sheet(jgl::Image *p_image, Vector2 p_size = 0);
-		Sprite_sheet(jgl::String path, Vector2 p_size = 0);
+		Sprite_sheet(const jgl::Image *p_image, const Vector2 p_size = 0);
+		Sprite_sheet(const jgl::String path, const Vector2 p_size = 0);
 		~Sprite_sheet()
 		{
 			if (_image != nullptr)
 				delete _image;
 		}
 
-		Image* image() { return (_image); }
-		Vector2 size() { return (_size); }
-		Vector2 unit() { return (_unit); }
-		std::vector<Vector2>& sprites() { return (_sprites); }
-		Vector2 sprite(size_t index)
+		const Image* image() const { return (_image); }
+		const Vector2 size() const { return (_size); }
+		const Vector2 unit() const { return (_unit); }
+		const jgl::Array<Vector2>& sprites() const { return (_sprites); }
+		const Vector2 sprite(const size_t index) const
 		{
 			if (index >= _sprites.size())
 				return (-1);
 			return (_sprites[index]);
 		}
-		Vector2 sprite(Vector2 coord)
+		const Vector2 sprite(const Vector2 coord) const
 		{
 			if (coord.x < 0 || coord.x >= _size.x ||
 				coord.y < 0 || coord.y >= _size.y)
@@ -47,11 +47,11 @@ namespace jgl
 			return (sprite(static_cast<size_t>(coord.x + (_size.x * coord.y))));
 		}
 
-		void draw(int id, Vector2 pos, Vector2 size, float p_alpha = 1.0f, Viewport* viewport = nullptr);
-		void draw_centred(int id, Vector2 pos, Vector2 size, float p_alpha = 1.0f, Viewport* viewport = nullptr);
+		void draw(const int id, const Vector2 pos, const Vector2 size, const float p_alpha = 1.0f, const Viewport* viewport = nullptr) const;
+		void draw_centred(const int id, const Vector2 pos, const Vector2 size, const float p_alpha = 1.0f, const Viewport* viewport = nullptr) const;
 
-		void draw(Vector2 sprite, Vector2 pos, Vector2 size, float p_alpha = 1.0f, Viewport* viewport = nullptr);
-		void draw_centred(Vector2 sprite, Vector2 pos, Vector2 size, float p_alpha = 1.0f, Viewport* viewport = nullptr);
+		void draw(const Vector2 sprite, const Vector2 pos, const Vector2 size, const float p_alpha = 1.0f, const Viewport* viewport = nullptr) const;
+		void draw_centred(const Vector2 sprite, const Vector2 pos, const Vector2 size, const float p_alpha = 1.0f, const Viewport* viewport = nullptr) const;
 	};
 }
 #endif

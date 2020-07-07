@@ -39,6 +39,7 @@ namespace jgl
 			pos.x = _area.x - calc_text_len(_text, _size) / 2.0f;
 			pos.y = _area.y / 2.0f;
 		}
-		draw_centred_text(_text, pos + _anchor, _size, 0, _color, _style, viewport);
+		pos += _anchor;
+		draw_centred_text(_text, pos, _size, 0, _color, _style);
 	}
 }

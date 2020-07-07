@@ -57,10 +57,10 @@ namespace jgl
 
 		Pixel& operator = (Vector2 p_value);
 
-		Pixel operator + (const Pixel& delta);
-		Pixel operator - (const Pixel& delta);
-		Pixel operator * (const Pixel& delta);
-		Pixel operator / (const Pixel& delta);
+		Pixel operator + (const Pixel& delta) const;
+		Pixel operator - (const Pixel& delta) const;
+		Pixel operator * (const Pixel& delta) const;
+		Pixel operator / (const Pixel& delta) const;
 		void operator += (const Pixel& delta);
 		void operator -= (const Pixel& delta);
 		void operator *= (const Pixel& delta);
@@ -69,13 +69,13 @@ namespace jgl
 		bool operator != (const Pixel& delta) const;
 		bool operator < (const Pixel& other) const;
 		bool operator > (const Pixel& other) const;
-		float* decompose();
-		float distance(Pixel& point);
-		Pixel normalize();
-		Pixel cross(Pixel& other);
-		float dot(Pixel& other);
-		jgl::Unique_string str();
-		Pixel floor();
+		const float* decompose() const ;
+		float distance(Pixel& point) const;
+		Pixel normalize() const;
+		Pixel cross(Pixel& other) const;
+		float dot(Pixel& other) const;
+		jgl::Unique_string str() const;
+		Pixel floor() const;
 	};
 }
 

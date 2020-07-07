@@ -107,7 +107,8 @@ namespace jgl
 
 		for (size_t i = 0; i < _childrens.size(); i++)
 		{
-			_childrens[i]->update_children();
+			if (_childrens[i]->is_frozen() == false)
+				_childrens[i]->update_children();
 		}
 	}
 
@@ -123,7 +124,7 @@ namespace jgl
 			_childrens[i]->quit_children();
 		}
 	}
-	void Widget::send_back()
+	void Widget::send_front()
 	{
 		if (_parent == nullptr)
 			return;
@@ -137,7 +138,7 @@ namespace jgl
 		*tmp = front;
 	}
 
-	void Widget::send_front()
+	void Widget::send_back()
 	{
 		if (_parent == nullptr)
 			return;

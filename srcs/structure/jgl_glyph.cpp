@@ -66,6 +66,15 @@ namespace jgl
 		std::cout << std::endl;
 	}
 
+	size_t Glyph::size() const
+	{
+		size_t result = 0;
+
+		for (size_t i = 0; _content[i] != 0; i++)
+			result++;
+		return (result);
+	}
+
 	size_t Glyph::value() const
 	{
 		size_t self_value = 0;

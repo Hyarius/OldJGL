@@ -7,10 +7,10 @@ namespace jgl
 	Material* Mesh::_base_material = nullptr;
 	Material* Mesh_part::_base_material = nullptr;
 
-	Mesh_part::Mesh_part(jgl::String p_name)
+	Mesh_part::Mesh_part(const jgl::String p_name)
 	{
 
-		_name = p_name;
+		_name = p_name.copy();
 
 		glGenBuffers(1, &_vertex_buffer);
 		glGenBuffers(1, &_normale_buffer);
@@ -29,7 +29,7 @@ namespace jgl
 		_material = _base_material;
 	}
 
-	void Mesh_part::compute_normales(jgl::Matrix4x4 rot_matrix)
+	void Mesh_part::compute_normales(const jgl::Matrix4x4 rot_matrix)
 	{
 		Vector3 b;
 		Vector3 c;
@@ -57,7 +57,7 @@ namespace jgl
 		}
 	}
 
-	void Mesh_part::bake(jgl::Matrix4x4 rot_matrix)
+	void Mesh_part::bake(const jgl::Matrix4x4 rot_matrix)
 	{
 		compute_normales(rot_matrix);
 
@@ -103,28 +103,30 @@ namespace jgl
 			}
 		}
 
-		Vector3* tmp = _baked_vertices.all();
-		Vector2* tmp2 = _baked_uvs.all();
-		Vector3* tmp3 = _baked_normales.all();
+		const Vector3* tmp = _baked_vertices.all();
+		const Vector2* tmp2 = _baked_uvs.all();
+		const Vector3* tmp3 = _baked_normales.all();
 
 		if (_baked_vertices.size() == 0)
 			return;
 
 		glBindBuffer(GL_ARRAY_BUFFER, _vertex_buffer);
-		glBufferData(GL_ARRAY_BUFFER, _baked_vertices.size() * 3 * sizeof(float), static_cast<float*>(&(tmp[0].x)), GL_STATIC_DRAW);
+		glBufferData(GL_ARRAY_BUFFER, _baked_vertices.size() * 3 * sizeof(float), static_cast<const float*>(&(tmp[0].x)), GL_STATIC_DRAW);
 
 		glBindBuffer(GL_ARRAY_BUFFER, _uv_buffer);
-		glBufferData(GL_ARRAY_BUFFER, _baked_uvs.size() * 2 * sizeof(float), static_cast<float*>(&(tmp2[0].x)), GL_STATIC_DRAW);
+		glBufferData(GL_ARRAY_BUFFER, _baked_uvs.size() * 2 * sizeof(float), static_cast<const float*>(&(tmp2[0].x)), GL_STATIC_DRAW);
 
 		glBindBuffer(GL_ARRAY_BUFFER, _normale_buffer);
-		glBufferData(GL_ARRAY_BUFFER, _baked_normales.size() * 3 * sizeof(float), static_cast<float*>(&(tmp3[0].x)), GL_STATIC_DRAW);
-
+		glBufferData(GL_ARRAY_BUFFER, _baked_normales.size() * 3 * sizeof(float), static_cast<const float*>(&(tmp3[0].x)), GL_STATIC_DRAW);
 	}
 
-	void Mesh_part::render_color(Mesh* parent, Camera* camera, Vector3 p_pos)
+	void Mesh_part::render_color(const Mesh* parent, const Camera* camera, Vector3 p_pos, const jgl::Viewport *viewport)
 	{
 		if (_baked_vertices.size() == 0)
 			return;
+
+		if (viewport != nullptr)
+			viewport->use();
 
 		glUseProgram(g_application->program_color_model());
 
@@ -175,10 +177,13 @@ namespace jgl
 		glDisableVertexAttribArray(1);
 	}
 
-	void Mesh_part::render_texture(Mesh *parent, Camera* camera, Vector3 p_pos)
+	void Mesh_part::render_texture(const Mesh *parent, const Camera* camera, Vector3 p_pos, const jgl::Viewport* viewport)
 	{
 		if (_baked_vertices.size() == 0)
 			return;
+
+		if (viewport != nullptr)
+			viewport->use();
 
 		glUseProgram(g_application->program_texture_model());
 
@@ -251,12 +256,12 @@ namespace jgl
 		glDisableVertexAttribArray(2);
 	}
 
-	void Mesh_part::render(Mesh* parent, Camera* camera, Vector3 p_pos)
+	void Mesh_part::render(const Mesh* parent, const Camera* camera, Vector3 p_pos, const jgl::Viewport* viewport)
 	{
 		if (_material->diffuse_texture == Material::empty_texture() || _uvs.size() == 0)
-			render_color(parent, camera, p_pos);
+			render_color(parent, camera, p_pos, viewport);
 		else
-			render_texture(parent, camera, p_pos);
+			render_texture(parent, camera, p_pos, viewport);
 	}
 	
 	void Mesh_part::clear()

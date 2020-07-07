@@ -55,10 +55,13 @@ namespace jgl
 	}
 
 
-	jgl::Vector3 Camera::mouse_direction()
+	jgl::Vector3 Camera::mouse_direction(const jgl::Viewport* p_viewport) const
 	{
-		float mouseX = g_mouse->pos.x / (g_application->size().x / 2) - 1.0f;
-		float mouseY = 1.0f - g_mouse->pos.y / (g_application->size().y / 2);
+		Vector2 area = (p_viewport == nullptr ? g_application->size() : p_viewport->area());
+		Vector2 delta = (p_viewport == nullptr ? 0 : p_viewport->cumuled_anchor());
+
+		float mouseX = (g_mouse->pos.x - delta.x) / (area.x / 2) - 1.0f;
+		float mouseY = 1.0f - (g_mouse->pos.y - delta.y) / (area.y / 2);
 
 		jgl::Vector4 screen_pos = jgl::Vector4(mouseX, mouseY, -1.0f, 1.0f);
 		jgl::Matrix4x4 inv_proj = _projection.inverse_matrix();
@@ -78,8 +81,28 @@ namespace jgl
 		Matrix4x4 rotation(Matrix_type::rotation, delta.x, delta.y, delta.z);
 
 		_direction = rotation * _direction;
-		calc_variable();
-		compute();
+		_right = rotation * _right;
+		_forward = rotation * _forward;
+		_up = rotation * _up;
+
+		_view.value[0][0] = _right.x;
+		_view.value[1][0] = _right.y;
+		_view.value[2][0] = _right.z;
+		_view.value[3][0] = -(_right.dot(_pos) / 2);
+		_view.value[0][1] = _up.x;
+		_view.value[1][1] = _up.y;
+		_view.value[2][1] = _up.z;
+		_view.value[3][1] = -(_up.dot(_pos) / 2);
+		_view.value[0][2] = _forward.x;
+		_view.value[1][2] = _forward.y;
+		_view.value[2][2] = _forward.z;
+		_view.value[3][2] = -(_forward.dot(_pos) / 2);
+		_view.value[0][3] = 0;
+		_view.value[1][3] = 0;
+		_view.value[2][3] = 0;
+		_view.value[3][3] = 1;
+
+		bake();
 	}
 
 	void Camera::move(Vector3 delta)
@@ -104,7 +127,6 @@ namespace jgl
 	void Camera::compute_view()
 	{ 
 		_view = Matrix4x4::matrix_look_at(_pos, _pos + _direction, _up);
-		calc_variable();
 	}
 
 	void Camera::compute_projection()

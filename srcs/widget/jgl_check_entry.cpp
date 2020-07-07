@@ -24,7 +24,7 @@ namespace jgl
 
 	void Check_entry::set_geometry_imp(Vector2 p_anchor, Vector2 p_area)
 	{
-		//viewport()->resize(p_anchor, p_area);
+		_viewport->resize(p_anchor, p_area);
 		_box.set_area(p_area);
 		_box.set_anchor(p_anchor);
 
@@ -36,7 +36,7 @@ namespace jgl
 		text_area.y = p_area.y - _box.border() * 4;
 
 		_entry.set_area(text_area);
-		_entry.set_anchor(p_anchor + _box.border() * 3 + Vector2(check_area.x, 0.0f));
+		_entry.set_anchor(p_anchor + Vector2(check_area.x, 0.0f) + _box.border() * 3);
 		_entry.calc_text_size(_entry.area());
 
 		_check.set_area(check_area);

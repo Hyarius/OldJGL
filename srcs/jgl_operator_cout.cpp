@@ -33,9 +33,9 @@ std::ostream& operator<<(std::ostream& os, const jgl::Pixel value)
 std::ostream& operator<<(std::ostream& os, const jgl::Mouse mouse)
 {
 	jgl::String left = (mouse.get_button(jgl::mouse_button::left) == jgl::mouse_state::up ? "Up" : (mouse.get_button(jgl::mouse_button::left) == jgl::mouse_state::down ? "Down" : "Null"));
-	jgl::String middle = (mouse.get_button(jgl::mouse_button::middle) == jgl::mouse_state::up ? "Up" : (mouse.get_button(jgl::mouse_button::middle) == jgl::mouse_state::down ? "Down" : "Null"));
+	jgl::String center = (mouse.get_button(jgl::mouse_button::center) == jgl::mouse_state::up ? "Up" : (mouse.get_button(jgl::mouse_button::center) == jgl::mouse_state::down ? "Down" : "Null"));
 	jgl::String right = (mouse.get_button(jgl::mouse_button::right) == jgl::mouse_state::up ? "Up" : (mouse.get_button(jgl::mouse_button::right) == jgl::mouse_state::down ? "Down" : "Null"));
-	os << "Left : " << left << "\n" << "Middle : " << middle << "\n" << "Right : " << right;
+	os << "Left : " << left << "\n" << "Middle : " << center << "\n" << "Right : " << right;
 	return os;
 }
 

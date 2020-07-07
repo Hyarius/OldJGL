@@ -28,19 +28,19 @@ namespace jgl
 		return *this;
 	}
 
-	Pixel		Pixel::operator + (const Pixel& delta){
+	Pixel		Pixel::operator + (const Pixel& delta) const {
 		return (Pixel(this->x + delta.x, this->y + delta.y, this->z + delta.z));
 	}
 
-	Pixel		Pixel::operator - (const Pixel& delta){
+	Pixel		Pixel::operator - (const Pixel& delta) const {
 		return (Pixel(this->x - delta.x, this->y - delta.y, this->z - delta.z));
 	}
 
-	Pixel		Pixel::operator * (const Pixel& delta){
+	Pixel		Pixel::operator * (const Pixel& delta) const {
 		return (Pixel(this->x * delta.x, this->y * delta.y, this->z * delta.z));
 	}
 
-	Pixel		Pixel::operator / (const Pixel& delta){
+	Pixel		Pixel::operator / (const Pixel& delta) const {
 		return (Pixel(this->x / delta.x, this->y / delta.y, this->z / delta.z));
 	}
 
@@ -88,18 +88,18 @@ namespace jgl
 		return (true);
 	}
 
-	float * Pixel::decompose(){
+	const float * Pixel::decompose() const {
 		return (&x);
 	}
 
-	float Pixel::distance(Pixel &point)
+	float Pixel::distance(Pixel &point) const
 	{
 		return (sqrt( pow(point.x - this->x, 2.0f)
 					+ pow(point.y - this->y, 2.0f)
 					+ pow(point.z - this->z, 2.0f)));
 	}
 
-	Pixel		Pixel::normalize()
+	Pixel		Pixel::normalize() const
 	{
 		float		length;
 
@@ -110,7 +110,7 @@ namespace jgl
 		return (Pixel(this->x / length, this->y / length, this->z / length));
 	}
 
-	float			Pixel::dot(Pixel &b)
+	float			Pixel::dot(Pixel &b) const
 	{
 		float		result;
 
@@ -119,7 +119,7 @@ namespace jgl
 		return (result);
 	}
 
-	Pixel		Pixel::cross(Pixel &other) //Produit vectoriel / cross product
+	Pixel		Pixel::cross(Pixel &other) const  //Produit vectoriel / cross product
 	{
 		Pixel	result = Pixel(
 				this->y * other.z - this->z * other.y,
@@ -130,14 +130,14 @@ namespace jgl
 		return (result);
 	}
 
-	jgl::Unique_string Pixel::str()
+	jgl::Unique_string Pixel::str() const
 	{
 		jgl::Unique_string result = "(" + std::to_string(x) + " / " + std::to_string(y) + " / " + std::to_string(z) + ")";
 
 		return (result);
 	}
 
-	Pixel Pixel::floor()
+	Pixel Pixel::floor() const
 	{
 		Pixel result;
 

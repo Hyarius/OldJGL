@@ -27,11 +27,10 @@ namespace jgl
 		void destroy_widget();
 
 		std::vector<Widget*>& childrens() { return (_childrens); }
-		Widget* parent() { return (_parent); }
-		Vector2 area() { return (_viewport->area()); }
-		Vector2 anchor() { if (_parent == nullptr)return(_viewport->anchor()); return (_viewport->anchor() + _parent->anchor()); }
-		Vector2 self_anchor() { if (_parent == nullptr)return(_viewport->anchor()); return (_viewport->anchor() - _parent->anchor()); }
-		Viewport* viewport() { return (_viewport); }
+		Widget* parent() const { return (_parent); }
+		const Vector2 area() const { return (_viewport->area()); }
+		const Vector2 anchor() const { if (_parent == nullptr)return(_viewport->anchor()); return (_viewport->anchor() + _parent->anchor()); }
+		Viewport* viewport() const { return (_viewport); }
 
 		void send_front();
 		void send_back();

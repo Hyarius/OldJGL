@@ -1,4 +1,4 @@
-#include "jgl.h"
+﻿#include "jgl.h"
 
 namespace jgl
 {
@@ -36,8 +36,11 @@ namespace jgl
 		_area = p_area;
 	}
 
-	void Viewport::use()
+	void Viewport::use() const
 	{
+		if (g_application->active_viewport() == this)
+			return;
+
 		g_application->set_active_viewport(this);
 		//glClear(GL_DEPTH_BUFFER_BIT);
 		
@@ -49,14 +52,15 @@ namespace jgl
 		pos = jgl::Vector2(tmp.x, g_application->size().y - _area.y - tmp.y);
 
 		glViewport(static_cast<int>(pos.x), static_cast<int>(pos.y), static_cast<int>(size.x), static_cast<int>(size.y));
+		//glScissor(static_cast<int>(pos.x), static_cast<int>(pos.y), static_cast<int>(size.x), static_cast<int>(size.y));
 	}
 
-	void Viewport::reset()
+	void Viewport::reset() const
 	{
 		g_application->reset_viewport();
 	}
 
-	void Viewport::set_Color(Color p_color)
+	void Viewport::set_Color(const Color p_color)
 	{
 		//glClearColor((GLclampf)p_color.r, (GLclampf)p_color.g, (GLclampf)p_color.b, 0.0f);
 		//SDL_SetRenderDrawColor(_renderer, Color.r * 255, Color.g * 255, Color.b * 255, Color.a * 255);
@@ -67,5 +71,12 @@ namespace jgl
 		// use();
 		// set_Color(_background);
 		//glClear(GL_DEPTH_BUFFER_BIT);
+	}
+
+	const Vector2 Viewport::cumuled_anchor() const
+	{
+		if (_owner == nullptr)
+			return(_anchor);
+		return (_owner->anchor());
 	}
 }

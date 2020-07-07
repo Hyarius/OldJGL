@@ -9,17 +9,7 @@ namespace jgl
 		_area = Vector2();
 	}
 
-	Vector2		w_component::owner_anchor()
-	{
-		if (_owner == nullptr || _owner->parent() == nullptr ||
-			_owner->parent()->viewport()->active() == true)
-			return (Vector2(0, 0));
-
-		return (_owner->parent()->anchor());
-	};
-
-
-	bool w_component::is_pointed(Vector2 point)
+	bool w_component::is_pointed(const Vector2 point) const
 	{
 		Vector2 pos1, pos2;
 

@@ -27,16 +27,16 @@ namespace jgl
 
 		~Image();
 
-		void draw(Vector2 p_pos, Vector2 p_size, float p_alpha = 1.0f, Viewport* viewport = nullptr);
+		void draw(const Vector2 p_pos, const Vector2 p_size, const float p_alpha = 1.0f, const Viewport* viewport = nullptr) const ;
 		void upload_texture();
 		void save(jgl::String file_path);
 
-		jgl::String path() { return (_path); }
-		SDL_Surface* surface() { return (_surface); }
-		Vector2 size() { return (_size); }
-		GLenum format() { return (_format); }
-		GLint internal_format() { return (_internal_format); }
-		GLuint texture_id() { return (_texture_id); }
+		const jgl::String path() const { return (_path); }
+		const SDL_Surface* surface() const { return (_surface); }
+		const Vector2 size() const { return (_size); }
+		const GLenum format() const { return (_format); }
+		const GLint internal_format() const { return (_internal_format); }
+		const GLuint texture_id() const { return (_texture_id); }
 	};
 }
 #endif

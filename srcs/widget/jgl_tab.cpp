@@ -128,6 +128,7 @@ namespace jgl
 
 	void Tab::set_geometry_imp(Vector2 p_anchor, Vector2 p_area)
 	{
+		_viewport->resize(p_anchor, p_area);
 		reset_size();
 	}
 

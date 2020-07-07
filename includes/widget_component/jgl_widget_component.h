@@ -14,17 +14,16 @@ namespace jgl
 	public:
 		w_component(class Widget* p_owner);
 
-		void 		set_anchor(Vector2 p_anchor) { _anchor = p_anchor; }
-		void 		set_area(Vector2 p_area) { _area = p_area; }
-		void 		resize(Vector2 p_anchor, Vector2 p_area)
+		void 		set_anchor(const Vector2 p_anchor) { _anchor = p_anchor; }
+		void 		set_area(const Vector2 p_area) { _area = p_area; }
+		void 		resize(const Vector2 p_anchor, const Vector2 p_area)
 		{
 			set_anchor(p_anchor); set_area(p_area);
 		}
-		Vector2 	anchor() { return (_anchor); }
-		Vector2 	area() { return (_area); }
-		Vector2		owner_anchor();
+		Vector2 	anchor() const { return (_anchor); }
+		Vector2 	area() const { return (_area); }
 
-		bool is_pointed(Vector2 point);
+		bool is_pointed(const Vector2 point) const;
 
 		virtual void render(Viewport* viewport = nullptr) = 0;
 	};
@@ -54,13 +53,13 @@ namespace jgl
 		void set_corner_size(size_t p_corner_size) { _corner_size = p_corner_size; }
 
 		//Getter
-		Sprite_sheet* tileset() { return (_tileset); }
-		Sprite_sheet* image() { return (_image); }
-		int border() { return (_border); }
-		int sprite() { return (_sprite); }
-		size_t corner_size() { return (_corner_size); }
-		Color back() { return (_back); }
-		Color front() { return (_front); }
+		Sprite_sheet* tileset() const { return (_tileset); }
+		Sprite_sheet* image() const { return (_image); }
+		int border() const { return (_border); }
+		int sprite() const { return (_sprite); }
+		size_t corner_size() const { return (_corner_size); }
+		Color back() const { return (_back); }
+		Color front() const { return (_front); }
 	};
 
 	class w_textual_component
@@ -84,11 +83,11 @@ namespace jgl
 		void 		calc_text_size(Vector2 area);
 		void 		calc_text_size_height(Vector2 area);
 
-		jgl::String 		text() { return (_text); }
-		alignment 	align() { return (_align); }
-		int 		size() { return (_size); }
-		text_color 	color() { return (_color); }
-		text_style 	style() { return (_style); }
+		jgl::String  text() const { return (_text); }
+		alignment 	align() const { return (_align); }
+		int 		size() const { return (_size); }
+		text_color 	color() const { return (_color); }
+		text_style 	style() const { return (_style); }
 	};
 
 	class w_entry_component : public w_component, public w_graphical_component, public w_textual_component
@@ -106,11 +105,11 @@ namespace jgl
 		void 		set_selected(bool p_selected) { _selected = p_selected; }
 		void		set_cursor(size_t p_cursor) { _cursor = p_cursor; }
 		//Getter
-		bool		selected() { return (_selected); }
-		size_t 		cursor() { return (_cursor); }
+		bool		selected() const { return (_selected); }
+		size_t 		cursor() const { return (_cursor); }
 
-		jgl::String 		text_to_draw() { return (_text_to_draw); }
-		size_t 		cursor_to_draw() { return (_cursor_to_draw); }
+		jgl::String text_to_draw() const { return (_text_to_draw); }
+		size_t 		cursor_to_draw() const { return (_cursor_to_draw); }
 
 		void 		resize(Vector2 p_anchor, Vector2 p_area)
 		{
@@ -131,7 +130,7 @@ namespace jgl
 	public:
 		w_text_component(jgl::String p_text = "", class Widget* p_owner = nullptr);
 
-		void 		resize(Vector2 p_anchor, Vector2 p_area);
+		void resize(Vector2 p_anchor, Vector2 p_area);
 
 		void render(Viewport* viewport = nullptr);
 	};
@@ -157,11 +156,11 @@ namespace jgl
 		void set_check(Color p_check) { _check = p_check; }
 
 		//Getter
-		bool state() { return (_state); }
-		int border() { return (_border); }
-		Color back() { return (_back); }
-		Color front() { return (_front); }
-		Color check() { return (_check); }
+		bool state() const { return (_state); }
+		int border() const { return (_border); }
+		Color back() const { return (_back); }
+		Color front() const { return (_front); }
+		Color check() const { return (_check); }
 
 		bool check(Vector2 point);
 
@@ -182,7 +181,7 @@ namespace jgl
 		void set_delta(Color p_delta) { _delta = p_delta; }
 
 		//Getter
-		Color delta() { return (_delta); }
+		Color delta() const { return (_delta); }
 
 		void render(Viewport* viewport = nullptr);
 	};
@@ -245,9 +244,9 @@ namespace jgl
 		void 		calc_text() { if (_value_ptr != nullptr && *_value_ptr != _value) set_value(*_value_ptr); _text = ftoa(static_cast<float>(_value), _precision); }
 
 		//Getter
-		T*			value_ptr() { return (_value_ptr); }
-		T			value() { if (_value_ptr != nullptr)return (*_value_ptr); return (_value); }
-		int			precision() { return (_precision); }
+		T*			value_ptr() const { return (_value_ptr); }
+		T			value() const { if (_value_ptr != nullptr)return (*_value_ptr); return (_value); }
+		int			precision() const { return (_precision); }
 
 		void render(Viewport* viewport = nullptr)
 		{
@@ -322,10 +321,10 @@ namespace jgl
 		void 		calc_text() { if (_value_ptr != nullptr && *_value_ptr != _value) set_value(*_value_ptr); _text = ftoa(static_cast<float>(_value), _precision); }
 
 		//Getter
-		int			precision() { return (_precision); }
-		T			value() { return (_value); }
-		size_t		cursor() { return (_cursor); }
-		bool		selected() { return (_selected); }
+		int			precision() const { return (_precision); }
+		T			value() const { return (_value); }
+		size_t		cursor() const { return (_cursor); }
+		bool		selected() const { return (_selected); }
 
 		void render(Viewport* viewport = nullptr)
 		{

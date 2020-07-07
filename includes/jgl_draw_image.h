@@ -3,14 +3,19 @@
 
 namespace jgl
 {
-	void			draw_image(Vector2 p_tl, Vector2 p_tr, Vector2 p_dl, Vector2 p_dr,
-		float p_alpha = 1.0f,
-		Uv p_uv_tl = Uv(0, 0), Uv p_uv_tr = Uv(1, 0), Uv p_uv_dl = Uv(0, 1), Uv p_uv_dr = Uv(1, 1)
+	void			draw_image(const Vector2 p_tl, const Vector2 p_tr, const Vector2 p_dl, const Vector2 p_dr,
+		const float p_alpha = 1.0f,
+		const Uv p_uv_tl = Uv(0, 0), const Uv p_uv_tr = Uv(1, 0), const Uv p_uv_dl = Uv(0, 1), const Uv p_uv_dr = Uv(1, 1),
+		const jgl::Viewport* viewport = nullptr
 	);
 
-	void			draw_image(Vector2 coord, Vector2 size,
-		float p_alpha = 1.0f,
-		Uv p_uv_tl = Uv(0, 0), Uv p_uv_tr = Uv(1, 0), Uv p_uv_dl = Uv(0, 1), Uv p_uv_dr = Uv(1, 1)
+	void			draw_image(const Vector2 coord, const Vector2 size,
+		const float p_alpha = 1.0f,
+		const Uv p_uv_tl = Uv(0, 0), const Uv p_uv_tr = Uv(1, 0), const Uv p_uv_dl = Uv(0, 1), const Uv p_uv_dr = Uv(1, 1),
+		const jgl::Viewport* viewport = nullptr
 	);
+
+	void			draw_image(const jgl::Vector2 coord, const jgl::Vector2 size,
+		const float p_alpha, const jgl::Viewport* viewport);
 }
 #endif

@@ -2,7 +2,7 @@
 
 namespace jgl
 {
-	Matrix2x2 Matrix2x2::reverse()
+	Matrix2x2 Matrix2x2::reverse() const
 	{
 		Matrix2x2 result;
 
@@ -13,11 +13,11 @@ namespace jgl
 			}
 		return (result);
 	}
-	float Matrix2x2::determinant()
+	float Matrix2x2::determinant() const
 	{
 		return (value[0][0] * value[1][1] - value[1][0] * value[0][1]);
 	}
-	Matrix2x2 Matrix2x2::inverse_matrix()
+	Matrix2x2 Matrix2x2::inverse_matrix() const
 	{
 		float tmp = determinant();
 		return (Matrix2x2(
@@ -26,7 +26,7 @@ namespace jgl
 		));
 	}
 
-	Matrix3x3 Matrix3x3::reverse()
+	Matrix3x3 Matrix3x3::reverse() const
 	{
 		Matrix3x3 result;
 
@@ -37,7 +37,7 @@ namespace jgl
 			}
 		return (result);
 	}
-	float Matrix3x3::cofactor(int x, int y)
+	float Matrix3x3::cofactor(int x, int y) const
 	{
 		float tmp_value[4]{1, 1, 1, 1};
 
@@ -55,7 +55,7 @@ namespace jgl
 		Matrix2x2 tmp_matrix(tmp_value[0], tmp_value[1], tmp_value[2], tmp_value[3]);
 		return (tmp_matrix.determinant());
 	}
-	Matrix3x3 Matrix3x3::cofactor_matrix()
+	Matrix3x3 Matrix3x3::cofactor_matrix() const
 	{
 		Matrix3x3 result = Matrix3x3(
 			+cofactor(0, 0), -cofactor(1, 0), +cofactor(2, 0),
@@ -65,15 +65,15 @@ namespace jgl
 
 		return (result);
 	}
-	Matrix3x3 Matrix3x3::adjucate_matrix()
+	Matrix3x3 Matrix3x3::adjucate_matrix() const
 	{
 		return (cofactor_matrix().reverse());
 	}
-	float Matrix3x3::determinant()
+	float Matrix3x3::determinant() const
 	{
 		return (value[0][0] * cofactor(0, 0) - value[1][0] * cofactor(1, 0) + value[2][0] * cofactor(2, 0));
 	}
-	Matrix3x3 Matrix3x3::inverse_matrix()
+	Matrix3x3 Matrix3x3::inverse_matrix() const
 	{
 		Matrix3x3 tmp = adjucate_matrix();
 		Matrix3x3 result = Matrix3x3();
@@ -137,7 +137,7 @@ namespace jgl
 
 		return (result);
 	}
-	Matrix4x4 Matrix4x4::matrix_look_at(Vector3 pos, Vector3 target, Vector3 up_dir)
+	Matrix4x4 Matrix4x4::matrix_look_at(Vector3 pos, Vector3 target, Vector3 up_dir, float angle)
 	{
 		Matrix4x4 result;
 
@@ -147,6 +147,7 @@ namespace jgl
 		if (forward.dot(up) == 1 || forward.dot(up) == -1)
 			up = Vector3::front();
 		Vector3 right = (up.cross(forward)).normalize();
+		right = Matrix4x4::matrix_rotation_y(angle) * right;
 		up = (forward.cross(right)).normalize();
 
 		result.value[0][0] = right.x;
@@ -168,7 +169,7 @@ namespace jgl
 
 		return (result);
 	}
-	Matrix4x4 Matrix4x4::reverse()
+	Matrix4x4 Matrix4x4::reverse() const
 	{
 		Matrix4x4 result;
 
@@ -179,7 +180,7 @@ namespace jgl
 			}
 		return (result);
 	}
-	float Matrix4x4::cofactor(int x, int y)
+	float Matrix4x4::cofactor(int x, int y) const
 	{
 		float tmp_value[9]{ 1, 1, 1, 1, 1, 1, 1, 1, 1 };
 
@@ -202,7 +203,7 @@ namespace jgl
 		float result = tmp_matrix.determinant();
 		return (result);
 	}
-	Matrix4x4 Matrix4x4::cofactor_matrix()
+	Matrix4x4 Matrix4x4::cofactor_matrix() const
 	{
 		Matrix4x4 result = Matrix4x4(
 			+cofactor(0, 0), -cofactor(1, 0), +cofactor(2, 0), -cofactor(3, 0),
@@ -213,15 +214,15 @@ namespace jgl
 
 		return (result);
 	}
-	Matrix4x4 Matrix4x4::adjucate_matrix()
+	Matrix4x4 Matrix4x4::adjucate_matrix() const
 	{
 		return (cofactor_matrix().reverse());
 	}
-	float Matrix4x4::determinant()
+	float Matrix4x4::determinant() const
 	{
 		return (value[0][0] * cofactor(0, 0) - value[1][0] * cofactor(1, 0) + value[2][0] * cofactor(2, 0) - value[3][0] * cofactor(3, 0));
 	}
-	Matrix4x4 Matrix4x4::inverse_matrix()
+	Matrix4x4 Matrix4x4::inverse_matrix() const
 	{
 		Matrix4x4 tmp = adjucate_matrix();
 		Matrix4x4 result = Matrix4x4();

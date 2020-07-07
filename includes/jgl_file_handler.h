@@ -33,7 +33,7 @@ namespace jgl
 			extension = "";
 			type = File_type::error;
 		}
-		File(jgl::String p_path, jgl::String p_name, jgl::File_type p_type){
+		File(const jgl::String p_path, const jgl::String p_name, const jgl::File_type p_type){
 			jgl::Array<jgl::String> tmp;
 
 			path = p_path;
@@ -54,17 +54,17 @@ namespace jgl
 		}
 	};
 
-	std::fstream open_file(jgl::String path, std::ios_base::openmode mode = std::ios_base::in | std::ios_base::out);
+	std::fstream open_file(const jgl::String path, const std::ios_base::openmode mode = std::ios_base::in | std::ios_base::out);
 	jgl::String get_str(std::fstream& file);
 	jgl::Array<jgl::String> get_strsplit(std::fstream& file, const jgl::String c, int size = -1);
-	jgl::Array<jgl::File> list_files(jgl::String path, jgl::String extension = "*");
-	bool check_file_exist(jgl::String path);
-	void copy_file(jgl::String src_path, jgl::String dest_path);
-	void write_on_file(jgl::String path, jgl::String text);
-	void rewrite_on_file(jgl::String path, jgl::String text);
-	void write_on_file(std::fstream& file, jgl::String text);
+	jgl::Array<jgl::File> list_files(const jgl::String path, const jgl::String extension = "*");
+	bool check_file_exist(const jgl::String path);
+	void copy_file(const jgl::String src_path, const jgl::String dest_path);
+	void write_on_file(const jgl::String path, const jgl::String text);
+	void rewrite_on_file(const jgl::String path, const jgl::String text);
+	void write_on_file(std::fstream& file, const jgl::String text);
 }
 
-std::ostream& operator<<(std::ostream& os, jgl::File value);
+std::ostream& operator<<(std::ostream& os, const jgl::File value);
 
 #endif

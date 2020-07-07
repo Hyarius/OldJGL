@@ -7,7 +7,7 @@ namespace jgl
 {
 	struct Data
 	{
-		std::vector<void*> content;
+		jgl::Array<void*> content;
 
 		Data();
 		Data(void* p_data);
@@ -15,12 +15,12 @@ namespace jgl
 
 		void operator = (void* p_data);
 		void operator + (void* p_ptr);
-		Data operator + (const Data& delta);
+		Data operator + (Data& delta);
 		void operator += (void* p_ptr);
-		void operator += (const Data& delta);
+		void operator += (Data& delta);
 
 		template <typename T>
-		T acces(size_t index) { return (static_cast<T>(content[index])); }
+		T acces(const size_t index) { return (static_cast<T>(content[index])); }
 	};
 }
 #endif

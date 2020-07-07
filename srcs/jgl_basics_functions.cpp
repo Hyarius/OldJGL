@@ -2,20 +2,92 @@
 
 namespace jgl
 {
-	static size_t count_word_len(jgl::String& input, jgl::String& delim, size_t start)
+	size_t count_word(const jgl::String& input, const jgl::String& delim)
 	{
+		size_t tmp = input.size();
+		size_t tmp2 = delim.size();
+		size_t result = 1;
+
+		for (size_t i = 0; i < tmp; i++)
+		{
+			if (input[i] == delim[0])
+			{
+				size_t j = 0;
+				while (j < tmp2 &&
+					i + j < tmp &&
+					input[i + j] == delim[j])
+					j++;
+				if (j == tmp2)
+					result++;
+				i += j - 1;
+			}
+		}
+		return (result);
+	}
+	size_t count_word(const jgl::String& input, const jgl::Glyph& delim)
+	{
+		size_t tmp = input.size();
+		size_t result = 1;
+
+		for (size_t i = 0; i < tmp; i++)
+		{
+			if (input[i].value() == delim.value())
+				result++;
+		}
+		return (result);
+	}
+	size_t unique_count_word(const jgl::Unique_string& input, const jgl::Unique_string& delim)
+	{
+		size_t tmp = input.size();
+		size_t tmp2 = delim.size();
+		size_t result = 1;
+
+		for (size_t i = 0; i < tmp; i++)
+		{
+			if (input[i] == delim[0])
+			{
+				size_t j = 0;
+				while (j < tmp2 &&
+					i + j < tmp &&
+					input[i + j].value() == delim[j].value())
+					j++;
+				if (j == tmp2)
+					result++;
+				i += j - 1;
+			}
+		}
+		return (result);
+	}
+	
+	size_t count_word_len(const jgl::String& input, const jgl::Glyph& delim, const size_t start)
+	{
+		size_t tmp = input.size();
 		size_t result = 0;
 
-		for (result = start; result < input.size(); result++)
+		for (result = start; result < tmp; result++)
+		{
+			if (input[result].value() == delim.value())
+				return (result - start);
+		}
+		return (result - start);
+	}
+
+	size_t count_word_len(const jgl::String& input, const jgl::String& delim, const size_t start)
+	{
+		size_t tmp = input.size();
+		size_t tmp2 = delim.size();
+		size_t result = 0;
+
+		for (result = start; result < tmp; result++)
 		{
 			if (input[result] == delim[0])
 			{
 				size_t j = 0;
-				while (j < delim.size() &&
-					result + j < input.size() &&
-					input[result + j] == delim[j])
+				while (j < tmp2 &&
+					result + j < tmp &&
+					input[result + j].value() == delim[j].value())
 					j++;
-				if (j == delim.size())
+				if (j == tmp2)
 					return (result - start);
 				result += j - 1;
 			}
@@ -23,20 +95,22 @@ namespace jgl
 		return (result - start);
 	}
 
-	static size_t unique_count_word_len(jgl::Unique_string& input, jgl::Unique_string& delim, size_t start)
+	size_t unique_count_word_len(const jgl::Unique_string& input, const jgl::Unique_string& delim, const size_t start)
 	{
+		size_t tmp = input.size();
+		size_t tmp2 = delim.size();
 		size_t result = 0;
 
-		for (result = start; result < input.size(); result++)
+		for (result = start; result < tmp; result++)
 		{
 			if (input[result] == delim[0])
 			{
 				size_t j = 0;
-				while (j < delim.size() &&
-					result + j < input.size() &&
-					input[result + j] == delim[j])
+				while (j < tmp2 &&
+					result + j < tmp &&
+					input[result + j].value() == delim[j].value())
 					j++;
-				if (j == delim.size())
+				if (j == tmp2)
 					return (result - start);
 				result += j - 1;
 			}
@@ -44,7 +118,7 @@ namespace jgl
 		return (result - start);
 	}
 
-	jgl::Array<jgl::String> strsplit(jgl::String input, jgl::String delim, bool regroup)
+	jgl::Array<jgl::String> strsplit(const jgl::String input, const jgl::String delim, const bool regroup)
 	{
 		jgl::Array<jgl::String>	tab(40);
 
@@ -53,28 +127,26 @@ namespace jgl
 		return (tab);
 	}
 
-	void strsplit(jgl::Array<jgl::String>& tab, jgl::String input, jgl::String delim, bool regroup)
+	void strsplit(jgl::Array<jgl::String>& tab, const jgl::String input, const jgl::String delim, const bool regroup)
 	{
-		jgl::String new_word;
+		size_t tmp = input.size();
+		size_t tmp2 = delim.size();
 		size_t index = 0;
 		size_t nb_word = 0;
-		tab.clear();
 
-		while (index < input.size())
+		tab.resize(count_word(input, delim));
+		while (index < tmp)
 		{
 			size_t word_len = count_word_len(input, delim, index);
 			if (word_len != 0 || regroup == true)
 			{
-				new_word = input.substr(index, index + word_len);
-				if (new_word.size() == 0)
-					jgl::error_exit(1, "Bad len here");
-				tab.push_back(new_word);
+				input.substr(tab[nb_word], index, index + word_len);
+				nb_word++;
 			}
-			index += word_len + delim.size();
-			nb_word++;
+			index += word_len + tmp2;
 		}
 	}
-	jgl::Array<jgl::Unique_string> unique_strsplit(jgl::Unique_string input, jgl::Unique_string c, bool regroup)
+	jgl::Array<jgl::Unique_string> unique_strsplit(const jgl::Unique_string input, const jgl::Unique_string c, const bool regroup)
 	{
 		jgl::Array<jgl::Unique_string> tab;
 
@@ -83,38 +155,41 @@ namespace jgl
 		return (tab);
 	}
 
-	void unique_strsplit(jgl::Array<jgl::Unique_string>& tab, jgl::Unique_string input, jgl::Unique_string delim, bool regroup)
+	void unique_strsplit(jgl::Array<jgl::Unique_string>& tab, const jgl::Unique_string input, const jgl::Unique_string delim, const bool regroup)
 	{
-		jgl::Unique_string new_word;
+		size_t tmp = input.size();
+		size_t tmp2 = delim.size();
 		size_t index = 0;
 		size_t nb_word = 0;
 		tab.clear();
 
-		while (index < input.size())
+		tab.resize(unique_count_word(input, delim));
+		while (index < tmp)
 		{
 			size_t word_len = unique_count_word_len(input, delim, index);
 			if (word_len != 0 || regroup == true)
 			{
-				input.substr(new_word, index, index + word_len);
-				tab.push_back(new_word);
+				input.substr(tab[nb_word], index, index + word_len);
+				nb_word++;
 			}
-			index += word_len + delim.size();
-			nb_word++;
+			index += word_len + tmp2;
 		}
 	}
 
-	void check_sdl_error(jgl::String file, int line)
+	void check_sdl_error(const jgl::String file, const int line)
 	{
-		jgl::Array<jgl::String>tab = file.split("\\");
-		if (tab.size() == 1)
-			tab = file.split("/");
-		jgl::String file_name = tab[tab.size() - 1];
 		jgl::String text = SDL_GetError();
 		if (text.size() != 0)
+		{
+			jgl::Array<jgl::String>tab = file.split("\\");
+			if (tab.size() == 1)
+				tab = file.split("/");
+			jgl::String file_name = tab[tab.size() - 1];
 			error_exit(1, file_name + " - line [" + std::to_string(line) + "] : " + text);
+		}
 	}
 
-	void				error_exit(int num, jgl::String error)
+	void				error_exit(const int num, const jgl::String error)
 	{
 		std::cout << error << std::endl;
 		if (g_application != nullptr)
@@ -124,7 +199,7 @@ namespace jgl
 		exit(num);
 	}
 
-	void error_exit(int num, const char* str)
+	void error_exit(const int num, const char* str)
 	{
 		std::cout << str << std::endl;
 		if (g_application != nullptr)
@@ -134,7 +209,7 @@ namespace jgl
 		exit(num);
 	}
 
-	jgl::String normalize_string(jgl::String str, jgl::Glyph c, size_t size)
+	jgl::String normalize_string(const jgl::String str, const jgl::Glyph c, const size_t size)
 	{
 		jgl::String result;
 
@@ -146,7 +221,7 @@ namespace jgl
 		return (result);
 	}
 
-	jgl::String normalize_float(float num, int after_point, jgl::Glyph c, size_t size)
+	jgl::String normalize_float(const float num, const int after_point, const jgl::Glyph c, const size_t size)
 	{
 		jgl::String result;
 
@@ -170,7 +245,7 @@ namespace jgl
 		}
 	}
 
-	jgl::String itoa(int x, int d)
+	jgl::String itoa(const int x, const int d)
 	{
 		std::string result = std::to_string(x);
 		size_t i = result.size();
@@ -188,14 +263,15 @@ namespace jgl
 	}
 
 	// Converts a floating point number tostring.
-	jgl::String ftoa(float n, int afterpoint, int length)
+	jgl::String ftoa(const float n, const int afterpoint, const int length)
 	{
 		std::string text;
 		std::stringstream out;
+		int tmp = afterpoint;
 
 		if (n > 0 || n < -1)
-			afterpoint += 2;
-		out << std::setprecision(afterpoint) << n;
+			tmp += 2;
+		out << std::setprecision(tmp) << n;
 		text = out.str();
 		while (length != -1 && text.length() < static_cast<size_t>(length))
 			text.insert(text.begin(), ' ');
@@ -204,29 +280,29 @@ namespace jgl
 		return jgl::String(out.str());
 	}
 	// Converts a floating point number tostring.
-	jgl::String ftoa(double n, int afterpoint, int length)
+	jgl::String ftoa(const double n, const int afterpoint, const int length)
 	{
 		return (ftoa((float)n, afterpoint, length));
 	}
 
 
-	float stof(jgl::String text)
+	float stof(const jgl::String text)
 	{
-		std::string tmp = text->std();
-		return (std::stof(tmp));
+		const char* tmp = static_cast<jgl::String>(text).str();
+		return (static_cast<float>(std::atof(tmp)));
 	}
-	int stoi(jgl::String text)
+	int stoi(const jgl::String text)
 	{
-		std::string tmp = text->std();
-		return (std::stoi(tmp));
+		const char* tmp = static_cast<jgl::String>(text).str();
+		return (std::atoi(tmp));
 	}
 
-	bool string_is_numeric(jgl::String text)
+	bool string_is_numeric(const jgl::String text)
 	{
 		return (text->contain("0123456789."));
 	}
 
-	bool is_middle(float min, float value, float max)
+	bool is_middle(const float min, const float value, const float max)
 	{
 		if (min > value)
 			return (false);
@@ -235,7 +311,7 @@ namespace jgl
 		return (true);
 	}
 
-	void remove_char(jgl::String& src, jgl::String to_remove)
+	void remove_char(jgl::String& src, const jgl::String to_remove)
 	{
 		jgl::String result;
 		for (size_t i = 0; i < src.size(); i++)
@@ -292,19 +368,19 @@ namespace jgl
 		return (result);
 	}
 
-	int generate_nbr(int min, int max)
+	int generate_nbr(const int min, const int max)
 	{
 		return((rand() % (max - min)) + min);
 	}
 
-	Pixel				convert_screen_to_opengl(Pixel source)
+	Pixel				convert_screen_to_opengl(const Pixel source)
 	{
 		float x = (source.x) / (g_application->active_viewport()->area().x / 2.0f) - 1.0f;
 		float y = -((source.y) / (g_application->active_viewport()->area().y / 2.0f) - 1.0f);
 		return (Pixel(x, y, 0.0f));
 	}
 
-	SDL_Surface* create_surface_color(Color p_color)
+	SDL_Surface* create_surface_color(const Color p_color)
 	{
 		SDL_Surface* surface;
 		Uint32			rmask, gmask, bmask, amask;
@@ -329,17 +405,17 @@ namespace jgl
 		return (surface);
 	}
 
-	float				degree_to_radian(float angle)
+	float				degree_to_radian(const float angle)
 	{
 		return ((angle * static_cast<float>(M_PI)) / 180.0f);
 	}
 
-	float				radian_to_degree(float radian)
+	float				radian_to_degree(const float radian)
 	{
 		return ((radian * 180.0f) / static_cast<float>(M_PI));
 	}
 
-	float clamp_float(float min, float value, float max)
+	float clamp_float(const float min, const float value, const float max)
 	{
 		if (value < min)
 			return (min);
@@ -348,7 +424,7 @@ namespace jgl
 		return (value);
 	}
 
-	int clamp_int(int min, int value, int max)
+	int clamp_int(const int min, const int value, const int max)
 	{
 		if (value < min)
 			return (min);
@@ -357,11 +433,21 @@ namespace jgl
 		return (value);
 	}
 
-	bool point_in_rectangle(Vector2 target, Vector2 pos, Vector2 size)
+	bool point_in_rectangle(const Vector2 target, const Vector2 pos, const Vector2 size)
 	{
 		if (target.x > pos.x&& target.x <= pos.x + size.x &&
 			target.y > pos.y&& target.y <= pos.y + size.y)
 			return (true);
 		return (false);
+	}
+
+	jgl::Vector3 rotate_point(const jgl::Vector3 pos, const jgl::Vector3 center, const jgl::Vector3 axis, const float angle)
+	{
+		jgl::Vector3 result;
+		jgl::Matrix4x4 rotation = jgl::Matrix4x4::matrix_custom_rotation(angle, axis);
+
+		result = pos - center;
+		result = rotation * result + center;
+		return (result);
 	}
 }

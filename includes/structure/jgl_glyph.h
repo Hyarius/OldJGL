@@ -23,6 +23,7 @@ namespace jgl
 
 		void print_info() const;
 
+		size_t size() const;
 		size_t value() const;
 	};
 
