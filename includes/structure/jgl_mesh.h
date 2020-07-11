@@ -35,21 +35,21 @@ namespace jgl
 
 	struct Face
 	{
-		Vector3 normale;
+		//Vector3 normale;
 		int index_vertices[3];
 		int index_uvs[3];
 		int index_normale[3];
 
 		Face()
 		{
-			normale = 0;
+			//normale = 0;
 			index_vertices[0] = 0;
 			index_uvs[0] = 0;
 			index_normale[0] = 0;
 		}
 		Face(const int p_index_vertices[3], const int p_index_uvs[3], const int p_index_normale[3])
 		{
-			normale = 0;
+			//normale = 0;
 			for (size_t i = 0; i < 3; i++)
 			{
 				index_vertices[i] = p_index_vertices[i];
@@ -61,7 +61,7 @@ namespace jgl
 		{
 			if (p_index_vertices.size() != 3 || p_index_uvs.size() != 3 || p_index_normale.size() != 3)
 				error_exit(1, "Bad number of argument in face definition");
-			normale = 0;
+			//normale = 0;
 			for (size_t i = 0; i < 3; i++)
 			{
 				index_vertices[i] = p_index_vertices[i];
@@ -83,13 +83,13 @@ namespace jgl
 
 		jgl::Array<Face>	_faces;
 
-		jgl::Array<Vector3>	_vertices;
-		jgl::Array<Vector2>	_uvs;
-		jgl::Array<Vector3>	_normales;
+		jgl::share_object< jgl::Array<Vector3> > _vertices;
+		jgl::share_object< jgl::Array<Vector2> > _uvs;
+		jgl::share_object< jgl::Array<Vector3> > _normales;
 
-		jgl::Array<Vector3>	_baked_vertices;
-		jgl::Array<Vector2>	_baked_uvs;
-		jgl::Array<Vector3>	_baked_normales;
+		jgl::Array<Vector3> _baked_vertices;
+		jgl::Array<Vector2> _baked_uvs;
+		jgl::Array<Vector3> _baked_normales;
 
 		Material* _material;
 
@@ -97,23 +97,25 @@ namespace jgl
 		static void set_base_material(Material* p_material) { _base_material = p_material;}
 		static Material* base_material() { return (_base_material); }
 		Mesh_part(const jgl::String p_name = "unnamed");
-
 		const jgl::String name() const { return (_name); }
 
-		jgl::Array<Vector3>& vertices() { return (_vertices); }
-		const jgl::Array<Vector3>& vertices() const { return (_vertices); }
-		void set_vertices(jgl::Array<Vector3>& p_vertice) { _vertices = p_vertice;	}
-		const Vector3 vertices(const size_t index) const { if (index >= _vertices.size())return (-1); return (_vertices[index]); }
+		jgl::Array<Vector3>& vertices() { return (*_vertices); }
+		const jgl::Array<Vector3>& vertices() const { return (*_vertices); }
+		void set_vertices(jgl::Array<Vector3>& p_vertice) { *_vertices = p_vertice; }
+		void set_vertices(jgl::share_object<jgl::Array<Vector3>> p_vertice) { _vertices = p_vertice;	}
+		const Vector3 vertices(const size_t index) const { if (index >= _vertices->size())return (-1); return (_vertices->operator[](index)); }
 
-		jgl::Array<Vector2>& uvs() { return (_uvs); }
-		const jgl::Array<Vector2>& uvs() const { return (_uvs); }
-		void set_uvs(jgl::Array<Vector2>& p_uvs) { _uvs = p_uvs; }
-		const Vector2 uvs(const size_t index) const { if (index >= _uvs.size())return (-1); return (_uvs[index]); }
+		jgl::Array<Vector2>& uvs() { return (*_uvs); }
+		const jgl::Array<Vector2>& uvs() const { return (*_uvs); }
+		void set_uvs(jgl::Array<Vector2>& p_uvs) { *_uvs = p_uvs; }
+		void set_uvs(jgl::share_object < jgl::Array<Vector2>> p_uvs) { _uvs = p_uvs; }
+		const Vector2 uvs(const size_t index) const { if (index >= _uvs->size())return (-1); return (_uvs->operator[](index)); }
 
-		jgl::Array<Vector3>& normales() { return (_normales); }
-		const jgl::Array<Vector3>& normales() const { return (_normales); }
-		void set_normales(jgl::Array<Vector3>& p_normale) { _normales = p_normale; }
-		const Vector3 normales(const size_t index) const { if (index >= _normales.size())return (-1); return (_normales[index]); }
+		jgl::Array<Vector3>& normales() { return (*_normales); }
+		const jgl::Array<Vector3>& normales() const { return (*_normales); }
+		void set_normales(jgl::Array<Vector3>& p_normale) { *_normales = p_normale; }
+		void set_normales(jgl::share_object < jgl::Array<Vector3> > p_normale) { _normales = p_normale; }
+		const Vector3 normales(const size_t index) const { if (index >= _normales->size())return (-1); return (_normales->operator[](index)); }
 
 		jgl::Array<Face>& faces() { return (_faces); }
 		const jgl::Array<Face>& faces() const { return (_faces); }
@@ -121,9 +123,9 @@ namespace jgl
 		const Material* material() const { return (_material); }
 
 		void set_name(const jgl::String p_name) { _name = p_name.copy(); }
-		void add_point(Vector3 p_point) { _vertices.push_back(p_point); }
-		void add_uv(Vector2 p_uv) { _uvs.push_back(p_uv); }
-		void add_normale(Vector3 p_normale) { _normales.push_back(p_normale); }
+		void add_point(Vector3 p_point) { _vertices->push_back(p_point); }
+		void add_uv(Vector2 p_uv) { _uvs->push_back(p_uv); }
+		void add_normale(Vector3 p_normale) { _normales->push_back(p_normale); }
 		void add_face(Face p_face) { _faces.push_back(p_face); }
 		void set_material(Material* p_material) { if (p_material == nullptr)_material = _base_material;else _material = p_material; }
 		void compute_normales(const jgl::Matrix4x4 rot_matrix);
@@ -224,8 +226,11 @@ namespace jgl
 		void add_face(const Face p_face, const int index = -1);
 
 		void set_vertices(jgl::Array<Vector3>& p_vertices, int index = -1) { Mesh_part* tmp = check_part(index); tmp->set_vertices(p_vertices); }
+		void set_vertices(jgl::share_object < jgl::Array<Vector3> > p_vertices, int index = -1) { Mesh_part* tmp = check_part(index); tmp->set_vertices(p_vertices); }
 		void set_uvs(jgl::Array<Vector2>& p_uvs, int index = -1) { Mesh_part* tmp = check_part(index); tmp->set_uvs(p_uvs); }
+		void set_uvs(jgl::share_object < jgl::Array<Vector2> > p_uvs, int index = -1) { Mesh_part* tmp = check_part(index); tmp->set_uvs(p_uvs); }
 		void set_normales(jgl::Array<Vector3>& p_normales, int index = -1) { Mesh_part* tmp = check_part(index); tmp->set_normales(p_normales); }
+		void set_normales(jgl::share_object < jgl::Array<Vector3> > p_normales, int index = -1) { Mesh_part* tmp = check_part(index); tmp->set_normales(p_normales); }
 
 		void set_material(jgl::Material* p_material, const bool shared = false)
 		{

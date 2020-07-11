@@ -58,6 +58,14 @@ namespace jgl
 		return (Vector4(x / delta.x, y / delta.y, z / delta.z, 1.0f));
 	}
 
+	Vector4		Vector4::operator % (const Vector4 delta) const {
+		return (Vector4(
+			static_cast<int>(x) % static_cast<int>(delta.x),
+			static_cast<int>(y) % static_cast<int>(delta.y),
+			static_cast<int>(z) % static_cast<int>(delta.z),
+			static_cast<int>(w) % static_cast<int>(delta.w)));
+	}
+
 	void 		Vector4::operator += (const Vector4 delta) {
 		x += delta.x; y += delta.y; z += delta.z;
 	}

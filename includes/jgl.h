@@ -19,6 +19,7 @@
 #include "jgl_color.h"
 #include "jgl_geometry.h"
 #include "jgl_basics_functions.h"
+#include "jgl_share_object.h"
 #include "jgl_system.h"
 #include "jgl_application.h"
 #include "jgl_viewport.h"

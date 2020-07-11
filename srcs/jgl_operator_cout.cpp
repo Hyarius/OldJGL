@@ -134,7 +134,6 @@ std::ostream& operator<<(std::ostream& os, const jgl::Camera camera)
 
 std::ostream& operator<<(std::ostream& os, const jgl::Face to_print)
 {
-	os << "Normal : " << to_print.normale << std::endl;
 	os << "Index vertices : [" << to_print.index_vertices[0] << "][" << to_print.index_vertices[1] << "][" << to_print.index_vertices[2] << "]" << std::endl;
 	os << "Index uvs : [" << to_print.index_uvs[0] << "][" << to_print.index_uvs[1] << "][" << to_print.index_uvs[2] << "]" << std::endl;
 	os << "Index normales : [" << to_print.index_normale[0] << "][" << to_print.index_normale[1] << "][" << to_print.index_normale[2] << "]" << std::endl;
@@ -182,4 +181,10 @@ std::ostream& operator<<(std::ostream& os, const jgl::String value)
 {
 	os << *value;
 	return os;
+}
+
+std::ostream& operator<<(std::ostream& os, const jgl::Reference_count& value)
+{
+	os << value.value();
+	return (os);
 }

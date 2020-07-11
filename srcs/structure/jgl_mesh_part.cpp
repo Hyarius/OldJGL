@@ -18,13 +18,9 @@ namespace jgl
 
 		_faces.clear();
 
-		_vertices.clear();
-		_uvs.clear();
-		_normales.clear();
-
-		_baked_vertices.clear();
-		_baked_uvs.clear();
-		_baked_normales.clear();
+		_vertices->clear();
+		_uvs->clear();
+		_normales->clear();
 
 		_material = _base_material;
 	}
@@ -37,22 +33,14 @@ namespace jgl
 
 		for (size_t i = 0; i < _faces.size(); i++)
 		{
-			for (size_t j = 0; j < 3; j++)
+			if (_faces[i].index_normale[0] == -1)
 			{
-				if (_faces[i].index_normale[j] == -1)
-				{
-					b = rot_matrix * (_vertices[_faces[i].index_vertices[0]] - _vertices[_faces[i].index_vertices[1]]);
-					c = rot_matrix * (_vertices[_faces[i].index_vertices[2]] - _vertices[_faces[i].index_vertices[0]]);
-					tmp = b.cross(c).normalize();
-					_normales.insert(_normales.end(), tmp);
-					_faces[i].normale = tmp;
-				}
-				else
-				{
-					if (_normales.size() <= static_cast<size_t>(_faces[i].index_normale[j] + 1))
-						_normales.resize(_faces[i].index_normale[j] + 1);
-					_faces[i].normale = _normales[_faces[i].index_normale[j]];
-				}
+				b = (_vertices->operator[](_faces[i].index_vertices[0]) - _vertices->operator[](_faces[i].index_vertices[1]));
+				c = (_vertices->operator[](_faces[i].index_vertices[2]) - _vertices->operator[](_faces[i].index_vertices[0]));
+				tmp = rot_matrix * b.cross(c).normalize();
+				_normales->insert(_normales->end(), tmp);
+				_normales->insert(_normales->end(), tmp);
+				_normales->insert(_normales->end(), tmp);
 			}
 		}
 	}
@@ -76,30 +64,30 @@ namespace jgl
 				size_t tmp = i * 3 + j;
 				if (_faces[i].index_vertices[j] != -1)
 				{
-					if (size_t(_faces[i].index_vertices[j]) >= _vertices.size())
-						jgl::error_exit(1, "Error while baking a Mesh_part with vertices = " + jgl::itoa(_faces[i].index_vertices[j]) + " over " + jgl::itoa(_vertices.size()) + " possibility");
-					_baked_vertices[tmp] = _vertices[_faces[i].index_vertices[j]];
+					if (size_t(_faces[i].index_vertices[j]) >= _vertices->size())
+						jgl::error_exit(1, "Error while baking a Mesh_part with vertices = " + jgl::itoa(_faces[i].index_vertices[j]) + " over " + jgl::itoa(_vertices->size()) + " possibility");
+					_baked_vertices[tmp] = _vertices->operator[](_faces[i].index_vertices[j]);
 				}
 				else
 					_baked_vertices[tmp] = Vector3(-1, -1, -1);
 
 				if (_faces[i].index_uvs[j] != -1)
 				{
-					if (size_t(_faces[i].index_uvs[j]) >= _uvs.size())
-						jgl::error_exit(1, "Error while baking a Mesh_part with uvs = " + jgl::itoa(_faces[i].index_uvs[j]) + " over " + jgl::itoa(_uvs.size()) + " possibility");
-					_baked_uvs[tmp] = _uvs[_faces[i].index_uvs[j]];
+					if (size_t(_faces[i].index_uvs[j]) >= _uvs->size())
+						jgl::error_exit(1, "Error while baking a Mesh_part with uvs = " + jgl::itoa(_faces[i].index_uvs[j]) + " over " + jgl::itoa(_uvs->size()) + " possibility");
+					_baked_uvs[tmp] = _uvs->operator[](_faces[i].index_uvs[j]);
 				}
 				else
 					_baked_uvs[tmp] = Vector2(-1, -1);
 
 				if (_faces[i].index_normale[j] != -1)
 				{
-					if (size_t(_faces[i].index_normale[j]) >= _normales.size())
-						jgl::error_exit(1, "Error while baking a Mesh_part with normales = " + jgl::itoa(_faces[i].index_normale[j]) + " over " + jgl::itoa(_normales.size()) + " possibility");
-					_baked_normales[tmp] = _normales[_faces[i].index_normale[j]];
+					if (size_t(_faces[i].index_normale[j]) >= _normales->size())
+						jgl::error_exit(1, "Error while baking a Mesh_part with normales = " + jgl::itoa(_faces[i].index_normale[j]) + " over " + jgl::itoa(_normales->size()) + " possibility");
+					_baked_normales[tmp] = _normales->operator[](_faces[i].index_normale[j]);
 				}
 				else
-					_baked_normales[tmp] = _normales[tmp];
+					_baked_normales[tmp] = _normales->operator[](tmp);
 			}
 		}
 
@@ -120,7 +108,7 @@ namespace jgl
 		glBufferData(GL_ARRAY_BUFFER, _baked_normales.size() * 3 * sizeof(float), static_cast<const float*>(&(tmp3[0].x)), GL_STATIC_DRAW);
 	}
 
-	void Mesh_part::render_color(const Mesh* parent, const Camera* camera, Vector3 p_pos, const jgl::Viewport *viewport)
+	void Mesh_part::render_color(const Mesh* parent, const Camera* camera, Vector3 p_pos, const jgl::Viewport* viewport)
 	{
 		if (_baked_vertices.size() == 0)
 			return;
@@ -145,7 +133,7 @@ namespace jgl
 		glUniform4f(g_application->material_kd_colorID(), _material->kd.r, _material->kd.g, _material->kd.b, _material->kd.a);
 		glUniform4f(g_application->material_ks_colorID(), _material->ks.r, _material->ks.g, _material->ks.b, _material->ks.a);
 		glUniform4f(g_application->material_ke_colorID(), _material->ke.r, _material->ke.g, _material->ke.b, _material->ke.a);
-		
+
 		glUniform1f(g_application->material_ns_colorID(), _material->ns);
 		glUniform1f(g_application->material_ni_colorID(), _material->ni);
 		glUniform1f(g_application->material_d_colorID(), _material->d);
@@ -177,7 +165,7 @@ namespace jgl
 		glDisableVertexAttribArray(1);
 	}
 
-	void Mesh_part::render_texture(const Mesh *parent, const Camera* camera, Vector3 p_pos, const jgl::Viewport* viewport)
+	void Mesh_part::render_texture(const Mesh* parent, const Camera* camera, Vector3 p_pos, const jgl::Viewport* viewport)
 	{
 		if (_baked_vertices.size() == 0)
 			return;
@@ -258,7 +246,7 @@ namespace jgl
 
 	void Mesh_part::render(const Mesh* parent, const Camera* camera, Vector3 p_pos, const jgl::Viewport* viewport)
 	{
-		if (_material->diffuse_texture == Material::empty_texture() || _uvs.size() == 0)
+		if (_material->diffuse_texture == Material::empty_texture() || _uvs->size() == 0)
 			render_color(parent, camera, p_pos, viewport);
 		else
 			render_texture(parent, camera, p_pos, viewport);
@@ -266,19 +254,16 @@ namespace jgl
 	
 	void Mesh_part::clear()
 	{
-		_faces.clear();
+		_vertices->clear();
+		_uvs->clear();
+		_normales->clear();
 
-		_vertices.clear();
-		_uvs.clear();
-		_normales.clear();
-
-		_baked_vertices.clear();
-		_baked_uvs.clear();
-		_baked_normales.clear();
+		clear_baked();
 	}
 	void Mesh_part::clear_baked()
 	{
 		_faces.clear();
+
 		_baked_vertices.clear();
 		_baked_uvs.clear();
 		_baked_normales.clear();

@@ -25,6 +25,7 @@ namespace jgl
 		Vector4 operator - (const Vector4 delta) const;
 		Vector4 operator * (const Vector4 delta) const;
 		Vector4 operator / (const Vector4 delta) const;
+		Vector4 operator % (const Vector4 delta) const;
 		void operator += (const Vector4 delta);
 		void operator -= (const Vector4 delta);
 		void operator *= (const Vector4 delta);
@@ -75,6 +76,7 @@ namespace jgl
 		Vector3 operator - (const Vector3 delta) const;
 		Vector3 operator * (const Vector3 delta) const;
 		Vector3 operator / (const Vector3 delta) const;
+		Vector3 operator % (const Vector3 delta) const;
 		void operator += (const Vector3 delta);
 		void operator -= (const Vector3 delta);
 		void operator *= (const Vector3 delta);
@@ -118,6 +120,7 @@ namespace jgl
 		Vector2	operator - (const Vector2 delta) const;
 		Vector2	operator * (const Vector2 delta) const;
 		Vector2	operator / (const Vector2 delta) const;
+		Vector2 operator % (const Vector2 delta) const;
 		void operator += (const Vector2 delta);
 		void operator -= (const Vector2 delta);
 		void operator *= (const Vector2 delta);

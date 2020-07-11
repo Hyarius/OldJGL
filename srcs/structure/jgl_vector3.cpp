@@ -69,6 +69,13 @@ namespace jgl
 		return (Vector3(x / delta.x, y / delta.y, z / delta.z));
 	}
 
+	Vector3		Vector3::operator % (const Vector3 delta) const {
+		return (Vector3(
+			static_cast<int>(x) % static_cast<int>(delta.x),
+			static_cast<int>(y) % static_cast<int>(delta.y),
+			static_cast<int>(z) % static_cast<int>(delta.z)));
+	}
+
 	void 		Vector3::operator += (const Vector3 delta) {
 		x += delta.x; y += delta.y; z += delta.z;
 	}
@@ -163,7 +170,7 @@ namespace jgl
 
 	jgl::String Vector3::str() const
 	{
-		jgl::String result = "(" + jgl::ftoa(x, 3) + " / " + jgl::ftoa(y, 3) + " / " + jgl::ftoa(z, 3) + ")";
+		jgl::String result = "(" + jgl::ftoa(x, 6) + " / " + jgl::ftoa(y, 6) + " / " + jgl::ftoa(z, 6) + ")";
 
 		return (result);
 	}

@@ -54,6 +54,10 @@ namespace jgl
 		return (Vector2(x / delta.x, y / delta.y));
 	}
 
+	Vector2		Vector2::operator % (const Vector2 delta) const {
+		return (Vector2(static_cast<int>(x) % static_cast<int>(delta.x), static_cast<int>(y) % static_cast<int>(delta.y)));
+	}
+
 	void 		Vector2::operator += (const Vector2 delta) {
 		x += delta.x; y += delta.y;
 	}

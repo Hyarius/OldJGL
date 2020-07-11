@@ -16,4 +16,6 @@ namespace jgl
 	};
 }
 
+std::ostream& operator<<(std::ostream& os, const jgl::Reference_count& value);
+
 #endif
