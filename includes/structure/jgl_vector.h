@@ -93,6 +93,7 @@ namespace jgl
 		float dot(Vector3 other) const;
 		jgl::String str() const;
 		jgl::String text() const;
+		float angle(Vector3 other);
 		Vector3 floor() const;
 		Vector3 invert() const;
 		Vector4 convert(int p_value) const;
@@ -136,6 +137,7 @@ namespace jgl
 		float dot(Vector2 other) const;
 		jgl::String str() const;
 		jgl::String text() const;
+		float angle(Vector2 other);
 		Vector2 floor() const;
 		Vector2 ceiling() const;
 		Vector2 invert() const;

@@ -182,6 +182,13 @@ namespace jgl
 		return (result);
 	}
 
+	float Vector3::angle(Vector3 other)
+	{
+		float angle = acos((dot(other) / (length() * other.length())));
+
+		return (jgl::radian_to_degree(angle));
+	}
+
 	Vector3 Vector3::floor() const
 	{
 		Vector3 result;

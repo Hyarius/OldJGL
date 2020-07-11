@@ -152,6 +152,17 @@ namespace jgl
 		return (result);
 	}
 
+	float Vector2::angle(Vector2 other)
+	{
+		float rdot = this->dot(other);
+
+		rdot = (rdot < -1.0f ? -1.0f : (rdot > 1.0f ? 1.0f : rdot));
+
+		float angle = acos(rdot);
+
+		return (jgl::radian_to_degree(angle));
+	}
+
 	Vector2 Vector2::floor() const
 	{
 		Vector2 result;
