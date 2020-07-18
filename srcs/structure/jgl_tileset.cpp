@@ -39,11 +39,11 @@ namespace jgl
 
 		Vector2 value[] = {
 			pos + Vector2(0.0f, 0.0f),
-			pos + Vector2(size.x, 0.0f),
-			pos + Vector2(0.0f, size.y),
 			pos + Vector2(0.0f, size.y),
 			pos + Vector2(size.x, 0.0f),
-			pos + Vector2(size.x, size.y)
+			pos + Vector2(0.0f, size.y),
+			pos + Vector2(size.x, size.y),
+			pos + Vector2(size.x, 0.0f)
 		};
 
 		Vector3 points[] = {
@@ -65,11 +65,11 @@ namespace jgl
 
 		Uv uvs[] = {
 			Uv(sprite_coord + Vector2(0.0f, 0.0f)),
-			Uv(sprite_coord + Vector2(_unit.x, 0.0f)),
-			Uv(sprite_coord + Vector2(0.0f, _unit.y)),
 			Uv(sprite_coord + Vector2(0.0f, _unit.y)),
 			Uv(sprite_coord + Vector2(_unit.x, 0.0f)),
-			Uv(sprite_coord + _unit)
+			Uv(sprite_coord + Vector2(0.0f, _unit.y)),
+			Uv(sprite_coord + _unit),
+			Uv(sprite_coord + Vector2(_unit.x, 0.0f))
 		};
 
 		draw_triangle_texture(points, uvs, p_alpha, 2);
@@ -87,11 +87,11 @@ namespace jgl
 
 		Vector2 value[] = {
 			pos + Vector2(0.0f, 0.0f),
-			pos + Vector2(size.x, 0.0f),
-			pos + Vector2(0.0f, size.y),
 			pos + Vector2(0.0f, size.y),
 			pos + Vector2(size.x, 0.0f),
-			pos + Vector2(size.x, size.y)
+			pos + Vector2(0.0f, size.y),
+			pos + Vector2(size.x, size.y),
+			pos + Vector2(size.x, 0.0f)
 		};
 
 		Vector3 points[] = {
@@ -111,11 +111,11 @@ namespace jgl
 
 		Uv uvs[] = {
 			Uv(sprite_coord + Vector2(0.0f, 0.0f)),
-			Uv(sprite_coord + Vector2(_unit.x, 0.0f)),
-			Uv(sprite_coord + Vector2(0.0f, _unit.y)),
 			Uv(sprite_coord + Vector2(0.0f, _unit.y)),
 			Uv(sprite_coord + Vector2(_unit.x, 0.0f)),
-			Uv(sprite_coord + _unit)
+			Uv(sprite_coord + Vector2(0.0f, _unit.y)),
+			Uv(sprite_coord + _unit),
+			Uv(sprite_coord + Vector2(_unit.x, 0.0f))
 		};
 
 		draw_triangle_texture(points, uvs, p_alpha, 2);

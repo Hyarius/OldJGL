@@ -21,7 +21,8 @@ namespace jgl
 
 	void		Mouse::actualize_pos(int x, int y)
 	{
-		pos = Vector2(x, y);
+		old_pos = pos.floor();
+		pos = Vector2(x, y).floor();
 
 		if (old_pos.x != -1)
 			rel_pos = pos - old_pos;
@@ -77,7 +78,6 @@ namespace jgl
 		int x, y;
 		Uint32 mousestate;
 
-		old_pos = pos;
 		SDL_PumpEvents();
 		mousestate = SDL_GetMouseState(&(x), &(y));
 
@@ -92,9 +92,9 @@ namespace jgl
 
 	void Mouse::place(Vector2 coord)
 	{
-		pos = coord;
-		old_pos = coord;
-		rel_pos = Vector2(0, 0);
+		pos = coord.floor();
+		old_pos = coord.floor();
+		rel_pos = Vector2(0, 0).floor();
 		SDL_WarpMouseInWindow(g_application->window(), static_cast<int>(coord.x), static_cast<int>(coord.y));
 	}
 

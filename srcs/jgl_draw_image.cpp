@@ -12,19 +12,19 @@ namespace jgl
 
 		jgl::Vector3 points[] = {
 			convert_screen_to_opengl(p_tl),
+			convert_screen_to_opengl(p_dr),
 			convert_screen_to_opengl(p_tr),
 			convert_screen_to_opengl(p_dl),
 			convert_screen_to_opengl(p_dr),
-			convert_screen_to_opengl(p_dl),
-			convert_screen_to_opengl(p_tr)
+			convert_screen_to_opengl(p_tl)
 		};
 		jgl::Uv uvs[] = {
 			p_uv_tl,
+			p_uv_dr,
 			p_uv_tr,
 			p_uv_dl,
 			p_uv_dr,
-			p_uv_dl,
-			p_uv_tr
+			p_uv_tl
 		};
 
 		draw_triangle_texture(points, uvs, p_alpha, 2);

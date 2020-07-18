@@ -36,7 +36,7 @@ namespace jgl
 			if (_faces[i].index_normale[0] == -1)
 			{
 				b = (_vertices->operator[](_faces[i].index_vertices[0]) - _vertices->operator[](_faces[i].index_vertices[1]));
-				c = (_vertices->operator[](_faces[i].index_vertices[2]) - _vertices->operator[](_faces[i].index_vertices[0]));
+				c = (_vertices->operator[](_faces[i].index_vertices[0]) - _vertices->operator[](_faces[i].index_vertices[2]));
 				tmp = rot_matrix * b.cross(c).normalize();
 				_normales->insert(_normales->end(), tmp);
 				_normales->insert(_normales->end(), tmp);

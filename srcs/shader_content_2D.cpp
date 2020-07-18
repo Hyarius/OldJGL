@@ -48,7 +48,7 @@ std::string texture_shader_frag = {
 	"uniform sampler2D textureID;"
 	"void main()"
 	"{"
-	"color = texture(textureID, UV).rgba;"
+		"color = texture(textureID, UV).rgba;"
 		"color.a = color.a * ALPHA;"
 	"}"
 };
