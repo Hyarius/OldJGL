@@ -24,12 +24,6 @@ std::ostream& operator<<(std::ostream& os, const jgl::Vector4 value)
 	return os;
 }
 
-std::ostream& operator<<(std::ostream& os, const jgl::Pixel value)
-{
-	os << "(" << jgl::ftoa(value.x, 3) << " / " << jgl::ftoa(value.y, 3) << " / " << jgl::ftoa(value.z, 3) << ")";
-	return os;
-}
-
 std::ostream& operator<<(std::ostream& os, const jgl::Mouse mouse)
 {
 	jgl::String left = (mouse.get_button(jgl::mouse_button::left) == jgl::mouse_state::up ? "Up" : (mouse.get_button(jgl::mouse_button::left) == jgl::mouse_state::down ? "Down" : "Null"));

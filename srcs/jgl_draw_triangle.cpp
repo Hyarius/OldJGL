@@ -2,7 +2,7 @@
 
 namespace jgl
 {
-	void			draw_pixel_color(const Pixel points, const Color colors, const size_t nb)
+	void			draw_pixel_color(const Vector3 points, const Color colors, const size_t nb)
 	{
 		GLfloat* g_vertex_buffer_data = (float*)(&points);
 
@@ -33,7 +33,7 @@ namespace jgl
 		glDrawArrays(GL_LINES, 0, static_cast<GLsizei>(1 * nb));
 	}
 
-	void			draw_line_color(const Pixel* points, const Color* colors, const size_t nb)
+	void			draw_line_color(const Vector3* points, const Color* colors, const size_t nb)
 	{
 		GLfloat* g_vertex_buffer_data = (float*)(points);
 
@@ -64,7 +64,7 @@ namespace jgl
 		glDrawArrays(GL_LINES, 0, static_cast<GLsizei>(2 * nb));
 	}
 
-	void			draw_triangle_color(const Pixel* points, const Color* colors, const size_t nb)
+	void			draw_triangle_color(const Vector3* points, const Color* colors, const size_t nb)
 	{
 		GLfloat* g_vertex_buffer_data = (float*)(points);
 
@@ -94,10 +94,9 @@ namespace jgl
 
 		glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
 		glDrawArrays(GL_TRIANGLES, 0, static_cast<GLsizei>(3 * nb));
-		glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
 	}
 
-	void			fill_triangle_color(const Pixel* points, const Color* colors, const size_t nb)
+	void			fill_triangle_color(const Vector3* points, const Color* colors, const size_t nb)
 	{
 		GLfloat* g_vertex_buffer_data = (float*)(points);
 
@@ -125,10 +124,11 @@ namespace jgl
 		glBindBuffer(GL_ARRAY_BUFFER, g_application->color_buffer());
 		glVertexAttribPointer(1, 4, GL_FLOAT, GL_FALSE, 0, NULL);
 
+		glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
 		glDrawArrays(GL_TRIANGLES, 0, static_cast<GLsizei>(3 * nb));
 	}
 
-	void			draw_triangle_texture(const Pixel* points, const Uv* uvs, const float alpha, const size_t nb)
+	void			draw_triangle_texture(const Vector3* points, const Uv* uvs, const float alpha, const size_t nb)
 	{
 		GLfloat* g_vertex_buffer_data = (float*)(points);
 

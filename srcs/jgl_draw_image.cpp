@@ -10,7 +10,7 @@ namespace jgl
 		if (viewport != nullptr)
 			viewport->use();
 
-		jgl::Pixel points[] = {
+		jgl::Vector3 points[] = {
 			convert_screen_to_opengl(p_tl),
 			convert_screen_to_opengl(p_tr),
 			convert_screen_to_opengl(p_dl),

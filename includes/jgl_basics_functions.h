@@ -57,7 +57,7 @@ namespace jgl
 		return (src_map.count(value));
 	}
 
-	Pixel convert_screen_to_opengl(const Pixel source);
+	Vector3 convert_screen_to_opengl(const Vector2 source);
 	SDL_Surface* create_surface_color(const Color p_color);
 	float degree_to_radian(const float angle);
 	float radian_to_degree(const float radian);

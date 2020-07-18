@@ -2,13 +2,12 @@
 
 std::string color_shader_vert = {
 	"#version 330 core\n"
-	"layout(location = 0)"
-	"in vec3 model_space;"
+	"layout(location = 0) in vec3 model_space;"
 	"layout(location = 1) in vec4 vertexColor;"
 	"out vec4 fragmentColor;"
 	"void main()"
 	"{"
-		"gl_Position.xyz = model_space;"
+		"gl_Position = vec4(model_space, 1.0f);"
 		"fragmentColor = vertexColor;"
 	"}"
 };
@@ -35,7 +34,7 @@ std::string texture_shader_vert = {
 	"out float ALPHA;"
 	"void main()"
 	"{"
-		"gl_Position.xyz = model_space;"
+		"gl_Position = vec4(model_space, 1.0f);"
 		"UV = vertexUV;"
 		"ALPHA = alpha_value;"
 	"}"

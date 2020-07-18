@@ -46,7 +46,7 @@ namespace jgl
 			pos + Vector2(size.x, size.y)
 		};
 
-		Pixel points[] = {
+		Vector3 points[] = {
 			convert_screen_to_opengl(value[0]),
 			convert_screen_to_opengl(value[1]),
 			convert_screen_to_opengl(value[2]),
@@ -94,7 +94,7 @@ namespace jgl
 			pos + Vector2(size.x, size.y)
 		};
 
-		Pixel points[] = {
+		Vector3 points[] = {
 			convert_screen_to_opengl(value[0]),
 			convert_screen_to_opengl(value[1]),
 			convert_screen_to_opengl(value[2]),

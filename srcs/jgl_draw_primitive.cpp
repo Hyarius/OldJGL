@@ -28,15 +28,15 @@ namespace jgl
 		std::vector<Vector2> to_draw = calc_point(width);
 		Vector2 actual;
 		Color colors[2];
-		Pixel pixels[2];
+		Vector3 Vector3s[2];
 
 		colors[0] = p_color;
 		colors[1] = p_color;
 		for (size_t i = 0; i < to_draw.size(); i++)
 		{
-			pixels[0] = convert_screen_to_opengl(Vector2(to_draw[i].x + p1.x, to_draw[i].y + p1.y));
-			pixels[1] = convert_screen_to_opengl(Vector2(to_draw[i].x + p2.x, to_draw[i].y + p2.y));
-			draw_line_color(pixels, colors, 1);
+			Vector3s[0] = convert_screen_to_opengl(Vector2(to_draw[i].x + p1.x, to_draw[i].y + p1.y));
+			Vector3s[1] = convert_screen_to_opengl(Vector2(to_draw[i].x + p2.x, to_draw[i].y + p2.y));
+			draw_line_color(Vector3s, colors, 1);
 		}
 
 	}
@@ -46,15 +46,15 @@ namespace jgl
 		if (viewport != nullptr)
 			viewport->use();
 
-		Pixel tmp_center = 0;
-		Pixel actual;
+		Vector3 tmp_center = 0;
+		Vector3 actual;
 
 		for (actual.x = -static_cast<int>(width) / 2.0f; actual.x <= static_cast<int>(width) / 2.0f || actual.x == 0; actual.x++)
 		{
 			for (actual.y = -static_cast<int>(width) / 2.0f; actual.y <= static_cast<int>(width) / 2.0f || actual.y == 0; actual.y++)
 			{
 				if (tmp_center.distance(actual) < width / 2.0f)
-					draw_pixel_color(Pixel(actual.x + center.x, actual.y + center.y), p_color);
+					draw_pixel_color(Vector3(actual.x + center.x, actual.y + center.y, 0.0f), p_color);
 			}
 		}
 	}
@@ -64,13 +64,13 @@ namespace jgl
 		if (viewport != nullptr)
 			viewport->use();
 
-		Pixel points[] = {
-				convert_screen_to_opengl(p_tl),
-				convert_screen_to_opengl(p_tr),
-				convert_screen_to_opengl(p_dl),
-				convert_screen_to_opengl(p_dr),
-				convert_screen_to_opengl(p_dl),
-				convert_screen_to_opengl(p_tr)
+		Vector3 points[] = {
+			convert_screen_to_opengl(p_tl),
+			convert_screen_to_opengl(p_dr),
+			convert_screen_to_opengl(p_tr),
+			convert_screen_to_opengl(p_dl),
+			convert_screen_to_opengl(p_dr),
+			convert_screen_to_opengl(p_tl)
 		};
 		Color colors[] = {
 			p_color,
@@ -89,13 +89,13 @@ namespace jgl
 		if (viewport != nullptr)
 			viewport->use();
 
-		Pixel points[] = {
+		Vector3 points[] = {
 			convert_screen_to_opengl(p_tl),
+			convert_screen_to_opengl(p_dr),
 			convert_screen_to_opengl(p_tr),
 			convert_screen_to_opengl(p_dl),
 			convert_screen_to_opengl(p_dr),
-			convert_screen_to_opengl(p_dl),
-			convert_screen_to_opengl(p_tr)
+			convert_screen_to_opengl(p_tl)
 		};
 		Color colors[] = {
 			p_color,

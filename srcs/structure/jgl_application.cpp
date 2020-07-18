@@ -11,7 +11,7 @@ namespace jgl
 
 		//check_sdl_error(__FILE__, __LINE__);
 
-		SDL_GL_SetAttribute(SDL_GL_CONTEXT_MAJOR_VERSION, 4);
+		SDL_GL_SetAttribute(SDL_GL_CONTEXT_MAJOR_VERSION, 3);
 		SDL_GL_SetAttribute(SDL_GL_CONTEXT_MINOR_VERSION, 1);
 		SDL_GL_SetAttribute(SDL_GL_ACCELERATED_VISUAL, 1);
 		SDL_GL_SetAttribute(SDL_GL_CONTEXT_PROFILE_MASK, SDL_GL_CONTEXT_PROFILE_CORE);
@@ -58,10 +58,10 @@ namespace jgl
 		}
 
 		std::cout << "Graphical info :\n" << std::endl;
-		std::cout << glGetString(GL_VENDOR) << "\n" << std::endl;
-		std::cout << glGetString(GL_RENDERER) << "\n" << std::endl;
-		std::cout << glGetString(GL_VERSION) << "\n" << std::endl;
-		std::cout << glGetString(GL_SHADING_LANGUAGE_VERSION) << "\n" << std::endl;
+		std::cout << "Vendeur : " << glGetString(GL_VENDOR) << "\n" << std::endl;
+		std::cout << "Carte graphique : " << glGetString(GL_RENDERER) << "\n" << std::endl;
+		std::cout << "Version opengl : " << glGetString(GL_VERSION) << "\n" << std::endl;
+		std::cout << "Version shader : " << glGetString(GL_SHADING_LANGUAGE_VERSION) << "\n" << std::endl;
 		std::cout << "\n" << std::endl;
 
 
@@ -73,8 +73,8 @@ namespace jgl
 
 		_max_fps = 60;
 		_fps_ratio = 1.0f;
-		SDL_GL_MakeCurrent(_window,
-			_context);
+		glewExperimental = true;
+		SDL_GL_MakeCurrent(_window, _context);
 		int err = glewInit();
 		if (err != GLEW_OK)
 		{
@@ -167,9 +167,9 @@ namespace jgl
 		glCullFace(GL_BACK);
 		glEnable(GL_CULL_FACE);
 		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-		glFrontFace(GL_CW);
+		glFrontFace(GL_CCW);
 
-		glEnable(GL_SCISSOR_TEST);
+		//glEnable(GL_SCISSOR_TEST);
 
 		glBindVertexArray(_vertex_array);
 
@@ -227,7 +227,7 @@ namespace jgl
 
 	void Application::clear()
 	{
-		glClearColor(0, 0, 0, 1.0f);
+		glClearColor(0.8f, 0.1f, 0.1f, 1.0f);
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	}
 

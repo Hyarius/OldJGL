@@ -8,11 +8,11 @@
 
 namespace jgl
 {
-	void draw_pixel_color(const Pixel points, const Color colors, const size_t nb = 1);
-	void draw_line_color(const Pixel* points, const Color* colors, const size_t nb = 1);
-	void draw_triangle_color(const Pixel* points, const Color* colors, const size_t nb = 1);
-	void draw_triangle_texture(const Pixel* points, const Uv* uvs, float alpha, const size_t nb = 1);
-	void fill_triangle_color(const Pixel* points, const Color* colors, const size_t nb = 1);
+	void draw_pixel_color(const Vector3 points, const Color colors, const size_t nb = 1);
+	void draw_line_color(const Vector3* points, const Color* colors, const size_t nb = 1);
+	void draw_triangle_color(const Vector3* points, const Color* colors, const size_t nb = 1);
+	void draw_triangle_texture(const Vector3* points, const Uv* uvs, float alpha, const size_t nb = 1);
+	void fill_triangle_color(const Vector3* points, const Color* colors, const size_t nb = 1);
 
 	std::vector<Vector2> calc_point(const size_t width);
 	void draw_line(const Vector2 p1, const Vector2 p2, const size_t width, const Color p_color, const Viewport* viewport = nullptr);

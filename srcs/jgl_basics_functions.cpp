@@ -373,11 +373,11 @@ namespace jgl
 		return((rand() % (max - min)) + min);
 	}
 
-	Pixel				convert_screen_to_opengl(const Pixel source)
+	Vector3				convert_screen_to_opengl(const Vector2 source)
 	{
 		float x = (source.x) / (g_application->active_viewport()->area().x / 2.0f) - 1.0f;
 		float y = -((source.y) / (g_application->active_viewport()->area().y / 2.0f) - 1.0f);
-		return (Pixel(x, y, 0.0f));
+		return (Vector3(x, y, 0.0f));
 	}
 
 	SDL_Surface* create_surface_color(const Color p_color)
