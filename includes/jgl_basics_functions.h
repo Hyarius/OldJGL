@@ -7,6 +7,9 @@
 
 namespace jgl
 {
+	jgl::Vector2 compose_smaller(jgl::Vector2 first, jgl::Vector2 second);
+	jgl::Vector2 compose_biggest(jgl::Vector2 first, jgl::Vector2 second);
+	int floor(float value);
 	void check_sdl_error(const jgl::String file, const int line);
 	bool string_is_numeric(const jgl::String text);
 	size_t count_word(const jgl::String& input, const jgl::String& delim);
@@ -56,8 +59,10 @@ namespace jgl
 	{
 		return (src_map.count(value));
 	}
-
+	Vector2 convert_screenV2_to_opengl(const Vector2 source);
 	Vector3 convert_screen_to_opengl(const Vector2 source);
+	Vector2 convert_opengl_to_screen(const Vector3 source);
+	Vector2 convert_opengl_to_screen(const Vector2 source);
 	SDL_Surface* create_surface_color(const Color p_color);
 	float degree_to_radian(const float angle);
 	float radian_to_degree(const float radian);

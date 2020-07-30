@@ -33,9 +33,9 @@ namespace jgl
 		const Vector2 size() const { return (_size); }
 		const Vector2 unit() const { return (_unit); }
 		const jgl::Array<Vector2>& sprites() const { return (_sprites); }
-		const Vector2 sprite(const size_t index) const
+		const Vector2 sprite(const int index) const
 		{
-			if (index >= _sprites.size())
+			if (index == -1 || static_cast<size_t>(index) >= _sprites.size())
 				return (-1);
 			return (_sprites[index]);
 		}

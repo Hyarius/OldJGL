@@ -25,7 +25,6 @@ namespace jgl
 			print_fps = saved_fps;
 			framedelay = static_cast<unsigned int>(1000.0f / static_cast<float>(saved_fps));
 		}
-		g_time = SDL_GetTicks();
 		if (beginsecond == 0)
 			beginsecond = g_time;
 		if (g_time - beginsecond > 1000)

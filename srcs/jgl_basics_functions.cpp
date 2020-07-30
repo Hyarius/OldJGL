@@ -2,6 +2,24 @@
 
 namespace jgl
 {
+	jgl::Vector2 compose_smaller(jgl::Vector2 first, jgl::Vector2 second)
+	{
+		float x = (first.x < second.x ? first.x : second.x);
+		float y = (first.y < second.y ? first.y : second.y);
+
+		return (jgl::Vector2(x, y));
+	}
+	jgl::Vector2 compose_biggest(jgl::Vector2 first, jgl::Vector2 second)
+	{
+		float x = (first.x > second.x ? first.x : second.x);
+		float y = (first.y > second.y ? first.y : second.y);
+
+		return (jgl::Vector2(x, y));
+	}
+	int floor(float value)
+	{
+		return (static_cast<int>(std::floor(value)));
+	}
 	size_t count_word(const jgl::String& input, const jgl::String& delim)
 	{
 		size_t tmp = input.size();
@@ -373,11 +391,40 @@ namespace jgl
 		return((rand() % (max - min)) + min);
 	}
 
+	Vector2				convert_screenV2_to_opengl(const Vector2 source)
+	{
+		if (g_application == nullptr)
+			error_exit(1, "jgl::Application not created");
+		float x = (source.x) / (g_application->active_viewport()->area().x / 2.0f) - 1.0f;
+		float y = -((source.y) / (g_application->active_viewport()->area().y / 2.0f) - 1.0f);
+		return (Vector2(x, y));
+	}
+
 	Vector3				convert_screen_to_opengl(const Vector2 source)
 	{
+		if (g_application == nullptr)
+			error_exit(1, "jgl::Application not created");
 		float x = (source.x) / (g_application->active_viewport()->area().x / 2.0f) - 1.0f;
 		float y = -((source.y) / (g_application->active_viewport()->area().y / 2.0f) - 1.0f);
 		return (Vector3(x, y, 0.0f));
+	}
+
+	Vector2				convert_opengl_to_screen(const Vector2 source)
+	{
+		if (g_application == nullptr)
+			error_exit(1, "jgl::Application not created");
+		float x = (source.x + 1.0f) * (g_application->active_viewport()->area().x / 2.0f);
+		float y = (source.y - 1.0f) * (g_application->active_viewport()->area().y / -2.0f);
+		return (Vector2(x, y));
+	}
+
+	Vector2				convert_opengl_to_screen(const Vector3 source)
+	{
+		if (g_application == nullptr)
+			error_exit(1, "jgl::Application not created");
+		float x = (source.x + 1.0f) * (g_application->active_viewport()->area().x / 2.0f);
+		float y = (source.y - 1.0f) * (g_application->active_viewport()->area().y / -2.0f);
+		return (Vector2(x, y));
 	}
 
 	SDL_Surface* create_surface_color(const Color p_color)

@@ -61,18 +61,18 @@ namespace jgl
 		else
 			i = id;
 
-		Vector2	sprite_coord = Vector2(_sprites[i]);
+		Vector2	sprite_coord = _sprites[i];
 
-		Uv uvs[] = {
-			Uv(sprite_coord + Vector2(0.0f, 0.0f)),
-			Uv(sprite_coord + Vector2(0.0f, _unit.y)),
-			Uv(sprite_coord + Vector2(_unit.x, 0.0f)),
-			Uv(sprite_coord + Vector2(0.0f, _unit.y)),
-			Uv(sprite_coord + _unit),
-			Uv(sprite_coord + Vector2(_unit.x, 0.0f))
+		Vector2 uvs[] = {
+			Vector2(sprite_coord + Vector2(0.0f, 0.0f)),
+			Vector2(sprite_coord + Vector2(0.0f, _unit.y)),
+			Vector2(sprite_coord + Vector2(_unit.x, 0.0f)),
+			Vector2(sprite_coord + Vector2(0.0f, _unit.y)),
+			Vector2(sprite_coord + _unit),
+			Vector2(sprite_coord + Vector2(_unit.x, 0.0f))
 		};
 
-		draw_triangle_texture(points, uvs, p_alpha, 2);
+		draw_triangle_texture(points, uvs, p_alpha, 6);
 	}
 
 	void Sprite_sheet::draw_centred(const int id, const Vector2 pos, const Vector2 size, const float p_alpha, const Viewport* viewport) const
@@ -109,16 +109,16 @@ namespace jgl
 
 		Vector2	sprite_coord = Vector2(_sprites[i]);
 
-		Uv uvs[] = {
-			Uv(sprite_coord + Vector2(0.0f, 0.0f)),
-			Uv(sprite_coord + Vector2(0.0f, _unit.y)),
-			Uv(sprite_coord + Vector2(_unit.x, 0.0f)),
-			Uv(sprite_coord + Vector2(0.0f, _unit.y)),
-			Uv(sprite_coord + _unit),
-			Uv(sprite_coord + Vector2(_unit.x, 0.0f))
+		Vector2 uvs[] = {
+			Vector2(sprite_coord + Vector2(0.0f, 0.0f)),
+			Vector2(sprite_coord + Vector2(0.0f, _unit.y)),
+			Vector2(sprite_coord + Vector2(_unit.x, 0.0f)),
+			Vector2(sprite_coord + Vector2(0.0f, _unit.y)),
+			Vector2(sprite_coord + _unit),
+			Vector2(sprite_coord + Vector2(_unit.x, 0.0f))
 		};
 
-		draw_triangle_texture(points, uvs, p_alpha, 2);
+		draw_triangle_texture(points, uvs, p_alpha, 6);
 	}
 
 	void Sprite_sheet::draw_centred(const Vector2 coord, const Vector2 pos, const Vector2 size, const float p_alpha, const Viewport* viewport) const

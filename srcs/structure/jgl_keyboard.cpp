@@ -90,7 +90,8 @@ namespace jgl
 		SDL_SCANCODE_SPACE,
 		SDL_SCANCODE_LSHIFT,
 		SDL_SCANCODE_RSHIFT,
-		SDL_SCANCODE_TAB
+		SDL_SCANCODE_TAB,
+		SDL_SCANCODE_GRAVE
 	};
 
 	jgl::Unique_string key_name_value[]{
@@ -170,7 +171,8 @@ namespace jgl
 		"key SPACE",
 		"key LEFT SHIFT",
 		"key TABULATION",
-		"key RIGHT SHIFT"
+		"key RIGHT SHIFT",
+		"key SQUARE"
 	};
 
 	void Keyboard::actualize()

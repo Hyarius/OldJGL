@@ -96,8 +96,8 @@ namespace jgl
 		}
 		else
 		{
-			draw_rectangle(p_pos, p_size, Color(0.2f, 0.2f, 0.2f), viewport);
-			draw_rectangle(p_pos + 4, p_size - 8, Color(0.4f, 0.4f, 0.4f), viewport);
+			fill_rectangle(p_pos, p_size, Color(0.2f, 0.2f, 0.2f), viewport);
+			fill_rectangle(p_pos + 4, p_size - 8, Color(0.4f, 0.4f, 0.4f), viewport);
 		}
 	}
 }

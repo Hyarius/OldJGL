@@ -5,15 +5,6 @@
 
 namespace jgl
 {
-	struct Uv
-	{
-		float u;
-		float v;
-
-		Uv(float p_u = 0.0f, float p_v = 0.0f) : u(p_u), v(p_v) {}
-		Uv(Vector2 pos) : u(pos.x), v(pos.y) {}
-	};
-
 	struct Rect
 	{
 		float x;

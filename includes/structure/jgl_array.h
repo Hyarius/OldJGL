@@ -185,13 +185,6 @@ namespace jgl
 				calc_element();
 				return (*this);
 			}
-			Iterator& operator = (T p_value)
-			{
-				if (_parent == nullptr)
-					error_exit_tmp(1, "No parent in jgl::Array : segfault");
-				_parent->operator[](_index) = p_value;
-				return (*this);
-			}
 			T& operator*()
 			{
 				if (_parent == nullptr)
@@ -466,7 +459,7 @@ namespace jgl
 				return;
 			for (size_t i = index; i < _size - 1; i++)
 				this->operator[](i) = this->operator[](i + 1);
-			this->operator[](_size - 1) = nullptr;
+			this->operator[](_size - 1) = 0;
 			_size--;
 			clear_computed();
 		}

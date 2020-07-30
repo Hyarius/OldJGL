@@ -11,6 +11,7 @@ namespace jgl
 
 		//check_sdl_error(__FILE__, __LINE__);
 
+		SDL_GL_SetSwapInterval(0);
 		SDL_GL_SetAttribute(SDL_GL_CONTEXT_MAJOR_VERSION, 3);
 		SDL_GL_SetAttribute(SDL_GL_CONTEXT_MINOR_VERSION, 1);
 		SDL_GL_SetAttribute(SDL_GL_ACCELERATED_VISUAL, 1);
@@ -69,7 +70,6 @@ namespace jgl
 		//SDL_SetRenderDrawBlendMode(_renderer, SDL_BLENDMODE_BLEND);
 
 		SDL_WarpMouseInWindow(_window, static_cast<int>(_size.x / 2), static_cast<int>(_size.y / 2));
-
 
 		_max_fps = 60;
 		_fps_ratio = 1.0f;
@@ -291,6 +291,8 @@ namespace jgl
 		{
 			g_mouse->actualize();
 			g_keyboard->actualize();
+
+			g_time = SDL_GetTicks();
 
 			clear();
 

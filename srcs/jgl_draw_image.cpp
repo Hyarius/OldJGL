@@ -4,7 +4,7 @@ namespace jgl
 {
 	void			draw_image(jgl::Vector2 p_tl, jgl::Vector2 p_tr, jgl::Vector2 p_dl, jgl::Vector2 p_dr,
 		float p_alpha,
-		jgl::Uv p_uv_tl, jgl::Uv p_uv_tr, jgl::Uv p_uv_dl, jgl::Uv p_uv_dr,
+		jgl::Vector2 p_uv_tl, jgl::Vector2 p_uv_tr, jgl::Vector2 p_uv_dl, jgl::Vector2 p_uv_dr,
 		const jgl::Viewport* viewport)
 	{
 		if (viewport != nullptr)
@@ -18,7 +18,7 @@ namespace jgl
 			convert_screen_to_opengl(p_dr),
 			convert_screen_to_opengl(p_tl)
 		};
-		jgl::Uv uvs[] = {
+		jgl::Vector2 uvs[] = {
 			p_uv_tl,
 			p_uv_dr,
 			p_uv_tr,
@@ -27,12 +27,12 @@ namespace jgl
 			p_uv_tl
 		};
 
-		draw_triangle_texture(points, uvs, p_alpha, 2);
+		draw_triangle_texture(points, uvs, p_alpha, 6);
 	}
 
 	void			draw_image(jgl::Vector2 coord, jgl::Vector2 size,
 		float p_alpha,
-		jgl::Uv p_uv_tl, jgl::Uv p_uv_tr, jgl::Uv p_uv_dl, jgl::Uv p_uv_dr,
+		jgl::Vector2 p_uv_tl, jgl::Vector2 p_uv_tr, jgl::Vector2 p_uv_dl, jgl::Vector2 p_uv_dr,
 		const jgl::Viewport* viewport)
 	{
 		jgl::draw_image(coord, jgl::Vector2(coord.x + size.x, coord.y),
@@ -45,6 +45,6 @@ namespace jgl
 	{
 		jgl::draw_image(coord, jgl::Vector2(coord.x + size.x, coord.y),
 			jgl::Vector2(coord.x, coord.y + size.y), jgl::Vector2(coord.x + size.x, coord.y + size.y), p_alpha,
-			Uv(0, 0), Uv(1, 0), Uv(0, 1), Uv(1, 1), viewport);
+			Vector2(0, 0), Vector2(1, 0), Vector2(0, 1), Vector2(1, 1), viewport);
 	}
 }
