@@ -180,6 +180,18 @@ namespace jgl
 		return (result);
 	}
 
+	Vector4 Vector4::round() const
+	{
+		Vector4 result;
+
+		result.x = std::round(x);
+		result.y = std::round(y);
+		result.z = std::round(z);
+		result.w = std::round(w);
+
+		return (result);
+	}
+
 	Vector4 Vector4::invert() const
 	{
 		Vector4 result;

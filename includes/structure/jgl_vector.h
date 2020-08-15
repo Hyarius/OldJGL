@@ -42,6 +42,7 @@ namespace jgl
 		jgl::String str() const;
 		jgl::String text() const;
 		Vector4 floor() const;
+		Vector4 round() const;
 		Vector4 invert() const;
 	};
 
@@ -95,6 +96,7 @@ namespace jgl
 		jgl::String text() const;
 		float angle(Vector3 other);
 		Vector3 floor() const;
+		Vector3 round() const;
 		Vector3 invert() const;
 		Vector4 convert(int p_value) const;
 		Vector4 convert(float p_value = 0) const;
@@ -140,6 +142,7 @@ namespace jgl
 		float angle(Vector2 other);
 		Vector2 floor() const;
 		Vector2 ceiling() const;
+		Vector2 round() const;
 		Vector2 invert() const;
 		Vector3 convert(int p_value) const;
 		Vector3 convert(float p_value = 0) const;

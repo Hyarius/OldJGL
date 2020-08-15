@@ -11,8 +11,9 @@ namespace jgl
 {
 	int				get_frame_state(int div)
 	{
-		int value = (int)(((double)(nb_frame) / (double)(g_application->max_fps())) * div) % (div);
-		return ((value == div ? div - 1 : value));
+		Uint32 tmp = g_time % 1000;
+		float ratio = static_cast<float>(tmp) / 1000.0f;
+		return (static_cast<int>(ratio * div));
 	}
 
 	void Application::check_frame(bool draw)
@@ -36,8 +37,12 @@ namespace jgl
 		}
 		else
 			nb_frame++;
-		if (framedelay > g_time - old_time)
-			SDL_Delay(framedelay - (g_time - old_time));
-		old_time = g_time;
+		Uint32 tmp = g_time - old_time;
+		if (framedelay > tmp)
+		{
+			Uint32 delta = framedelay - tmp;
+			SDL_Delay(delta);
+		}
+		old_time = SDL_GetTicks();
 	}
 }

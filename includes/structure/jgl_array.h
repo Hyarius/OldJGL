@@ -474,6 +474,16 @@ namespace jgl
 			_size--;
 			clear_computed();
 		}
+
+		void reverse()
+		{
+			for (size_t i = 0; i < _size / 2; i++)
+			{
+				T tmp = this->operator[](i);
+				this->operator[](i) = this->operator[](_size - i - 1);
+				this->operator[](_size - i - 1) = tmp;
+			}
+		}
 		const bool computed() const { return (_computed); }
 		const T* computed_content() const { return (_computed_result); }
 		const T** content() const { return (_array_content); }

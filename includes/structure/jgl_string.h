@@ -20,6 +20,8 @@ namespace jgl
 
 		jgl::Glyph& operator[](size_t index);
 		jgl::Glyph operator[](size_t index) const;
+		bool operator < (const jgl::String other) const;
+		bool operator > (const jgl::String other) const;
 		jgl::String operator + (const jgl::String other);
 		jgl::String operator += (const jgl::String other);
 		bool operator == (const jgl::String other) const;

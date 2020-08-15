@@ -11,7 +11,6 @@ namespace jgl
 
 		//check_sdl_error(__FILE__, __LINE__);
 
-		SDL_GL_SetSwapInterval(0);
 		SDL_GL_SetAttribute(SDL_GL_CONTEXT_MAJOR_VERSION, 3);
 		SDL_GL_SetAttribute(SDL_GL_CONTEXT_MINOR_VERSION, 1);
 		SDL_GL_SetAttribute(SDL_GL_ACCELERATED_VISUAL, 1);

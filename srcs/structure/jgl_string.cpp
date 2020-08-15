@@ -42,6 +42,24 @@ namespace jgl
 	{
 		return ((*this)->operator[](index));
 	}
+	bool String::operator < (const jgl::String other) const
+	{
+		for (size_t i = 0; i < size(); i++)
+		{
+			if (this->operator[](i) < other[i])
+				return (true);
+		}
+		return (false);
+	}
+	bool String::operator > (const jgl::String other) const
+	{
+		for (size_t i = 0; i < size(); i++)
+		{
+			if (this->operator[](i) > other[i])
+				return (true);
+		}
+		return (false);
+	}
 	jgl::String String::operator + (const jgl::String other)
 	{
 		jgl::String result;

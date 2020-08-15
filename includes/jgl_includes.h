@@ -33,6 +33,4 @@
 #include <algorithm>
 #include <iterator>
 
-#include <vld.h>
-
 #endif

@@ -200,6 +200,17 @@ namespace jgl
 		return (result);
 	}
 
+	Vector3 Vector3::round() const
+	{
+		Vector3 result;
+
+		result.x = std::round(x);
+		result.y = std::round(y);
+		result.z = std::round(z);
+
+		return (result);
+	}
+
 	Vector3 Vector3::invert() const
 	{
 		Vector3 result;

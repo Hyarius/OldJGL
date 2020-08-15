@@ -41,6 +41,7 @@ namespace jgl
 	const key_state get_key(const key key_type);
 	const mouse_state get_button(const mouse_button type);
 	const Vector2 get_mouse_pos();
+	const jgl::Unique_string& get_key_name(const key key_type);
 }
 
 extern jgl::Keyboard *g_keyboard;

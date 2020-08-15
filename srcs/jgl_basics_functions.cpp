@@ -213,7 +213,6 @@ namespace jgl
 		if (g_application != nullptr)
 			g_application->quit();
 		jgl::quit_jgl();
-		VLDDisable();
 		exit(num);
 	}
 
@@ -223,7 +222,6 @@ namespace jgl
 		if (g_application != nullptr)
 			g_application->quit();
 		jgl::quit_jgl();
-		VLDDisable();
 		exit(num);
 	}
 

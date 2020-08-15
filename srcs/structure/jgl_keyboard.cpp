@@ -94,7 +94,7 @@ namespace jgl
 		SDL_SCANCODE_GRAVE
 	};
 
-	jgl::Unique_string key_name_value[]{
+	jgl::Array<jgl::Unique_string> key_name_value = {
 		"Key A",
 		"key B",
 		"key C",
@@ -200,6 +200,12 @@ namespace jgl
 	const key_state Keyboard::get_key(const key key_type) const
 	{
 		return (keys[static_cast<size_t>(key_type)]);
+	}
+
+
+	const jgl::Unique_string& get_key_name(const key key_type)
+	{
+		return (key_name_value[static_cast<size_t>(key_type)]);
 	}
 
 	Keyboard* get_keyboard()

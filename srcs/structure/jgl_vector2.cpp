@@ -140,7 +140,7 @@ namespace jgl
 
 	jgl::String Vector2::str() const
 	{
-		jgl::String result = "(" + ftoa(x, 2) + " / " + ftoa(y, 2) + ")";
+		jgl::String result = "(" + ftoa(x, 5) + " / " + ftoa(y, 5) + ")";
 
 		return (result);
 	}
@@ -179,6 +179,16 @@ namespace jgl
 
 		result.x = std::ceil(x);
 		result.y = std::ceil(y);
+
+		return (result);
+	}
+
+	Vector2 Vector2::round() const
+	{
+		Vector2 result;
+
+		result.x = std::round(x);
+		result.y = std::round(y);
 
 		return (result);
 	}
