@@ -5,13 +5,19 @@
 
 namespace jgl
 {
-	struct Data
+	class Data
 	{
-		jgl::Array<void*> content;
+	private:
+		jgl::Array<void*> _content;
 
+	public:		
 		Data();
 		Data(void* p_data);
 		Data(int nb_param, ...);
+
+		jgl::Array<void*>& content() { return (_content); }
+		void* content(size_t index) { return (_content[index]); }
+		size_t size() { return (_content.size()); }
 
 		void operator = (void* p_data);
 		void operator + (void* p_ptr);
@@ -20,7 +26,7 @@ namespace jgl
 		void operator += (Data& delta);
 
 		template <typename T>
-		T acces(const size_t index) { return (static_cast<T>(content[index])); }
+		T acces(const size_t index) { return (static_cast<T>(_content[index])); }
 	};
 }
 #endif

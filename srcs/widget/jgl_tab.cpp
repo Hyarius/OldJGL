@@ -4,9 +4,9 @@ namespace jgl
 {
 	static void active_tab(Data p_data)
 	{
-		std::vector<Button*> buttons = *(std::vector<Button*>*)(p_data.content[0]);
-		std::vector<Frame*> tabs = *(std::vector<Frame*>*)(p_data.content[1]);
-		size_t index = (size_t)(p_data.content[2]);
+		std::vector<Button*> buttons = *(std::vector<Button*>*)(p_data.content(0));
+		std::vector<Frame*> tabs = *(std::vector<Frame*>*)(p_data.content(1));
+		size_t index = (size_t)(p_data.content(2));
 
 		for (size_t i = 0; i < buttons.size(); i++)
 		{

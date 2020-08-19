@@ -9,4 +9,6 @@
 
 #define JGL_STRING_PUSH_SIZE 100
 
+#define GET_VARIABLE_NAME(Variable) (#Variable)
+
 #endif

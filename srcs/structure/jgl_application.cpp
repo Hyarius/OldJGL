@@ -203,6 +203,8 @@ namespace jgl
 		//_viewport->use();
 		g_font_path = "";
 		start_jgl();
+
+		SDL_GL_SetSwapInterval(0);
 	}
 
 	void Application::resize(Vector2 p_size)

@@ -42,7 +42,7 @@ namespace jgl
 
 		void clear_computed()
 		{
-			if (_computed_result != nullptr)
+			if (_computed = true)
 				delete _computed_result;
 			_computed = false;
 			_computed_result = nullptr;
@@ -338,9 +338,9 @@ namespace jgl
 		}
 		T& operator [](const size_t index) const
 		{
-			if (index >= _max_size)
+			if (index >= _size)
 			{
-				std::cout << "Segfault in jgl::Array - Invalid acces" << std::endl;
+				std::cout << "Segfault in jgl::Array - Invalid acces to an array of type " << typeid(T).name() << " at index " << index << " with a size of " << _size << std::endl;
 				exit(1);
 			}
 			size_t nb_line = index / _push_size;
@@ -459,7 +459,6 @@ namespace jgl
 				return;
 			for (size_t i = index; i < _size - 1; i++)
 				this->operator[](i) = this->operator[](i + 1);
-			this->operator[](_size - 1) = 0;
 			_size--;
 			clear_computed();
 		}
@@ -470,7 +469,6 @@ namespace jgl
 				return;
 			for (size_t i = iter.index(); i < _size - 1; i++)
 				this->operator[](i) = this->operator[](i + 1);
-			this->operator[](_size - 1) = nullptr;
 			_size--;
 			clear_computed();
 		}
