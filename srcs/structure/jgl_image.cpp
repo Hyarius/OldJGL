@@ -72,7 +72,6 @@ namespace jgl
 	
 	Image::~Image()
 	{
-		_path.~String();
 		if (_surface != nullptr)
 		{
 			SDL_FreeSurface(_surface);

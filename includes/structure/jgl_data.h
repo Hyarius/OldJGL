@@ -21,9 +21,9 @@ namespace jgl
 
 		void operator = (void* p_data);
 		void operator + (void* p_ptr);
-		Data operator + (Data& delta);
+		Data operator + (Data delta);
 		void operator += (void* p_ptr);
-		void operator += (Data& delta);
+		void operator += (Data delta);
 
 		template <typename T>
 		T acces(const size_t index) { return (static_cast<T>(_content[index])); }

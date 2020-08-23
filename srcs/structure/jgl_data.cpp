@@ -36,7 +36,7 @@ namespace jgl
 		_content.push_back(p_ptr);
 	}
 
-	jgl::Data		jgl::Data::operator + (Data& delta)
+	jgl::Data		jgl::Data::operator + (Data delta)
 	{
 		Data result;
 
@@ -56,7 +56,7 @@ namespace jgl
 		_content.push_back(p_ptr);
 	}
 
-	void 		jgl::Data::operator += (Data& delta)
+	void 		jgl::Data::operator += (Data delta)
 	{
 		for (size_t i = 0; i < delta.content().size(); i++)
 			_content.push_back(delta.content(i));
