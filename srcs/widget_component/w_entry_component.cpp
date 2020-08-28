@@ -112,7 +112,7 @@ namespace jgl
 
 		pos += _anchor;
 
-		draw_text(_text_to_draw, pos, _size, 0, _color, _style);
+		draw_text(_text_to_draw, pos, _size, 0, 1.0f, _color, _style);
 
 		pos.x += calc_text_len(_text_to_draw.substr(0, _cursor_to_draw), _size);
 

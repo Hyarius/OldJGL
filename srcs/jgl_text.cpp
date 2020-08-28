@@ -263,7 +263,7 @@ namespace jgl
 		return (limit);
 	}
 
-	int				draw_text(const jgl::String text, const Vector2 coord, const size_t size, const size_t outline, const text_color color, const text_style style, const Viewport* viewport)
+	int				draw_text(const jgl::String text, const Vector2 coord, const size_t size, const size_t outline, const float alpha, const text_color color, const text_style style, const Viewport* viewport)
 	{
 		Image* image;
 		size_t			i = 0;
@@ -281,7 +281,7 @@ namespace jgl
 			{
 				image = get_char(text[i], size, outline, color, style);
 
-				image->draw(rel_coord, image->size(), 1.0f, viewport);
+				image->draw(rel_coord, image->size(), alpha, viewport);
 				delta += static_cast<int>(image->size().x);
 			}
 			i++;
@@ -324,7 +324,7 @@ namespace jgl
 		return (delta);
 	}
 
-	int				draw_centred_text(const jgl::String text, const Vector2 coord, const size_t size, const size_t outline, const text_color color, const text_style style, const Viewport* viewport)
+	int				draw_centred_text(const jgl::String text, const Vector2 coord, const size_t size, const size_t outline, const float alpha, const text_color color, const text_style style, const Viewport* viewport)
 	{
 		if (size <= 2)
 			return 0;
@@ -332,7 +332,7 @@ namespace jgl
 		int x = calc_text_len(text, size);
 		int y = static_cast<int>(get_char('M', size, 0, color, style)->size().y);
 
-		return (draw_text(text, Vector2(coord.x - x / 2, coord.y - y / 2), size, outline, color, style, viewport));
+		return (draw_text(text, Vector2(coord.x - x / 2, coord.y - y / 2), size, outline, alpha, color, style, viewport));
 	}
 
 	void delete_loaded_char()

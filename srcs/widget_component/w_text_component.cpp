@@ -40,6 +40,6 @@ namespace jgl
 			pos.y = _area.y / 2.0f;
 		}
 		pos += _anchor;
-		draw_centred_text(_text, pos, _size, 0, _color, _style);
+		draw_centred_text(_text, pos, _size, 0, 1.0f, _color, _style);
 	}
 }

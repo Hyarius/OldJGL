@@ -20,8 +20,8 @@ namespace jgl
 	Image* get_char(const Glyph c, const size_t size = 16, const size_t outline = 0, const text_color color = text_color::black, const text_style style = text_style::normal);
 	int count_char_len(const char to_parse);
 	int create_char_unicode(char* result, const char* base, const size_t index);
-	int draw_text(const jgl::String text, const Vector2 coord, const size_t size = 16, const size_t outline = 0, const text_color color = text_color::black, const text_style style = text_style::normal, const Viewport* viewport = nullptr);
-	int draw_centred_text(const jgl::String text, const Vector2 coord, const size_t size = 16, const size_t outline = 0, const text_color color = text_color::black, const text_style style = text_style::normal, const Viewport* viewport = nullptr);
+	int draw_text(const jgl::String text, const Vector2 coord, const size_t size = 16, const size_t outline = 0, const float alpha = 1.0f, const text_color color = text_color::black, const text_style style = text_style::normal, const Viewport* viewport = nullptr);
+	int draw_centred_text(const jgl::String text, const Vector2 coord, const size_t size = 16, const size_t outline = 0, const float alpha = 1.0f, const text_color color = text_color::black, const text_style style = text_style::normal, const Viewport* viewport = nullptr);
 	int calc_text_len(const jgl::String text, const size_t size = 16);
 	int	max_char_in_box(const int space, const size_t size = 16);
 	void delete_loaded_char();
