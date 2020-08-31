@@ -34,6 +34,7 @@ namespace jgl
 	jgl::String normalize_string(const jgl::String str, const jgl::Glyph c, const size_t size);
 	jgl::String normalize_float(const float num, const int after_point, const jgl::Glyph c, const size_t size);
 	bool is_middle(const float min, const float value, const float max);
+	bool is_middle(const jgl::Vector2 min, const jgl::Vector2 value, const jgl::Vector2 max);
 	jgl::Array<jgl::Vector2> calc_line_2d(const float x1, const float y1, const float x2, const float y2);
 	int generate_nbr(const int min, const int max);
 

@@ -331,6 +331,13 @@ namespace jgl
 		return (true);
 	}
 
+	bool is_middle(const jgl::Vector2 min, const jgl::Vector2 value, const jgl::Vector2 max)
+	{
+		if (is_middle(min.x, value.x, max.x) == true && is_middle(min.y, value.y, max.y) == true)
+			return (true);
+		return (false);
+	}
+
 	void remove_char(jgl::String& src, const jgl::String to_remove)
 	{
 		jgl::String result;
