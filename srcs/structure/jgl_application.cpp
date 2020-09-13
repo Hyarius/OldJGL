@@ -94,6 +94,7 @@ namespace jgl
 		_program_color_model = load_shaders(color_model_shader_vert, color_model_shader_frag);
 		_program_texture_model = load_shaders(texture_model_shader_vert, texture_model_shader_frag);
 
+		_color_simpleID = glGetUniformLocation(_program_color, "vertexColor");
 		_textureID = glGetUniformLocation(_program_texture, "textureID");
 		if (_textureID == -1)
 			error_exit(1, "Error on _textureID");
@@ -176,13 +177,14 @@ namespace jgl
 		glGenBuffers(1, &_color_buffer);
 		glGenBuffers(1, &_texture_buffer);
 
+		
 		glBindBuffer(GL_ARRAY_BUFFER, _vertex_buffer);
 		glBufferData(GL_ARRAY_BUFFER, static_cast<GLuint>(sizeof(GLfloat) * _size.x * _size.y * 3), NULL, GL_STATIC_DRAW);
 		glBindBuffer(GL_ARRAY_BUFFER, _color_buffer);
 		glBufferData(GL_ARRAY_BUFFER, static_cast<GLuint>(sizeof(GLfloat) * _size.x * _size.y * 4), NULL, GL_DYNAMIC_DRAW);
 		glBindBuffer(GL_ARRAY_BUFFER, _texture_buffer);
 		glBufferData(GL_ARRAY_BUFFER, static_cast<GLuint>(sizeof(GLfloat) * _size.x * _size.y * 4), NULL, GL_DYNAMIC_DRAW);
-
+	
 		_play = true;
 		_poll_ret = 0;
 		_event = SDL_Event();

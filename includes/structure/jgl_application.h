@@ -39,6 +39,7 @@ namespace jgl
 		GLuint _color_buffer;
 		GLuint _texture_buffer;
 
+
 		GLuint _pos_colorID;
 		GLuint _rot_colorID;
 		GLuint _size_colorID;
@@ -88,6 +89,7 @@ namespace jgl
 
 		GLuint _textureID;
 		GLuint _alphaID;
+		GLuint _color_simpleID;
 
 		size_t _max_fps;
 		float _fps_ratio;

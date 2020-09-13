@@ -8,11 +8,15 @@
 
 namespace jgl
 {
-	void draw_pixel_color(const Vector3 points, const Color colors, const size_t nb = 1);
-	void draw_line_color(const Vector3* points, const Color* colors, const size_t nb = 1);
-	void draw_triangle_color(const Vector3* points, const Color* colors, const size_t nb = 1);
+	void draw_pixel_color(const Vector3 points, const Color color, const size_t nb = 1);
+	void draw_line_color(const Vector3* points, const Color color, const size_t nb = 1);
+	void draw_line_color(const GLuint points_buffer, const Color color, const size_t nb);
+	void draw_triangle_color(const Vector3* points, const Color color, const size_t nb = 1);
+	void draw_triangle_color(const GLuint points_buffer, const Color color, const size_t nb = 1);
 	void draw_triangle_texture(const Vector3* points, const Vector2* uvs, float alpha, const size_t nb = 1);
-	void fill_triangle_color(const Vector3* points, const Color* colors, const size_t nb = 1);
+	void draw_triangle_texture(const GLuint points_buffer, const GLuint uvs_buffer, float alpha, const size_t nb = 1);
+	void fill_triangle_color(const Vector3* points, const Color color, const size_t nb = 1);
+	void fill_triangle_color(const GLuint points_buffer, const Color color, const size_t nb = 1);
 
 	jgl::Array<Vector2> calc_point(const size_t width);
 	void draw_line(const Vector2 p1, const Vector2 p2, const size_t width, const Color p_color, const Viewport* viewport = nullptr);

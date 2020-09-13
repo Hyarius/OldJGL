@@ -60,6 +60,7 @@ namespace jgl
 		static Vector3 zero() { return (0); }
 
 		Vector3(Vector4 p_other);
+		Vector3(struct Vector2 p_other);
 		Vector3(int p_value);
 		Vector3(size_t p_value);
 		Vector3(double p_value);

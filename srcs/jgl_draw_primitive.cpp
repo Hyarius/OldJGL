@@ -5,6 +5,7 @@ namespace jgl
 	jgl::Array<Vector2> calc_point(const size_t width)
 	{
 		jgl::Array<Vector2> result;
+		Vector2 center = width / 2;
 		int tmp;
 
 		if (width % 2 == 0)
@@ -12,41 +13,41 @@ namespace jgl
 		else
 			tmp = width;
 
-		for (int i = 0; i <= tmp / 2; i++)
-			for (int j = 0; j <= tmp / 2; j++)
+		for (int i = 0; i < tmp; i++)
+			for (int j = 0; j < tmp; j++)
 			{
-				result.push_back(jgl::Vector2(i, j));
-				if (i != 0 && j != 0)
-					result.push_back(jgl::Vector2(-i, -j));
-				if (i == 0 && j != 0)
-					result.push_back(jgl::Vector2(i, -j));
-				if (i != 0 && j == 0)
-					result.push_back(jgl::Vector2(-i, j));
+				Vector2 tmp_point = Vector2(i, j);
+				if (width == 1 || (center.distance(tmp_point) <= width / 2.0f && center.distance(tmp_point) >= width / 2.05f))
+					result.push_back(tmp_point - tmp / 2.0);
 			}
 
 		return (result);
 	}
+
+	jgl::Array<jgl::Array<Vector2>> circle_point;
 
 	void draw_line(const Vector2 p1, const Vector2 p2, const size_t width, const Color p_color, const Viewport* viewport)
 	{
 		if (viewport != nullptr)
 			viewport->use();
 
-		jgl::Array<Vector2> to_draw = calc_point(width);
+		if (circle_point.size() <= width || circle_point[width].size() == 0)
+		{
+			if (circle_point.size() <= width)
+				circle_point.resize(width + 1);
+			circle_point[width] = calc_point(width);
+		}
+		jgl::Array<Vector2>& to_draw = circle_point[width];
 		static jgl::Array<Vector3> points;
-		static jgl::Array<Color> colors;
 
 		points.clear();
-		colors.clear();
 
 		for (size_t i = 0; i < to_draw.size(); i++)
 		{
 			points.push_back(convert_screen_to_opengl(p1 + to_draw[i]));
 			points.push_back(convert_screen_to_opengl(p2 + to_draw[i]));
-			colors.push_back(p_color);
-			colors.push_back(p_color);
 		}
-		draw_line_color(points.all(), colors.all(), points.size());
+		draw_line_color(points.all(), p_color, points.size());
 		
 	}
 
@@ -73,10 +74,33 @@ namespace jgl
 		if (viewport != nullptr)
 			viewport->use();
 
-		draw_line(p_tl, p_tr, width, p_color, viewport);
-		draw_line(p_tl, p_dl, width, p_color, viewport);
-		draw_line(p_dl, p_dr, width, p_color, viewport);
-		draw_line(p_tr, p_dr, width, p_color, viewport);
+		Vector2 point_order[] = {
+			p_tl, p_tr,
+			p_tl, p_dl,
+			p_dl, p_dr,
+			p_tr, p_dr
+		};
+
+		if (circle_point.size() <= width || circle_point[width].size() == 0)
+		{
+			if (circle_point.size() <= width)
+				circle_point.resize(width + 1);
+			circle_point[width] = calc_point(width);
+		}
+		jgl::Array<Vector2>& to_draw = circle_point[width];
+		static jgl::Array<Vector3> points;
+
+		points.clear();
+
+		for (size_t i = 0; i < to_draw.size(); i++)
+		{
+			for (size_t j = 0; j < 4; j++)
+			{
+				points.push_back(convert_screen_to_opengl(point_order[j * 2] + to_draw[i]));
+				points.push_back(convert_screen_to_opengl(point_order[j * 2 + 1] + to_draw[i]));
+			}
+		}
+		draw_line_color(points.all(), p_color, points.size());
 	}
 
 	void fill_rectangle(const Vector2 p_tl, const Vector2 p_tr, const Vector2 p_dl, const Vector2 p_dr, const Color p_color, const Viewport* viewport)
@@ -92,16 +116,9 @@ namespace jgl
 			convert_screen_to_opengl(p_dr),
 			convert_screen_to_opengl(p_tl)
 		};
-		Color colors[] = {
-			p_color,
-			p_color,
-			p_color,
-			p_color,
-			p_color,
-			p_color
-		};
 
-		fill_triangle_color(points, colors, 6);
+
+		fill_triangle_color(points, p_color, 6);
 	}
 
 	void draw_rectangle(const Vector2 pos, const Vector2 size, const size_t width, const Color p_color, const Viewport* viewport)

@@ -3,7 +3,7 @@
 std::string color_shader_vert = {
 	"#version 330 core\n"
 	"layout(location = 0) in vec3 model_space;"
-	"layout(location = 1) in vec4 vertexColor;"
+	"uniform vec4 vertexColor;"
 	"out vec4 fragmentColor;"
 	"void main()"
 	"{"

@@ -2,9 +2,12 @@
 
 namespace jgl
 {
-
 	Vector3::Vector3(Vector4 other) :
 		x(other.x), y(other.y), z(other.z) {}
+
+	Vector3::Vector3(Vector2 p_other) :
+		x(static_cast<float>(p_other.x)), y(static_cast<float>(p_other.y)),
+		z(static_cast<float>(0)) {}
 
 	Vector3::Vector3(int p_value) :
 		x(static_cast<float>(p_value)), y(static_cast<float>(p_value)),
