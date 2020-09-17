@@ -62,7 +62,7 @@ namespace jgl
 
 		for (size_t i = 0; i < 3; i++)
 		{
-			tmp_strsplit(face_content, tab[face_index_value[type][i]], delim, false);
+			tmp_strsplit(face_content, tab[face_index_value[type][i]], delim, true);
 			index_vertices[i] = stoi(face_content[0]) - 1 - delta_vertice_index;
 			if (face_content.size() >= 2)
 				index_uvs[i] = (face_content[1].size() == 0 ? -1 : stoi(face_content[1]) - 1 - delta_uvs_index);
@@ -129,7 +129,7 @@ namespace jgl
 			if (line.size() != 0 && line[0] != '#')
 			{
 				tab.clear();
-				tmp_strsplit(tab, line, delim);
+				tmp_strsplit(tab, line, delim, false);
 				if (tab[0].equal(controler[0]) == true)
 				{
 					if (material != nullptr)
@@ -315,7 +315,7 @@ namespace jgl
 			if (line.size() != 0)
 			{
 				tab.clear();
-				tmp_strsplit(tab, line, delim);
+				tmp_strsplit(tab, line, delim, false);
 
 				if (tab.size() != 0)
 				{
@@ -338,7 +338,7 @@ namespace jgl
 					else if (tab[0].equal(controler[5]) == true)
 					{
 						Material* tmp_material = find_material(tab[1]);
-						_parts[tmp_part_index]->set_material(tmp_material);
+						check_part(tmp_part_index)->set_material(tmp_material);
 					}
 					else if (tab[0].equal(controler[6]) == true)
 					{
@@ -456,7 +456,11 @@ namespace jgl
 	void Mesh::render_differed(const Camera* camera, Vector3 p_pos, const jgl::Viewport* viewport)
 	{
 		for (size_t i = 0; i < _parts.size(); i++)
+		{
+			std::cout << "Here ?" << std::endl;
 			_parts[i]->render(this, camera, p_pos, viewport);
+			std::cout << "Not here ?" << std::endl;
+		}
 	}
 
 void Mesh::add_component(const Mesh* mesh, const Vector3 p_pos, const int index)

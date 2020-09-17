@@ -1,5 +1,26 @@
 ### - JGL : High level library for easy graphical interface and video game
 
+### - Objectives :
+- Learn OpenGL / Vulkan
+- Improve my C++ skill
+- Learn better knowledge of Qt widget system
+- Discover new design patern to solve problems
+- Implement algorithm
+
+### - Actual state :
+
+3D mesh rendering program
+---
+![alt text][OBJ]
+
+3D Voxel custom engine
+---
+![alt text][VOXEL]
+
+Graphical interface
+---
+![alt text][EDITOR]
+
 ***
 ## Content :  
 ### - Main data structure :
@@ -89,3 +110,8 @@
 - jgl::Vector2 / Vector3 / Vector4
 
 	`Vectors math implementation`
+
+
+[OBJ]: .readme/images/obj_parsing.png "OBJ Rendering"
+[EDITOR]: .readme/images/spell_editor.png "OBJ Rendering"
+[VOXEL]: .readme/images/voxel_engine.png "OBJ Rendering"
