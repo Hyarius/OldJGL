@@ -11,15 +11,15 @@
 
 3D mesh rendering program
 ---
-![alt text][OBJ]
+![OBJ file renderer][OBJ]
 
 3D Voxel custom engine
 ---
-![alt text][VOXEL]
+![Voxel engine][VOXEL]
 
 Graphical interface
 ---
-![alt text][EDITOR]
+![Graphical interface][EDITOR]
 
 ***
 ## Content :  
@@ -112,6 +112,6 @@ Graphical interface
 	`Vectors math implementation`
 
 
-[OBJ]: .readme/images/obj_parsing.png "OBJ Rendering"
-[EDITOR]: .readme/images/spell_editor.png "OBJ Rendering"
-[VOXEL]: .readme/images/voxel_engine.png "OBJ Rendering"
+[OBJ]: readme/images/obj_parsing.png "OBJ Rendering"
+[EDITOR]: readme/images/spell_editor.png "Spell editor"
+[VOXEL]: readme/images/voxel_engine.png "Voxel engine"
