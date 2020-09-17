@@ -1,124 +1,64 @@
 ### - JGL : High level library for easy graphical interface and video game
 
-#### - Language [English](LIEN) - [French](LIEN)
 ***
 ## Content :  
 ### - Main data structure :
 #### *Classes* :
 - [jgl::Application](LIEN)
-	`description`
+	`Main classe : Handle window for the user`
 - [jgl::Viewport](LIEN)
-	`description`
+	`Screen subdividing classe`
 - [jgl::Array](LIEN)
-	`description`
+	`std::vector custom implementation without memory reallocation`
 - [jgl::Image](LIEN)
-	`description`
+	`Image classe : handle GPU data for 2D/3D rendering`
 - [jgl::Sprite_sheet](LIEN)
-	`description`
+	`jgl::Image with subdivision`
 - [jgl::Glyph](LIEN)
-	`description`
+	`Unicode, encoded with UTF-8`
 - [jgl::String](LIEN)
-	`description`
+	`std::string custom implementation with memory optimization`
 - [jgl::Unique_string](LIEN)
-	`description`
+	`Strict std::string implementation`
 - [jgl::Pool](LIEN)
-	`description`
+	`Pool design patern implementation`
 - [jgl::Pool_object](LIEN)
-	`description`
+	`Object for jgl::pool`
 - [jgl::Share_object](LIEN)
-	`description`
+	`Implementation of a new smart pointer`
 - [jgl::Mesh](LIEN)
-	`description`
+	`Handle 3D data as vertices, uvs, normales, materials`
 - [jgl::Camera](LIEN)
-	`description`
+	`Handle 3D rendering`
 
 #### *Widgets* :
 - [jgl::Button](LIEN)
-	`description`
+	`Custom implementation of Qt QPushbutton`
 - [jgl::Check_box](LIEN)
-	`description`
+	`Custom implementation of Qt QCheckbox`
 - [jgl::Check_entry](LIEN)
-	`description`
+	`A Check_box with text entry`
 - [jgl::Contener](LIEN)
-	`description`
-- [jgl::File_menu](LIEN)
-	`description`
+	`A no-visual widget, for organization`
 - [jgl::Frame](LIEN)
-	`description`
-- [jgl::Hour_entry](LIEN)
-	`description`
+	`Custom implementation of Qt QFrame`
 - [jgl::Image_label](LIEN)
-	`description`
+	`Custom implementation of Qt QLabel - Image rendering part`
 - [jgl::Render_widget](LIEN)
 	`TO BE DEFINED`
-- [jgl::Tab](LIEN)
-	`description`
 - [jgl::Text_entry](LIEN)
-	`description`
+	`Custom implementation of Qt QTextEdit`
 - [jgl::Text_label](LIEN)
-	`description`
+	`Custom implementation of Qt QLabel - Text rendering part`
 - [jgl::Value_entry](LIEN)
-	`description`
+	`A floating-point value entry`
 - [jgl::Value_label](LIEN)
-	`description`
-- [jgl::Vscrollbar](LIEN)
-	`description`
-
-#### *Widget component* :
-- [jgl::w_component](LIEN)
-	`description`
-- [jgl::w_graphical_component](LIEN)
-	`description`
-- [jgl::w_textual_component](LIEN)
-	`description`
-- [jgl::w_entry_component](LIEN)
-	`description`
-- [jgl::w_text_component](LIEN)
-	`description`
-- [jgl::w_check_component](LIEN)
-	`description`
-- [jgl::w_box_component](LIEN)
-	`description`
-- [jgl::w_text_entry_component](LIEN)
-	`description`
-- [jgl::w_value_component](LIEN)
-	`description`
-- [jgl::w_value_entry_component](LIEN)
-	`description`
+	`A widget rendering a floating-point value`
 
 #### *Structures* :
 - [jgl::Color](LIEN)
-	`description`
-- [jgl::Data](LIEN)
-	`description`
-- [jgl::Matrix2x2](LIEN)
-	`description`
-- [jgl::Matrix3x3](LIEN)
-	`description`
-- [jgl::Matrix4x4](LIEN)
-	`description`
-- [jgl::Vector2](LIEN)
-	`description`
-- [jgl::Vector3](LIEN)
-	`description`
-- [jgl::Vector4](LIEN)
-	`description`
-- [jgl::Mouse](LIEN)
-	`description`
-- [jgl::Keyboard](LIEN)
-	`description`
-
-***
-## - Utility functions :
-- [jgl::String manipulation](LIEN)
-	`description`
-- [Primitive rendering function](LIEN)
-	`description`
-- [Image rendering function](LIEN)
-	`description`
-- [Text rendering function](LIEN)
-	`description`
-- [Log file handler](LIEN)
-	`description`
-- [JSON file writer](LIEN)
-	`description`
+	`Storing RGBA color as float, from 0 to 1`
+- [jgl::Matrix2x2 / 3x3 / 4x4](LIEN)
+	`Matrices math implementation`
+- [jgl::Vector2 / Vector3 / Vector4](LIEN)
+	`Vectors math implementation`
