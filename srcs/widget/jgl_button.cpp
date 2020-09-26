@@ -52,7 +52,7 @@ namespace jgl
 
 	bool Button::handle_mouse()
 	{
-		if (g_mouse->get_button(mouse_button::left) == mouse_state::pressed && is_pointed(g_mouse->pos))
+		if (g_mouse->get_button(mouse_button::left) == mouse_state::release && is_pointed(g_mouse->pos))
 		{
 			if (_funct != nullptr)
 				_funct(_data);

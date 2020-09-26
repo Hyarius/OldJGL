@@ -81,7 +81,7 @@ namespace jgl
 			fill_rectangle(_anchor, _area, _back + _delta);
 			fill_rectangle(_anchor + _border, _area - _border * 2, _front + _delta);
 		}
-		if (_tileset != nullptr && _tileset->image() != nullptr && _sprite != -1)
+		if (_image != nullptr && _image->image() != nullptr && _sprite != -1)
 		{
 			_image->draw(_sprite, _anchor, _area, 1.0f);
 			fill_rectangle(_anchor, _area, _delta);

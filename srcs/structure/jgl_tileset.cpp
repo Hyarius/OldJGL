@@ -27,9 +27,10 @@ namespace jgl
 		}
 	}
 
-	Sprite_sheet::Sprite_sheet(const Image* p_image, const Vector2 p_size) : Sprite_sheet(p_image->path(), p_size)
+	Sprite_sheet::Sprite_sheet(const Image* p_image, const Vector2 p_size)
 	{
-		
+		if (p_image != nullptr)
+			Sprite_sheet(p_image->path(), p_size);
 	}
 
 	void Sprite_sheet::draw(const int id, const Vector2 pos, const Vector2 size, const float p_alpha, const Viewport* viewport) const

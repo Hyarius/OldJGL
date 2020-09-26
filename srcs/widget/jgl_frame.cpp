@@ -23,9 +23,6 @@ namespace jgl
 
 	void Frame::render()
 	{
-		if (is_active() == false)
-			return;
-
 		_box.render(_viewport);
 	}
 

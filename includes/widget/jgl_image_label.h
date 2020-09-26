@@ -27,7 +27,8 @@ namespace jgl
 		void set_front(Color p_front) { _box.set_front(p_front); }
 		void set_border(int p_border) { _box.set_border(p_border); }
 		void set_sprite(int p_sprite) { _box.set_sprite(p_sprite); }
-		int sprite() { return (_box.sprite()); }
+		void set_sprite(jgl::Vector2 p_sprite) { _box.set_sprite(p_sprite); }
+		jgl::Vector2 sprite() { return (_box.sprite()); }
 		Sprite_sheet* tileset() { return (_box.tileset()); }
 		Sprite_sheet* image() { return (_box.image()); }
 		int border() { return (_box.border()); }

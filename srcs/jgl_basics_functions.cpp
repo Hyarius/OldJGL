@@ -225,7 +225,8 @@ namespace jgl
 		std::cout << str << std::endl;
 		if (g_application != nullptr)
 			g_application->quit();
-		jgl::quit_jgl();
+		else
+			jgl::quit_jgl();
 		exit(num);
 	}
 

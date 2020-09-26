@@ -35,7 +35,7 @@ namespace jgl
 		size_t _corner_size;
 
 		Sprite_sheet* _image;
-		int _sprite;
+		jgl::Vector2 _sprite;
 
 		Color _back;
 		Color _front;
@@ -49,14 +49,15 @@ namespace jgl
 		void set_back(Color p_back) { _back = p_back; }
 		void set_front(Color p_front) { _front = p_front; }
 		void set_border(int p_border) { _border = p_border; }
-		void set_sprite(int p_sprite) { _sprite = p_sprite; }
+		void set_sprite(int p_sprite) { _sprite = _image->sprite(p_sprite); }
+		void set_sprite(jgl::Vector2 p_sprite) { _sprite = p_sprite; }
 		void set_corner_size(size_t p_corner_size) { _corner_size = p_corner_size; }
 
 		//Getter
 		Sprite_sheet* tileset() const { return (_tileset); }
 		Sprite_sheet* image() const { return (_image); }
 		int border() const { return (_border); }
-		int sprite() const { return (_sprite); }
+		jgl::Vector2 sprite() const { return (_sprite); }
 		size_t corner_size() const { return (_corner_size); }
 		Color back() const { return (_back); }
 		Color front() const { return (_front); }
