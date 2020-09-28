@@ -48,6 +48,7 @@
 #include "jgl_vscrollable_bar.h"
 #include "jgl_image_label.h"
 #include "jgl_render_widget.h"
+#include "jgl_progressive_bar.h"
 
 #include "jgl_file_handler.h"
 #include "jgl_log_handler.h"

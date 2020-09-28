@@ -457,9 +457,7 @@ namespace jgl
 	{
 		for (size_t i = 0; i < _parts.size(); i++)
 		{
-			std::cout << "Here ?" << std::endl;
 			_parts[i]->render(this, camera, p_pos, viewport);
-			std::cout << "Not here ?" << std::endl;
 		}
 	}
 
