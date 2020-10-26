@@ -94,6 +94,8 @@ namespace jgl
 		size_t _max_fps;
 		float _fps_ratio;
 
+		Perlin* _perlin;
+
 		class Window* _central_widget;
 		bool _play;
 		SDL_Event _event;
@@ -198,6 +200,7 @@ namespace jgl
 
 	void start_jgl();
 	void quit_jgl();
+	double perlin_noise(double x, double y, double z);
 }
 
 

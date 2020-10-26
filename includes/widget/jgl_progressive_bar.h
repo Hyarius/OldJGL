@@ -12,6 +12,8 @@ namespace jgl
 		w_box_component _box;
 		Color _color;
 		float _percent;
+		bool _print_value;
+		float _max_value;
 
 	public:
 		Progressive_bar(float p_percent, Color p_color = Color(56, 199, 96), Widget* p_parent = nullptr);
@@ -22,10 +24,14 @@ namespace jgl
 
 		void move(Vector2 delta);
 		
+		void set_max_value(float p_max_value) { _max_value = p_max_value; }
+		void set_print_value(bool p_state) { _print_value = p_state; }
 		void set_percent(float p_percent) { _percent = p_percent / 100.0f; }
 		void set_ratio(float p_percent) { _percent = p_percent; }
 		void set_color(Color p_color) { _color = p_color; }
 
+		float max_value() { return (_max_value); }
+		bool print_value() { return (_print_value); }
 		float percent() { return (_percent); }
 		Color color() { return (_color); }
 

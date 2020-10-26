@@ -44,6 +44,12 @@ namespace jgl
 		Vector4 floor() const;
 		Vector4 round() const;
 		Vector4 invert() const;
+
+		friend std::ostream& operator<<(std::ostream& os, const jgl::Vector4 value)
+		{
+			os << value.str();
+			return os;
+		}
 	};
 
 	typedef Vector4 Vector3w;
@@ -101,6 +107,12 @@ namespace jgl
 		Vector3 invert() const;
 		Vector4 convert(int p_value) const;
 		Vector4 convert(float p_value = 0) const;
+
+		friend std::ostream& operator<<(std::ostream& os, const jgl::Vector3 value)
+		{
+			os << value.str();
+			return os;
+		}
 	};
 
 	struct Vector2
@@ -147,13 +159,14 @@ namespace jgl
 		Vector2 invert() const;
 		Vector3 convert(int p_value) const;
 		Vector3 convert(float p_value = 0) const;
+		Vector2 rotate(Vector2 center, float angle);
+
+		friend std::ostream& operator<<(std::ostream& os, const jgl::Vector2 value)
+		{
+			os << value.str();
+			return os;
+		}
 	};
 }
-
-std::ostream& operator<<(std::ostream& os, const jgl::Vector2 value);
-
-std::ostream& operator<<(std::ostream& os, const jgl::Vector3 value);
-
-std::ostream& operator<<(std::ostream& os, const jgl::Vector4 value);
 
 #endif

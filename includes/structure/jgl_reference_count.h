@@ -13,9 +13,13 @@ namespace jgl
 		void decrement() { _value--; }
 		const size_t value() const { return (_value); }
 		void set_value(size_t p_value) { _value = p_value; }
+
+		friend std::ostream& operator<<(std::ostream& os, const jgl::Reference_count& value)
+		{
+			os << value.value();
+			return (os);
+		}
 	};
 }
-
-std::ostream& operator<<(std::ostream& os, const jgl::Reference_count& value);
 
 #endif

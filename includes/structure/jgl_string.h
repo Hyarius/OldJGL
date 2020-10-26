@@ -52,11 +52,15 @@ namespace jgl
 		jgl::String copy() const;
 		jgl::String substr(size_t start, size_t end) const;
 		void substr(jgl::String& result, size_t start, size_t end) const;
+
+		friend std::ostream& operator<<(std::ostream& os, const jgl::String value)
+		{
+			os << *value;
+			return os;
+		}
 	};
 
 	jgl::String operator + (const char* str, jgl::String other);
 }
-
-std::ostream& operator<<(std::ostream& os, const jgl::String value);
 
 #endif

@@ -81,8 +81,22 @@ namespace jgl
 		const Vector3 up() const { return (_up); }
 
 		void bake() { _MVP = _projection * _view * _model; }
+
+		friend std::ostream& operator<<(std::ostream& os, const jgl::Camera camera)
+		{
+			os << "Camera pos : " << camera.pos() << std::endl;
+			os << "Camera forward : " << camera.forward() << std::endl;
+			os << "Camera right : " << camera.right() << std::endl;
+			os << "Camera up : " << camera.up() << std::endl;
+			os << "Camera direction : " << camera.direction() << std::endl;
+			os << "Camera Model matrix : " << std::endl << camera.model() << std::endl;
+			os << "Camera View matrix : " << std::endl << camera.view() << std::endl;
+			os << "Camera Projection matrix : " << std::endl << camera.projection() << std::endl;
+			os << "Camera MVP matrix : " << std::endl << camera.MVP() << std::endl;
+
+			return os;
+		}
 	};
 }
 
-std::ostream& operator<<(std::ostream& os, const jgl::Camera camera);
 #endif

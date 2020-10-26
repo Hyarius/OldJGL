@@ -83,6 +83,9 @@ namespace jgl
 
 	void Sprite_sheet::draw(const Vector2 coord, const Vector2 pos, const Vector2 size, const float p_alpha, const Viewport* viewport) const
 	{
+		if (viewport != nullptr)
+			viewport->use();
+
 		glActiveTexture(GL_TEXTURE0);
 		glBindTexture(GL_TEXTURE_2D, _image->texture_id());
 

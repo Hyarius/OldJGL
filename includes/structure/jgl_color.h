@@ -19,9 +19,13 @@ namespace jgl
 		float* decompose();
 
 		Color operator + (const Color& delta);
+
+		friend std::ostream& operator<<(std::ostream& os, const jgl::Color value)
+		{
+			os << "(r : " << std::to_string(value.r) << " / g : " << std::to_string(value.g) << " / b : " << std::to_string(value.b) << " / a : " << std::to_string(value.a) << ")";
+			return os;
+		}
 	};
 }
-
-std::ostream& operator<<(std::ostream& os, const jgl::Color value);
 
 #endif

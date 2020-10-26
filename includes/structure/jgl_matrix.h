@@ -3,6 +3,9 @@
 
 namespace jgl
 {
+	jgl::String normalize_string(const jgl::String str, const jgl::Glyph c, const size_t size);
+	jgl::String normalize_float(const float num, const int after_point, const jgl::Glyph c, const size_t size);
+
 	enum class Matrix_type {
 		rotation = 0,
 		translation = 1,
@@ -59,6 +62,22 @@ namespace jgl
 				return (nullptr);
 			return (value[index]);
 		}
+		friend std::ostream& operator<<(std::ostream& os, const jgl::Matrix2x2 data)
+		{
+			os << jgl::normalize_string("", '-', 6 * 2 + (3 * 1)) << std::endl;
+			for (int i = 0; i < 2; i++)
+			{
+				for (int j = 0; j < 2; j++)
+				{
+					if (j != 0)
+						os << " - ";
+					os << "[" << jgl::normalize_float(data.value[j][i], 4, ' ', 4) << "]";
+				}
+				os << std::endl;
+			}
+			os << jgl::normalize_string("", '-', 6 * 2 + (3 * 1)) << std::endl;
+			return os;
+		}
 	};
 
 	struct Matrix3x3
@@ -113,6 +132,22 @@ namespace jgl
 			if (index > 3)
 				return (nullptr);
 			return (&(value[index][0]));
+		}
+		friend std::ostream& operator<<(std::ostream& os, const jgl::Matrix3x3 data)
+		{
+			os << jgl::normalize_string("", '-', 6 * 3 + (3 * 2)) << std::endl;
+			for (int i = 0; i < 3; i++)
+			{
+				for (int j = 0; j < 3; j++)
+				{
+					if (j != 0)
+						os << " - ";
+					os << "[" << jgl::normalize_float(data.value[j][i], 4, ' ', 4) << "]";
+				}
+				os << std::endl;
+			}
+			os << jgl::normalize_string("", '-', 6 * 3 + (3 * 2)) << std::endl;
+			return os;
 		}
 	};
 
@@ -261,10 +296,23 @@ namespace jgl
 				return (nullptr);
 			return (&(value[index][0]));
 		}
+		friend std::ostream& operator<<(std::ostream& os, const jgl::Matrix4x4 data)
+		{
+			os << jgl::normalize_string("", '-', 6 * 4 + 9) << std::endl;
+			for (int i = 0; i < 4; i++)
+			{
+				for (int j = 0; j < 4; j++)
+				{
+					if (j != 0)
+						os << " - ";
+					os << "[" << jgl::normalize_float(data.value[j][i], 4, ' ', 4) << "]";
+				}
+				os << std::endl;
+			}
+			os << jgl::normalize_string("", '-', 6 * 4 + 9) << std::endl;
+			return os;
+		}
 	};
 }
-std::ostream& operator<<(std::ostream& os, const jgl::Matrix2x2 data);
-std::ostream& operator<<(std::ostream& os, const jgl::Matrix3x3 data);
-std::ostream& operator<<(std::ostream& os, const jgl::Matrix4x4 data);
 
 #endif

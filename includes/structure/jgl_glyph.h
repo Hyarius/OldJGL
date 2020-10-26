@@ -25,6 +25,12 @@ namespace jgl
 
 		size_t size() const;
 		size_t value() const;
+
+		friend std::ostream& operator<<(std::ostream& os, const jgl::Glyph value)
+		{
+			os << value.content();
+			return os;
+		}
 	};
 
 	bool operator == (const Glyph& tmp, const Glyph& other);
@@ -34,7 +40,5 @@ namespace jgl
 	bool operator >= (const Glyph& tmp, const Glyph& other);
 	bool operator <= (const Glyph& tmp, const Glyph& other);
 }
-
-std::ostream& operator<<(std::ostream& os, const jgl::Glyph value);
 
 #endif

@@ -96,11 +96,11 @@ namespace jgl
 	bool String::operator != (const jgl::String other) const
 	{
 		if (size() != other.size())
-			return (false);
+			return (true);
 		for (size_t i = 0; i < size(); i++)
 			if (other[i] != this->operator[](i))
-				return (false);
-		return (true);
+				return (true);
+		return (false);
 	}
 	bool String::equal (const jgl::String& other) const
 	{

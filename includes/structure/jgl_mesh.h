@@ -30,6 +30,33 @@ namespace jgl
 		static void delete_empty_texture() { if (_empty_texture != nullptr)delete _empty_texture; _empty_texture = nullptr; }
 		Material(const jgl::String p_name);
 		~Material();
+
+		friend std::ostream& operator<<(std::ostream& os, const jgl::Material to_print)
+		{
+			os << "Material : " << to_print.name << std::endl;
+			os << "		ka : " << to_print.ka << std::endl;
+			os << "		kd : " << to_print.kd << std::endl;
+			os << "		ks : " << to_print.ks << std::endl;
+			os << "		ke : " << to_print.ke << std::endl;
+			os << "		ns : " << to_print.ns << std::endl;
+			os << "		ni : " << to_print.ni << std::endl;
+			os << "		d : " << to_print.d << std::endl;
+			os << "		illum : " << to_print.illum << std::endl;
+			if (to_print.ambiant_texture != nullptr)
+				os << "		ambiant texture : " << to_print.ambiant_texture->path() << std::endl;
+			if (to_print.diffuse_texture != nullptr)
+				os << "		diffuse texture : " << to_print.diffuse_texture->path() << std::endl;
+			if (to_print.specular_texture != nullptr)
+				os << "		specular texture : " << to_print.specular_texture->path() << std::endl;
+			if (to_print.specular_hight_light != nullptr)
+				os << "		specular hight light : " << to_print.specular_hight_light->path() << std::endl;
+			if (to_print.alpha_texture != nullptr)
+				os << "		alpha texture : " << to_print.alpha_texture->path() << std::endl;
+			if (to_print.bump != nullptr)
+				os << "		bump map : " << to_print.bump->path() << std::endl;
+
+			return (os);
+		}
 	};
 
 
@@ -68,6 +95,14 @@ namespace jgl
 				index_uvs[i] = p_index_uvs[i];
 				index_normale[i] = p_index_normale[i];
 			}
+		}
+		friend std::ostream& operator<<(std::ostream& os, const jgl::Face to_print)
+		{
+			os << "Index vertices : [" << to_print.index_vertices[0] << "][" << to_print.index_vertices[1] << "][" << to_print.index_vertices[2] << "]" << std::endl;
+			os << "Index uvs : [" << to_print.index_uvs[0] << "][" << to_print.index_uvs[1] << "][" << to_print.index_uvs[2] << "]" << std::endl;
+			os << "Index normales : [" << to_print.index_normale[0] << "][" << to_print.index_normale[1] << "][" << to_print.index_normale[2] << "]" << std::endl;
+
+			return (os);
 		}
 	};
 
@@ -276,9 +311,5 @@ namespace jgl
 	Mesh *primitive_voxel(const Vector3 pos, const Sprite_sheet *tileset, const Vector2 top_sprite, const Vector2 side_sprite, const Vector2 down_sprite, const float p_transparency = 1.0f, const bool should_bake = false, const Vector3 rot = 0, const Vector3 size = 1);
 	Mesh *primitive_voxel(const Vector3 pos, const Sprite_sheet *tileset, const size_t type, const float p_transparency = 1.0f, const bool should_bake = false, const Vector3 rot = 0, const Vector3 size = 1);
 }
-
-
-std::ostream& operator<<(std::ostream& os, jgl::Face to_print);
-std::ostream& operator<<(std::ostream& os, jgl::Material to_print);
 
 #endif

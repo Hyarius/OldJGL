@@ -23,6 +23,12 @@ namespace jgl
 		Vector3 b;
 
 		Line3D(Vector3 p_a = 0, Vector3 p_b = 0) { a = p_a; b = p_b; }
+
+		friend std::ostream& operator<<(std::ostream& os, const jgl::Line3D value)
+		{
+			os << "(" << value.a << " / " << value.b << ")";
+			return os;
+		}
 	};
 
 	struct Triangle3D
@@ -32,6 +38,12 @@ namespace jgl
 		Vector3 c;
 
 		Triangle3D(Vector3 p_a = 0, Vector3 p_b = 0, Vector3 p_c = 0) { a = p_a; b = p_b; c = p_c; }
+
+		friend std::ostream& operator<<(std::ostream& os, const jgl::Triangle3D value)
+		{
+			os << "(" << value.a << " / " << value.b << " / " << value.c << ")";
+			return os;
+		}
 	};
 }
 

@@ -77,10 +77,17 @@ namespace jgl
 
 		bool operator == (const Unique_string other) const;
 		bool operator != (const Unique_string other) const;
+
+		friend std::ostream& operator<<(std::ostream& os, const jgl::Unique_string value)
+		{
+			for (size_t i = 0; i < value.size(); i++)
+			{
+				os << value[i];
+			}
+			return os;
+		}
 	};
 	Unique_string operator + (const char* str, Unique_string delta);
 }
-
-std::ostream& operator<<(std::ostream& os, const jgl::Unique_string value);
 
 #endif

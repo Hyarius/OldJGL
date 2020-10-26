@@ -1,6 +1,7 @@
 #include "jgl.h"
 
 jgl::Application* g_application;
+jgl::Perlin* g_perlin;
 
 namespace jgl
 {
@@ -57,12 +58,12 @@ namespace jgl
 			error_exit(1, "Error with context creation");
 		}
 
-		std::cout << "Graphical info :\n" << std::endl;
+		/*std::cout << "Graphical info :\n" << std::endl;
 		std::cout << "Vendeur : " << glGetString(GL_VENDOR) << "\n" << std::endl;
 		std::cout << "Carte graphique : " << glGetString(GL_RENDERER) << "\n" << std::endl;
 		std::cout << "Version opengl : " << glGetString(GL_VERSION) << "\n" << std::endl;
 		std::cout << "Version shader : " << glGetString(GL_SHADING_LANGUAGE_VERSION) << "\n" << std::endl;
-		std::cout << "\n" << std::endl;
+		std::cout << "\n" << std::endl;*/
 
 
 		//_renderer = SDL_CreateRenderer(_window, -1, SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC);
@@ -248,7 +249,8 @@ namespace jgl
 			TTF_Init();
 			SDL_StartTextInput();
 		}
-		srand(static_cast<unsigned int>(std::time(NULL)));
+		srand(time(NULL));
+		g_perlin = new jgl::Perlin(rand());
 		g_mouse = new Mouse();
 		g_keyboard = new Keyboard();
 		g_time = SDL_GetTicks();
@@ -271,6 +273,11 @@ namespace jgl
 		}
 
 		delete_loaded_char();
+	}
+
+	double perlin_noise(double x, double y, double z)
+	{
+		return (g_perlin->noise(x, y, z));
 	}
 
 	void Application::quit()

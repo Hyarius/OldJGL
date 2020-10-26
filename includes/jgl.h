@@ -4,11 +4,13 @@
 #define FPS 60.0f;
 
 #include "jgl_includes.h"
+#include "jgl_perlin.h"
 #include "jgl_define.h"
 #include "jgl_dirent.h"
 #include "jgl_enum.h"
 #include "jgl_reference_count.h"
 #include "jgl_array.h"
+#include "jgl_locked_queue.h"
 #include "jgl_glyph.h"
 #include "jgl_unique_string.h"
 #include "jgl_pool.h"
@@ -59,5 +61,7 @@
 
 #include "jgl_window.h"
 #include "jgl_plot.h"
+
+#include "jgl_network.h"
 
 #endif

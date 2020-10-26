@@ -212,4 +212,18 @@ namespace jgl
 	{
 		return (Vector3(x, y, p_value));
 	}
+
+	Vector2 Vector2::rotate(Vector2 center, float angle)
+	{
+		float theta = jgl::degree_to_radian(angle);
+
+		float pcos = cos(theta);
+		float psin = sin(theta);
+
+		jgl::Vector2 result;
+		result.x = (x - center.x) * pcos - (y - center.y) * psin;
+		result.y = (x - center.x) * psin + (y - center.y) * pcos;
+		
+		return (result + center);
+	}
 }

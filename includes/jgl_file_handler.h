@@ -52,6 +52,14 @@ namespace jgl
 				extension = "";
 			}
 		}
+		friend std::ostream& operator<<(std::ostream& os, const jgl::File value)
+		{
+			os << "File : " << value.path << "\\" << value.name << "\\" << value.extension << " - "
+				<< "Path : " << value.path << " - Name : " << value.name << " - Extension : " << value.extension
+				<< " - File type : " << (value.type == jgl::File_type::file ? "File" : "Directory");
+
+			return (os);
+		}
 	};
 
 	std::fstream open_file(const jgl::String path, const std::ios_base::openmode mode = std::ios_base::in | std::ios_base::out);
@@ -64,7 +72,5 @@ namespace jgl
 	void rewrite_on_file(const jgl::String path, const jgl::String text);
 	void write_on_file(std::fstream& file, const jgl::String text);
 }
-
-std::ostream& operator<<(std::ostream& os, const jgl::File value);
 
 #endif

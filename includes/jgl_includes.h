@@ -1,6 +1,19 @@
 #ifndef JGL_INCLUDES_H
 #define JGL_INCLUDES_H
 
+#define WIN32_LEAN_AND_MEAN 
+
+#ifdef _WIN32
+#define _WIN32_WINNT 0x0A00
+#endif
+
+#define ASIO_STANDALONE
+#include <asio.hpp>
+#include <asio/ts/buffer.hpp>
+#include <asio/ts/internet.hpp>
+
+#include <deque>
+
 #include <io.h>
 #include <iostream>
 #include <fstream>
