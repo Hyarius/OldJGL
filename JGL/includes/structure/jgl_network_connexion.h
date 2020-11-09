@@ -27,12 +27,6 @@ namespace jgl
 		uint32_t _id = 0;
 
 	public:
-		enum class Owner
-		{
-			server,
-			client
-		};
-
 		Connexion(Connexion_owner parent, asio::io_context& p_context, asio::ip::tcp::socket p_socket, jgl::Locked_queue<jgl::Input_message<T>>* p_input)
 			: _context(p_context), _socket(std::move(p_socket)), _input(p_input), _tmp_message({})
 		{
@@ -42,7 +36,7 @@ namespace jgl
 		virtual ~Connexion()
 		{}
 
-		jgl::Locked_queue<jgl::Input_message<T>>* input()
+		jgl::Locked_queue<jgl::Input_message<T>>& input()
 		{
 			return (_input);
 		}
@@ -98,8 +92,9 @@ namespace jgl
 			asio::post(_context,
 				[this, msg]()
 				{
+					bool state = _output.empty();
 					_output.push_back(msg);
-					if (_output.empty() == false)
+					if (state == true)
 						write_header();
 				});
 		}

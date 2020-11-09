@@ -105,8 +105,6 @@ namespace jgl
 			{
 				client_disconnect(client);
 
-				client.reset();
-
 				_active_connexion.erase(
 					std::remove(_active_connexion.begin(), _active_connexion.end(), client), _active_connexion.end());
 			}
@@ -137,8 +135,6 @@ namespace jgl
 
 		void update()
 		{
-			//_input.wait();
-
 			while (_input.empty() == false)
 			{
 				auto msg = _input.pop_front();
