@@ -24,6 +24,10 @@ namespace jgl
 	{
 		return (static_cast<int>(std::round(value)));
 	}
+	int ceil(float value)
+	{
+		return (static_cast<int>(std::ceil(value)));
+	}
 	size_t count_word(const jgl::String& input, const jgl::String& delim)
 	{
 		size_t tmp = input.size();

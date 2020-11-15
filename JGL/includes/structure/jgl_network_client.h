@@ -59,7 +59,6 @@ namespace jgl
 			if (_thread_context.joinable())
 				_thread_context.join();
 
-			delete _connexion;
 		}
 
 		bool is_connected()

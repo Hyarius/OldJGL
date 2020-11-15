@@ -11,6 +11,7 @@ namespace jgl
 	jgl::Vector2 compose_biggest(jgl::Vector2 first, jgl::Vector2 second);
 	int floor(float value);
 	int round(float value);
+	int ceil(float value);
 	void check_sdl_error(const jgl::String file, const int line);
 	bool string_is_numeric(const jgl::String text);
 	size_t count_word(const jgl::String& input, const jgl::String& delim);

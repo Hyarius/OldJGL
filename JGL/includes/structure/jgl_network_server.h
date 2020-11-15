@@ -10,7 +10,7 @@ namespace jgl
 	template<typename T>
 	class Server_interface
 	{
-	private:
+	protected:
 		jgl::Locked_queue<jgl::Input_message<T>> _input;
 
 		std::deque<jgl::Connexion<T>*> _active_connexion;
@@ -104,7 +104,6 @@ namespace jgl
 			else
 			{
 				client_disconnect(client);
-
 				_active_connexion.erase(
 					std::remove(_active_connexion.begin(), _active_connexion.end(), client), _active_connexion.end());
 			}
@@ -124,7 +123,8 @@ namespace jgl
 				else if (client != nullptr)
 				{
 					client_disconnect(client);
-
+					delete client;
+					client = nullptr;
 					error = true;
 				}
 			}
