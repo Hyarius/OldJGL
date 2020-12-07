@@ -1,3 +1,6 @@
+#ifndef JGL_PERLIN_H
+#define JGL_PERLIN_H
+
 class Perlin {
 private:
 	std::uint8_t p[512];
@@ -75,7 +78,7 @@ public:
 			
 		return (lerp(w, lerp(v, lerp(u, grad(p[AA], x, y, z),
 			grad(p[BA], x - 1, y, z)),
-			Lerp(u, grad(p[AB], x, y - 1, z),
+			lerp(u, grad(p[AB], x, y - 1, z),
 			grad(p[BB], x - 1, y - 1, z))),
 			lerp(v, lerp(u, grad(p[AA + 1], x, y, z - 1),
 			grad(p[BA + 1], x - 1, y, z - 1)),
@@ -116,7 +119,6 @@ public:
 		}
 	}
 };
-
 extern jgl::Perlin* g_perlin;
 
 #endif
