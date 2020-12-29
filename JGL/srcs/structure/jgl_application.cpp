@@ -253,7 +253,6 @@ namespace jgl
 		g_perlin = new jgl::Perlin(rand());
 		g_mouse = new Mouse();
 		g_keyboard = new Keyboard();
-		g_time = SDL_GetTicks();
 	}
 
 	void quit_jgl()
@@ -302,7 +301,7 @@ namespace jgl
 			g_mouse->actualize();
 			g_keyboard->actualize();
 
-			g_time = SDL_GetTicks();
+			_time = SDL_GetTicks();
 
 			clear();
 

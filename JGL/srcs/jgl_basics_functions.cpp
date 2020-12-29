@@ -329,9 +329,9 @@ namespace jgl
 
 	bool is_middle(const float min, const float value, const float max)
 	{
-		if (min > value)
+		if (value < min)
 			return (false);
-		if (value > max)
+		if (value >= max)
 			return (false);
 		return (true);
 	}
@@ -398,6 +398,13 @@ namespace jgl
 			}
 		}
 		return (result);
+	}
+
+	int generate_nbr_from_2D(long long seed, int x, int y)
+	{
+		int h = seed + x * 374761393 + y * 668265263; //all constants are prime
+		h = (h ^ (h >> 13)) * 1274126177;
+		return h ^ (h >> 16);
 	}
 
 	int generate_nbr(const int min, const int max)

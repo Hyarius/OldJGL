@@ -16,6 +16,8 @@
 
 #include <io.h>
 #include <iostream>
+#include <array>
+#include <random>
 #include <fstream>
 #include <fcntl.h>
 #include <string>
@@ -45,5 +47,9 @@
 #include <string>
 #include <algorithm>
 #include <iterator>
+#include <thread>
+#include <mutex>
+#include <atomic>
+#include <mutex>
 
 #endif

@@ -92,6 +92,7 @@ namespace jgl
 		GLuint _color_simpleID;
 
 		size_t _max_fps;
+		Uint32 _fps_delta;
 		float _fps_ratio;
 
 		Perlin* _perlin;
@@ -100,6 +101,8 @@ namespace jgl
 		bool _play;
 		SDL_Event _event;
 		int _poll_ret;
+
+		Uint32 _time;
 
 	public:
 		Application(const jgl::String name, const Vector2 p_size = Vector2(840, 680), const Color p_color = Color(50, 50, 50));
@@ -172,6 +175,7 @@ namespace jgl
 		const GLuint material_alpha_texture_textureID() const { return (_material_alpha_texture_textureID); }
 		const GLuint material_bump_texture_textureID() const { return (_material_bump_texture_textureID); }
 
+		const Uint32 time() { return (_time); }
 		const size_t max_fps() const { return (_max_fps); }
 		const float fps_ratio() const { return (_fps_ratio); }
 		const int poll_ret() const { return (_poll_ret); }
@@ -181,7 +185,7 @@ namespace jgl
 
 		void set_full_screen(bool state){ SDL_SetWindowFullscreen(_window, (state == true ? SDL_TRUE : SDL_FALSE)); }
 		void set_active_viewport(const class Viewport* p_active_viewport) { if (p_active_viewport == nullptr)_active_viewport = _viewport; else _active_viewport = p_active_viewport; }
-		void set_max_fps(const int p_max_fps) { _max_fps = p_max_fps; _fps_ratio = 60.0f / p_max_fps; }
+		void set_max_fps(const int p_max_fps) { _max_fps = p_max_fps; _fps_ratio = 60.0f / p_max_fps; _fps_delta = static_cast<Uint32>(1000.0 / static_cast<double>(_max_fps)); }
 		void set_fps_ratio(const float p_ratio) { _fps_ratio = p_ratio; }
 		void check_frame(const bool draw = false);
 		void reset_viewport() { _active_viewport = _viewport; _viewport->use(); }
@@ -192,6 +196,9 @@ namespace jgl
 		void clear();
 		void render();
 		int run();
+
+		void activate_vsync() { SDL_GL_SetSwapInterval(1); }
+		void desactivate_vsync() { SDL_GL_SetSwapInterval(0); }
 	};
 
 	GLuint		load_shaders(
