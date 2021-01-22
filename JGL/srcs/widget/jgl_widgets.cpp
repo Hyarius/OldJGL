@@ -128,14 +128,28 @@ namespace jgl
 	{
 		if (_parent == nullptr)
 			return;
+
 		std::vector<Widget*>& children_list = _parent->childrens();
 
-		auto tmp = std::find(children_list.begin(), children_list.end(), this);
-		if (tmp == children_list.end())
+		if (children_list.size() <= 1)
 			return;
-		auto front = children_list.front();
-		children_list.front() = this;
-		*tmp = front;
+
+		std::cout << "Send front " << this << " in fonction " << __FUNCTION__ << std::endl;
+		for (size_t i = 0; i < children_list.size(); i++)
+		{
+			std::cout << "[" << i << "] " << children_list[i] << std::endl;
+		}
+		std::cout << std::endl;
+
+		auto tmp = std::find(children_list.begin(), children_list.end(), this);
+		children_list.erase(tmp);
+		children_list.insert(children_list.begin(), this);
+
+		for (size_t i = 0; i < children_list.size(); i++)
+		{
+			std::cout << "[" << i << "] " << children_list[i] << std::endl;
+		}
+		std::cout << std::endl;
 	}
 
 	void Widget::send_back()
@@ -145,11 +159,8 @@ namespace jgl
 		std::vector<Widget*>& children_list = _parent->childrens();
 
 		auto tmp = std::find(children_list.begin(), children_list.end(), this);
-		if (tmp == children_list.end())
-			return;
-		auto tail = children_list.back();
-		children_list.back() = this;
-		*tmp = tail;
+		children_list.erase(tmp);
+		children_list.insert(children_list.end(), this);
 	}
 
 	void Widget::raise()
@@ -157,6 +168,7 @@ namespace jgl
 		if (_parent == nullptr)
 			return;
 		std::vector<Widget*>& children_list = _parent->childrens();
+
 		auto tmp = std::find(children_list.begin(), children_list.end(), this);
 		if (tmp == children_list.end() || *tmp == children_list.back())
 			return;
@@ -171,6 +183,7 @@ namespace jgl
 		if (_parent == nullptr)
 			return;
 		std::vector<Widget*>& children_list = _parent->childrens();
+
 		auto tmp = std::find(children_list.begin(), children_list.end(), this);
 		if (tmp == children_list.end() || tmp == children_list.begin())
 			return;
