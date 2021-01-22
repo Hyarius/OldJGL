@@ -134,22 +134,9 @@ namespace jgl
 		if (children_list.size() <= 1)
 			return;
 
-		std::cout << "Send front " << this << " in fonction " << __FUNCTION__ << std::endl;
-		for (size_t i = 0; i < children_list.size(); i++)
-		{
-			std::cout << "[" << i << "] " << children_list[i] << std::endl;
-		}
-		std::cout << std::endl;
-
 		auto tmp = std::find(children_list.begin(), children_list.end(), this);
 		children_list.erase(tmp);
 		children_list.insert(children_list.begin(), this);
-
-		for (size_t i = 0; i < children_list.size(); i++)
-		{
-			std::cout << "[" << i << "] " << children_list[i] << std::endl;
-		}
-		std::cout << std::endl;
 	}
 
 	void Widget::send_back()
