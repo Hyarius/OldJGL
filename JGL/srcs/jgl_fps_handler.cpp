@@ -5,7 +5,6 @@ size_t			saved_fps = 0;
 int				nb_frame;
 int				beginsecond = 0;
 Uint32			old_time = 0;
-Uint32			g_time = 0;
 
 namespace jgl
 {

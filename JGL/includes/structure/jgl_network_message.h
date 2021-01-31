@@ -65,12 +65,15 @@ namespace jgl
 		jgl::String get_string()
 		{
 			jgl::String text;
+			size_t size;
 
-			while (empty() == false)
+			*this >> size;
+			while (empty() == false && size != 0)
 			{
 				jgl::Glyph c;
 				*this >> c;
 				text.push_front(c);
+				size--;
 			}
 
 			return (text);
@@ -80,6 +83,7 @@ namespace jgl
 		{
 			for (size_t i = 0; i < text.size(); i++)
 				*this << text[i];
+			*this << text.size();
 		}
 
 		template<typename DataType>

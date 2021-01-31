@@ -71,26 +71,26 @@ namespace jgl
 			_entry.move_cursor(-1);
 		else if (g_keyboard->get_key(key::right_arrow) == key_state::down && ticks < SDL_GetTicks() && (ticks = SDL_GetTicks() + 100))
 			_entry.move_cursor(1);
-		else if (g_keyboard->get_key(key::backspace) == key_state::down && g_time >= _next_input)
+		else if (g_keyboard->get_key(key::backspace) == key_state::down && g_application->time() >= _next_input)
 		{
 			_entry.remove_text();
-			_next_input = g_time + _input_delay / 2;
+			_next_input = g_application->time() + _input_delay / 2;
 		}
-		else if (g_keyboard->get_key(key::delete_key) == key_state::down && g_time >= _next_input)
+		else if (g_keyboard->get_key(key::delete_key) == key_state::down && g_application->time() >= _next_input)
 		{
 			_entry.supp_text();
-			_next_input = g_time + _input_delay / 2;
+			_next_input = g_application->time() + _input_delay / 2;
 		}
 
 		if (g_application->event()->type == SDL_TEXTINPUT)
 		{
 			static Glyph last_char = '\0';
 			Glyph text = g_application->event()->text.text;
-			if (text != last_char || g_time >= _next_input)
+			if (text != last_char || g_application->time() >= _next_input)
 			{
 				last_char = text;
 				_entry.add_text(text);
-				_next_input = g_time + _input_delay;
+				_next_input = g_application->time() + _input_delay;
 			}
 		}
 

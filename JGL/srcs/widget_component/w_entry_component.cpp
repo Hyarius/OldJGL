@@ -83,7 +83,7 @@ namespace jgl
 
 	void w_entry_component::supp_text()
 	{
-		if (_cursor > 0 && _cursor < _text.size() && _text.size() != 0)
+		if (_cursor < _text.size() && _text.size() != 0)
 		{
 			_text.erase(_cursor);
 			calc_text_to_draw();

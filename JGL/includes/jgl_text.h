@@ -5,7 +5,6 @@
 #include "jgl_image.h"
 
 extern jgl::String g_font_path;
-extern Uint32 g_time;
 
 #define NB_SIZE			150
 #define NB_COLOR		26
