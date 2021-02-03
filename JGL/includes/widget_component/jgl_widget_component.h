@@ -75,7 +75,7 @@ namespace jgl
 	public:
 		w_textual_component();
 
-		void 		set_text(jgl::String p_text) { _text = p_text; }
+		void 		set_text(jgl::String p_text) { _text = p_text;}
 		void 		set_align(alignment p_align) { _align = p_align; }
 		void 		set_size(int p_size) { _size = p_size; }
 		void 		set_color(text_color p_color) { _color = p_color; }
@@ -131,6 +131,7 @@ namespace jgl
 	public:
 		w_text_component(jgl::String p_text = "", class Widget* p_owner = nullptr);
 
+		void set_text(jgl::String text) { _text = text; calc_text_size(_area); }
 		void resize(Vector2 p_anchor, Vector2 p_area);
 
 		void render(Viewport* viewport = nullptr);

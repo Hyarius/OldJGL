@@ -48,6 +48,7 @@
 #include "jgl_hour_entry.h"
 #include "jgl_tab.h"
 #include "jgl_vscrollable_bar.h"
+#include "jgl_hscrollable_bar.h"
 #include "jgl_image_label.h"
 #include "jgl_render_widget.h"
 #include "jgl_progressive_bar.h"

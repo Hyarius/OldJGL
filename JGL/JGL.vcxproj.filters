@@ -225,6 +225,9 @@
     <ClCompile Include="srcs\widget_component\w_value_entry_component.cpp">
       <Filter>Source Files\widget componenet</Filter>
     </ClCompile>
+    <ClCompile Include="srcs\widget\jgl_hscrollable_bar.cpp">
+      <Filter>Source Files\widget</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="includes\widget\jgl_file_menu.h">
@@ -412,6 +415,9 @@
     </ClInclude>
     <ClInclude Include="includes\widget_component\jgl_widget_component.h">
       <Filter>Header Files\widget_componenet</Filter>
+    </ClInclude>
+    <ClInclude Include="includes\widget\jgl_hscrollable_bar.h">
+      <Filter>Header Files\widget</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

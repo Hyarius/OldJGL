@@ -70,16 +70,46 @@ namespace jgl
 		_actual_pos += delta;
 	}
 
+	bool Vscroll_bar::handle_keyboard()
+	{
+		static uint32_t time = 0;
+
+		if (parent() != nullptr && parent()->is_pointed(g_mouse->pos))
+		{
+			if (jgl::get_key(jgl::key::up_arrow) == jgl::key_state::down && time < g_application->time())
+			{
+				time = g_application->time() + 50;
+				for (int i = 0; i < 3; i++)
+					up_widget(this);
+				return (true);
+			}
+			if (jgl::get_key(jgl::key::down_arrow) == jgl::key_state::down && time < g_application->time())
+			{
+				time = g_application->time() + 50;
+				for (int i = 0; i < 3; i++)
+					down_widget(this);
+				return (true);
+			}
+		}
+		return (false);
+	}
+
 	bool Vscroll_bar::handle_mouse()
 	{
 		if (parent() != nullptr && parent()->is_pointed(g_mouse->pos))
 		{
 			if (g_mouse->wheel > 0)
+			{
 				for (int i = 0; i < 3; i++)
 					up_widget(this);
+				return (true);
+			}
 			if (g_mouse->wheel < 0)
+			{
 				for (int i = 0; i < 3; i++)
 					down_widget(this);
+				return (true);
+			}
 		}
 		return (false);
 	}

@@ -62,6 +62,7 @@
     <ClCompile Include="srcs\widget\jgl_check_entry.cpp" />
     <ClCompile Include="srcs\widget\jgl_frame.cpp" />
     <ClCompile Include="srcs\widget\jgl_hour_entry.cpp" />
+    <ClCompile Include="srcs\widget\jgl_hscrollable_bar.cpp" />
     <ClCompile Include="srcs\widget\jgl_image_label.cpp" />
     <ClCompile Include="srcs\widget\jgl_progressive_bar.cpp" />
     <ClCompile Include="srcs\widget\jgl_render_widget.cpp" />
@@ -134,6 +135,7 @@
     <ClInclude Include="includes\widget\jgl_file_menu.h" />
     <ClInclude Include="includes\widget\jgl_frame.h" />
     <ClInclude Include="includes\widget\jgl_hour_entry.h" />
+    <ClInclude Include="includes\widget\jgl_hscrollable_bar.h" />
     <ClInclude Include="includes\widget\jgl_image_label.h" />
     <ClInclude Include="includes\widget\jgl_progressive_bar.h" />
     <ClInclude Include="includes\widget\jgl_render_widget.h" />
