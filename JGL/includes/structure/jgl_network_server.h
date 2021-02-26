@@ -141,6 +141,15 @@ namespace jgl
 
 				on_message_reception(msg.remote, msg.msg);
 			}
+			for (auto& client : _active_connexion)
+			{
+				if (client != nullptr && client->is_connected() == false)
+				{
+					client_disconnect(client);
+					delete client;
+					client = nullptr;
+				}
+			}
 		}
 
 	protected:

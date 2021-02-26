@@ -16,6 +16,22 @@ namespace jgl
 
 		return (jgl::Vector2(x, y));
 	}
+	jgl::Vector3 compose_smaller(jgl::Vector3 first, jgl::Vector3 second)
+	{
+		float x = (first.x < second.x ? first.x : second.x);
+		float y = (first.y < second.y ? first.y : second.y);
+		float z = (first.z < second.z ? first.z : second.z);
+
+		return (jgl::Vector3(x, y, z));
+	}
+	jgl::Vector3 compose_biggest(jgl::Vector3 first, jgl::Vector3 second)
+	{
+		float x = (first.x > second.x ? first.x : second.x);
+		float y = (first.y > second.y ? first.y : second.y);
+		float z = (first.z > second.z ? first.z : second.z);
+
+		return (jgl::Vector3(x, y, z));
+	}
 	int floor(float value)
 	{
 		return (static_cast<int>(std::floor(value)));
@@ -159,8 +175,11 @@ namespace jgl
 		size_t tmp2 = delim.size();
 		size_t index = 0;
 		size_t nb_word = 0;
+		size_t total_nb_word = count_word(input, delim);
 
-		tab.resize(count_word(input, delim));
+		tab.resize(total_nb_word);
+		for (size_t i = 0; i < total_nb_word; i++)
+			tab[i].clear();
 		while (index < tmp)
 		{
 			size_t word_len = count_word_len(input, delim, index);

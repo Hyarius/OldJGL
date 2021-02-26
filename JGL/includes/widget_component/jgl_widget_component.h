@@ -84,7 +84,8 @@ namespace jgl
 		void 		calc_text_size(Vector2 area);
 		void 		calc_text_size_height(Vector2 area);
 
-		jgl::String  text() const { return (_text); }
+		const jgl::String* ptr_text() const { return (&_text); }
+		jgl::String text() const { return (_text); }
 		alignment 	align() const { return (_align); }
 		int 		size() const { return (_size); }
 		text_color 	color() const { return (_color); }
@@ -95,6 +96,7 @@ namespace jgl
 	{
 	protected:
 		size_t _cursor;
+		bool _masked;
 		bool _selected;
 
 		jgl::String _text_to_draw;
@@ -102,6 +104,8 @@ namespace jgl
 
 	public:
 		w_entry_component(jgl::String p_text = "", class Widget* p_owner = nullptr);
+
+		void		set_masked(bool state) { _masked = state; }
 		void		set_text(jgl::String new_text) { _text = new_text; _cursor = new_text->size(); calc_text_to_draw(); }
 		void 		set_selected(bool p_selected) { _selected = p_selected; }
 		void		set_cursor(size_t p_cursor) { _cursor = p_cursor; }
@@ -128,9 +132,12 @@ namespace jgl
 
 	class w_text_component : public w_component, public w_graphical_component, public w_textual_component
 	{
+	private:
+		bool _masked;
 	public:
 		w_text_component(jgl::String p_text = "", class Widget* p_owner = nullptr);
 
+		void set_masked(bool state) { _masked = state; }
 		void set_text(jgl::String text) { _text = text; calc_text_size(_area); }
 		void resize(Vector2 p_anchor, Vector2 p_area);
 

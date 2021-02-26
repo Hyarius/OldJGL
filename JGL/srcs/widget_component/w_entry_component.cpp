@@ -112,7 +112,10 @@ namespace jgl
 
 		pos += _anchor;
 
-		draw_text(_text_to_draw, pos, _size, 0, 1.0f, _color, _style);
+		if (_masked == true)
+			draw_text(jgl::normalize_string("", jgl::Glyph('*'), _text_to_draw.size()), pos, _size, 0, 1.0f, _color, _style);
+		else
+			draw_text(_text_to_draw, pos, _size, 0, 1.0f, _color, _style);
 
 		pos.x += calc_text_len(_text_to_draw.substr(0, _cursor_to_draw), _size);
 

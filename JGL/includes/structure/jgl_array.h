@@ -341,7 +341,7 @@ namespace jgl
 			if (index >= _size)
 			{
 				std::cout << "Segfault in jgl::Array - Invalid acces to an array of type " << typeid(T).name() << " at index " << index << " with a size of " << _size << std::endl;
-				exit(1);
+				//exit(1);
 			}
 			size_t nb_line = index / _push_size;
 			size_t nb_index = index % _push_size;
@@ -371,8 +371,8 @@ namespace jgl
 		{
 			if (iter.index() >= _size + 1)
 			{
-				std::cout << "Segfault in jgl::Array - Invalid acces" << std::endl;
-				exit(1);
+				std::cout << "Segfault in jgl::Array - Invalid acces" << std::endl; 
+				//exit(1);
 			}
 
 			size_t i = size();

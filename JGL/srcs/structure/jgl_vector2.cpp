@@ -147,7 +147,7 @@ namespace jgl
 
 	jgl::String Vector2::text() const
 	{
-		jgl::String result = ftoa(x, 2) + " " + ftoa(y, 2);
+		jgl::String result = ftoa(x, 2) + ";" + ftoa(y, 2);
 
 		return (result);
 	}

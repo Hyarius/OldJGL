@@ -57,7 +57,9 @@ namespace jgl
 		
 			_asio_context.stop();
 			if (_thread_context.joinable())
+			{
 				_thread_context.join();
+			}
 
 		}
 

@@ -6,6 +6,7 @@ namespace jgl
 		w_component(p_owner), w_graphical_component(), w_textual_component()
 	{
 		_text = p_text;
+		_masked = false;
 		_area = Vector2();
 		_anchor = Vector2();
 		_align = alignment::left;
@@ -40,6 +41,9 @@ namespace jgl
 			pos.y = _area.y / 2.0f;
 		}
 		pos += _anchor;
-		draw_centred_text(_text, pos, _size, 0, 1.0f, _color, _style);
+		if (_masked == true)
+			draw_centred_text(jgl::normalize_string("", jgl::Glyph('*'), _text.size()), pos, _size, 0, 1.0f, _color, _style);
+		else
+			draw_centred_text(_text, pos, _size, 0, 1.0f, _color, _style);
 	}
 }

@@ -64,11 +64,12 @@ namespace jgl
 			{
 				_funct(_data);
 				_timer = _timer_delta;
-				return (true);
 			}
 
 			if (_timer == 0)
 				_timer = _timer_delta;
+
+			return (true);
 		}
 
 		return (false);

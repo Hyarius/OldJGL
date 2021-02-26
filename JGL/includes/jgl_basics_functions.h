@@ -9,6 +9,8 @@ namespace jgl
 {
 	jgl::Vector2 compose_smaller(jgl::Vector2 first, jgl::Vector2 second);
 	jgl::Vector2 compose_biggest(jgl::Vector2 first, jgl::Vector2 second);
+	jgl::Vector3 compose_smaller(jgl::Vector3 first, jgl::Vector3 second);
+	jgl::Vector3 compose_biggest(jgl::Vector3 first, jgl::Vector3 second);
 	int floor(float value);
 	int round(float value);
 	int ceil(float value);

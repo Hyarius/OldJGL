@@ -180,7 +180,7 @@ namespace jgl
 
 	jgl::String Vector3::text() const
 	{
-		jgl::String result = jgl::ftoa(x, 2) + " " + jgl::ftoa(y, 2) + " " + jgl::ftoa(z, 2);
+		jgl::String result = jgl::ftoa(x, 2) + ";" + jgl::ftoa(y, 2) + ";" + jgl::ftoa(z, 2);
 
 		return (result);
 	}
