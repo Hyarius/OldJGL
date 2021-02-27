@@ -419,14 +419,14 @@ namespace jgl
 		return (result);
 	}
 
-	__int64 generate_nbr_from_2D(long long seed, int x, int y)
+	uint32_t generate_nbr_from_2D(long long seed, int x, int y)
 	{
-		__int64 h = seed + x * 374761393 + y * 668265263; //all constants are prime
+		uint32_t h = seed + x * 374761393 + y * 668265263; //all constants are prime
 		h = (h ^ (h >> 13)) * 1274126177;
 		return h ^ (h >> 16);
 	}
 
-	__int64 generate_nbr(const int min, const int max)
+	uint32_t generate_nbr(const int min, const int max)
 	{
 		return((rand() % (max - min)) + min);
 	}
