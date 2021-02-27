@@ -22,7 +22,7 @@ namespace jgl
 	public:
 		Image();
 		Image(jgl::String path);
-		Image(size_t width, size_t height, Color p_color);
+		Image(uint32_t width, uint32_t height, Color p_color);
 		Image(SDL_Surface* p_surface);
 
 		~Image();

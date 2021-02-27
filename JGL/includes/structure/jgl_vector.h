@@ -11,11 +11,11 @@ namespace jgl
 		float w;
 
 		Vector4(int p_value);
-		Vector4(size_t p_value);
+		Vector4(uint32_t p_value);
 		Vector4(float p_value = -1);
 		Vector4(float p_x, float p_y, float p_z, float p_w);
 		Vector4(int p_x, int p_y, int p_z, int p_w);
-		Vector4(size_t p_x, size_t p_y, size_t p_z, size_t p_w);
+		Vector4(uint32_t p_x, uint32_t p_y, uint32_t p_z, uint32_t p_w);
 		Vector4(double p_x, double p_y, double p_z, double p_w);
 
 		void operator = (int p_value);
@@ -68,12 +68,12 @@ namespace jgl
 		Vector3(Vector4 p_other);
 		Vector3(struct Vector2 p_other);
 		Vector3(int p_value);
-		Vector3(size_t p_value);
+		Vector3(uint32_t p_value);
 		Vector3(double p_value);
 		Vector3(float p_value = -1);
 		Vector3(float p_x, float p_y, float p_z);
 		Vector3(int p_x, int p_y, int p_z);
-		Vector3(size_t p_x, size_t p_y, size_t p_z);
+		Vector3(uint32_t p_x, uint32_t p_y, uint32_t p_z);
 		Vector3(double p_x, double p_y, double p_z);
 
 		void operator = (Vector4 p_other);
@@ -121,12 +121,12 @@ namespace jgl
 		float y;
 
 		Vector2(int p_value);
-		Vector2(size_t p_value);
+		Vector2(uint32_t p_value);
 		Vector2(double p_value);
 		Vector2(float p_value = -1);
 		Vector2(float p_x, float p_y);
 		Vector2(int p_x, int p_y);
-		Vector2(size_t p_x, size_t p_y);
+		Vector2(uint32_t p_x, uint32_t p_y);
 		Vector2(double p_x, double p_y);
 
 		void operator = (int p_value);

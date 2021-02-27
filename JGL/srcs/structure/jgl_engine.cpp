@@ -12,13 +12,13 @@ namespace jgl
 		bool found;
 		Mesh* tmp;
 
-		for (size_t i = 0; i < _meshes.size(); i++)
+		for (uint32_t i = 0; i < _meshes.size(); i++)
 		{
 			tmp = mesh(i);
 			if (tmp->kinetic() == true)
 			{
 				found = false;
-				for (size_t j = 0; j < _meshes.size(); j++)
+				for (uint32_t j = 0; j < _meshes.size(); j++)
 				{
 					if (j != i && intersect_bubble_box(tmp, mesh(j)) == true)
 						found = true;
@@ -30,7 +30,7 @@ namespace jgl
 					tmp->reset_velocity();
 			}
 		}
-		for (size_t i = 0; i < _meshes.size(); i++)
+		for (uint32_t i = 0; i < _meshes.size(); i++)
 		{
 			tmp = mesh(i);
 			if (tmp->kinetic() == true)
@@ -41,7 +41,7 @@ namespace jgl
 	void Engine::render(const jgl::Camera *camera)
 	{
 		jgl::fill_rectangle(0, camera->viewport()->area(), jgl::Color(180, 180, 180), camera->viewport());
-		for (size_t i = 0; i < _meshes.size(); i++)
+		for (uint32_t i = 0; i < _meshes.size(); i++)
 		{
 			_meshes[i]->render(camera);
 		}

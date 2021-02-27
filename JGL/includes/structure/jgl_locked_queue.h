@@ -69,7 +69,7 @@ namespace jgl
 			return _content.empty();
 		}
 
-		size_t count()
+		uint32_t count()
 		{
 			std::scoped_lock lock(muxQueue);
 			return _content.size();

@@ -1,7 +1,7 @@
 #include "jgl.h"
 
-size_t			print_fps = 0;
-size_t			saved_fps = 0;
+uint32_t			print_fps = 0;
+uint32_t			saved_fps = 0;
 int				nb_frame;
 int				beginsecond = 0;
 Uint32			old_time = 0;

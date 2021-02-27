@@ -17,25 +17,25 @@ namespace jgl
 		T* _computed_result;
 
 		T** _array_content;
-		size_t _size;
-		size_t _max_size;
-		size_t _push_size;
+		uint32_t _size;
+		uint32_t _max_size;
+		uint32_t _push_size;
 
 		void add_new_line()
 		{
 			T** old_array_content = _array_content;
 
-			size_t nb_line = _max_size / _push_size;
+			uint32_t nb_line = _max_size / _push_size;
 			_max_size += _push_size;
 			_array_content = new T*[nb_line + 1];
 
-			for (size_t i = 0; i < nb_line; i++)
+			for (uint32_t i = 0; i < nb_line; i++)
 				_array_content[i] = old_array_content[i];
 
 			delete [] old_array_content;
 			
 			_array_content[nb_line] = new T[_push_size];
-			for (size_t i = 0; i < _push_size; i++)
+			for (uint32_t i = 0; i < _push_size; i++)
 				_array_content[nb_line][i] = T();
 
 		}
@@ -54,7 +54,7 @@ namespace jgl
 
 			if (_array_content != nullptr)
 			{
-				for (size_t i = 0; i < _max_size / _push_size; i++)
+				for (uint32_t i = 0; i < _max_size / _push_size; i++)
 				{
 					delete[] _array_content[i];
 				}
@@ -67,7 +67,7 @@ namespace jgl
 		{
 		private:
 			const Array<T>* _parent;
-			size_t _index;
+			uint32_t _index;
 			T* _element;
 
 			void calc_element()
@@ -79,7 +79,7 @@ namespace jgl
 				else
 					_element = &(_parent->operator[](_index));
 			}
-			void set_index(size_t p_delta) {
+			void set_index(uint32_t p_delta) {
 				_index = p_delta;
 			}
 			void set_element(T* p_delta) {
@@ -92,14 +92,14 @@ namespace jgl
 				_index = 0;
 				_element = nullptr;
 			}
-			Iterator(const Array<T>* p_parent, const size_t p_index)
+			Iterator(const Array<T>* p_parent, const uint32_t p_index)
 			{
 				_parent = p_parent;
 				_index = p_index;
 				calc_element();
 			}
 			const Array<T>* parent() const { return (_parent); }
-			const size_t index() const { return (_index); }
+			const uint32_t index() const { return (_index); }
 			const T* element() const { return (_element); }
 
 
@@ -137,7 +137,7 @@ namespace jgl
 				Iterator result = *this;
 				if (_parent == nullptr)
 					error_exit_tmp(1, "No parent in jgl::Array : segfault");
-				if (result.index() + static_cast<size_t>(delta) >= result.parent()->size())
+				if (result.index() + static_cast<uint32_t>(delta) >= result.parent()->size())
 					result.set_index(result.parent()->size());
 				else
 					result.set_index(result.index() + delta);
@@ -150,7 +150,7 @@ namespace jgl
 
 				if (_parent == nullptr)
 					error_exit_tmp(1, "No parent in jgl::Array : segfault");
-				if (result.index() <= static_cast<size_t>(delta))
+				if (result.index() <= static_cast<uint32_t>(delta))
 					result.set_index(0);
 				else
 					result.set_index(result.index() - delta);
@@ -177,7 +177,7 @@ namespace jgl
 				calc_element();
 			}
 
-			Iterator& operator = (const size_t p_value)
+			Iterator& operator = (const uint32_t p_value)
 			{
 				if (_parent == nullptr)
 					error_exit_tmp(1, "No parent in jgl::Array : segfault");
@@ -258,10 +258,10 @@ namespace jgl
 
 		Array(const std::initializer_list<T> init) : Array<T>()
 		{
-			for (size_t i = 0; i < init.size(); i++)
+			for (uint32_t i = 0; i < init.size(); i++)
 				push_back(init.begin()[i]);
 		}
-		Array(const size_t p_push_size = 100)
+		Array(const uint32_t p_push_size = 100)
 		{
 			_array_content = nullptr;
 			_push_size = p_push_size;
@@ -272,7 +272,7 @@ namespace jgl
 		}
 		Array(const Array<T>& other) : Array<T>(other.push_size())
 		{
-			for (size_t i = 0; i < other.size(); i++)
+			for (uint32_t i = 0; i < other.size(); i++)
 				push_back(other[i]);
 		}
 		~Array()
@@ -284,7 +284,7 @@ namespace jgl
 		{
 			std::cout << (char*)("Size : ") << _size << (char*)("/") << _max_size << (char*)("(") << _push_size << (char*)(")") << std::endl;
 			std::cout << (char*)("Array content : ") << std::endl;
-			for (size_t i = 0; i < _size; i++)
+			for (uint32_t i = 0; i < _size; i++)
 			{
 				if (i != 0)
 					std::cout << (char*)(" - ");
@@ -300,7 +300,7 @@ namespace jgl
 		void print_content() const
 		{
 			std::cout << (char*)("Array content : ");
-			for (size_t i = 0; i < _size; i++)
+			for (uint32_t i = 0; i < _size; i++)
 			{
 				if (i != 0)
 					std::cout << (char*)(" - ");
@@ -314,8 +314,8 @@ namespace jgl
 			{
 				add_new_line();
 			}
-			size_t nb_line = _size / _push_size;
-			size_t nb_index = _size % _push_size;
+			uint32_t nb_line = _size / _push_size;
+			uint32_t nb_index = _size % _push_size;
 			_array_content[nb_line][nb_index] = elem;
 			_size++;
 			clear_computed();
@@ -331,23 +331,23 @@ namespace jgl
 		{
 			this->clear();
 
-			for (size_t i = 0; i < other.size(); i++)
+			for (uint32_t i = 0; i < other.size(); i++)
 				push_back(other[i]);
 
 			return (*this);
 		}
-		T& operator [](const size_t index) const
+		T& operator [](const uint32_t index) const
 		{
 			if (index >= _size)
 			{
 				std::cout << "Segfault in jgl::Array - Invalid acces to an array of type " << typeid(T).name() << " at index " << index << " with a size of " << _size << std::endl;
 				//exit(1);
 			}
-			size_t nb_line = index / _push_size;
-			size_t nb_index = index % _push_size;
+			uint32_t nb_line = index / _push_size;
+			uint32_t nb_index = index % _push_size;
 			return (_array_content[nb_line][nb_index]);
 		}
-		T& insert(const size_t index, const T elem)
+		T& insert(const uint32_t index, const T elem)
 		{
 			if (index >= _size + 1)
 			{
@@ -355,7 +355,7 @@ namespace jgl
 				exit(1);
 			}
 
-			size_t i = size();
+			uint32_t i = size();
 			push_back('\0');
 			while (i >= 1 && i > index)
 			{
@@ -375,7 +375,7 @@ namespace jgl
 				//exit(1);
 			}
 
-			size_t i = size();
+			uint32_t i = size();
 			push_back('\0');
 			while (i >= 1 && i > iter.index())
 			{
@@ -391,7 +391,7 @@ namespace jgl
 		{
 			jgl::Array<T> result = jgl::Array<T>(push_size());
 
-			for (size_t i = 0; i < this->size(); i++)
+			for (uint32_t i = 0; i < this->size(); i++)
 				result.push_back(this->operator[](i));
 
 			result.push_back(delta);
@@ -402,10 +402,10 @@ namespace jgl
 		{
 			jgl::Array<T> result = jgl::Array<T>(other.push_size());
 
-			for (size_t i = 0; i < this->size(); i++)
+			for (uint32_t i = 0; i < this->size(); i++)
 				result.push_back(this->operator[](i));
 
-			for (size_t i = 0; i < other.size(); i++)
+			for (uint32_t i = 0; i < other.size(); i++)
 				result.push_back(other[i]);
 
 			return (result);
@@ -417,11 +417,11 @@ namespace jgl
 		}
 		void operator += (const jgl::Array<T> other)
 		{
-			for (size_t i = 0; i < this->size(); i++)
+			for (uint32_t i = 0; i < this->size(); i++)
 				push_back(other[i]);
 			clear_computed();
 		}
-		void resize(const size_t new_size)
+		void resize(const uint32_t new_size)
 		{
 			while (_max_size < new_size)
 				add_new_line();
@@ -438,7 +438,7 @@ namespace jgl
 		}
 		bool contain(const T to_find) const
 		{
-			for (size_t i = 0; i < size(); i++)
+			for (uint32_t i = 0; i < size(); i++)
 				if (this->operator[](i) == to_find)
 					return(true);
 			return (false);
@@ -453,11 +453,11 @@ namespace jgl
 		{
 			erase(0);
 		}
-		void erase(const size_t index)
+		void erase(const uint32_t index)
 		{
 			if (_size == 0)
 				return;
-			for (size_t i = index; i < _size - 1; i++)
+			for (uint32_t i = index; i < _size - 1; i++)
 				this->operator[](i) = this->operator[](i + 1);
 			_size--;
 			clear_computed();
@@ -467,7 +467,7 @@ namespace jgl
 		{
 			if (_size == 0)
 				return;
-			for (size_t i = iter.index(); i < _size - 1; i++)
+			for (uint32_t i = iter.index(); i < _size - 1; i++)
 				this->operator[](i) = this->operator[](i + 1);
 			_size--;
 			clear_computed();
@@ -475,7 +475,7 @@ namespace jgl
 
 		void reverse()
 		{
-			for (size_t i = 0; i < _size / 2; i++)
+			for (uint32_t i = 0; i < _size / 2; i++)
 			{
 				T tmp = this->operator[](i);
 				this->operator[](i) = this->operator[](_size - i - 1);
@@ -485,9 +485,9 @@ namespace jgl
 		const bool computed() const { return (_computed); }
 		const T* computed_content() const { return (_computed_result); }
 		const T** content() const { return (_array_content); }
-		const size_t size() const { return (_size); }
-		const size_t max_size() const { return (_max_size); }
-		const size_t push_size() const { return (_push_size); }
+		const uint32_t size() const { return (_size); }
+		const uint32_t max_size() const { return (_max_size); }
+		const uint32_t push_size() const { return (_push_size); }
 		const T* all()
 		{
 			if (_computed == false)
@@ -496,7 +496,7 @@ namespace jgl
 					delete _computed_result;
 				_computed_result = new T[_size];
 
-				for (size_t i = 0; i < _size; i++)
+				for (uint32_t i = 0; i < _size; i++)
 					_computed_result[i] = this->operator[](i);
 				_computed = true;
 			}
@@ -504,15 +504,15 @@ namespace jgl
 			return (_computed_result);
 		}
 		Iterator find(const T to_find) const {
-			for (size_t i = 0; i < size(); i++)
+			for (uint32_t i = 0; i < size(); i++)
 			{
 				if (this->operator[](i) == to_find)
 					return (Iterator(this, i));
 			}
 			return (end());
 		}
-		Iterator find(const T to_find, const size_t start) const {
-			for (size_t i = start; i < size(); i++)
+		Iterator find(const T to_find, const uint32_t start) const {
+			for (uint32_t i = start; i < size(); i++)
 			{
 				if (this->operator[](i) == to_find)
 					return (Iterator(this, i));

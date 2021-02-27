@@ -2,11 +2,11 @@
 
 namespace jgl
 {
-	void json_add_line(std::fstream& file, size_t tab, jgl::String type_name, jgl::String symbol)
+	void json_add_line(std::fstream& file, uint32_t tab, jgl::String type_name, jgl::String symbol)
 	{
 		jgl::String result = "";
 
-		for (size_t i = 0; i < tab; i++)
+		for (uint32_t i = 0; i < tab; i++)
 			result += "\t";
 
 		if (type_name != "")
@@ -17,11 +17,11 @@ namespace jgl
 		write_on_file(file, type_name + ";" + result);
 	}
 
-	void json_add_line(std::fstream& file, size_t tab, jgl::String text)
+	void json_add_line(std::fstream& file, uint32_t tab, jgl::String text)
 	{
 		jgl::String result("");
 
-		for (size_t i = 0; i < tab; i++)
+		for (uint32_t i = 0; i < tab; i++)
 			result += "\t";
 
 		result += text;

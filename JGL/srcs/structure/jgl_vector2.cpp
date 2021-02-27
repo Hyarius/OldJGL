@@ -5,7 +5,7 @@ namespace jgl
 	Vector2::Vector2(int p_value) :
 		x(static_cast<float>(p_value)), y(static_cast<float>(p_value)) {}
 
-	Vector2::Vector2(size_t p_value) :
+	Vector2::Vector2(uint32_t p_value) :
 		x(static_cast<float>(p_value)), y(static_cast<float>(p_value)) {}
 
 	Vector2::Vector2(double p_value) :
@@ -20,7 +20,7 @@ namespace jgl
 	Vector2::Vector2(int p_x, int p_y) :
 		x(static_cast<float>(p_x)), y(static_cast<float>(p_y)) {}
 
-	Vector2::Vector2(size_t p_x, size_t p_y) :
+	Vector2::Vector2(uint32_t p_x, uint32_t p_y) :
 		x(static_cast<float>(p_x)), y(static_cast<float>(p_y)) {}
 
 	Vector2::Vector2(double p_x, double p_y) :

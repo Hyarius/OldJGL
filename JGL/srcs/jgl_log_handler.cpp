@@ -20,9 +20,9 @@ namespace jgl
 
 		jgl::String text = "=== " + log_name + " ===\n";
 		log_file << text;
-		size_t len = text.size() - 1;
+		uint32_t len = text.size() - 1;
 		text.clear();
-		for (size_t i = 0; i < len; i++)
+		for (uint32_t i = 0; i < len; i++)
 			text.push_back('=');
 		text.push_back('\n');
 		log_file << text;

@@ -31,7 +31,7 @@ namespace jgl
 		Vector3 c;
 		Vector3 tmp;
 
-		for (size_t i = 0; i < _faces.size(); i++)
+		for (uint32_t i = 0; i < _faces.size(); i++)
 		{
 			if (_faces[i].index_normale[0] == -1)
 			{
@@ -65,14 +65,14 @@ namespace jgl
 		_baked_uvs.resize(_faces.size() * 3);
 		_baked_normales.resize(_faces.size() * 3);
 
-		for (size_t i = 0; i < _faces.size(); i++)
+		for (uint32_t i = 0; i < _faces.size(); i++)
 		{
-			for (size_t j = 0; j < 3; j++)
+			for (uint32_t j = 0; j < 3; j++)
 			{
-				size_t tmp = i * 3 + j;
+				uint32_t tmp = i * 3 + j;
 				if (_faces[i].index_vertices[j] != -1)
 				{
-					if (size_t(_faces[i].index_vertices[j]) >= _vertices->size())
+					if (uint32_t(_faces[i].index_vertices[j]) >= _vertices->size())
 						jgl::error_exit(1, "Error while baking a Mesh_part with vertices = " + jgl::itoa(_faces[i].index_vertices[j]) + " over " + jgl::itoa(_vertices->size()) + " possibility");
 					_baked_vertices[tmp] = _vertices->operator[](_faces[i].index_vertices[j]);
 				}
@@ -81,7 +81,7 @@ namespace jgl
 
 				if (_faces[i].index_uvs[j] != -1)
 				{
-					if (size_t(_faces[i].index_uvs[j]) >= _uvs->size())
+					if (uint32_t(_faces[i].index_uvs[j]) >= _uvs->size())
 						jgl::error_exit(1, "Error while baking a Mesh_part with uvs = " + jgl::itoa(_faces[i].index_uvs[j]) + " over " + jgl::itoa(_uvs->size()) + " possibility");
 					_baked_uvs[tmp] = _uvs->operator[](_faces[i].index_uvs[j]);
 				}
@@ -90,7 +90,7 @@ namespace jgl
 
 				if (_faces[i].index_normale[j] != -1)
 				{
-					if (size_t(_faces[i].index_normale[j]) >= _normales->size())
+					if (uint32_t(_faces[i].index_normale[j]) >= _normales->size())
 						jgl::error_exit(1, "Error while baking a Mesh_part with normales = " + jgl::itoa(_faces[i].index_normale[j]) + " over " + jgl::itoa(_normales->size()) + " possibility");
 					_baked_normales[tmp] = _normales->operator[](_faces[i].index_normale[j]);
 				}
@@ -185,7 +185,7 @@ namespace jgl
 
 		glUniform3f(g_application->pos_textureID(), p_pos.x, p_pos.y, p_pos.z);
 		glUniformMatrix4fv(g_application->rot_textureID(), 1, GL_FALSE, &(parent->rot_matrix().value[0][0]));
-		glUniform3f(g_application->size_textureID(), parent->size().x, parent->size().y, parent->size().z);
+		glUniform3f(g_application->uint32_textureID(), parent->size().x, parent->size().y, parent->size().z);
 		glUniformMatrix4fv(g_application->MVP_textureID(), 1, GL_FALSE, &(camera->MVP().value[0][0]));
 		glUniformMatrix4fv(g_application->view_matrix_textureID(), 1, GL_FALSE, &(camera->view().value[0][0]));
 		glUniformMatrix4fv(g_application->model_matrix_textureID(), 1, GL_FALSE, &(camera->model().value[0][0]));

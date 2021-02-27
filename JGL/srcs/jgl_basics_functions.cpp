@@ -44,17 +44,17 @@ namespace jgl
 	{
 		return (static_cast<int>(std::ceil(value)));
 	}
-	size_t count_word(const jgl::String& input, const jgl::String& delim)
+	uint32_t count_word(const jgl::String& input, const jgl::String& delim)
 	{
-		size_t tmp = input.size();
-		size_t tmp2 = delim.size();
-		size_t result = 1;
+		uint32_t tmp = input.size();
+		uint32_t tmp2 = delim.size();
+		uint32_t result = 1;
 
-		for (size_t i = 0; i < tmp; i++)
+		for (uint32_t i = 0; i < tmp; i++)
 		{
 			if (input[i] == delim[0])
 			{
-				size_t j = 0;
+				uint32_t j = 0;
 				while (j < tmp2 &&
 					i + j < tmp &&
 					input[i + j] == delim[j])
@@ -66,29 +66,29 @@ namespace jgl
 		}
 		return (result);
 	}
-	size_t count_word(const jgl::String& input, const jgl::Glyph& delim)
+	uint32_t count_word(const jgl::String& input, const jgl::Glyph& delim)
 	{
-		size_t tmp = input.size();
-		size_t result = 1;
+		uint32_t tmp = input.size();
+		uint32_t result = 1;
 
-		for (size_t i = 0; i < tmp; i++)
+		for (uint32_t i = 0; i < tmp; i++)
 		{
 			if (input[i].value() == delim.value())
 				result++;
 		}
 		return (result);
 	}
-	size_t unique_count_word(const jgl::Unique_string& input, const jgl::Unique_string& delim)
+	uint32_t unique_count_word(const jgl::Unique_string& input, const jgl::Unique_string& delim)
 	{
-		size_t tmp = input.size();
-		size_t tmp2 = delim.size();
-		size_t result = 1;
+		uint32_t tmp = input.size();
+		uint32_t tmp2 = delim.size();
+		uint32_t result = 1;
 
-		for (size_t i = 0; i < tmp; i++)
+		for (uint32_t i = 0; i < tmp; i++)
 		{
 			if (input[i] == delim[0])
 			{
-				size_t j = 0;
+				uint32_t j = 0;
 				while (j < tmp2 &&
 					i + j < tmp &&
 					input[i + j].value() == delim[j].value())
@@ -101,10 +101,10 @@ namespace jgl
 		return (result);
 	}
 	
-	size_t count_word_len(const jgl::String& input, const jgl::Glyph& delim, const size_t start)
+	uint32_t count_word_len(const jgl::String& input, const jgl::Glyph& delim, const uint32_t start)
 	{
-		size_t tmp = input.size();
-		size_t result = 0;
+		uint32_t tmp = input.size();
+		uint32_t result = 0;
 
 		for (result = start; result < tmp; result++)
 		{
@@ -114,17 +114,17 @@ namespace jgl
 		return (result - start);
 	}
 
-	size_t count_word_len(const jgl::String& input, const jgl::String& delim, const size_t start)
+	uint32_t count_word_len(const jgl::String& input, const jgl::String& delim, const uint32_t start)
 	{
-		size_t tmp = input.size();
-		size_t tmp2 = delim.size();
-		size_t result = 0;
+		uint32_t tmp = input.size();
+		uint32_t tmp2 = delim.size();
+		uint32_t result = 0;
 
 		for (result = start; result < tmp; result++)
 		{
 			if (input[result] == delim[0])
 			{
-				size_t j = 0;
+				uint32_t j = 0;
 				while (j < tmp2 &&
 					result + j < tmp &&
 					input[result + j].value() == delim[j].value())
@@ -137,17 +137,17 @@ namespace jgl
 		return (result - start);
 	}
 
-	size_t unique_count_word_len(const jgl::Unique_string& input, const jgl::Unique_string& delim, const size_t start)
+	uint32_t unique_count_word_len(const jgl::Unique_string& input, const jgl::Unique_string& delim, const uint32_t start)
 	{
-		size_t tmp = input.size();
-		size_t tmp2 = delim.size();
-		size_t result = 0;
+		uint32_t tmp = input.size();
+		uint32_t tmp2 = delim.size();
+		uint32_t result = 0;
 
 		for (result = start; result < tmp; result++)
 		{
 			if (input[result] == delim[0])
 			{
-				size_t j = 0;
+				uint32_t j = 0;
 				while (j < tmp2 &&
 					result + j < tmp &&
 					input[result + j].value() == delim[j].value())
@@ -171,18 +171,18 @@ namespace jgl
 
 	void strsplit(jgl::Array<jgl::String>& tab, const jgl::String input, const jgl::String delim, const bool regroup)
 	{
-		size_t tmp = input.size();
-		size_t tmp2 = delim.size();
-		size_t index = 0;
-		size_t nb_word = 0;
-		size_t total_nb_word = count_word(input, delim);
+		uint32_t tmp = input.size();
+		uint32_t tmp2 = delim.size();
+		uint32_t index = 0;
+		uint32_t nb_word = 0;
+		uint32_t total_nb_word = count_word(input, delim);
 
 		tab.resize(total_nb_word);
-		for (size_t i = 0; i < total_nb_word; i++)
+		for (uint32_t i = 0; i < total_nb_word; i++)
 			tab[i].clear();
 		while (index < tmp)
 		{
-			size_t word_len = count_word_len(input, delim, index);
+			uint32_t word_len = count_word_len(input, delim, index);
 			if (word_len != 0 || regroup == true)
 			{
 				input.substr(tab[nb_word], index, index + word_len);
@@ -202,16 +202,16 @@ namespace jgl
 
 	void unique_strsplit(jgl::Array<jgl::Unique_string>& tab, const jgl::Unique_string input, const jgl::Unique_string delim, const bool regroup)
 	{
-		size_t tmp = input.size();
-		size_t tmp2 = delim.size();
-		size_t index = 0;
-		size_t nb_word = 0;
+		uint32_t tmp = input.size();
+		uint32_t tmp2 = delim.size();
+		uint32_t index = 0;
+		uint32_t nb_word = 0;
 		tab.clear();
 
 		tab.resize(unique_count_word(input, delim));
 		while (index < tmp)
 		{
-			size_t word_len = unique_count_word_len(input, delim, index);
+			uint32_t word_len = unique_count_word_len(input, delim, index);
 			if (word_len != 0 || regroup == true)
 			{
 				input.substr(tab[nb_word], index, index + word_len);
@@ -253,7 +253,7 @@ namespace jgl
 		exit(num);
 	}
 
-	jgl::String normalize_string(const jgl::String str, const jgl::Glyph c, const size_t size)
+	jgl::String normalize_string(const jgl::String str, const jgl::Glyph c, const uint32_t size)
 	{
 		jgl::String result;
 
@@ -265,7 +265,7 @@ namespace jgl
 		return (result);
 	}
 
-	jgl::String normalize_float(const float num, const int after_point, const jgl::Glyph c, const size_t size)
+	jgl::String normalize_float(const float num, const int after_point, const jgl::Glyph c, const uint32_t size)
 	{
 		jgl::String result;
 
@@ -278,7 +278,7 @@ namespace jgl
 
 	void reverse(jgl::String& base)
 	{
-		size_t i = 0, j = base.size() - 1;
+		uint32_t i = 0, j = base.size() - 1;
 		Glyph temp;
 		while (i < j)
 		{
@@ -292,11 +292,11 @@ namespace jgl
 	jgl::String itoa(const int x, const int d)
 	{
 		std::string result = std::to_string(x);
-		size_t i = result.size();
+		uint32_t i = result.size();
 
 		if (d > 0)
 		{
-			while (i < (size_t)d)
+			while (i < (uint32_t)d)
 			{
 				result.insert(0, " ");
 				i++;
@@ -317,7 +317,7 @@ namespace jgl
 			tmp += 2;
 		out << std::setprecision(tmp) << n;
 		text = out.str();
-		while (length != -1 && text.length() < static_cast<size_t>(length))
+		while (length != -1 && text.length() < static_cast<uint32_t>(length))
 			text.insert(text.begin(), ' ');
 		out.seekp(0);
 		out << text;
@@ -365,10 +365,10 @@ namespace jgl
 	void remove_char(jgl::String& src, const jgl::String to_remove)
 	{
 		jgl::String result;
-		for (size_t i = 0; i < src.size(); i++)
+		for (uint32_t i = 0; i < src.size(); i++)
 		{
 			Glyph target = '\0';
-			for (size_t j = 0; j < to_remove.size(); j++)
+			for (uint32_t j = 0; j < to_remove.size(); j++)
 				if (to_remove[j] == src[i])
 					target = to_remove[j];
 
@@ -419,14 +419,14 @@ namespace jgl
 		return (result);
 	}
 
-	int generate_nbr_from_2D(long long seed, int x, int y)
+	__int64 generate_nbr_from_2D(long long seed, int x, int y)
 	{
-		int h = seed + x * 374761393 + y * 668265263; //all constants are prime
+		__int64 h = seed + x * 374761393 + y * 668265263; //all constants are prime
 		h = (h ^ (h >> 13)) * 1274126177;
 		return h ^ (h >> 16);
 	}
 
-	int generate_nbr(const int min, const int max)
+	__int64 generate_nbr(const int min, const int max)
 	{
 		return((rand() % (max - min)) + min);
 	}

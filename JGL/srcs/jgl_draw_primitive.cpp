@@ -2,7 +2,7 @@
 
 namespace jgl
 {
-	jgl::Array<Vector2> calc_point(const size_t width)
+	jgl::Array<Vector2> calc_point(const uint32_t width)
 	{
 		jgl::Array<Vector2> result;
 		Vector2 center = width / 2;
@@ -26,7 +26,7 @@ namespace jgl
 
 	jgl::Array<jgl::Array<Vector2>> circle_point;
 
-	void draw_line(const Vector2 p1, const Vector2 p2, const size_t width, const Color p_color, const Viewport* viewport)
+	void draw_line(const Vector2 p1, const Vector2 p2, const uint32_t width, const Color p_color, const Viewport* viewport)
 	{
 		if (viewport != nullptr)
 			viewport->use();
@@ -42,7 +42,7 @@ namespace jgl
 
 		points.clear();
 
-		for (size_t i = 0; i < to_draw.size(); i++)
+		for (uint32_t i = 0; i < to_draw.size(); i++)
 		{
 			points.push_back(convert_screen_to_opengl(p1 + to_draw[i]));
 			points.push_back(convert_screen_to_opengl(p2 + to_draw[i]));
@@ -51,7 +51,7 @@ namespace jgl
 		
 	}
 
-	void draw_point(const Vector2 center, const size_t width, const Color p_color, const Viewport* viewport)
+	void draw_point(const Vector2 center, const uint32_t width, const Color p_color, const Viewport* viewport)
 	{
 		if (viewport != nullptr)
 			viewport->use();
@@ -69,7 +69,7 @@ namespace jgl
 		}
 	}
 
-	void draw_rectangle(const Vector2 p_tl, const Vector2 p_tr, const Vector2 p_dl, const Vector2 p_dr, const size_t width, const Color p_color, const Viewport* viewport)
+	void draw_rectangle(const Vector2 p_tl, const Vector2 p_tr, const Vector2 p_dl, const Vector2 p_dr, const uint32_t width, const Color p_color, const Viewport* viewport)
 	{
 		if (viewport != nullptr)
 			viewport->use();
@@ -92,9 +92,9 @@ namespace jgl
 
 		points.clear();
 
-		for (size_t i = 0; i < to_draw.size(); i++)
+		for (uint32_t i = 0; i < to_draw.size(); i++)
 		{
-			for (size_t j = 0; j < 4; j++)
+			for (uint32_t j = 0; j < 4; j++)
 			{
 				points.push_back(convert_screen_to_opengl(point_order[j * 2] + to_draw[i]));
 				points.push_back(convert_screen_to_opengl(point_order[j * 2 + 1] + to_draw[i]));
@@ -121,7 +121,7 @@ namespace jgl
 		fill_triangle_color(points, p_color, 6);
 	}
 
-	void draw_rectangle(const Vector2 pos, const Vector2 size, const size_t width, const Color p_color, const Viewport* viewport)
+	void draw_rectangle(const Vector2 pos, const Vector2 size, const uint32_t width, const Color p_color, const Viewport* viewport)
 	{
 		draw_rectangle(pos, Vector2(pos.x + size.x, pos.y), Vector2(pos.x, pos.y + size.y), pos + size, width, p_color, viewport);
 	}
@@ -136,7 +136,7 @@ namespace jgl
 		fill_rectangle(p_coord - p_size / 2, p_size, p_color, viewport);
 	}
 
-	void draw_centred_rectangle(const Vector2 p_coord, const Vector2 p_size, const size_t width, const Color p_color, const Viewport* viewport)
+	void draw_centred_rectangle(const Vector2 p_coord, const Vector2 p_size, const uint32_t width, const Color p_color, const Viewport* viewport)
 	{
 		draw_rectangle(p_coord - p_size / 2, p_size, width, p_color, viewport);
 	}

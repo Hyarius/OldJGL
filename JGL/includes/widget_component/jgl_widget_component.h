@@ -32,7 +32,7 @@ namespace jgl
 	{
 	protected:
 		Sprite_sheet* _tileset;
-		size_t _corner_size;
+		uint32_t _corner_size;
 
 		Sprite_sheet* _image;
 		jgl::Vector2 _sprite;
@@ -51,14 +51,14 @@ namespace jgl
 		void set_border(int p_border) { _border = p_border; }
 		void set_sprite(int p_sprite) { _sprite = _image->sprite(p_sprite); }
 		void set_sprite(jgl::Vector2 p_sprite) { _sprite = p_sprite; }
-		void set_corner_size(size_t p_corner_size) { _corner_size = p_corner_size; }
+		void set_corner_size(uint32_t p_corner_size) { _corner_size = p_corner_size; }
 
 		//Getter
 		Sprite_sheet* tileset() const { return (_tileset); }
 		Sprite_sheet* image() const { return (_image); }
 		int border() const { return (_border); }
 		jgl::Vector2 sprite() const { return (_sprite); }
-		size_t corner_size() const { return (_corner_size); }
+		uint32_t corner_size() const { return (_corner_size); }
 		Color back() const { return (_back); }
 		Color front() const { return (_front); }
 	};
@@ -95,12 +95,12 @@ namespace jgl
 	class w_entry_component : public w_component, public w_graphical_component, public w_textual_component
 	{
 	protected:
-		size_t _cursor;
+		uint32_t _cursor;
 		bool _masked;
 		bool _selected;
 
 		jgl::String _text_to_draw;
-		size_t _cursor_to_draw;
+		uint32_t _cursor_to_draw;
 
 	public:
 		w_entry_component(jgl::String p_text = "", class Widget* p_owner = nullptr);
@@ -108,13 +108,13 @@ namespace jgl
 		void		set_masked(bool state) { _masked = state; }
 		void		set_text(jgl::String new_text) { _text = new_text; _cursor = new_text->size(); calc_text_to_draw(); }
 		void 		set_selected(bool p_selected) { _selected = p_selected; }
-		void		set_cursor(size_t p_cursor) { _cursor = p_cursor; }
+		void		set_cursor(uint32_t p_cursor) { _cursor = p_cursor; }
 		//Getter
 		bool		selected() const { return (_selected); }
-		size_t 		cursor() const { return (_cursor); }
+		uint32_t 		cursor() const { return (_cursor); }
 
 		jgl::String text_to_draw() const { return (_text_to_draw); }
-		size_t 		cursor_to_draw() const { return (_cursor_to_draw); }
+		uint32_t 		cursor_to_draw() const { return (_cursor_to_draw); }
 
 		void 		resize(Vector2 p_anchor, Vector2 p_area)
 		{
@@ -198,11 +198,11 @@ namespace jgl
 	class w_text_entry_component : public w_entry_component
 	{
 	protected:
-		size_t _cursor;
+		uint32_t _cursor;
 		bool _selected;
 
 		jgl::String _text_to_draw;
-		size_t _cursor_to_draw;
+		uint32_t _cursor_to_draw;
 
 	public:
 		w_text_entry_component(jgl::String p_text = "", class Widget* p_owner = nullptr);
@@ -290,10 +290,10 @@ namespace jgl
 		T _value;
 		T* _value_ptr;
 		int _precision;
-		size_t _cursor;
+		uint32_t _cursor;
 
 		jgl::String _text_to_draw;
-		size_t _cursor_to_draw;
+		uint32_t _cursor_to_draw;
 
 	public:
 		//Constructor
@@ -332,7 +332,7 @@ namespace jgl
 		//Getter
 		int			precision() const { return (_precision); }
 		T			value() const { return (_value); }
-		size_t		cursor() const { return (_cursor); }
+		uint32_t		cursor() const { return (_cursor); }
 		bool		selected() const { return (_selected); }
 
 		void render(Viewport* viewport = nullptr)

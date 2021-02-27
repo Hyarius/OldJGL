@@ -39,7 +39,7 @@ namespace jgl
 			return (tab);
 		}
 		tab = strsplit(line, c, false);
-		if (size != -1 && tab.size() != (size_t)size)
+		if (size != -1 && tab.size() != (uint32_t)size)
 			error_exit(1, get_file_info(__FILE__, __LINE__) + " - Bad lenght in get_strsplit");
 		return tab;
 	}
@@ -87,7 +87,7 @@ namespace jgl
 		source.seekg(0, std::ios::end);
 		std::fstream::pos_type size = source.tellg();
 		source.seekg(0);
-		char* buffer = new char[static_cast<size_t>(size)];
+		char* buffer = new char[static_cast<uint32_t>(size)];
 
 		source.read(buffer, size);
 		destination.write(buffer, size);

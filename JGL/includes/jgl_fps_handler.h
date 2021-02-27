@@ -1,7 +1,7 @@
 #ifndef JGL_FPS_HANDLER_H
 #define JGL_FPS_HANDLER_H
 
-extern size_t			print_fps;
+extern uint32_t			print_fps;
 
 namespace jgl
 {

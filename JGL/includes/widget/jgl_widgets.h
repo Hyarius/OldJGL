@@ -36,7 +36,7 @@ namespace jgl
 		void send_back();
 		void raise();
 		void lower();
-		void set_layer(size_t index);
+		void set_layer(uint32_t index);
 		bool is_frozen() { return (_frozen); }
 		bool is_active() { return (_activated); }
 		bool is_pointed(Vector2 point = g_mouse->pos);

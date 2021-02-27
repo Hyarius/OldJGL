@@ -19,32 +19,32 @@ namespace jgl
 	String::String(const char* str) : jgl::Pool_object<Unique_string>()
 	{
 		clear();
-		for (size_t i = 0; str[i] != '\0'; i++)
+		for (uint32_t i = 0; str[i] != '\0'; i++)
 			push_back(str[i]);
 	}
 	String::String(std::string str) : jgl::Pool_object<Unique_string>()
 	{
 		clear();
-		for (size_t i = 0; i < str.size(); i++)
+		for (uint32_t i = 0; i < str.size(); i++)
 			push_back(str[i]);
 	}
 	String::String(jgl::Unique_string str) : jgl::Pool_object<Unique_string>()
 	{
 		clear();
-		for (size_t i = 0; i < str.size(); i++)
+		for (uint32_t i = 0; i < str.size(); i++)
 			push_back(str[i]);
 	}
-	jgl::Glyph& String::operator[](size_t index)
+	jgl::Glyph& String::operator[](uint32_t index)
 	{
 		return ((*this)->operator[](index));
 	}
-	jgl::Glyph String::operator[](size_t index) const
+	jgl::Glyph String::operator[](uint32_t index) const
 	{
 		return ((*this)->operator[](index));
 	}
 	bool String::operator < (const jgl::String other) const
 	{
-		for (size_t i = 0; i < size(); i++)
+		for (uint32_t i = 0; i < size(); i++)
 		{
 			jgl::Glyph tmp2;
 			jgl::Glyph tmp;
@@ -69,7 +69,7 @@ namespace jgl
 	}
 	bool String::operator > (const jgl::String other) const
 	{
-		for (size_t i = 0; i < size(); i++)
+		for (uint32_t i = 0; i < size(); i++)
 		{
 			jgl::Glyph tmp;
 			jgl::Glyph tmp2;
@@ -96,11 +96,11 @@ namespace jgl
 	{
 		jgl::String result;
 
-		for (size_t i = 0; i < this->element()->size(); i++)
+		for (uint32_t i = 0; i < this->element()->size(); i++)
 		{
 			result->push_back(this->operator[](i));
 		}
-		for (size_t i = 0; i < other->size(); i++)
+		for (uint32_t i = 0; i < other->size(); i++)
 		{
 			result->push_back(other[i]);
 		}
@@ -109,7 +109,7 @@ namespace jgl
 	}
 	jgl::String String::operator += (const jgl::String other)
 	{
-		for (size_t i = 0; i < other->size(); i++)
+		for (uint32_t i = 0; i < other->size(); i++)
 		{
 			(*this)->push_back(other[i]);
 		}
@@ -120,7 +120,7 @@ namespace jgl
 	{
 		if (size() != other.size())
 			return (false);
-		for (size_t i = 0; i < size(); i++)
+		for (uint32_t i = 0; i < size(); i++)
 			if (other[i] != this->operator[](i))
 				return (false);
 		return (true);
@@ -129,7 +129,7 @@ namespace jgl
 	{
 		if (size() != other.size())
 			return (true);
-		for (size_t i = 0; i < size(); i++)
+		for (uint32_t i = 0; i < size(); i++)
 			if (other[i] != this->operator[](i))
 				return (true);
 		return (false);
@@ -138,7 +138,7 @@ namespace jgl
 	{
 		if (size() != other.size())
 			return (false);
-		for (size_t i = 0; i < size(); i++)
+		for (uint32_t i = 0; i < size(); i++)
 			if (other[i].value() != this->operator[](i).value())
 				return (false);
 		return (true);
@@ -147,7 +147,7 @@ namespace jgl
 	{
 		if (size() != other.size())
 			return (false);
-		for (size_t i = 0; i < size(); i++)
+		for (uint32_t i = 0; i < size(); i++)
 			if (other[i].value() != this->operator[](i).value())
 				return (false);
 		return (true);
@@ -169,13 +169,13 @@ namespace jgl
 	{
 		jgl::String result = jgl::String();
 
-		for (size_t i = 0; i < size(); i++)
+		for (uint32_t i = 0; i < size(); i++)
 			result.push_back(this->operator[](i));
 
 		return (result);
 	}
 
-	jgl::String String::substr(size_t start, size_t end) const
+	jgl::String String::substr(uint32_t start, uint32_t end) const
 	{
 		jgl::String result = jgl::String();
 
@@ -183,9 +183,9 @@ namespace jgl
 
 		return (result);
 	}
-	void String::substr(jgl::String& result, size_t start, size_t end) const
+	void String::substr(jgl::String& result, uint32_t start, uint32_t end) const
 	{
-		size_t size = end - start;
+		uint32_t size = end - start;
 
 		if (start >= (*this)->size())
 		{
@@ -194,7 +194,7 @@ namespace jgl
 		}
 
 		result->resize(size);
-		for (size_t i = 0; i < size; i++)
+		for (uint32_t i = 0; i < size; i++)
 			result[i] = this->operator[](i + start);
 	}
 	void String::print_info() const
@@ -205,11 +205,11 @@ namespace jgl
 	{
 		jgl::String result;
 
-		for (size_t i = 0; str[i] != '\0'; i++)
+		for (uint32_t i = 0; str[i] != '\0'; i++)
 		{
 			result->push_back(str[i]);
 		}
-		for (size_t i = 0; i < other->size(); i++)
+		for (uint32_t i = 0; i < other->size(); i++)
 		{
 			result->push_back(other[i]);
 		}
@@ -218,7 +218,7 @@ namespace jgl
 	}
 	void String::append(jgl::String other)
 	{
-		for (size_t i = 0; i < other->size(); i++)
+		for (uint32_t i = 0; i < other->size(); i++)
 		{
 			(*this)->push_back(other[i]);
 		}
@@ -231,15 +231,15 @@ namespace jgl
 	{
 		(*this)->push_front(glyph);
 	}
-	void String::insert(size_t index, jgl::String other)
+	void String::insert(uint32_t index, jgl::String other)
 	{
 		(*this)->insert(index, *other);
 	}
-	void String::insert(size_t index, jgl::Glyph other)
+	void String::insert(uint32_t index, jgl::Glyph other)
 	{
 		(*this)->insert(index, other);
 	}
-	void String::erase(size_t index)
+	void String::erase(uint32_t index)
 	{
 		(*this)->erase(index);
 	}
@@ -248,23 +248,23 @@ namespace jgl
 		(*this)->pop_back();
 	}
 
-	const size_t String::char_size() const
+	const uint32_t String::char_size() const
 	{
-		size_t result = 0;
-		for (size_t i = 0; i < size(); i++)
+		uint32_t result = 0;
+		for (uint32_t i = 0; i < size(); i++)
 		{
 			result += this->operator[](i).size();
 		}
 		return (result);
 	}
 
-	const size_t String::size() const
+	const uint32_t String::size() const
 	{
 		return ((*this)->size());
 	}
 	const bool String::find(Glyph to_find) const
 	{
-		for (size_t i = 0; i < size(); i++)
+		for (uint32_t i = 0; i < size(); i++)
 			if (this->operator[](i) == to_find)
 				return(true);
 		return (false);
@@ -272,10 +272,10 @@ namespace jgl
 	const bool String::contain(Unique_string to_find) const
 	{
 		bool result = false;
-		for (size_t i = 0; i < size(); i++)
+		for (uint32_t i = 0; i < size(); i++)
 		{
 			result = false;
-			for (size_t j = 0; j < to_find.size() && result == false; j++)
+			for (uint32_t j = 0; j < to_find.size() && result == false; j++)
 				if (this->operator[](i) == to_find[j])
 					result = true;
 			if (result == false)

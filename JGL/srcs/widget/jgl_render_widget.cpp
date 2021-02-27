@@ -20,11 +20,11 @@ namespace jgl
 
 		g_application->clear();
 
-		for (size_t i = 0; i < _engine->meshes().size(); i++)
+		for (uint32_t i = 0; i < _engine->meshes().size(); i++)
 			if (_engine->mesh(i)->transparency() >= 1.0f)
 				_engine->mesh(i)->render(_camera);
 
-		for (size_t i = 0; i < _engine->meshes().size(); i++)
+		for (uint32_t i = 0; i < _engine->meshes().size(); i++)
 			if (_engine->mesh(i)->transparency() <= 1.0f)
 				_engine->mesh(i)->render(_camera);
 	}

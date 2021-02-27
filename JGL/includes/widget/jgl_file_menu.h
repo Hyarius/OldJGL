@@ -69,9 +69,9 @@ public:
 
 	void actualize_files_label_geometry()
 	{
-		size_t nb_collum = 3;
+		uint32_t nb_collum = 3;
 		jgl::Vector2 label_size = jgl::Vector2((_file_frame->area().x - (20 + (nb_collum - 1) * 10)) / nb_collum - 5, 30.0f);
-		for (size_t i = 0; i < _files_labels.size(); i++)
+		for (uint32_t i = 0; i < _files_labels.size(); i++)
 		{
 			_files_labels[i]->set_geometry(jgl::Vector2(10 + ((i % nb_collum) * (label_size.x + 10)), 10 + ((i / nb_collum) * (label_size.y + 10))), label_size);
 		}
@@ -81,13 +81,13 @@ public:
 
 	void actualize_files()
 	{
-		for (size_t i = 0; i < _files_labels.size(); i++)
+		for (uint32_t i = 0; i < _files_labels.size(); i++)
 		{
 			delete _files_labels[i];
 		}
 		_files_labels.clear();
 		_list_file = jgl::list_files(_path, _extension);
-		for (size_t i = 1; i < _list_file.size(); i++)
+		for (uint32_t i = 1; i < _list_file.size(); i++)
 		{
 			jgl::Text_label* tmp = new jgl::Text_label(_list_file[i].name, _file_frame);
 			if (_list_file[i].type == jgl::File_type::file)
@@ -144,7 +144,7 @@ public:
 	{
 		if (jgl::get_button(jgl::mouse_button::left) == jgl::mouse_state::release)
 		{
-			for (size_t i = 0; i < _files_labels.size(); i++)
+			for (uint32_t i = 0; i < _files_labels.size(); i++)
 			{
 				if (_files_labels[i]->is_pointed() == true)
 				{
@@ -160,7 +160,7 @@ public:
 							if (tmp.size() >= 1)
 							{
 								_path->clear();
-								for (size_t i = 0; i < tmp.size() - 1; i++)
+								for (uint32_t i = 0; i < tmp.size() - 1; i++)
 								{
 									if (i != 0)
 										_path += "\\";

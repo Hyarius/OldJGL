@@ -37,7 +37,7 @@ namespace jgl
 		_lines.push_back(Line(p_color));
 	}
 
-	void Plot::add_point(Vector2 p_point, size_t line)
+	void Plot::add_point(Vector2 p_point, uint32_t line)
 	{
 		if (_lines.size() <= line)
 			_lines.resize(line + 1);
@@ -45,7 +45,7 @@ namespace jgl
 		_lines[line].add_point(p_point);
 	}
 
-	void Plot::set_line_color(size_t index, Color p_color)
+	void Plot::set_line_color(uint32_t index, Color p_color)
 	{
 		_lines[index] = Line(p_color);
 	}
@@ -68,9 +68,9 @@ namespace jgl
 		draw_absciss();
 		draw_ordinate();
 
-		for (size_t i = 0; i < _lines.size(); i++)
+		for (uint32_t i = 0; i < _lines.size(); i++)
 		{
-			for (size_t j = 0; j < _lines[i].points.size(); j++)
+			for (uint32_t j = 0; j < _lines[i].points.size(); j++)
 			{
 				draw_plot_point(_lines[i].points[j], _lines[i].color);
 				if (j != 0)

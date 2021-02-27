@@ -103,7 +103,7 @@ namespace jgl
 		void write_header()
 		{
 			asio::async_write(_socket, asio::buffer(&_output.front().header, sizeof(Message_header<T>)),
-				[this](std::error_code ec, std::size_t length)
+				[this](std::error_code ec, std::uint32_t length)
 				{
 					if (!ec)
 					{
@@ -128,7 +128,7 @@ namespace jgl
 		void write_content()
 		{
 			asio::async_write(_socket, asio::buffer(_output.front().content.data(), _output.front().content.size()),
-				[this](std::error_code ec, std::size_t length)
+				[this](std::error_code ec, std::uint32_t length)
 				{
 					if (!ec)
 					{
@@ -148,7 +148,7 @@ namespace jgl
 		void read_header()
 		{
 			asio::async_read(_socket, asio::buffer(&_tmp_message.header, sizeof(Message_header<T>)),
-				[this](std::error_code ec, std::size_t length)
+				[this](std::error_code ec, std::uint32_t length)
 				{
 					if (!ec)
 					{
@@ -173,7 +173,7 @@ namespace jgl
 		void read_content()
 		{
 			asio::async_read(_socket, asio::buffer(_tmp_message.content.data(), _tmp_message.content.size()),
-				[this](std::error_code ec, std::size_t length)
+				[this](std::error_code ec, std::uint32_t length)
 				{
 					if (!ec)
 					{

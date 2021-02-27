@@ -2,7 +2,7 @@
 
 namespace jgl
 {
-	void			draw_pixel_color(const Vector3 points, const Color color, const size_t nb)
+	void			draw_pixel_color(const Vector3 points, const Color color, const uint32_t nb)
 	{
 		GLfloat* g_vertex_buffer_data = (float*)(&points);
 
@@ -26,7 +26,7 @@ namespace jgl
 		glDrawArrays(GL_LINES, 0, static_cast<GLsizei>(nb));
 	}
 
-	void			draw_line_color(const Vector3* points, const Color color, const size_t nb)
+	void			draw_line_color(const Vector3* points, const Color color, const uint32_t nb)
 	{
 		GLfloat* g_vertex_buffer_data = (float*)(points);
 
@@ -50,7 +50,7 @@ namespace jgl
 		glDrawArrays(GL_LINES, 0, static_cast<GLsizei>(nb));
 	}
 
-	void			draw_line_color(const GLuint points_buffer, const Color color, const size_t nb)
+	void			draw_line_color(const GLuint points_buffer, const Color color, const uint32_t nb)
 	{
 		glDisableVertexAttribArray(0);
 		glDisableVertexAttribArray(1);
@@ -67,7 +67,7 @@ namespace jgl
 		glDrawArrays(GL_LINES, 0, static_cast<GLsizei>(nb));
 	}
 
-	void			draw_triangle_color(const Vector3* points, const Color color, const size_t nb)
+	void			draw_triangle_color(const Vector3* points, const Color color, const uint32_t nb)
 	{
 		GLfloat* g_vertex_buffer_data = (float*)(points);
 
@@ -92,7 +92,7 @@ namespace jgl
 		glDrawArrays(GL_TRIANGLES, 0, static_cast<GLsizei>(nb));
 	}
 
-	void			draw_triangle_color(const GLuint points_buffer, const Color color, const size_t nb)
+	void			draw_triangle_color(const GLuint points_buffer, const Color color, const uint32_t nb)
 	{
 		glDisableVertexAttribArray(0);
 		glDisableVertexAttribArray(1);
@@ -110,7 +110,7 @@ namespace jgl
 		glDrawArrays(GL_TRIANGLES, 0, static_cast<GLsizei>(nb));
 	}
 
-	void			fill_triangle_color(const Vector3* points, const Color color, const size_t nb)
+	void			fill_triangle_color(const Vector3* points, const Color color, const uint32_t nb)
 	{
 		GLfloat* g_vertex_buffer_data = (float*)(points);
 
@@ -135,7 +135,7 @@ namespace jgl
 		glDrawArrays(GL_TRIANGLES, 0, static_cast<GLsizei>(nb));
 	}
 
-	void			fill_triangle_color(const GLuint points_buffer, const Color color, const size_t nb)
+	void			fill_triangle_color(const GLuint points_buffer, const Color color, const uint32_t nb)
 	{
 		glDisableVertexAttribArray(0);
 		glDisableVertexAttribArray(1);
@@ -153,7 +153,7 @@ namespace jgl
 		glDrawArrays(GL_TRIANGLES, 0, static_cast<GLsizei>(nb));
 	}
 
-	void			draw_triangle_texture(const Vector3* points, const Vector2* uvs, const float alpha, const size_t nb)
+	void			draw_triangle_texture(const Vector3* points, const Vector2* uvs, const float alpha, const uint32_t nb)
 	{
 		GLfloat* g_vertex_buffer_data = (float*)(points);
 
@@ -186,7 +186,7 @@ namespace jgl
 		glDrawArrays(GL_TRIANGLES, 0, static_cast<GLsizei>(nb));
 	}
 
-	void			draw_triangle_texture(const GLuint points_buffer, const GLuint uvs_buffer, const float alpha, const size_t nb)
+	void			draw_triangle_texture(const GLuint points_buffer, const GLuint uvs_buffer, const float alpha, const uint32_t nb)
 	{
 		glDisableVertexAttribArray(0);
 		glDisableVertexAttribArray(1);

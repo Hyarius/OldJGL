@@ -6,8 +6,8 @@ namespace jgl
 	{
 		Matrix2x2 result;
 
-		for (size_t i = 0; i < 2; i++)
-			for (size_t j = 0; j < 2; j++)
+		for (uint32_t i = 0; i < 2; i++)
+			for (uint32_t j = 0; j < 2; j++)
 			{
 				result.value[i][j] = value[j][i];
 			}
@@ -30,8 +30,8 @@ namespace jgl
 	{
 		Matrix3x3 result;
 
-		for (size_t i = 0; i < 3; i++)
-			for (size_t j = 0; j < 3; j++)
+		for (uint32_t i = 0; i < 3; i++)
+			for (uint32_t j = 0; j < 3; j++)
 			{
 				result.value[i][j] = value[j][i];
 			}
@@ -41,10 +41,10 @@ namespace jgl
 	{
 		float tmp_value[4]{1, 1, 1, 1};
 
-		size_t index = 0;
+		uint32_t index = 0;
 
-		for (size_t i = 0; i < 3; i++)
-			for (size_t j = 0; j < 3; j++)
+		for (uint32_t i = 0; i < 3; i++)
+			for (uint32_t j = 0; j < 3; j++)
 			{
 				if (i != x && j != y)
 				{
@@ -81,8 +81,8 @@ namespace jgl
 
 		if (deter != 0)
 		{
-			for (size_t i = 0; i < 3; i++)
-				for (size_t j = 0; j < 3; j++)
+			for (uint32_t i = 0; i < 3; i++)
+				for (uint32_t j = 0; j < 3; j++)
 				{
 					result.value[i][j] = tmp.value[i][j] / deter;
 				}
@@ -131,8 +131,8 @@ namespace jgl
 			d0, d1, d2, d3
 		);
 
-		for (size_t i = 0; i < 4; i++)
-			for (size_t j = 0; j < 3; j++)
+		for (uint32_t i = 0; i < 4; i++)
+			for (uint32_t j = 0; j < 3; j++)
 				result[i][j] /= len;
 
 		return (result);
@@ -173,8 +173,8 @@ namespace jgl
 	{
 		Matrix4x4 result;
 
-		for (size_t i = 0; i < 4; i++)
-			for (size_t j = 0; j < 4; j++)
+		for (uint32_t i = 0; i < 4; i++)
+			for (uint32_t j = 0; j < 4; j++)
 			{
 				result.value[i][j] = value[j][i];
 			}
@@ -184,10 +184,10 @@ namespace jgl
 	{
 		float tmp_value[9]{ 1, 1, 1, 1, 1, 1, 1, 1, 1 };
 
-		size_t index = 0;
+		uint32_t index = 0;
 
-		for (size_t i = 0; i < 4; i++)
-			for (size_t j = 0; j < 4; j++)
+		for (uint32_t i = 0; i < 4; i++)
+			for (uint32_t j = 0; j < 4; j++)
 			{
 				if (i != x && j != y)
 				{
@@ -230,8 +230,8 @@ namespace jgl
 
 		if (deter != 0)
 		{
-			for (size_t i = 0; i < 4; i++)
-				for (size_t j = 0; j < 4; j++)
+			for (uint32_t i = 0; i < 4; i++)
+				for (uint32_t j = 0; j < 4; j++)
 				{
 					result.value[i][j] = tmp.value[i][j] / deter;
 				}

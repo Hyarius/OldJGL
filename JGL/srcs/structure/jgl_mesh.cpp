@@ -23,14 +23,14 @@ namespace jgl
 
 	void tmp_strsplit(jgl::Array<jgl::String>& tab, jgl::String& input, jgl::Glyph& delim, bool regroup = true)
 	{
-		size_t tmp = input.size();
-		size_t index = 0;
-		size_t nb_word = 0;
+		uint32_t tmp = input.size();
+		uint32_t index = 0;
+		uint32_t nb_word = 0;
 
 		tab.resize(count_word(input, delim));
 		while (index < tmp)
 		{
-			size_t word_len = count_word_len(input, delim, index);
+			uint32_t word_len = count_word_len(input, delim, index);
 			if (word_len != 0 || regroup == true)
 			{
 				tab[nb_word].clear();
@@ -41,7 +41,7 @@ namespace jgl
 		}
 	}
 
-	static void compose_face(jgl::Mesh *target, jgl::Array<jgl::String>& tab, int type, Color color, size_t index)
+	static void compose_face(jgl::Mesh *target, jgl::Array<jgl::String>& tab, int type, Color color, uint32_t index)
 	{
 		static jgl::Array<jgl::String> face_content;
 		static jgl::Glyph delim = '/';
@@ -50,7 +50,7 @@ namespace jgl
 		int delta_uvs_index = 0;
 		int delta_normale_index = 0;
 
-		for (size_t i = 0; i < index; i++)
+		for (uint32_t i = 0; i < index; i++)
 		{
 			Mesh_part* tmp = target->parts(i);
 			if (tmp == nullptr)
@@ -60,7 +60,7 @@ namespace jgl
 			delta_normale_index += tmp->normales().size();
 		}
 
-		for (size_t i = 0; i < 3; i++)
+		for (uint32_t i = 0; i < 3; i++)
 		{
 			tmp_strsplit(face_content, tab[face_index_value[type][i]], delim, true);
 			index_vertices[i] = stoi(face_content[0]) - 1 - delta_vertice_index;
@@ -81,7 +81,7 @@ namespace jgl
 
 		jgl::String result = "";
 
-		for (size_t i = 0; i < tab.size() - 1; i++)
+		for (uint32_t i = 0; i < tab.size() - 1; i++)
 		{
 			result += tab[i];
 			result += "/";
@@ -283,7 +283,7 @@ namespace jgl
 
 	Material* Mesh::find_material(jgl::String p_name)
 	{
-		for (size_t i = 0; i < _materials.size(); i++)
+		for (uint32_t i = 0; i < _materials.size(); i++)
 		{
 			if (_materials[i]->name == p_name)
 				return (_materials[i]);
@@ -361,12 +361,12 @@ namespace jgl
 	}
 	Mesh::~Mesh()
 	{
-		for (size_t i = 0; i < _materials.size(); i++)
+		for (uint32_t i = 0; i < _materials.size(); i++)
 		{
 			if (_materials[i] != Mesh::base_material())
 				delete _materials[i];
 		}
-		for (size_t i = 0; i < _parts.size(); i++)
+		for (uint32_t i = 0; i < _parts.size(); i++)
 			delete _parts[i];
 	}
 
@@ -418,14 +418,14 @@ namespace jgl
 	void Mesh::compute_bubble_box()
 	{
 		Vector3 total;
-		size_t total_size;
+		uint32_t total_size;
 
 		total = 0;
 		total_size = 0;
-		for (size_t j = 0; j < _parts.size(); j++)
+		for (uint32_t j = 0; j < _parts.size(); j++)
 		{
 			Mesh_part* tmp = check_part(j);
-			for (size_t i = 0; i < tmp->vertices().size(); i++)
+			for (uint32_t i = 0; i < tmp->vertices().size(); i++)
 			{
 				total += tmp->vertices()[i];
 				total_size++;
@@ -433,10 +433,10 @@ namespace jgl
 		}
 		_center = total / total_size;
 		_radius = 0;
-		for (size_t j = 0; j < _parts.size(); j++)
+		for (uint32_t j = 0; j < _parts.size(); j++)
 		{
 			Mesh_part* tmp = check_part(j);
-			for (size_t i = 0; i < tmp->vertices().size(); i++)
+			for (uint32_t i = 0; i < tmp->vertices().size(); i++)
 			{
 				float tmp_radius = _center.distance(tmp->vertices()[i]);
 				if (_radius < tmp_radius)
@@ -447,7 +447,7 @@ namespace jgl
 
 	void Mesh::bake()
 	{
-		for (size_t i = 0; i < _parts.size(); i++)
+		for (uint32_t i = 0; i < _parts.size(); i++)
 		{
 			_parts[i]->bake(_rot_matrix);
 		}
@@ -455,7 +455,7 @@ namespace jgl
 
 	void Mesh::render_differed(const Camera* camera, Vector3 p_pos, const jgl::Viewport* viewport)
 	{
-		for (size_t i = 0; i < _parts.size(); i++)
+		for (uint32_t i = 0; i < _parts.size(); i++)
 		{
 			_parts[i]->render(this, camera, p_pos, viewport);
 		}
@@ -463,26 +463,26 @@ namespace jgl
 
 void Mesh::add_component(const Mesh* mesh, const Vector3 p_pos, const int index)
 {
-	for (size_t tmp_index = 0; tmp_index < mesh->parts().size(); tmp_index++)
+	for (uint32_t tmp_index = 0; tmp_index < mesh->parts().size(); tmp_index++)
 	{
 		Mesh_part* tmp = check_part((index < 0 ? -1 : index + tmp_index));
 		Mesh_part* other = mesh->control_part(tmp_index);
-		size_t index_actual_vertices;
-		size_t index_actual_uvs;
-		size_t index_actual_normales;
+		uint32_t index_actual_vertices;
+		uint32_t index_actual_uvs;
+		uint32_t index_actual_normales;
 
 		index_actual_vertices = tmp->vertices().size();
 		index_actual_uvs = tmp->uvs().size();
 		index_actual_normales = tmp->normales().size();
 
-		for (size_t i = 0; i < other->vertices().size(); i++)
+		for (uint32_t i = 0; i < other->vertices().size(); i++)
 			add_point(other->vertices()[i] + p_pos);
-		for (size_t i = 0; i < other->uvs().size(); i++)
+		for (uint32_t i = 0; i < other->uvs().size(); i++)
 			add_uv(other->uvs()[i]);
-		for (size_t i = 0; i < other->normales().size(); i++)
+		for (uint32_t i = 0; i < other->normales().size(); i++)
 			add_normale(other->normales()[i]);
 
-		for (size_t i = 0; i < other->faces().size(); i++)
+		for (uint32_t i = 0; i < other->faces().size(); i++)
 		{
 			Face* actual;
 
@@ -508,7 +508,7 @@ void Mesh::add_component(const Mesh* mesh, const Vector3 p_pos, const int index)
 	{
 		if (index < 0)
 			index = 0;
-		if (static_cast<size_t>(index) >= _parts.size())
+		if (static_cast<uint32_t>(index) >= _parts.size())
 		{
 			Mesh_part* tmp = new Mesh_part();
 			_parts.push_back(tmp);
@@ -520,14 +520,14 @@ void Mesh::add_component(const Mesh* mesh, const Vector3 p_pos, const int index)
 	{
 		if (index < 0)
 			index = 0;
-		if (static_cast<size_t>(index) >= _parts.size())
+		if (static_cast<uint32_t>(index) >= _parts.size())
 			error_exit(1, "Bad index in control_part");
 		return (_parts[index]);
 	}
 
 	bool Mesh::remove_part(const Mesh_part* p_part)
 	{
-		for (size_t i = 0; i < _parts.size(); i++)
+		for (uint32_t i = 0; i < _parts.size(); i++)
 		{
 			if (p_part == _parts[i])
 			{
@@ -539,7 +539,7 @@ void Mesh::add_component(const Mesh* mesh, const Vector3 p_pos, const int index)
 	}
 	bool Mesh::remove_part(jgl::String p_name)
 	{
-		for (size_t i = 0; i < _parts.size(); i++)
+		for (uint32_t i = 0; i < _parts.size(); i++)
 		{
 			if (_parts[i]->name() == p_name)
 			{
@@ -577,14 +577,14 @@ void Mesh::add_component(const Mesh* mesh, const Vector3 p_pos, const int index)
 	void Mesh::clear()
 	{
 		_rotation = 0;
-		for (size_t i = 0; i < _parts.size(); i++)
+		for (uint32_t i = 0; i < _parts.size(); i++)
 		{
 			_parts[i]->clear();
 		}
 	}
 	void Mesh::clear_baked()
 	{
-		for (size_t i = 0; i < _parts.size(); i++)
+		for (uint32_t i = 0; i < _parts.size(); i++)
 		{
 			_parts[i]->clear_baked();
 		}

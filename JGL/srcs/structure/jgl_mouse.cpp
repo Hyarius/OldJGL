@@ -15,7 +15,7 @@ namespace jgl
 		rel_pos = Vector2(0, 0);
 		wheel = 0.0f;
 		motion = false;
-		for (size_t i = 0; i < 3; i++)
+		for (uint32_t i = 0; i < 3; i++)
 			button[i] = mouse_state::up;
 	}
 
@@ -40,8 +40,8 @@ namespace jgl
 
 	void		Mouse::actualize_button(Uint32 mousestate)
 	{
-		size_t nb = static_cast<size_t>(mouse_button::count);
-		for (size_t i = 0; i < nb; i++)
+		uint32_t nb = static_cast<uint32_t>(mouse_button::count);
+		for (uint32_t i = 0; i < nb; i++)
 		{
 			if (mousestate & SDL_BUTTON(value_mouse_button[i])) // Le bouton est pressé
 			{

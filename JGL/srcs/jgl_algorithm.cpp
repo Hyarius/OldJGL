@@ -125,10 +125,10 @@ namespace jgl
 			dist < abs(tri_tar.a.distance(tri_tar.c)) ||
 			dist < abs(tri_tar.c.distance(tri_tar.b)))
 		{
-			for (size_t tmp_index = 0; tmp_index < to_check->parts().size(); tmp_index++)
+			for (uint32_t tmp_index = 0; tmp_index < to_check->parts().size(); tmp_index++)
 			{
 				Mesh_part* tmp = to_check->control_part(tmp_index);
-				for (size_t i = 0; i < tmp->faces().size(); i++)
+				for (uint32_t i = 0; i < tmp->faces().size(); i++)
 				{
 					actual = tmp->faces(i);
 					tri_comp = calc_face_triangle(actual, to_check->rot_matrix(), tmp, to_check->pos() + to_check->velocity());
@@ -144,10 +144,10 @@ namespace jgl
 	{
 		Face* tmp;
 
-		for (size_t tmp_index = 0; tmp_index < to_check->parts().size(); tmp_index++)
+		for (uint32_t tmp_index = 0; tmp_index < to_check->parts().size(); tmp_index++)
 		{
 			Mesh_part* tmp_part = to_check->control_part(tmp_index);
-			for (size_t i = 0; i < tmp_part->faces().size(); i++)
+			for (uint32_t i = 0; i < tmp_part->faces().size(); i++)
 			{
 				tmp = tmp_part->faces(i);
 				if (triangles_line_intersection(Line3D(pos, direction),
@@ -161,10 +161,10 @@ namespace jgl
 	bool intersect_mesh(const Mesh* to_move, const Mesh* to_check)
 	{
 		Face* tmp;
-		for (size_t tmp_index = 0; tmp_index < to_check->parts().size(); tmp_index++)
+		for (uint32_t tmp_index = 0; tmp_index < to_check->parts().size(); tmp_index++)
 		{
 			Mesh_part* tmp_part = to_check->control_part(tmp_index);
-			for (size_t i = 0; i < tmp_part->faces().size(); i++)
+			for (uint32_t i = 0; i < tmp_part->faces().size(); i++)
 			{
 				tmp = tmp_part->faces(i);
 				if (compare_faces(tmp, to_check, tmp_part, to_move) == true)

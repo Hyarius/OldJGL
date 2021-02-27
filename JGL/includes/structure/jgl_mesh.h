@@ -77,7 +77,7 @@ namespace jgl
 		Face(const int p_index_vertices[3], const int p_index_uvs[3], const int p_index_normale[3])
 		{
 			//normale = 0;
-			for (size_t i = 0; i < 3; i++)
+			for (uint32_t i = 0; i < 3; i++)
 			{
 				index_vertices[i] = p_index_vertices[i];
 				index_uvs[i] = p_index_uvs[i];
@@ -89,7 +89,7 @@ namespace jgl
 			if (p_index_vertices.size() != 3 || p_index_uvs.size() != 3 || p_index_normale.size() != 3)
 				error_exit(1, "Bad number of argument in face definition");
 			//normale = 0;
-			for (size_t i = 0; i < 3; i++)
+			for (uint32_t i = 0; i < 3; i++)
 			{
 				index_vertices[i] = p_index_vertices[i];
 				index_uvs[i] = p_index_uvs[i];
@@ -138,23 +138,23 @@ namespace jgl
 		const jgl::Array<Vector3>& vertices() const { return (*_vertices); }
 		void set_vertices(jgl::Array<Vector3>& p_vertice) { *_vertices = p_vertice; }
 		void set_vertices(jgl::share_object<jgl::Array<Vector3>> p_vertice) { _vertices = p_vertice;	}
-		const Vector3 vertices(const size_t index) const { if (index >= _vertices->size())return (-1); return (_vertices->operator[](index)); }
+		const Vector3 vertices(const uint32_t index) const { if (index >= _vertices->size())return (-1); return (_vertices->operator[](index)); }
 
 		jgl::Array<Vector2>& uvs() { return (*_uvs); }
 		const jgl::Array<Vector2>& uvs() const { return (*_uvs); }
 		void set_uvs(jgl::Array<Vector2>& p_uvs) { *_uvs = p_uvs; }
 		void set_uvs(jgl::share_object < jgl::Array<Vector2>> p_uvs) { _uvs = p_uvs; }
-		const Vector2 uvs(const size_t index) const { if (index >= _uvs->size())return (-1); return (_uvs->operator[](index)); }
+		const Vector2 uvs(const uint32_t index) const { if (index >= _uvs->size())return (-1); return (_uvs->operator[](index)); }
 
 		jgl::Array<Vector3>& normales() { return (*_normales); }
 		const jgl::Array<Vector3>& normales() const { return (*_normales); }
 		void set_normales(jgl::Array<Vector3>& p_normale) { *_normales = p_normale; }
 		void set_normales(jgl::share_object < jgl::Array<Vector3> > p_normale) { _normales = p_normale; }
-		const Vector3 normales(const size_t index) const { if (index >= _normales->size())return (-1); return (_normales->operator[](index)); }
+		const Vector3 normales(const uint32_t index) const { if (index >= _normales->size())return (-1); return (_normales->operator[](index)); }
 
 		jgl::Array<Face>& faces() { return (_faces); }
 		const jgl::Array<Face>& faces() const { return (_faces); }
-		Face* faces(size_t i) { if (i >= _faces.size())return (NULL); return (&(_faces[i])); }
+		Face* faces(uint32_t i) { if (i >= _faces.size())return (NULL); return (&(_faces[i])); }
 		const Material* material() const { return (_material); }
 
 		void set_name(const jgl::String p_name) { _name = p_name.copy(); }
@@ -181,7 +181,7 @@ namespace jgl
 		{
 			if (p_array.find(p_material) == p_array.end())
 				p_array.push_back(p_material);
-			for (size_t i = 0; i < _parts.size(); i++)
+			for (uint32_t i = 0; i < _parts.size(); i++)
 			{
 				Mesh_part* tmp = check_part(i);
 				tmp->set_material(p_material);
@@ -238,12 +238,12 @@ namespace jgl
 
 		jgl::Array<jgl::Material*>& materials() { return (_materials); }
 		const jgl::Array<jgl::Material*>& materials() const { return (_materials); }
-		jgl::Material *materials(const size_t index) const { if (index >= _materials.size())return (nullptr); return (_materials[index]); }
+		jgl::Material *materials(const uint32_t index) const { if (index >= _materials.size())return (nullptr); return (_materials[index]); }
 		jgl::Material* find_material(jgl::String name);
 
 		jgl::Array<jgl::Mesh_part*>& parts() { return (_parts); }
 		const jgl::Array<jgl::Mesh_part*>& parts() const { return (_parts); }
-		jgl::Mesh_part* parts(const size_t index) const { if (index >= _parts.size())return (nullptr); return (_parts[index]); }
+		jgl::Mesh_part* parts(const uint32_t index) const { if (index >= _parts.size())return (nullptr); return (_parts[index]); }
 		jgl::Mesh_part* check_part(const int index);
 		jgl::Mesh_part* control_part(const int index) const;
 
@@ -309,7 +309,7 @@ namespace jgl
 	};
 	Mesh *primitive_cube(const Vector3 pos, const Vector3 rot, const Vector3 size, const jgl::Color color, const bool should_bake = true);
 	Mesh *primitive_voxel(const Vector3 pos, const Sprite_sheet *tileset, const Vector2 top_sprite, const Vector2 side_sprite, const Vector2 down_sprite, const float p_transparency = 1.0f, const bool should_bake = false, const Vector3 rot = 0, const Vector3 size = 1);
-	Mesh *primitive_voxel(const Vector3 pos, const Sprite_sheet *tileset, const size_t type, const float p_transparency = 1.0f, const bool should_bake = false, const Vector3 rot = 0, const Vector3 size = 1);
+	Mesh *primitive_voxel(const Vector3 pos, const Sprite_sheet *tileset, const uint32_t type, const float p_transparency = 1.0f, const bool should_bake = false, const Vector3 rot = 0, const Vector3 size = 1);
 }
 
 #endif

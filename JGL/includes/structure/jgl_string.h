@@ -18,8 +18,8 @@ namespace jgl
 		String(std::string str);
 		String(jgl::Unique_string str);
 
-		jgl::Glyph& operator[](size_t index);
-		jgl::Glyph operator[](size_t index) const;
+		jgl::Glyph& operator[](uint32_t index);
+		jgl::Glyph operator[](uint32_t index) const;
 		bool operator < (const jgl::String other) const;
 		bool operator > (const jgl::String other) const;
 		jgl::String operator + (const jgl::String other);
@@ -33,13 +33,13 @@ namespace jgl
 		void append(jgl::String other);
 		void push_back(jgl::Glyph glyph);
 		void push_front(jgl::Glyph glyph);
-		void insert(size_t index, jgl::String other);
-		void insert(size_t index, jgl::Glyph other);
-		void erase(size_t index);
+		void insert(uint32_t index, jgl::String other);
+		void insert(uint32_t index, jgl::Glyph other);
+		void erase(uint32_t index);
 		void pop_back();
 
-		const size_t char_size() const;
-		const size_t size() const ;
+		const uint32_t char_size() const;
+		const uint32_t size() const ;
 		const bool empty() const { return ((*this)->empty()); }
 		const bool find(Glyph to_find) const;
 		const bool contain(Unique_string to_find) const;
@@ -50,8 +50,8 @@ namespace jgl
 		const std::string std() const;
 		jgl::Array<jgl::String> split(jgl::String delim, bool regroup = true) const;
 		jgl::String copy() const;
-		jgl::String substr(size_t start, size_t end) const;
-		void substr(jgl::String& result, size_t start, size_t end) const;
+		jgl::String substr(uint32_t start, uint32_t end) const;
+		void substr(jgl::String& result, uint32_t start, uint32_t end) const;
 
 		friend std::ostream& operator<<(std::ostream& os, const jgl::String value)
 		{

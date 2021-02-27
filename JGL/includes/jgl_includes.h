@@ -16,9 +16,11 @@
 #include <SDL.h>
 #ifdef _WIN32
 	#include <io.h>
+	#include <glew.h>
+#else
+	#include <GL/glew.h>
 #endif
 #include <iostream>
-#include <GL/glew.h>
 #include <array>
 #include <random>
 #include <fstream>

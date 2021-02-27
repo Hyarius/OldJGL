@@ -107,7 +107,7 @@ namespace jgl
 			convert_screen_to_opengl(value[5])
 		};
 
-		size_t i = static_cast<size_t>(coord.x + coord.y * _size.x);
+		uint32_t i = static_cast<uint32_t>(coord.x + coord.y * _size.x);
 		if (i >= _sprites.size())
 			i = 0;
 

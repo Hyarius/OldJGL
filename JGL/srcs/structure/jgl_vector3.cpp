@@ -13,7 +13,7 @@ namespace jgl
 		x(static_cast<float>(p_value)), y(static_cast<float>(p_value)),
 		z(static_cast<float>(p_value)) {}
 
-	Vector3::Vector3(size_t p_value) :
+	Vector3::Vector3(uint32_t p_value) :
 		x(static_cast<float>(p_value)), y(static_cast<float>(p_value)),
 		z(static_cast<float>(p_value)) {}
 
@@ -31,7 +31,7 @@ namespace jgl
 		x(static_cast<float>(p_x)), y(static_cast<float>(p_y)),
 		z(static_cast<float>(p_z)) {}
 
-	Vector3::Vector3(size_t p_x, size_t p_y, size_t p_z) :
+	Vector3::Vector3(uint32_t p_x, uint32_t p_y, uint32_t p_z) :
 		x(static_cast<float>(p_x)), y(static_cast<float>(p_y)),
 		z(static_cast<float>(p_z)) {}
 

@@ -28,7 +28,7 @@ namespace jgl
 
 		int border() { return (tab_area->border()); }
 
-		void set_tab_name(size_t index, jgl::String new_name)
+		void set_tab_name(uint32_t index, jgl::String new_name)
 		{
 			_buttons[index]->set_text(new_name);
 		}

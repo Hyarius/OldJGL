@@ -6,9 +6,9 @@ namespace jgl
 	{
 		std::vector<Button*> buttons = *(std::vector<Button*>*)(p_data.content(0));
 		std::vector<Frame*> tabs = *(std::vector<Frame*>*)(p_data.content(1));
-		size_t index = (size_t)(p_data.content(2));
+		uint32_t index = (uint32_t)(p_data.content(2));
 
-		for (size_t i = 0; i < buttons.size(); i++)
+		for (uint32_t i = 0; i < buttons.size(); i++)
 		{
 			if (buttons[i] != nullptr)
 			{
@@ -25,7 +25,7 @@ namespace jgl
 			}
 		}
 
-		for (size_t i = 0; i < tabs.size(); i++)
+		for (uint32_t i = 0; i < tabs.size(); i++)
 		{
 			if (tabs[i] != nullptr)
 			{
@@ -63,7 +63,7 @@ namespace jgl
 		if (index == -1)
 			index = static_cast<int>(_tabs.size());
 
-		for (size_t i = _tabs.size(); i <= static_cast<size_t>(index) + 1; i++)
+		for (uint32_t i = _tabs.size(); i <= static_cast<uint32_t>(index) + 1; i++)
 		{
 			_tabs.push_back(nullptr);
 			_buttons.push_back(nullptr);
@@ -92,7 +92,7 @@ namespace jgl
 		Vector2 tab_size = Vector2(area().x - tab_area->border(), area().y - tab_area->border() - tab_pos.y);
 
 		tab_area->set_geometry(tab_pos, tab_size);
-		for (size_t i = 0; i < _tabs.size(); i++)
+		for (uint32_t i = 0; i < _tabs.size(); i++)
 			if (_tabs[i] != nullptr)
 				_tabs[i]->set_geometry(0, tab_size - (_tabs[i]->border() * 2));
 	}
@@ -108,7 +108,7 @@ namespace jgl
 
 		button_area->set_geometry(button_pos, button_size);
 
-		for (size_t i = 0; i < _buttons.size(); i++)
+		for (uint32_t i = 0; i < _buttons.size(); i++)
 		{
 			if (_buttons[i] != nullptr)
 			{

@@ -16,13 +16,13 @@ namespace jgl
 
 	Unique_string::Unique_string(const char *str) : Unique_string()
 	{
-		for (size_t i = 0; str[i] != '\0'; i++)
+		for (uint32_t i = 0; str[i] != '\0'; i++)
 			push_back(str[i]);
 	}
 	Unique_string::Unique_string(const Unique_string& old)
 	{
 		clear();
-		for (size_t i = 0; i < old.size(); i++)
+		for (uint32_t i = 0; i < old.size(); i++)
 		{
 			Glyph tmp = old[i];
 			push_back(tmp);
@@ -33,7 +33,7 @@ namespace jgl
 		clear();
 
 		char tmp[4] = { 0, 0, 0, 0 };
-		size_t i = 0;
+		uint32_t i = 0;
 		while (i < str.size())
 		{
 			int delta = create_char_unicode(tmp, str.c_str(), i);
@@ -44,11 +44,11 @@ namespace jgl
 		}
 	}
 
-	Glyph& Unique_string::operator[](size_t i)
+	Glyph& Unique_string::operator[](uint32_t i)
 	{
 		return (_content[i]);
 	}
-	const Glyph& Unique_string::operator[](size_t i) const
+	const Glyph& Unique_string::operator[](uint32_t i) const
 	{
 		return (_content[i]);
 	}
@@ -57,13 +57,13 @@ namespace jgl
 	{
 		clear();
 
-		for (size_t i = 0; i < p_value.size(); i++)
+		for (uint32_t i = 0; i < p_value.size(); i++)
 			push_back(p_value[i]);
 	}
 
 	Unique_string Unique_string::operator += (const Unique_string delta)
 	{
-		for (size_t i = 0; i < delta.size(); i++)
+		for (uint32_t i = 0; i < delta.size(); i++)
 			push_back(delta[i]);
 
 		return (*this);
@@ -71,7 +71,7 @@ namespace jgl
 
 	Unique_string Unique_string::operator + (const Unique_string delta)
 	{
-		for (size_t i = 0; i < delta.size(); i++)
+		for (uint32_t i = 0; i < delta.size(); i++)
 			push_back(delta[i]);
 
 		return (*this);
@@ -85,16 +85,16 @@ namespace jgl
 	}
 	const char* Unique_string::str()
 	{
-		size_t c = 0;
+		uint32_t c = 0;
 
 		if (_str == nullptr)
 		{
 			_str = new char[size()];
 
-			for (size_t i = 0; i < size(); i++)
+			for (uint32_t i = 0; i < size(); i++)
 			{
 				jgl::Glyph tmp = this->operator[](i);
-				for (size_t j = 0; j < tmp.size(); j++)
+				for (uint32_t j = 0; j < tmp.size(); j++)
 				{
 					_str[c] = tmp.content()[j];
 					c++;
@@ -108,10 +108,10 @@ namespace jgl
 	{
 		std::string result;
 
-		for (size_t i = 0; i < size(); i++)
+		for (uint32_t i = 0; i < size(); i++)
 		{
 			Glyph tmp_glyph = this->operator[](i);
-			for (size_t i = 0; tmp_glyph.content()[i] != '\0'; i++)
+			for (uint32_t i = 0; tmp_glyph.content()[i] != '\0'; i++)
 				result.push_back(tmp_glyph.content()[i]);
 		}
 
@@ -122,10 +122,10 @@ namespace jgl
 	{
 		Unique_string result;
 
-		for (size_t i = 0; str[i] != '\0'; i++)
+		for (uint32_t i = 0; str[i] != '\0'; i++)
 			result.push_back(str[i]);
 
-		for (size_t i = 0; i < delta.size(); i++)
+		for (uint32_t i = 0; i < delta.size(); i++)
 			result.push_back(delta[i]);
 
 		return (result);
@@ -137,7 +137,7 @@ namespace jgl
 
 		result = Unique_string(str);
 
-		for (size_t i = 0; i < delta.size(); i++)
+		for (uint32_t i = 0; i < delta.size(); i++)
 			result.push_back(delta[i]);
 
 		return (result);
@@ -145,7 +145,7 @@ namespace jgl
 
 	const bool Unique_string::find(const Glyph to_find) const
 	{
-		for (size_t i = 0; i < size(); i++)
+		for (uint32_t i = 0; i < size(); i++)
 			if (this->operator[](i) == to_find)
 				return(true);
 		return (false);
@@ -154,10 +154,10 @@ namespace jgl
 	const bool Unique_string::contain(const Unique_string to_find) const
 	{
 		bool result = false;
-		for (size_t i = 0; i < size(); i++)
+		for (uint32_t i = 0; i < size(); i++)
 		{
 			result = false;
-			for (size_t j = 0; j < to_find.size() && result == false; j++)
+			for (uint32_t j = 0; j < to_find.size() && result == false; j++)
 				if (this->operator[](i) == to_find[j])
 					result = true;
 			if (result == false)
@@ -170,7 +170,7 @@ namespace jgl
 	{
 		if (size() != other.size())
 			return (false);
-		for (size_t i = 0; i < size(); i++)
+		for (uint32_t i = 0; i < size(); i++)
 			if (other[i] != this->operator[](i))
 				return (false);
 		return (true);
@@ -181,7 +181,7 @@ namespace jgl
 		return (!(*this == other));
 	}
 
-	Unique_string Unique_string::substr(const size_t start, const size_t end) const
+	Unique_string Unique_string::substr(const uint32_t start, const uint32_t end) const
 	{
 		Unique_string result;
 		
@@ -190,9 +190,9 @@ namespace jgl
 		return (result);
 	}
 
-	void Unique_string::substr(Unique_string& result, const size_t start, const size_t end) const
+	void Unique_string::substr(Unique_string& result, const uint32_t start, const uint32_t end) const
 	{
-		size_t size = end - start;
+		uint32_t size = end - start;
 
 		if (start >= _content.size())
 		{
@@ -203,7 +203,7 @@ namespace jgl
 		result.clear();
 		if (result.max_size() <= size)
 			result.resize(size);
-		for (size_t i = 0; i < size; i++)
+		for (uint32_t i = 0; i < size; i++)
 			result[i] = this->operator[](i + start);
 	}
 

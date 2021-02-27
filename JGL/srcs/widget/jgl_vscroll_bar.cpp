@@ -14,7 +14,7 @@ namespace jgl
 			 
 			if (parent != nullptr)
 			{
-				for (size_t i = 0; i < parent->childrens().size(); i++)
+				for (uint32_t i = 0; i < parent->childrens().size(); i++)
 					parent->childrens()[i]->move(delta);
 			}
 			bar->move_pos(delta);
@@ -34,7 +34,7 @@ namespace jgl
 
 			if (parent != nullptr)
 			{
-				for (size_t i = 0; i < parent->childrens().size(); i++)
+				for (uint32_t i = 0; i < parent->childrens().size(); i++)
 					parent->childrens()[i]->move(delta);
 			}
 			bar->move_pos(delta);

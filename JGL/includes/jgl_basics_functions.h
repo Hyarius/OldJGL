@@ -16,12 +16,12 @@ namespace jgl
 	int ceil(float value);
 	void check_sdl_error(const jgl::String file, const int line);
 	bool string_is_numeric(const jgl::String text);
-	size_t count_word(const jgl::String& input, const jgl::String& delim);
-	size_t count_word(const jgl::String& input, const jgl::Glyph& delim);
-	size_t unique_count_word(const jgl::Unique_string& input, const jgl::Unique_string& delim);
-	size_t count_word_len(const jgl::String& input, const jgl::String& delim, const size_t start);
-	size_t count_word_len(const jgl::String& input, const jgl::Glyph& delim, const size_t start);
-	size_t unique_count_word_len(const jgl::Unique_string& input, const jgl::Unique_string& delim, const size_t start);
+	uint32_t count_word(const jgl::String& input, const jgl::String& delim);
+	uint32_t count_word(const jgl::String& input, const jgl::Glyph& delim);
+	uint32_t unique_count_word(const jgl::Unique_string& input, const jgl::Unique_string& delim);
+	uint32_t count_word_len(const jgl::String& input, const jgl::String& delim, const uint32_t start);
+	uint32_t count_word_len(const jgl::String& input, const jgl::Glyph& delim, const uint32_t start);
+	uint32_t unique_count_word_len(const jgl::Unique_string& input, const jgl::Unique_string& delim, const uint32_t start);
 	jgl::Array<jgl::String> strsplit(const jgl::String input, const jgl::String delim, const bool regroup = true);
 	void strsplit(jgl::Array<jgl::String>& tab, const jgl::String input, const jgl::String delim, const bool regroup = true);
 	jgl::Array<jgl::Unique_string> unique_strsplit(const jgl::Unique_string input, const jgl::Unique_string delim, const bool regroup);
@@ -34,13 +34,13 @@ namespace jgl
 	jgl::String ftoa(const double n, const int afterpoint = -1, const int lenght = -1);
 	float stof(const jgl::String text);
 	int stoi(const jgl::String text);
-	jgl::String normalize_string(const jgl::String str, const jgl::Glyph c, const size_t size);
-	jgl::String normalize_float(const float num, const int after_point, const jgl::Glyph c, const size_t size);
+	jgl::String normalize_string(const jgl::String str, const jgl::Glyph c, const uint32_t size);
+	jgl::String normalize_float(const float num, const int after_point, const jgl::Glyph c, const uint32_t size);
 	bool is_middle(const float min, const float value, const float max);
 	bool is_middle(const jgl::Vector2 min, const jgl::Vector2 value, const jgl::Vector2 max);
 	jgl::Array<jgl::Vector2> calc_line_2d(const float x1, const float y1, const float x2, const float y2);
-	int generate_nbr_from_2D(long long seed, int x, int y);
-	int generate_nbr(const int min, const int max);
+	__int64 generate_nbr_from_2D(long long seed, int x, int y);
+	__int64 generate_nbr(const int min, const int max);
 
 	void remove_char(jgl::String& src, const jgl::String to_remove);
 

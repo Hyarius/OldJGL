@@ -127,7 +127,7 @@ namespace jgl
 
 		_pos_textureID = glGetUniformLocation(_program_texture_model, "pos");
 		_rot_textureID = glGetUniformLocation(_program_texture_model, "rot");
-		_size_textureID = glGetUniformLocation(_program_texture_model, "size");
+		_uint32_textureID = glGetUniformLocation(_program_texture_model, "size");
 		_MVP_textureID = glGetUniformLocation(_program_texture_model, "MVP");
 		_view_matrix_textureID = glGetUniformLocation(_program_texture_model, "view_matrix");
 		_model_matrix_textureID = glGetUniformLocation(_program_texture_model, "model_matrix");
@@ -341,7 +341,7 @@ namespace jgl
 
 		return (result);
 	}
-	const GLuint Application::get_custom_program(size_t index)
+	const GLuint Application::get_custom_program(uint32_t index)
 	{
 		if (index >= _custom_program.size())
 			return (0);

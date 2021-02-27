@@ -3,8 +3,8 @@
 
 namespace jgl
 {
-	jgl::String normalize_string(const jgl::String str, const jgl::Glyph c, const size_t size);
-	jgl::String normalize_float(const float num, const int after_point, const jgl::Glyph c, const size_t size);
+	jgl::String normalize_string(const jgl::String str, const jgl::Glyph c, const uint32_t size);
+	jgl::String normalize_float(const float num, const int after_point, const jgl::Glyph c, const uint32_t size);
 
 	enum class Matrix_type {
 		rotation = 0,
@@ -56,7 +56,7 @@ namespace jgl
 				value[0][1] * vertex.x + value[1][1] * vertex.y
 			));
 		}
-		float* operator[](const size_t index)
+		float* operator[](const uint32_t index)
 		{
 			if (index > 2)
 				return (nullptr);
@@ -127,7 +127,7 @@ namespace jgl
 				value[0][2] * vertex.x + value[1][2] * vertex.y + value[2][2] * vertex.z
 			));
 		}
-		float* operator[](const size_t index)
+		float* operator[](const uint32_t index)
 		{
 			if (index > 3)
 				return (nullptr);
@@ -290,7 +290,7 @@ namespace jgl
 				value[3][0] * vertex.x + value[1][3] * vertex.y + value[2][3] * vertex.z + value[3][3] * vertex.w)
 			);
 		}
-		float* operator[](const size_t index)
+		float* operator[](const uint32_t index)
 		{
 			if (index > 4)
 				return (nullptr);

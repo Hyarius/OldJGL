@@ -49,7 +49,7 @@ namespace jgl
 		upload_texture();
 	}
 
-	Image::Image(size_t width, size_t height, Color p_color)
+	Image::Image(uint32_t width, uint32_t height, Color p_color)
 	{
 		_path = "unknow";
 		_surface = create_surface_color(p_color);

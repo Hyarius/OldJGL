@@ -6,7 +6,7 @@ namespace jgl
 		x(static_cast<float>(p_value)), y(static_cast<float>(p_value)),
 		z(static_cast<float>(p_value)), w(static_cast<float>(p_value)) {}
 
-	Vector4::Vector4(size_t p_value) :
+	Vector4::Vector4(uint32_t p_value) :
 		x(static_cast<float>(p_value)), y(static_cast<float>(p_value)),
 		z(static_cast<float>(p_value)), w(static_cast<float>(p_value)) {}
 
@@ -20,7 +20,7 @@ namespace jgl
 		x(static_cast<float>(p_x)), y(static_cast<float>(p_y)),
 		z(static_cast<float>(p_z)), w(static_cast<float>(p_w)) {}
 
-	Vector4::Vector4(size_t p_x, size_t p_y, size_t p_z, size_t p_w) :
+	Vector4::Vector4(uint32_t p_x, uint32_t p_y, uint32_t p_z, uint32_t p_w) :
 		x(static_cast<float>(p_x)), y(static_cast<float>(p_y)),
 		z(static_cast<float>(p_z)), w(static_cast<float>(p_w)) {}
 

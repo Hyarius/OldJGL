@@ -16,14 +16,14 @@ namespace jgl
 		Pool() {}
 		~Pool()
 		{
-			for (size_t i = 0; i < _content.size(); i++)
+			for (uint32_t i = 0; i < _content.size(); i++)
 			{
 				delete _content[i];
 			}
 			_content.~Array();
 		}
 		const jgl::Array<T*> content() const { return (_content); }
-		const size_t size() const { return (_content.size()); }
+		const uint32_t size() const { return (_content.size()); }
 		T* obtain()
 		{
 			if (_content.size() == 0)
@@ -44,7 +44,7 @@ namespace jgl
 		{
 			_content.push_back(object);
 		}
-		T* operator[](size_t index)
+		T* operator[](uint32_t index)
 		{
 			return (_content[index]);
 		}

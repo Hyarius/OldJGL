@@ -11,7 +11,7 @@ namespace jgl
 		char _content[5] = {0, 0, 0, 0, 0};
 
 	public:
-		Glyph(size_t value);
+		Glyph(uint32_t value);
 		Glyph(int value);
 		Glyph(char c);
 		Glyph(char* str);
@@ -23,8 +23,8 @@ namespace jgl
 
 		void print_info() const;
 
-		size_t size() const;
-		size_t value() const;
+		uint32_t size() const;
+		uint32_t value() const;
 
 		friend std::ostream& operator<<(std::ostream& os, const jgl::Glyph value)
 		{

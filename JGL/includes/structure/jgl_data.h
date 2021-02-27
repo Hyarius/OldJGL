@@ -16,8 +16,8 @@ namespace jgl
 		Data(int nb_param, ...);
 
 		jgl::Array<void*>& content() { return (_content); }
-		void* content(size_t index) { return (_content[index]); }
-		size_t size() { return (_content.size()); }
+		void* content(uint32_t index) { return (_content[index]); }
+		uint32_t size() { return (_content.size()); }
 
 		void operator = (void* p_data);
 		void operator + (void* p_ptr);
@@ -26,7 +26,7 @@ namespace jgl
 		void operator += (Data delta);
 
 		template <typename T>
-		T acces(const size_t index) { return (static_cast<T>(_content[index])); }
+		T acces(const uint32_t index) { return (static_cast<T>(_content[index])); }
 	};
 }
 #endif

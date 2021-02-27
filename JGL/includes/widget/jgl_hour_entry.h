@@ -47,9 +47,9 @@ namespace jgl
 		void set_border(int p_border) { _box.set_border(p_border); }
 		void set_sprite(int p_sprite) { _box.set_sprite(p_sprite); }
 		void set_sprite(jgl::Vector2 p_sprite) { _box.set_sprite(p_sprite); }
-		void set_corner_size(size_t p_corner_size) { _box.set_corner_size(p_corner_size); }
+		void set_corner_size(uint32_t p_corner_size) { _box.set_corner_size(p_corner_size); }
 		jgl::Vector2 sprite() const { return (_box.sprite()); }
-		size_t corner_size() { return (_box.corner_size()); }
+		uint32_t corner_size() { return (_box.corner_size()); }
 		Sprite_sheet* tileset() { return (_box.tileset()); }
 		Sprite_sheet* image() { return (_box.image()); }
 		int border() { return (_box.border()); }
@@ -77,7 +77,7 @@ namespace jgl
 		int			hour_precision() { return (_hour.precision()); }
 		float 		hour_value() { return (_hour.value()); }
 		jgl::String hour_text() { return (_hour.text()); }
-		size_t 		hour_cursor() { return (_hour.cursor()); }
+		uint32_t 		hour_cursor() { return (_hour.cursor()); }
 
 		void 		set_minute_selected(bool p_selected) { _minute.set_selected(p_selected); }
 		void 		set_minute_precision(int p_precision) { _minute.set_precision(p_precision); }
@@ -88,7 +88,7 @@ namespace jgl
 		int			minute_precision() { return (_minute.precision()); }
 		float 		minute_value() { return (_minute.value()); }
 		jgl::String minute_text() { return (_minute.text()); }
-		size_t 		minute_cursor() { return (_minute.cursor()); }
+		uint32_t 		minute_cursor() { return (_minute.cursor()); }
 
 		void set_selected(bool p_selected) { _selected = p_selected; }
 		void set_box(w_box_component new_box) { _box = new_box; }

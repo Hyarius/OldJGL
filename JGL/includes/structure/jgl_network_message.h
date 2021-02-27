@@ -32,7 +32,7 @@ namespace jgl
 			return (header.id);
 		}
 
-		size_t size() const
+		uint32_t size() const
 		{
 			return content.size();
 		}
@@ -65,8 +65,8 @@ namespace jgl
 		jgl::String get_string()
 		{
 			jgl::String text;
-			size_t size;
-			size_t i;
+			uint32_t size;
+			uint32_t i;
 
 			*this >> size;
 			std::cout << "Size read : " << size << std::endl;
@@ -84,7 +84,7 @@ namespace jgl
 
 		void add_string(jgl::String text)
 		{
-			for (size_t i = 0; i < text.size(); i++)
+			for (uint32_t i = 0; i < text.size(); i++)
 				*this << text[i];
 			*this << text.size();
 		}
@@ -94,7 +94,7 @@ namespace jgl
 		{
 			static_assert(std::is_standard_layout<DataType>::value, "Data is too complex to be pushed into vector");
 
-			size_t i = msg.content.size();
+			uint32_t i = msg.content.size();
 
 			msg.content.resize(msg.content.size() + sizeof(DataType));
 
@@ -110,7 +110,7 @@ namespace jgl
 		{
 			static_assert(std::is_standard_layout<DataType>::value, "Data is too complex to be pulled from vector");
 
-			size_t i = msg.content.size() - sizeof(DataType);
+			uint32_t i = msg.content.size() - sizeof(DataType);
 
 			std::memcpy(&data, msg.content.data() + i, sizeof(DataType));
 

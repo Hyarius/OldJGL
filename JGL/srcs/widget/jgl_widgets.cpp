@@ -16,7 +16,7 @@ namespace jgl
 
 	void Widget::destroy_widget()
 	{
-		for (size_t i = 0; i < _childrens.size(); i++)
+		for (uint32_t i = 0; i < _childrens.size(); i++)
 		{
 			_childrens[i]->destroy_widget();
 			delete _childrens[i];
@@ -56,7 +56,7 @@ namespace jgl
 		if (is_active() == false || area() == -1 || is_frozen() == true)
 			return (false);
 
-		for (size_t i = 0; i < _childrens.size(); i++)
+		for (uint32_t i = 0; i < _childrens.size(); i++)
 			if (_childrens[i]->handle_event() == true)
 				return (true);
 
@@ -105,7 +105,7 @@ namespace jgl
 
 		update();
 
-		for (size_t i = 0; i < _childrens.size(); i++)
+		for (uint32_t i = 0; i < _childrens.size(); i++)
 		{
 			if (_childrens[i]->is_frozen() == false)
 				_childrens[i]->update_children();
@@ -119,7 +119,7 @@ namespace jgl
 
 		quit();
 
-		for (size_t i = 0; i < _childrens.size(); i++)
+		for (uint32_t i = 0; i < _childrens.size(); i++)
 		{
 			_childrens[i]->quit_children();
 		}
@@ -180,7 +180,7 @@ namespace jgl
 		*tmp = *tmp2;
 	}
 
-	void Widget::set_layer(size_t index)
+	void Widget::set_layer(uint32_t index)
 	{
 		if (_parent == nullptr || _parent->childrens().size() >= index)
 			return;

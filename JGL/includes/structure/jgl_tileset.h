@@ -35,7 +35,7 @@ namespace jgl
 		const jgl::Array<Vector2>& sprites() const { return (_sprites); }
 		const Vector2 sprite(const int index) const
 		{
-			if (index == -1 || static_cast<size_t>(index) >= _sprites.size())
+			if (index == -1 || static_cast<uint32_t>(index) >= _sprites.size())
 				return (-1);
 			return (_sprites[index]);
 		}
@@ -44,7 +44,7 @@ namespace jgl
 			if (coord.x < 0 || coord.x >= _size.x ||
 				coord.y < 0 || coord.y >= _size.y)
 				return (-1);
-			return (sprite(static_cast<size_t>(coord.x + (_size.x * coord.y))));
+			return (sprite(static_cast<uint32_t>(coord.x + (_size.x * coord.y))));
 		}
 
 		void draw(const int id, const Vector2 pos, const Vector2 size, const float p_alpha = 1.0f, const Viewport* viewport = nullptr) const;

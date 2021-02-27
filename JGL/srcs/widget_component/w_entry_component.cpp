@@ -22,7 +22,7 @@ namespace jgl
 		_text_to_draw = "";
 		_cursor_to_draw = 0;
 
-		size_t i = _cursor;
+		uint32_t i = _cursor;
 
 		if (_text.empty() == false)
 		{
@@ -64,7 +64,7 @@ namespace jgl
 
 	void w_entry_component::change_text(jgl::String new_text)
 	{
-		for (size_t i = 0; i < new_text.size() && i + _cursor < _text.size(); i++)
+		for (uint32_t i = 0; i < new_text.size() && i + _cursor < _text.size(); i++)
 			_text[_cursor + i] = new_text[i];
 
 		_cursor++;

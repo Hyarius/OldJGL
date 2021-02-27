@@ -34,7 +34,7 @@ namespace jgl
 			{
 				tmp_text = jgl::itoa(static_cast<int>(_percent * _max_value)) + " / " + jgl::itoa(static_cast<int>(_max_value));
 			}
-			draw_centred_text(tmp_text, jgl::Vector2(0, -1) + _box.border() + size / 2, static_cast<size_t>(size.y / 1.3f), 0, 1.0f, jgl::text_color::black, jgl::text_style::normal, _viewport);
+			draw_centred_text(tmp_text, jgl::Vector2(0, -1) + _box.border() + size / 2, static_cast<uint32_t>(size.y / 1.3f), 0, 1.0f, jgl::text_color::black, jgl::text_style::normal, _viewport);
 		}
 	}
 

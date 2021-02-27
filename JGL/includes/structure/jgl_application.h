@@ -62,7 +62,7 @@ namespace jgl
 
 		GLuint _pos_textureID;
 		GLuint _rot_textureID;
-		GLuint _size_textureID;
+		GLuint _uint32_textureID;
 		GLuint _MVP_textureID;
 		GLuint _view_matrix_textureID;
 		GLuint _model_matrix_textureID;
@@ -91,7 +91,7 @@ namespace jgl
 		GLuint _alphaID;
 		GLuint _color_simpleID;
 
-		size_t _max_fps;
+		uint32_t _max_fps;
 		Uint32 _fps_delta;
 		float _fps_ratio;
 
@@ -113,7 +113,7 @@ namespace jgl
 		const Viewport* active_viewport() const { return (_active_viewport); }
 		const Vector2 size() { return (_size); }
 		const GLuint add_custom_shader(const jgl::String p_vertex_content, const jgl::String p_fragment_content);
-		const GLuint get_custom_program(const size_t index);
+		const GLuint get_custom_program(const uint32_t index);
 		const GLuint get_custom_uniform(const GLuint p_program, const jgl::String p_param);
 
 		const GLuint program_color() const { return (_program_color); }
@@ -150,7 +150,7 @@ namespace jgl
 
 		const GLuint pos_textureID() const { return (_pos_textureID); }
 		const GLuint rot_textureID() const { return (_rot_textureID); }
-		const GLuint size_textureID() const { return (_size_textureID); }
+		const GLuint uint32_textureID() const { return (_uint32_textureID); }
 		const GLuint MVP_textureID() const { return (_MVP_textureID); }
 		const GLuint view_matrix_textureID() const { return (_view_matrix_textureID); }
 		const GLuint model_matrix_textureID() const { return (_model_matrix_textureID); }
@@ -176,7 +176,7 @@ namespace jgl
 		const GLuint material_bump_texture_textureID() const { return (_material_bump_texture_textureID); }
 
 		const Uint32 time() { return (_time); }
-		const size_t max_fps() const { return (_max_fps); }
+		const uint32_t max_fps() const { return (_max_fps); }
 		const float fps_ratio() const { return (_fps_ratio); }
 		const int poll_ret() const { return (_poll_ret); }
 		class Widget* central_widget() const { return ((Widget*)_central_widget); }

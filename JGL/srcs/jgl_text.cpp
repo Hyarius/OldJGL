@@ -5,9 +5,9 @@ std::vector<TTF_Font *> font_outline;
 
 jgl::String g_font_path;
 
-size_t tmp_index = 0;
+uint32_t tmp_index = 0;
 std::vector<jgl::Image*> char_direct_list;
-std::vector <std::vector <std::vector <std::vector <std::map <size_t, jgl::Image *> > > > > char_list;
+std::vector <std::vector <std::vector <std::vector <std::map <uint32_t, jgl::Image *> > > > > char_list;
 
 int text_compared_value[] = {
 	0x80,
@@ -59,9 +59,9 @@ namespace jgl
 		g_font_path = p_font_path.copy();
 		font.clear();
 		tmp_index = 0;
-		for (size_t i = 0; i < char_list.size(); i++)
-			for (size_t j = 0; j < char_list[i].size(); j++)
-				for (size_t k = 0; k < char_list[i][j].size(); k++)
+		for (uint32_t i = 0; i < char_list.size(); i++)
+			for (uint32_t j = 0; j < char_list[i].size(); j++)
+				for (uint32_t k = 0; k < char_list[i][j].size(); k++)
 					char_list[i][j][k].clear();
 	}
 
@@ -72,7 +72,7 @@ namespace jgl
 		return (color_tab[i]);
 	}
 
-	TTF_Font* get_font(const size_t size)
+	TTF_Font* get_font(const uint32_t size)
 	{
 		if (size < 2)
 			error_exit(1, "Can't load a font of size < 2");
@@ -92,7 +92,7 @@ namespace jgl
 		return (font[size]);
 	}
 
-	TTF_Font* get_font_outline(const size_t size)
+	TTF_Font* get_font_outline(const uint32_t size)
 	{
 		if (size < 2)
 			error_exit(1, "Can't load a font of size < 2");
@@ -112,25 +112,25 @@ namespace jgl
 		return (font_outline[size]);
 	}
 
-	Image* get_string_image(const jgl::String str, const size_t size, const size_t outline, const text_color color, const text_style style)
+	Image* get_string_image(const jgl::String str, const uint32_t size, const uint32_t outline, const text_color color, const text_style style)
 	{
 		const char* text;
 
-		TTF_Font* tmp = get_font(static_cast<size_t>(size));
+		TTF_Font* tmp = get_font(static_cast<uint32_t>(size));
 		TTF_SetFontStyle(tmp, static_cast<int>(style));
 
 		std::string tmp_str = str.std();
 		text = tmp_str.c_str();
 
-		SDL_Surface* surface = TTF_RenderUTF8_Blended(tmp, text, get_color(static_cast<size_t>(color)));
+		SDL_Surface* surface = TTF_RenderUTF8_Blended(tmp, text, get_color(static_cast<uint32_t>(color)));
 
 		if (outline > 0)
 		{
-			TTF_Font* tmp_outline = get_font_outline(static_cast<size_t>(size));
+			TTF_Font* tmp_outline = get_font_outline(static_cast<uint32_t>(size));
 			TTF_SetFontStyle(tmp_outline, static_cast<int>(style));
 			TTF_SetFontOutline(tmp_outline, outline);
 
-			SDL_Surface* outline_surface = TTF_RenderUTF8_Blended(tmp_outline, text, get_color(static_cast<size_t>(text_color::black)));
+			SDL_Surface* outline_surface = TTF_RenderUTF8_Blended(tmp_outline, text, get_color(static_cast<uint32_t>(text_color::black)));
 			if (outline_surface == nullptr)
 				error_exit(1, "Error while creating the outline for char ");
 			SDL_Rect rect = { static_cast<int>(outline), static_cast<int>(outline), surface->w, surface->h };
@@ -154,37 +154,37 @@ namespace jgl
 		return (new Image(surface));
 	}
 
-	Image* get_char(const Glyph c, const size_t size, const size_t outline, const text_color color, const text_style style)
+	Image* get_char(const Glyph c, const uint32_t size, const uint32_t outline, const text_color color, const text_style style)
 	{
 		const char *text;
 
 		if (size <= 0 || c == '\0')
 			return (nullptr);
 
-		if (char_list.size() <= static_cast<size_t>(size))
-			char_list.resize(static_cast<size_t>(size) + 2);
-		if (char_list[size].size() <= static_cast<size_t>(style))
-			char_list[size].resize(static_cast<size_t>(style) + 2);
-		if (char_list[size][static_cast<size_t>(style)].size() <= static_cast<size_t>(color))
-			char_list[size][static_cast<size_t>(style)].resize(static_cast<size_t>(color) + 2);
-		if (char_list[size][static_cast<size_t>(style)][static_cast<size_t>(color)].size() <= outline)
-			char_list[size][static_cast<size_t>(style)][static_cast<size_t>(color)].resize(outline + 1);
-		if (char_list[size][static_cast<size_t>(style)][static_cast<size_t>(color)][outline].count(c.value()) == 0)
+		if (char_list.size() <= static_cast<uint32_t>(size))
+			char_list.resize(static_cast<uint32_t>(size) + 2);
+		if (char_list[size].size() <= static_cast<uint32_t>(style))
+			char_list[size].resize(static_cast<uint32_t>(style) + 2);
+		if (char_list[size][static_cast<uint32_t>(style)].size() <= static_cast<uint32_t>(color))
+			char_list[size][static_cast<uint32_t>(style)].resize(static_cast<uint32_t>(color) + 2);
+		if (char_list[size][static_cast<uint32_t>(style)][static_cast<uint32_t>(color)].size() <= outline)
+			char_list[size][static_cast<uint32_t>(style)][static_cast<uint32_t>(color)].resize(outline + 1);
+		if (char_list[size][static_cast<uint32_t>(style)][static_cast<uint32_t>(color)][outline].count(c.value()) == 0)
 		{
-			TTF_Font* tmp = get_font(static_cast<size_t>(size));
+			TTF_Font* tmp = get_font(static_cast<uint32_t>(size));
 			//
 			TTF_SetFontStyle(tmp, static_cast<int>(style));
 			//
 			text = c.content();
 
-			SDL_Surface* surface = TTF_RenderUTF8_Blended(tmp, text, get_color(static_cast<size_t>(color)));
+			SDL_Surface* surface = TTF_RenderUTF8_Blended(tmp, text, get_color(static_cast<uint32_t>(color)));
 			if (outline > 0)
 			{
-				TTF_Font* tmp_outline = get_font_outline(static_cast<size_t>(size));
+				TTF_Font* tmp_outline = get_font_outline(static_cast<uint32_t>(size));
 				TTF_SetFontStyle(tmp_outline, static_cast<int>(style));
 				TTF_SetFontOutline(tmp_outline, outline);
 
-				SDL_Surface* outline_surface = TTF_RenderUTF8_Blended(tmp_outline, text, get_color(static_cast<size_t>(text_color::black)));
+				SDL_Surface* outline_surface = TTF_RenderUTF8_Blended(tmp_outline, text, get_color(static_cast<uint32_t>(text_color::black)));
 				if (outline_surface == nullptr)
 					error_exit(1, "Error while creating the outline for char ");
 				SDL_Rect rect = { static_cast<int>(outline), static_cast<int>(outline), surface->w, surface->h };
@@ -202,14 +202,14 @@ namespace jgl
 			{
 				Image* tmp_image = new Image(surface);
 				char_direct_list.push_back(tmp_image);
-				char_list[size][static_cast<size_t>(style)][static_cast<size_t>(color)][outline][c.value()] = tmp_image;
+				char_list[size][static_cast<uint32_t>(style)][static_cast<uint32_t>(color)][outline][c.value()] = tmp_image;
 			}
 			else
 				error_exit(1, "Error while creating the char");
 
 			TTF_SetFontStyle(tmp, static_cast<int>(text_style::normal));
 		}
-		return (char_list[size][static_cast<size_t>(style)][static_cast<size_t>(color)][outline][c.value()]);
+		return (char_list[size][static_cast<uint32_t>(style)][static_cast<uint32_t>(color)][outline][c.value()]);
 	}
 
 	int count_char_len(const char to_parse)
@@ -228,7 +228,7 @@ namespace jgl
 			return (-1);
 	}
 
-	int create_char_unicode(char* result, const char* base, const size_t index)
+	int create_char_unicode(char* result, const char* base, const uint32_t index)
 	{
 		unsigned char to_parse = base[index];
 		int limit = 0;
@@ -263,10 +263,10 @@ namespace jgl
 		return (limit);
 	}
 
-	int				draw_text(const jgl::String text, const Vector2 coord, const size_t size, const size_t outline, const float alpha, const text_color color, const text_style style, const Viewport* viewport)
+	int				draw_text(const jgl::String text, const Vector2 coord, const uint32_t size, const uint32_t outline, const float alpha, const text_color color, const text_style style, const Viewport* viewport)
 	{
 		Image* image;
-		size_t			i = 0;
+		uint32_t			i = 0;
 		Vector2			rel_coord;
 		int				delta = 0;
 
@@ -289,7 +289,7 @@ namespace jgl
 		return (delta);
 	}
 
-	int				max_char_in_box(const int space, const size_t size)
+	int				max_char_in_box(const int space, const uint32_t size)
 	{
 		int nb_char = 0;
 		Image* image;
@@ -305,10 +305,10 @@ namespace jgl
 		return (nb_char);
 	}
 
-	int				calc_text_len(const jgl::String text, const size_t size)
+	int				calc_text_len(const jgl::String text, const uint32_t size)
 	{
 		Image* image;
-		size_t			i = 0;
+		uint32_t			i = 0;
 		int				delta = 0;
 
 		while (i < text.size())
@@ -324,7 +324,7 @@ namespace jgl
 		return (delta);
 	}
 
-	int				draw_centred_text(const jgl::String text, const Vector2 coord, const size_t size, const size_t outline, const float alpha, const text_color color, const text_style style, const Viewport* viewport)
+	int				draw_centred_text(const jgl::String text, const Vector2 coord, const uint32_t size, const uint32_t outline, const float alpha, const text_color color, const text_style style, const Viewport* viewport)
 	{
 		if (size <= 2)
 			return 0;
@@ -337,7 +337,7 @@ namespace jgl
 
 	void delete_loaded_char()
 	{
-		for (size_t i = 0; i < char_direct_list.size(); i++)
+		for (uint32_t i = 0; i < char_direct_list.size(); i++)
 			delete char_direct_list[i];
 	}
 }
