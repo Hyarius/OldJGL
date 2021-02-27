@@ -6,7 +6,13 @@
 #include "jgl_includes.h"
 #include "jgl_perlin.h"
 #include "jgl_define.h"
-#include "jgl_dirent.h"
+
+#ifdef _WIN32
+	#include "jgl_dirent.h"
+#else
+	#include "dirent.h"
+#endif
+
 #include "jgl_enum.h"
 #include "jgl_reference_count.h"
 #include "jgl_array.h"

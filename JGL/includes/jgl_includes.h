@@ -13,8 +13,12 @@
 #include <asio/ts/internet.hpp>
 
 #include <deque>
-#include <io.h>
+#include <SDL.h>
+#ifdef _WIN32
+	#include <io.h>
+#endif
 #include <iostream>
+#include <GL/glew.h>
 #include <array>
 #include <random>
 #include <fstream>
@@ -36,8 +40,6 @@
 #include <sstream>
 #include <sys/types.h>
 #include <sys/stat.h>
-#include <SDL.h>
-#include <glew.h>
 #include <SDL_opengl.h>
 #include <SDL_image.h>
 #include <SDL_ttf.h>

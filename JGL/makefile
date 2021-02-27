@@ -15,7 +15,7 @@ OBJ_DIR	=	obj
 vpath %.cpp $(foreach dir, $(SRC_DIR), $(dir):)
 
 ##Set the download program to brew
-DWL =		sudo apt-get install
+DWL =		sudo apt-get
 
 ##List every .c found inside SRC_DIR
 SRC = 		$(foreach dir, $(SRC_DIR), $(foreach file, $(wildcard $(dir)/*.cpp), $(notdir $(file))))
@@ -24,7 +24,7 @@ SRC = 		$(foreach dir, $(SRC_DIR), $(foreach file, $(wildcard $(dir)/*.cpp), $(n
 OBJ=		$(addprefix $(OBJ_DIR)/, $(SRC:%.cpp=%.o))
 
 ##List of libraries to download and install using the function defined in DWL
-LIB_DWN =	sdl2 sdl2_image sdl2_mixer sdl2_ttf
+LIB_DWN =	libglew-dev libsdl2-dev libsdl2-image-dev libsdl2-mixer-dev libsdl2-ttf-dev libasio-dev
 ##List of libraries to link while compiling
 LIB =		SDL2 SDL2_image SDL2_mixer SDL2_ttf
 
@@ -33,13 +33,13 @@ LIB =		SDL2 SDL2_image SDL2_mixer SDL2_ttf
 ##
 
 ##Basics flags
-CFLAGS=		-O3 -flto -std=c++17 -Wno-deprecated-declarations
+CFLAGS=		`sdl2-config --cflags --libs` -pthread -O3 -flto -std=c++17 -Wno-deprecated-declarations
 
 ##Create the flags to includes every .h needed by this program
 IFLAGS =	$(foreach dir, $(INC_DIR), -I$(dir))
 
 ##Create the flags to link every libraries needed by this program (-L and -l)
-LFLAGS = 	$(foreach dir, $(LIB_DIR), -L $(dir) ) $(foreach lib, $(LIB), -l$(lib) ) -framework OpenGL
+LFLAGS = 	$(foreach dir, $(LIB_DIR), -L $(dir) ) $(foreach lib, $(LIB), -l$(lib) )
 
 ##Define the compiler to use
 CC=			g++
@@ -52,9 +52,9 @@ install:
 				make $(NAME)
 
 libs:
-				$(foreach lib, $(LIB_DWN), $(DWL) install $(lib); )
+				$(foreach lib, $(LIB_DWN), $(DWL) install $(lib) ; )
 
-$(NAME):		$(OBJ) $(INC_DIR) Makefile
+$(NAME):		$(OBJ) $(INC_DIR)
 				@echo "Compiling $(NAME) ...\c"
 				@ar rc $(NAME) $(OBJ)
 				@ranlib $(NAME)

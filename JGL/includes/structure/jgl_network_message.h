@@ -66,14 +66,17 @@ namespace jgl
 		{
 			jgl::String text;
 			size_t size;
+			size_t i;
 
 			*this >> size;
-			while (empty() == false && size != 0)
+			std::cout << "Size read : " << size << std::endl;
+			while (empty() == false && i < size)
 			{
 				jgl::Glyph c;
 				*this >> c;
+				std::cout << "Glyph read : " << c << std::endl;
 				text.push_front(c);
-				size--;
+				i++;
 			}
 
 			return (text);

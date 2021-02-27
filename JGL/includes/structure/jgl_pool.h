@@ -65,7 +65,7 @@ namespace jgl
 		}
 
 	public:
-		static const jgl::Pool<T>& elem_pool() { return (_elem_pool); } const
+		static const jgl::Pool<T>& elem_pool(){ return (_elem_pool); } 
 		Pool_object()
 		{
 			obtain();
