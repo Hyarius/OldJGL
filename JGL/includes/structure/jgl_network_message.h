@@ -66,7 +66,7 @@ namespace jgl
 		{
 			jgl::String text;
 			uint32_t size;
-			uint32_t i;
+			uint32_t i = 0;
 
 			*this >> size;
 			std::cout << "Size read : " << size << std::endl;
