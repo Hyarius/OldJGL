@@ -5,8 +5,11 @@
 
 #include "jgl_vector.h"
 
+#define DEBUG_LINE() debug_line_imp(__FILE__, __FUNCTION__, __LINE__)
+
 namespace jgl
 {
+	void debug_line_imp(char *file, char* function, int line);
 	jgl::Vector2 compose_smaller(jgl::Vector2 first, jgl::Vector2 second);
 	jgl::Vector2 compose_biggest(jgl::Vector2 first, jgl::Vector2 second);
 	jgl::Vector3 compose_smaller(jgl::Vector3 first, jgl::Vector3 second);
