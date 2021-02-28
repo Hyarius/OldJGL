@@ -2,10 +2,6 @@
 
 namespace jgl
 {
-	void debug_line_imp(char* file, char* function, int line)
-	{
-		std::cout << file << " in function " << function << " at line " << line << std::endl;
-	}
 	jgl::Vector2 compose_smaller(jgl::Vector2 first, jgl::Vector2 second)
 	{
 		float x = (first.x < second.x ? first.x : second.x);

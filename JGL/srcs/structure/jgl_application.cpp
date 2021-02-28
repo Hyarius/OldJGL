@@ -270,7 +270,11 @@ namespace jgl
 			delete g_keyboard;
 			g_keyboard = nullptr;
 		}
-
+		if (g_perlin != nullptr)
+		{
+			delete g_perlin;
+			g_perlin = nullptr;
+		}
 		delete_loaded_char();
 	}
 

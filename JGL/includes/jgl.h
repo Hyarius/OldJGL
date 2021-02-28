@@ -13,6 +13,8 @@
 	#include "dirent.h"
 #endif
 
+#define DEBUG_LINE std::cout<<__FILE__<<(char*)(" in ")<<__FUNCTION__<<(char *)(" at line ")<<__LINE__<<std::endl
+
 #include "jgl_enum.h"
 #include "jgl_reference_count.h"
 #include "jgl_array.h"

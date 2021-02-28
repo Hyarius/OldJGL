@@ -4,11 +4,11 @@ namespace jgl
 {
 	static void active_tab(Data p_data)
 	{
-		std::vector<Button*> buttons = *(std::vector<Button*>*)(p_data.content(0));
-		std::vector<Frame*> tabs = *(std::vector<Frame*>*)(p_data.content(1));
-		uint32_t index = (uint32_t)(p_data.content(2));
+		std::vector<Button*> buttons = *(p_data.acces<std::vector<Button*>*>(0));
+		std::vector<Frame*> tabs = *(p_data.acces<std::vector<Frame *>*>(1));
+		uint64_t index = reinterpret_cast<uint64_t>(p_data.acces<void *>(2));
 
-		for (uint32_t i = 0; i < buttons.size(); i++)
+		for (uint64_t i = 0; i < buttons.size(); i++)
 		{
 			if (buttons[i] != nullptr)
 			{
@@ -25,7 +25,7 @@ namespace jgl
 			}
 		}
 
-		for (uint32_t i = 0; i < tabs.size(); i++)
+		for (uint64_t i = 0; i < tabs.size(); i++)
 		{
 			if (tabs[i] != nullptr)
 			{

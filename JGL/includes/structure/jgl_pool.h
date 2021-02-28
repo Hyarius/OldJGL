@@ -18,9 +18,13 @@ namespace jgl
 		{
 			for (uint32_t i = 0; i < _content.size(); i++)
 			{
-				delete _content[i];
+				if (_content[i] != nullptr)
+				{
+					delete _content[i];
+				}
+				_content[i] = nullptr;
 			}
-			_content.~Array();
+			//_content.~Array();
 		}
 		const jgl::Array<T*> content() const { return (_content); }
 		const uint32_t size() const { return (_content.size()); }
