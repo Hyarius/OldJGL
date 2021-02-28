@@ -5,7 +5,7 @@
 
 #include "jgl_vector.h"
 
-#define DEBUG_LINE() debug_line_imp(__FILE__, __FUNCTION__, __LINE__)
+#define DEBUG_LINE() jgl::debug_line_imp(__FILE__, __FUNCTION__, __LINE__)
 
 namespace jgl
 {
