@@ -69,12 +69,10 @@ namespace jgl
 			uint32_t i = 0;
 
 			*this >> size;
-			std::cout << "Size read : " << size << std::endl;
 			while (empty() == false && i < size)
 			{
 				jgl::Glyph c;
 				*this >> c;
-				std::cout << "Glyph read : " << c << std::endl;
 				text.push_front(c);
 				i++;
 			}
