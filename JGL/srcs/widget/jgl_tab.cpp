@@ -6,7 +6,7 @@ namespace jgl
 	{
 		std::vector<Button*> buttons = *(p_data.acces<std::vector<Button*>*>(0));
 		std::vector<Frame*> tabs = *(p_data.acces<std::vector<Frame *>*>(1));
-		uint32_t index = reinterpret_cast<uint32_t>(p_data.acces<void *>(2));
+		uint32_t index = static_cast<uint32_t>(reinterpret_cast<uint64_t>(p_data.acces<void *>(2)));
 
 		for (uint32_t i = 0; i < buttons.size(); i++)
 		{
