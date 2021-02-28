@@ -40,8 +40,8 @@ namespace jgl
 	bool is_middle(const float min, const float value, const float max);
 	bool is_middle(const jgl::Vector2 min, const jgl::Vector2 value, const jgl::Vector2 max);
 	jgl::Array<jgl::Vector2> calc_line_2d(const float x1, const float y1, const float x2, const float y2);
-	uint32_t generate_nbr_from_2D(long long seed, int x, int y);
-	uint32_t generate_nbr(const int min, const int max);
+	int32_t generate_nbr_from_2D(const int64_t seed, const int32_t x, const int32_t y);
+	int32_t generate_nbr(const int32_t min, const int32_t max);
 
 	void remove_char(jgl::String& src, const jgl::String to_remove);
 

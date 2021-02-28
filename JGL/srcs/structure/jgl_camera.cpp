@@ -27,7 +27,7 @@ namespace jgl
 	void Camera::calc_variable()
 	{
 		_yaw = radian_to_degree(atan2(_direction.z, -_direction.x)) - 90;
-		_pitch = radian_to_degree(atan2(_direction.y, sqrt(pow(_direction.x, 2) + pow(_direction.z, 2))));
+		_pitch = radian_to_degree(static_cast<float>(atan2(_direction.y, sqrt(pow(_direction.x, 2) + pow(_direction.z, 2)))));
 		_pitch = clamp_float(-89.0f, _pitch, 89.0f);
 		_right = Vector3(_view[0][0], _view[1][0], _view[2][0]);
 		_up = Vector3(_view[0][1], _view[1][1], _view[2][1]);

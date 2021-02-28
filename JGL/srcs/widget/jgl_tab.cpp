@@ -6,9 +6,9 @@ namespace jgl
 	{
 		std::vector<Button*> buttons = *(p_data.acces<std::vector<Button*>*>(0));
 		std::vector<Frame*> tabs = *(p_data.acces<std::vector<Frame *>*>(1));
-		uint64_t index = reinterpret_cast<uint64_t>(p_data.acces<void *>(2));
+		uint32_t index = reinterpret_cast<uint32_t>(p_data.acces<void *>(2));
 
-		for (uint64_t i = 0; i < buttons.size(); i++)
+		for (uint32_t i = 0; i < buttons.size(); i++)
 		{
 			if (buttons[i] != nullptr)
 			{
@@ -25,7 +25,7 @@ namespace jgl
 			}
 		}
 
-		for (uint64_t i = 0; i < tabs.size(); i++)
+		for (uint32_t i = 0; i < tabs.size(); i++)
 		{
 			if (tabs[i] != nullptr)
 			{
@@ -51,7 +51,7 @@ namespace jgl
 		set_geometry(-1, -1);
 	}
 
-	Frame* Tab::add_tab(jgl::String p_name, int index)
+	Frame* Tab::add_tab(jgl::String p_name, int32_t index)
 	{
 		bool tmp = (_tabs.size() == 0 ? true : false);
 		Frame* new_tab = new Frame(tab_area);
@@ -61,7 +61,7 @@ namespace jgl
 		new_tab_button->activate();
 
 		if (index == -1)
-			index = static_cast<int>(_tabs.size());
+			index = static_cast<int32_t>(_tabs.size());
 
 		for (uint32_t i = _tabs.size(); i <= static_cast<uint32_t>(index) + 1; i++)
 		{

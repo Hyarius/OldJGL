@@ -104,19 +104,19 @@ namespace jgl
 		float cos_theta = std::cos(theta);
 		float sin_theta = std::sin(theta);
 
-		float a0 = pow(u, 2) + (pow(v, 2) + pow(w, 2)) * cos_theta;
+		float a0 = static_cast<float>(pow(u, 2) + (pow(v, 2) + pow(w, 2)) * cos_theta);
 		float a1 = u * v * (1 - cos_theta) - w * root_len * sin_theta;
 		float a2 = u * w * (1 - cos_theta) + v * root_len * sin_theta;
 		float a3 = 0;
 
 		float b0 = v * u * (1 - cos_theta) + w * root_len * sin_theta;
-		float b1 = pow(v, 2) + (pow(u, 2) + pow(w, 2)) * cos_theta;
+		float b1 = static_cast<float>(pow(v, 2) + (pow(u, 2) + pow(w, 2)) * cos_theta);
 		float b2 = v * w * (1 - cos_theta) - u * root_len * sin_theta;
 		float b3 = 0;
 
 		float c0 = u * w * (1 - cos_theta) - v * root_len * sin_theta;
 		float c1 = v * w * (1 - cos_theta) + u * root_len * sin_theta;
-		float c2 = pow(w, 2) + (pow(u, 2) + pow(v, 2)) * cos_theta;
+		float c2 = static_cast<float>(pow(w, 2) + (pow(u, 2) + pow(v, 2)) * cos_theta);
 		float c3 = 0;
 
 		float d0 = 0;

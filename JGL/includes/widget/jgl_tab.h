@@ -21,7 +21,7 @@ namespace jgl
 		std::vector<Frame*> tabs() { return (_tabs); }
 		std::vector<Button*> buttons() { return (_buttons); }
 
-		Frame* add_tab(jgl::String p_name, int index = -1);
+		Frame* add_tab(jgl::String p_name, int32_t index = -1);
 		void reset_size();
 		void reset_tab();
 		void reset_button();
