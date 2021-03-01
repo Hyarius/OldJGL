@@ -14,6 +14,7 @@
 #endif
 
 #define DEBUG_LINE std::cout<<__FILE__<<(char*)(" in ")<<__FUNCTION__<<(char *)(" at line ")<<__LINE__<<std::endl
+#define LOG_LINE(text) std::cout<<"["<<__FILE__<<(char*)("] [")<<__FUNCTION__<<(char *)("] L[")<<__LINE__<< "] : " <<text<<std::endl
 
 #include "jgl_enum.h"
 #include "jgl_reference_count.h"
