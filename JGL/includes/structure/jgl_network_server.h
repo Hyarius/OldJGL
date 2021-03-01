@@ -112,11 +112,12 @@ namespace jgl
 		void message_all(const jgl::Message<T>& msg, jgl::Connexion<T>* p_ignore = nullptr)
 		{
 			bool error = false;
-
+			
 			for (auto& client : _active_connexion)
 			{
 				if (client != nullptr && client->is_connected())
 				{
+					std::cout << "Sending message fo type [" << msg.header.id << "] to client [" << client->id() << "]" << std::endl;
 					if (client != p_ignore)
 						client->send(msg);
 				}
