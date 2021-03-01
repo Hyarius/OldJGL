@@ -76,13 +76,6 @@ namespace jgl
 
 		return (*this);
 	}
-
-	void Unique_string::print_info() const
-	{
-		std::cout << "Size : " << _content.size() << std::endl;
-		std::cout << "Max size : " << _content.max_size() << std::endl;
-		std::cout << "Push size : " << _content.push_size() << std::endl;
-	}
 	const char* Unique_string::str()
 	{
 		uint32_t c = 0;

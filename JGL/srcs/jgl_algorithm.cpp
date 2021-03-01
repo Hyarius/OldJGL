@@ -185,6 +185,7 @@ namespace jgl
 		distance = move_center.distance(check_center);
 		if (distance < to_move->radius() + to_check->radius())
 		{
+
 			return (true);
 		}
 		return (false);
