@@ -43,7 +43,6 @@ namespace jgl
 		const bool empty() const { return ((*this)->empty()); }
 		const bool find(Glyph to_find) const;
 		const bool contain(Unique_string to_find) const;
-		void print_info() const;
 
 		const char* str();
 

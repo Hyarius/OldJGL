@@ -58,17 +58,6 @@ namespace jgl
 			error_exit(1, "Error with context creation");
 		}
 
-		/*std::cout << "Graphical info :\n" << std::endl;
-		std::cout << "Vendeur : " << glGetString(GL_VENDOR) << "\n" << std::endl;
-		std::cout << "Carte graphique : " << glGetString(GL_RENDERER) << "\n" << std::endl;
-		std::cout << "Version opengl : " << glGetString(GL_VERSION) << "\n" << std::endl;
-		std::cout << "Version shader : " << glGetString(GL_SHADING_LANGUAGE_VERSION) << "\n" << std::endl;
-		std::cout << "\n" << std::endl;*/
-
-
-		//_renderer = SDL_CreateRenderer(_window, -1, SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC);
-		//SDL_SetRenderDrawBlendMode(_renderer, SDL_BLENDMODE_BLEND);
-
 		SDL_WarpMouseInWindow(_window, static_cast<int>(_size.x / 2), static_cast<int>(_size.y / 2));
 
 		_max_fps = 60;

@@ -197,10 +197,6 @@ namespace jgl
 		for (uint32_t i = 0; i < size; i++)
 			result[i] = this->operator[](i + start);
 	}
-	void String::print_info() const
-	{
-		std::cout << "String : " << *this << "(ref : " << this->reference()->value() << ")" << std::endl;
-	}
 	jgl::String operator + (const char* str, jgl::String other)
 	{
 		jgl::String result;

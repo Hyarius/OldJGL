@@ -280,34 +280,6 @@ namespace jgl
 			clear_computed();
 			delete_array_content();
 		}
-		void print() const
-		{
-			std::cout << (char*)("Size : ") << _size << (char*)("/") << _max_size << (char*)("(") << _push_size << (char*)(")") << std::endl;
-			std::cout << (char*)("Array content : ") << std::endl;
-			for (uint32_t i = 0; i < _size; i++)
-			{
-				if (i != 0)
-					std::cout << (char*)(" - ");
-				const T& element = this->operator[](i);
-				std::cout << element;
-			}
-			std::cout << std::endl;
-		}
-		void print_info() const
-		{
-			std::cout << (char*)("Size : ") << _size << (char*)("/") << _max_size << (char*)("(") << _push_size << (char*)(")") << std::endl;
-		}
-		void print_content() const
-		{
-			std::cout << (char*)("Array content : ");
-			for (uint32_t i = 0; i < _size; i++)
-			{
-				if (i != 0)
-					std::cout << (char*)(" - ");
-				std::cout << this->operator[](i);
-			}
-			std::cout << std::endl;
-		}
 		T& push_back(const T elem)
 		{
 			if (_size + 1 >= _max_size)
@@ -340,6 +312,7 @@ namespace jgl
 		{
 			if (index >= _size)
 			{
+				DEBUG_LINE;
 				std::cout << "Segfault in jgl::Array - Invalid acces to an array of type " << typeid(T).name() << " at index " << index << " with a size of " << _size << std::endl;
 				//exit(1);
 			}
@@ -351,7 +324,8 @@ namespace jgl
 		{
 			if (index >= _size + 1)
 			{
-				std::cout << "Segfault in jgl::Array - Invalid acces" << std::endl;
+				DEBUG_LINE;
+				std::cout << "Segfault in jgl::Array - Invalid acces to an array of type " << typeid(T).name() << " at index " << index << " with a size of " << _size << std::endl;
 				exit(1);
 			}
 
@@ -371,7 +345,8 @@ namespace jgl
 		{
 			if (iter.index() >= _size + 1)
 			{
-				std::cout << "Segfault in jgl::Array - Invalid acces" << std::endl; 
+				DEBUG_LINE;
+				std::cout << "Segfault in jgl::Array - Invalid acces to an array of type " << typeid(T).name() << " at index " << index << " with a size of " << _size << std::endl;
 				//exit(1);
 			}
 

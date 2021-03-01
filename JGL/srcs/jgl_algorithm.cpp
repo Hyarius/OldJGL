@@ -185,7 +185,6 @@ namespace jgl
 		distance = move_center.distance(check_center);
 		if (distance < to_move->radius() + to_check->radius())
 		{
-			std::cout << "From " << move_center << " to " << check_center << " = " << distance << " vs " << ftoa(to_move->radius() + to_check->radius(), 2) << std::endl;
 			return (true);
 		}
 		return (false);

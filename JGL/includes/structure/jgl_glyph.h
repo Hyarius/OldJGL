@@ -21,8 +21,6 @@ namespace jgl
 
 		const char* content() const;
 
-		void print_info() const;
-
 		uint32_t size() const;
 		uint32_t value() const;
 

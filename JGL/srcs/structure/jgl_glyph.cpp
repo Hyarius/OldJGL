@@ -53,19 +53,6 @@ namespace jgl
 		return (_content);
 	}
 
-	void Glyph::print_info() const
-	{
-		std::cout << "Value total : " << value() << std::endl;
-		std::cout << "Binary : ";
-		for (uint32_t i = 0; i < 4; i++)
-		{
-			if (i != 0)
-				std::cout << " - ";
-			std::cout << std::bitset<8>(_content[i]); ;
-		}
-		std::cout << std::endl;
-	}
-
 	uint32_t Glyph::size() const
 	{
 		uint32_t result = 0;
