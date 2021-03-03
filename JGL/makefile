@@ -33,7 +33,7 @@ LIB =		SDL2 SDL2_image SDL2_mixer SDL2_ttf
 ##
 
 ##Basics flags
-CFLAGS=		`sdl2-config --cflags --libs` -pthread -O3 -flto -std=c++17 -Wno-deprecated-declarations -fsanitize=address -g
+CFLAGS=		`sdl2-config --cflags --libs` -pthread -O3 -flto -std=c++17
 
 ##Create the flags to includes every .h needed by this program
 IFLAGS =	$(foreach dir, $(INC_DIR), -I$(dir))
