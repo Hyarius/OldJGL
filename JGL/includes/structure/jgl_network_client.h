@@ -40,9 +40,19 @@ namespace jgl
 
 				_thread_context = std::thread([this]() { _asio_context.run(); });
 			}
-			catch (std::exception& e)
+			catch (const std::exception& e)
 			{
 				std::cerr << "Client Exception: " << e.what() << "\n";
+				return false;
+			}
+			catch (const std::string& ex)
+			{
+				std::cerr << "Client Exception: " << ex << "\n";
+				return false;
+			}
+			catch (...)
+			{
+				std::cerr << "Client Exception unknow" << "\n";
 				return false;
 			}
 			return true;

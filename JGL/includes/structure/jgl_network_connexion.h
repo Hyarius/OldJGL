@@ -24,12 +24,13 @@ namespace jgl
 		jgl::Locked_queue<jgl::Input_message<T>>* _input;
 		jgl::Message<T> _tmp_message;
 		Connexion_owner _owner = Connexion_owner::error;
-		uint32_t _id = 0;
+		uint32_t _id;
 
 	public:
 		Connexion(Connexion_owner parent, asio::io_context& p_context, asio::ip::tcp::socket p_socket, jgl::Locked_queue<jgl::Input_message<T>>* p_input)
 			: _context(p_context), _socket(std::move(p_socket)), _input(p_input), _tmp_message({})
 		{
+			_id = 0;
 			_owner = parent;
 		}
 
