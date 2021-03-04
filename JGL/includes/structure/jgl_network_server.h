@@ -73,13 +73,13 @@ namespace jgl
 
 						jgl::Connexion<T>* newconn = new jgl::Connexion<T>(jgl::Connexion_owner::server, _asio_context, std::move(socket), &_input);
 
-						_active_connexion.push_back(newconn);
-
-						newconn->connect_to_client(_id_count++);
-
 						if (client_connect(newconn))
 						{
-							std::cout << "[" << newconn->id() << "] Connexion Approved\n";
+							_active_connexion.push_back(std::move(newconn));
+
+							_active_connexion.back()->connect_to_client(_id_count++);
+
+							std::cout << "[" << _active_connexion.back()->id() << "] Connexion Approved\n";
 						}
 						else
 						{
