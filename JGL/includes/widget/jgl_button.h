@@ -28,7 +28,7 @@ namespace jgl
 
 		// - box redirection function
 		void set_tileset(Sprite_sheet* p_tileset) { _box.set_tileset(p_tileset); }
-		void set_tileset(jgl::String path) { _box.set_tileset(new Sprite_sheet(path, 3)); }
+		void set_tileset(jgl::String path) { _box.set_tileset(new Sprite_sheet(path, jgl::Vector2(6, 3))); }
 		void set_image(Sprite_sheet* p_image) { _box.set_image(p_image); }
 		void set_image(Image* p_image) { _box.set_image(new Sprite_sheet(p_image)); }
 		void set_image(jgl::String path) { _box.set_image(new Sprite_sheet(path, 1)); }
@@ -48,12 +48,16 @@ namespace jgl
 
 		// - label redirection function
 		void 		set_text(jgl::String p_text) { _label.set_text(p_text); }
-		void 		set_align(alignment p_align) { _label.set_align(p_align); }
+		void 		set_align(Horizontal_alignment p_align) { _label.set_horizontal_alignment(p_align); }
+		void 		set_align(Vertical_alignment p_align) { _label.set_vertical_alignment(p_align); }
 		void 		set_size(int p_size) { _label.set_size(p_size); }
 		void 		set_color(text_color p_color) { _label.set_color(p_color); }
 		void 		set_style(text_style p_style) { _label.set_style(p_style); }
+		void 		set_outline(int p_outline) { _label.set_outline(p_outline); }
+		int 		outline() { return (_label.outline()); }
 		jgl::String text() { return (_label.text()); }
-		alignment 	align() { return (_label.align()); }
+		Horizontal_alignment 	horizontal_alignment() { return (_label.horizontal_alignment()); }
+		Vertical_alignment 	vertical_alignment() { return (_label.vertical_alignment()); }
 		int 		size() { return (_label.size()); }
 		text_color 	color() { return (_label.color()); }
 		text_style 	style() { return (_label.style()); }

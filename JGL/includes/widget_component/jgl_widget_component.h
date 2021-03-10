@@ -68,7 +68,9 @@ namespace jgl
 	protected:
 		jgl::String _text;
 		int _size;
-		alignment _align;
+		int _outline;
+		Vertical_alignment _v_align;
+		Horizontal_alignment _h_align;
 		text_color _color;
 		text_style _style;
 
@@ -76,8 +78,10 @@ namespace jgl
 		w_textual_component();
 
 		void 		set_text(jgl::String p_text) { _text = p_text;}
-		void 		set_align(alignment p_align) { _align = p_align; }
+		void 		set_horizontal_alignment(Horizontal_alignment p_align) { _h_align = p_align; }
+		void 		set_vertical_alignment(Vertical_alignment p_align) { _v_align = p_align; }
 		void 		set_size(int p_size) { _size = p_size; }
+		void 		set_outline(int p_outline) { _outline = p_outline; }
 		void 		set_color(text_color p_color) { _color = p_color; }
 		void 		set_style(text_style p_style) { _style = p_style; }
 
@@ -86,8 +90,10 @@ namespace jgl
 
 		const jgl::String* ptr_text() const { return (&_text); }
 		jgl::String text() const { return (_text); }
-		alignment 	align() const { return (_align); }
+		Horizontal_alignment horizontal_alignment() const { return (_h_align); }
+		Vertical_alignment vertical_alignment() const { return (_v_align); }
 		int 		size() const { return (_size); }
+		int 		outline() const { return (_outline); }
 		text_color 	color() const { return (_color); }
 		text_style 	style() const { return (_style); }
 	};
@@ -224,7 +230,8 @@ namespace jgl
 			_value = 0;
 			_anchor = Vector2();
 			_area = Vector2();
-			_align = alignment::left;
+			_h_align = Horizontal_alignment::left;
+			_v_align = Vertical_alignment::left;
 			_size = 16;
 			_color = text_color::black;
 			_style = text_style::normal;
@@ -264,19 +271,30 @@ namespace jgl
 			if (_value_ptr != nullptr && *_value_ptr != _value)
 				set_value(*_value_ptr);
 
-			if (_align == alignment::left)
+			if (_h_align == Horizontal_alignment::left)
 			{
 				pos.x = calc_text_len(_text, _size) / 2.0f;
-				pos.y = _area.y / 2.0f;
 			}
-			else if (_align == alignment::centred)
+			else if (_h_align == Horizontal_alignment::centred)
 			{
-				pos = _area / 2;
+				pos.x = _area.x / 2;
 			}
-			else if (_align == alignment::right)
+			else if (_h_align == Horizontal_alignment::right)
 			{
 				pos.x = _area.x - calc_text_len(_text, _size) / 2.0f;
+			}
+
+			if (_v_align == Vertical_alignment::top)
+			{
+				pos.y = _size / 2.0f;
+			}
+			else if (_v_align == Vertical_alignment::centred)
+			{
 				pos.y = _area.y / 2.0f;
+			}
+			else if (_v_align == Vertical_alignment::bottom)
+			{
+				pos.y = _area.y - (_size / 2);
 			}
 			draw_centred_text(_text, pos + _anchor, _size, 0, 1.0f, _color, _style, viewport);
 		}
@@ -303,7 +321,8 @@ namespace jgl
 			_value = 0;
 			_anchor = Vector2();
 			_area = Vector2();
-			_align = alignment::left;
+			_h_align = Horizontal_alignment::left;
+			_v_align = Vertical_alignment::top;
 			_size = 16;
 			_color = text_color::black;
 			_style = text_style::normal;
@@ -342,19 +361,30 @@ namespace jgl
 			if (_value_ptr != nullptr && *_value_ptr != _value)
 				set_value(*_value_ptr);
 
-			if (_align == alignment::left)
+			if (_h_align == Horizontal_alignment::left)
 			{
 				pos.x = calc_text_len(_text, _size) / 2.0f;
-				pos.y = _area.y / 2.0f;
 			}
-			else if (_align == alignment::centred)
+			else if (_h_align == Horizontal_alignment::centred)
 			{
-				pos = _area / 2;
+				pos.x = _area.x / 2;
 			}
-			else if (_align == alignment::right)
+			else if (_h_align == Horizontal_alignment::right)
 			{
 				pos.x = _area.x - calc_text_len(_text, _size) / 2.0f;
+			}
+
+			if (_v_align == Vertical_alignment::top)
+			{
+				pos.y = _size / 2.0f;
+			}
+			else if (_v_align == Vertical_alignment::centred)
+			{
 				pos.y = _area.y / 2.0f;
+			}
+			else if (_v_align == Vertical_alignment::bottom)
+			{
+				pos.y = _area.y - (_size / 2);
 			}
 			draw_centred_text(_text, pos + _anchor, _size, 0, 1.0f, _color, _style, viewport);
 		}

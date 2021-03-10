@@ -37,7 +37,7 @@ namespace jgl
 		virtual ~Connexion()
 		{}
 
-		jgl::Locked_queue<jgl::Input_message<T>>& input()
+		jgl::Locked_queue<jgl::Input_message<T>>* input()
 		{
 			return (_input);
 		}

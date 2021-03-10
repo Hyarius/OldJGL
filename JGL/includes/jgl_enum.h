@@ -3,7 +3,13 @@
 
 namespace jgl
 {
-	enum class alignment
+	enum class Vertical_alignment
+	{
+		top = 0,
+		centred = 1,
+		bottom = 2
+	};
+	enum class Horizontal_alignment
 	{
 		left = 0,
 		centred = 1,

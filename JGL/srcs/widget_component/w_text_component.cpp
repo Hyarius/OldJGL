@@ -9,7 +9,8 @@ namespace jgl
 		_masked = false;
 		_area = Vector2();
 		_anchor = Vector2();
-		_align = alignment::left;
+		_h_align = Horizontal_alignment::left;
+		_v_align = Vertical_alignment::top;
 		_size = 16;
 		_color = text_color::black;
 		_style = text_style::normal;
@@ -26,24 +27,36 @@ namespace jgl
 	{
 		Vector2 pos;
 
-		if (_align == alignment::left)
+		if (_h_align == Horizontal_alignment::left)
 		{
 			pos.x = calc_text_len(_text, _size) / 2.0f;
-			pos.y = _area.y / 2.0f;
 		}
-		else if (_align == alignment::centred)
+		else if (_h_align == Horizontal_alignment::centred)
 		{
-			pos = _area / 2;
+			pos.x = _area.x / 2;
 		}
-		else if (_align == alignment::right)
+		else if (_h_align == Horizontal_alignment::right)
 		{
 			pos.x = _area.x - calc_text_len(_text, _size) / 2.0f;
+		}
+
+		if (_v_align == Vertical_alignment::top)
+		{
+			pos.y = _size / 2.0f;
+		}
+		else if (_v_align == Vertical_alignment::centred)
+		{
 			pos.y = _area.y / 2.0f;
 		}
+		else if (_v_align == Vertical_alignment::bottom)
+		{
+			pos.y = _area.y - (_size / 2);
+		}
+
 		pos += _anchor;
 		if (_masked == true)
-			draw_centred_text(jgl::normalize_string("", jgl::Glyph('*'), _text.size()), pos, _size, 0, 1.0f, _color, _style);
+			draw_centred_text(jgl::normalize_string("", jgl::Glyph('*'), _text.size()), pos, _size, _outline, 1.0f, _color, _style);
 		else
-			draw_centred_text(_text, pos, _size, 0, 1.0f, _color, _style);
+			draw_centred_text(_text, pos, _size, _outline, 1.0f, _color, _style);
 	}
 }

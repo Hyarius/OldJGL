@@ -58,7 +58,8 @@ namespace jgl
 
 		const bool empty() const { return (_content.empty()); }
 		const bool find(Glyph to_find) const;
-		const bool contain(Unique_string to_find) const;
+		const bool find(Unique_string to_find) const;
+		const bool compose_only(Unique_string to_find) const;
 		void pop_back() { _content.pop_back(); }
 		void erase(uint32_t index) { _content.erase(index); }
 

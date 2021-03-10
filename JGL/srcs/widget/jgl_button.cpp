@@ -13,7 +13,8 @@ namespace jgl
 
 		_box = w_box_component(this);
 		_label = w_text_component("Click me !", this);
-		_label.set_align(alignment::centred);
+		_label.set_horizontal_alignment(Horizontal_alignment::centred);
+		_label.set_vertical_alignment(Vertical_alignment::centred);
 
 		set_geometry(-1, -1);
 	}

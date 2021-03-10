@@ -42,7 +42,9 @@ namespace jgl
 		const uint32_t size() const ;
 		const bool empty() const { return ((*this)->empty()); }
 		const bool find(Glyph to_find) const;
-		const bool contain(Unique_string to_find) const;
+		const bool find(const char* to_find) const;
+		const bool find(Unique_string to_find) const;
+		const bool compose_only(Unique_string to_find) const;
 
 		const char* str();
 

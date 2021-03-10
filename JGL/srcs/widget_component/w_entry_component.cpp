@@ -11,7 +11,8 @@ namespace jgl
 		_cursor_to_draw = 0;
 		_area = Vector2();
 		_anchor = Vector2();
-		_align = alignment::left;
+		_h_align = Horizontal_alignment::left;
+		_v_align = Vertical_alignment::top;
 		_size = 16;
 		_color = text_color::black;
 		_style = text_style::normal;
@@ -92,30 +93,40 @@ namespace jgl
 
 	void 		w_entry_component::render(Viewport* viewport)
 	{
-		Vector2 pos;
+		Vector2 pos = 0;
 
-		if (_align == alignment::left)
+		if (_h_align == Horizontal_alignment::left)
 		{
 			pos.x = 0;
-			pos.y = 0;
 		}
-		else if (_align == alignment::centred)
+		else if (_h_align == Horizontal_alignment::centred)
 		{
 			pos.x = _area.x / 2 - calc_text_len(_text_to_draw, _size) / 2.0f;
-			pos.y = 0;
 		}
-		else if (_align == alignment::right)
+		else if (_h_align == Horizontal_alignment::right)
 		{
 			pos.x = _area.x - calc_text_len(_text_to_draw, _size);
+		}
+
+		if (_v_align == Vertical_alignment::top)
+		{
 			pos.y = 0;
 		}
+		else if (_v_align == Vertical_alignment::centred)
+		{
+			pos.y = _area.y / 2.0f - _size / 2;
+		}
+		else if (_v_align == Vertical_alignment::bottom)
+		{
+			pos.y = _area.y - _size;
+		}	
 
 		pos += _anchor;
 
 		if (_masked == true)
-			draw_text(jgl::normalize_string("", jgl::Glyph('*'), _text_to_draw.size()), pos, _size, 0, 1.0f, _color, _style);
+			draw_text(jgl::normalize_string("", jgl::Glyph('*'), _text_to_draw.size()), pos, _size, _outline, 1.0f, _color, _style);
 		else
-			draw_text(_text_to_draw, pos, _size, 0, 1.0f, _color, _style);
+			draw_text(_text_to_draw, pos - jgl::Vector2(0.0f, _size / 4.0f), _size, _outline, 1.0f, _color, _style);
 
 		pos.x += calc_text_len(_text_to_draw.substr(0, _cursor_to_draw), _size);
 

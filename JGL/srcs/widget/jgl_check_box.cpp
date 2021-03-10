@@ -6,7 +6,8 @@ namespace jgl
 	{
 		_box = w_box_component(this);
 		_label = w_text_component(p_label, this);
-		_label.set_align(alignment::centred);
+		_label.set_horizontal_alignment(Horizontal_alignment::centred);
+		_label.set_vertical_alignment(Vertical_alignment::centred);
 
 		_check = w_check_component(p_state, this);
 		_check.set_check(Color(70, 150, 255));

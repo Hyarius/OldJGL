@@ -18,7 +18,7 @@ namespace jgl
 		if (_owner == nullptr)
 			return;
 
-		if (_tileset != nullptr && _tileset->image() != nullptr && _tileset->size() == Vector2(3, 3))
+		if (_tileset != nullptr && _tileset->image() != nullptr && _tileset->size() == Vector2(6, 3))
 		{
 			float corner_size = (_corner_size == -1 ? 32.0f : _corner_size);
 			if (corner_size * 2 > _area.x || corner_size * 2 > _area.y)
@@ -36,45 +36,47 @@ namespace jgl
 				for (int i = 0; i < nb_sub_x + 2; i++)
 				{
 					Vector2 tmp_size;
-					int sprite;
+					Vector2 sprite;
 					if (i == 0 || i == nb_sub_x + 1)
 					{
 						if (i == 0)
 						{
 							if (j == 0)
-								sprite = 0;
+								sprite = jgl::Vector2(0, 0);
 							else if (j == nb_sub_y + 1)
-								sprite = 6;
+								sprite = jgl::Vector2(0, 2);
 							else
-								sprite = 3;
+								sprite = jgl::Vector2(0, 1);
 						}
 						else
 						{
 							if (j == 0)
-								sprite = 2;
+								sprite = jgl::Vector2(2, 0);
 							else if (j == nb_sub_y + 1)
-								sprite = 8;
+								sprite = jgl::Vector2(2, 2);
 							else
-								sprite = 5;
+								sprite = jgl::Vector2(2, 1);
 						}
 						tmp_size = corner_size;
 					}
 					else
 					{
 						if (j == 0)
-							sprite = 1;
+							sprite = jgl::Vector2(1, 0);
 						else if (j == nb_sub_y + 1)
-							sprite = 7;
+							sprite = jgl::Vector2(1, 2);
 						else
-							sprite = 4;
+							sprite = jgl::Vector2(1, 1);
 						tmp_size = h_middle_size;
 					}
-					_tileset->draw(sprite, pos, tmp_size, 1.0f);
+					if (_delta.a != 0.0f)
+						_tileset->draw(sprite + jgl::Vector2(3, 0), pos, tmp_size, 1.0f);
+					else
+						_tileset->draw(sprite, pos, tmp_size, 1.0f);
 					pos.x += tmp_size.x;
 				}
 				pos.y += (j == 0 || j == nb_sub_y + 1 ? corner_size : v_middle_size.y);
 			}
-			fill_rectangle(_anchor, _area, _delta);
 		}
 		else
 		{

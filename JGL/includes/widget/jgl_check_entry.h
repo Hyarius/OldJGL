@@ -42,12 +42,16 @@ namespace jgl
 
 		// - entry redirection function
 		void 		set_text(jgl::String p_text) { _entry.set_text(p_text); }
-		void 		set_align(alignment p_align) { _entry.set_align(p_align); }
+		void 		set_align(Horizontal_alignment p_align) { _entry.set_horizontal_alignment(p_align); }
+		void 		set_align(Vertical_alignment p_align) { _entry.set_vertical_alignment(p_align); }
 		void 		set_size(int p_size) { _entry.set_size(p_size); }
 		void 		set_color(text_color p_color) { _entry.set_color(p_color); }
 		void 		set_style(text_style p_style) { _entry.set_style(p_style); }
+		void 		set_outline(int p_outline) { _entry.set_outline(p_outline); }
+		int 		outline() { return (_entry.outline()); }
 		jgl::String text() { return (_entry.text()); }
-		alignment 	align() { return (_entry.align()); }
+		Horizontal_alignment 	horizontal_alignment() { return (_entry.horizontal_alignment()); }
+		Vertical_alignment 	vertical_alignment() { return (_entry.vertical_alignment()); }
 		int 		size() { return (_entry.size()); }
 		text_color 	color() { return (_entry.color()); }
 		text_style 	style() { return (_entry.style()); }

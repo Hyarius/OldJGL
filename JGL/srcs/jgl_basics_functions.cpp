@@ -343,7 +343,7 @@ namespace jgl
 
 	bool string_is_numeric(const jgl::String text)
 	{
-		return (text->contain("0123456789."));
+		return (text->compose_only("0123456789."));
 	}
 
 	bool is_middle(const float min, const float value, const float max)

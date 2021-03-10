@@ -265,7 +265,7 @@ namespace jgl
 				return(true);
 		return (false);
 	}
-	const bool String::contain(Unique_string to_find) const
+	const bool String::compose_only(Unique_string to_find) const
 	{
 		bool result = false;
 		for (uint32_t i = 0; i < size(); i++)
@@ -278,6 +278,26 @@ namespace jgl
 				return (false);
 		}
 		return (true);
+	}
+	const bool String::find(Unique_string to_find) const
+	{
+		for (uint32_t i = 0; i < size(); i++)
+		{
+			for (uint32_t j = 0; j < to_find.size(); j++)
+				if (this->operator[](i) == to_find[j])
+					return (true);
+		}
+		return (false);
+	}
+	const bool String::find(const char *to_find) const
+	{
+		for (uint32_t i = 0; i < size(); i++)
+		{
+			for (uint32_t j = 0; to_find[j] != '/0'; j++)
+				if (this->operator[](i) == to_find[j])
+					return (true);
+		}
+		return (false);
 	}
 	void String::clear()
 	{

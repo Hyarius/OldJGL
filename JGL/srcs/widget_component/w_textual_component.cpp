@@ -5,8 +5,10 @@ namespace jgl
 	w_textual_component::w_textual_component()
 	{
 		_text = "";
-		_align = alignment::left;
+		_h_align = Horizontal_alignment::left;
+		_v_align = Vertical_alignment::top;
 		_size = 16;
+		_outline = 0;
 		_color = text_color::black;
 		_style = text_style::normal;
 	}

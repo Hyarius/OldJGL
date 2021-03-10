@@ -144,7 +144,18 @@ namespace jgl
 		return (false);
 	}
 
-	const bool Unique_string::contain(const Unique_string to_find) const
+	const bool Unique_string::find(const Unique_string to_find) const
+	{
+		for (uint32_t i = 0; i < size(); i++)
+		{
+			for (uint32_t j = 0; j < to_find.size(); j++)
+				if (this->operator[](i) == to_find[j])
+					return (true);
+		}
+		return (false);
+	}
+
+	const bool Unique_string::compose_only(const Unique_string to_find) const
 	{
 		bool result = false;
 		for (uint32_t i = 0; i < size(); i++)

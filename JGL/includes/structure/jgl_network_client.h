@@ -58,6 +58,36 @@ namespace jgl
 			return true;
 		}
 
+		bool reconnect(const std::string& host, const uint16_t port)
+		{
+			try
+			{
+				//_connexion->disconnect();
+
+				asio::ip::tcp::resolver resolver(_asio_context);
+				asio::ip::tcp::resolver::results_type endpoints = resolver.resolve(host, std::to_string(port));
+
+				_connexion->connect_to_server(endpoints);
+				_connexion->input()->clear();
+			}
+			catch (const std::exception& e)
+			{
+				std::cerr << "Client Exception: " << e.what() << "\n";
+				return false;
+			}
+			catch (const std::string& ex)
+			{
+				std::cerr << "Client Exception: " << ex << "\n";
+				return false;
+			}
+			catch (...)
+			{
+				std::cerr << "Client Exception unknow" << "\n";
+				return false;
+			}
+			return true;
+		}
+
 		void disconnect()
 		{
 			if (is_connected())
@@ -70,7 +100,7 @@ namespace jgl
 			{
 				_thread_context.join();
 			}
-
+			_input.clear();
 		}
 
 		bool is_connected()
