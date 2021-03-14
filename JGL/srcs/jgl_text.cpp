@@ -161,8 +161,8 @@ namespace jgl
 		if (size <= 0 || c == '\0')
 			return (nullptr);
 
-		if (char_list.size() <= static_cast<uint32_t>(size))
-			char_list.resize(static_cast<uint32_t>(size) + 2);
+		if (char_list.size() <= size)
+			char_list.resize(size + 2);
 		if (char_list[size].size() <= static_cast<uint32_t>(style))
 			char_list[size].resize(static_cast<uint32_t>(style) + 2);
 		if (char_list[size][static_cast<uint32_t>(style)].size() <= static_cast<uint32_t>(color))

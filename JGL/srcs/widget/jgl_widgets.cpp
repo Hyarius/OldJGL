@@ -92,7 +92,7 @@ namespace jgl
 		
 		render();
 
-		for (int i = _childrens.size() - 1; i >= 0; i--)
+		for (int i = 0; i < _childrens.size(); i++)
 		{
 			_childrens[i]->render_children();
 		}
@@ -136,7 +136,7 @@ namespace jgl
 
 		auto tmp = std::find(children_list.begin(), children_list.end(), this);
 		children_list.erase(tmp);
-		children_list.insert(children_list.begin(), this);
+		children_list.push_back(this);
 	}
 
 	void Widget::send_back()
@@ -147,7 +147,7 @@ namespace jgl
 
 		auto tmp = std::find(children_list.begin(), children_list.end(), this);
 		children_list.erase(tmp);
-		children_list.insert(children_list.end(), this);
+		children_list.insert(children_list.begin(), this);
 	}
 
 	void Widget::raise()

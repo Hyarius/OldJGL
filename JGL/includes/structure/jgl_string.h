@@ -15,6 +15,7 @@ namespace jgl
 		String(const char* str);
 		String(char glyph);
 		String(jgl::Glyph glyph);
+		String(jgl::Glyph* str);
 		String(std::string str);
 		String(jgl::Unique_string str);
 

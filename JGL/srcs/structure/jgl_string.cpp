@@ -22,6 +22,12 @@ namespace jgl
 		for (uint32_t i = 0; str[i] != '\0'; i++)
 			push_back(str[i]);
 	}
+	String::String(jgl::Glyph *str) : jgl::Pool_object<Unique_string>()
+	{
+		clear();
+		for (uint32_t i = 0; i < str[i] != '\0'; i++)
+			push_back(str[i]);
+	}
 	String::String(std::string str) : jgl::Pool_object<Unique_string>()
 	{
 		clear();

@@ -330,7 +330,7 @@ namespace jgl
 			}
 
 			uint32_t i = size();
-			push_back('\0');
+			push_back({});
 			while (i >= 1 && i > index)
 			{
 				T tmp = this->operator[](i - 1);

@@ -117,7 +117,6 @@ namespace jgl
 			{
 				if (client != nullptr && client->is_connected())
 				{
-					std::cout << "Sending message fo type [" << msg.header.id << "] to client [" << client->id() << "]" << std::endl;
 					if (client != p_ignore)
 						client->send(msg);
 				}
