@@ -231,7 +231,7 @@ namespace jgl
 			_anchor = Vector2();
 			_area = Vector2();
 			_h_align = Horizontal_alignment::left;
-			_v_align = Vertical_alignment::left;
+			_v_align = Vertical_alignment::top;
 			_size = 16;
 			_color = text_color::black;
 			_style = text_style::normal;
