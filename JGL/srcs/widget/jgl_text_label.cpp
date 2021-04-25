@@ -21,11 +21,10 @@ namespace jgl
 
 	void Text_label::set_geometry_imp(Vector2 p_anchor, Vector2 p_area)
 	{
-		_viewport->resize(p_anchor, p_area);
 		_box.set_area(p_area);
-		_box.set_anchor(p_anchor);
+		_box.set_anchor(0);
 		_label.set_area(p_area - _box.border() * 4);
-		_label.set_anchor(p_anchor + _box.border() * 2);
+		_label.set_anchor(_box.border() * 2);
 		_label.calc_text_size(_label.area());
 	}
 
@@ -33,8 +32,9 @@ namespace jgl
 	{
 		if (is_active() == false)
 			return;
-		_box.render(_viewport);
-		_label.render(_viewport);
+		_viewport->use();
+		_box.render(_layer, _viewport);
+		_label.render(_layer, _viewport);
 	}
 
 	bool Text_label::handle_mouse()

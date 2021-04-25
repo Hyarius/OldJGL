@@ -27,14 +27,14 @@ namespace jgl
 		return (true);
 	}
 
-	void w_check_component::render(Viewport* viewport)
+	void w_check_component::render(const float layer, Viewport* viewport)
 	{
 		Vector2 pos_1;
 		Vector2 pos_2;
 
-		fill_rectangle(_anchor, _area, _back);
-		fill_rectangle(_anchor + _border, _area - _border * 2, _front);
+		fill_rectangle(_anchor, _area, _back, layer, viewport);
+		fill_rectangle(_anchor + _border, _area - _border * 2, _front, layer, viewport);
 		if (_state == true)
-			fill_rectangle(_anchor + _border * 2, _area - _border * 4, _check);
+			fill_rectangle(_anchor + _border * 2, _area - _border * 4, _check, layer, viewport);
 	}
 }

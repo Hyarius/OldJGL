@@ -91,7 +91,7 @@ namespace jgl
 		}
 	}
 
-	void 		w_entry_component::render(Viewport* viewport)
+	void 		w_entry_component::render(const float layer, Viewport* viewport)
 	{
 		Vector2 pos = 0;
 
@@ -124,13 +124,13 @@ namespace jgl
 		pos += _anchor;
 
 		if (_masked == true)
-			draw_text(jgl::normalize_string("", jgl::Glyph('*'), _text_to_draw.size()), pos, _size, _outline, 1.0f, _color, _style);
+			draw_text(jgl::normalize_string("", jgl::Glyph('*'), _text_to_draw.size()), pos, _size, _outline, 1.0f, _color, _style, layer, viewport);
 		else
-			draw_text(_text_to_draw, pos - jgl::Vector2(0.0f, _size / 4.0f), _size, _outline, 1.0f, _color, _style);
+			draw_text(_text_to_draw, pos - jgl::Vector2(0.0f, _size / 4.0f), _size, _outline, 1.0f, _color, _style, layer, viewport);
 
 		pos.x += calc_text_len(_text_to_draw.substr(0, _cursor_to_draw), _size);
 
 		if (_selected == true && (SDL_GetTicks() / 400) % 2 == 0)
-			fill_rectangle(pos, Vector2(2, _size), Color(50, 50, 50));
+			fill_rectangle(pos, Vector2(2, _size), Color(50, 50, 50), layer, viewport);
 	}
 }

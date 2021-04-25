@@ -63,7 +63,7 @@ namespace jgl
 		if (index == -1)
 			index = static_cast<int32_t>(_tabs.size());
 
-		for (uint32_t i = _tabs.size(); i <= static_cast<uint32_t>(index) + 1; i++)
+		for (size_t i = _tabs.size(); i <= static_cast<uint32_t>(index) + 1; i++)
 		{
 			_tabs.push_back(nullptr);
 			_buttons.push_back(nullptr);
@@ -136,6 +136,7 @@ namespace jgl
 	{
 		if (is_active() == false)
 			return;
+		_viewport->use();
 	}
 
 	bool Tab::handle_mouse()

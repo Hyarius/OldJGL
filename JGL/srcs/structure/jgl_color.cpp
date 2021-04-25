@@ -22,7 +22,7 @@ namespace jgl
 		return (&a);
 	}
 
-	Color Color::operator + (const Color& delta)
+	Color Color::operator + (const Color delta) const
 	{
 		Color	result;
 		float	base_alpha;

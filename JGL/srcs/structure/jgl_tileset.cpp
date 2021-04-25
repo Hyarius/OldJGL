@@ -33,10 +33,12 @@ namespace jgl
 			Sprite_sheet(p_image->path(), p_size);
 	}
 
-	void Sprite_sheet::draw(const int id, const Vector2 pos, const Vector2 size, const float p_alpha, const Viewport* viewport) const
+	void Sprite_sheet::draw(const int id, const Vector2 pos, const Vector2 size, const float p_alpha, const float layer, const Viewport* viewport) const
 	{
+		g_application->take_context_control();
 		glActiveTexture(GL_TEXTURE0);
 		glBindTexture(GL_TEXTURE_2D, _image->texture_id());
+		g_application->release_context_control();
 
 		Vector2 value[] = {
 			pos + Vector2(0.0f, 0.0f),
@@ -48,12 +50,12 @@ namespace jgl
 		};
 
 		Vector3 points[] = {
-			convert_screen_to_opengl(value[0]),
-			convert_screen_to_opengl(value[1]),
-			convert_screen_to_opengl(value[2]),
-			convert_screen_to_opengl(value[3]),
-			convert_screen_to_opengl(value[4]),
-			convert_screen_to_opengl(value[5])
+			convert_screen_to_opengl(value[0], layer),
+			convert_screen_to_opengl(value[1], layer),
+			convert_screen_to_opengl(value[2], layer),
+			convert_screen_to_opengl(value[3], layer),
+			convert_screen_to_opengl(value[4], layer),
+			convert_screen_to_opengl(value[5], layer)
 		};
 
 		int			i;
@@ -76,18 +78,20 @@ namespace jgl
 		draw_triangle_texture(points, uvs, p_alpha, 6);
 	}
 
-	void Sprite_sheet::draw_centred(const int id, const Vector2 pos, const Vector2 size, const float p_alpha, const Viewport* viewport) const
+	void Sprite_sheet::draw_centred(const int id, const Vector2 pos, const Vector2 size, const float p_alpha, const float layer, const Viewport* viewport) const
 	{
-		draw(id, pos - size / 2, size, p_alpha, viewport);
+		draw(id, pos - size / 2, size, p_alpha, layer, viewport);
 	}
 
-	void Sprite_sheet::draw(const Vector2 coord, const Vector2 pos, const Vector2 size, const float p_alpha, const Viewport* viewport) const
+	void Sprite_sheet::draw(const Vector2 coord, const Vector2 pos, const Vector2 size, const float p_alpha, const float layer, const Viewport* viewport) const
 	{
 		if (viewport != nullptr)
 			viewport->use();
 
+		g_application->take_context_control();
 		glActiveTexture(GL_TEXTURE0);
 		glBindTexture(GL_TEXTURE_2D, _image->texture_id());
+		g_application->release_context_control();
 
 		Vector2 value[] = {
 			pos + Vector2(0.0f, 0.0f),
@@ -99,12 +103,12 @@ namespace jgl
 		};
 
 		Vector3 points[] = {
-			convert_screen_to_opengl(value[0]),
-			convert_screen_to_opengl(value[1]),
-			convert_screen_to_opengl(value[2]),
-			convert_screen_to_opengl(value[3]),
-			convert_screen_to_opengl(value[4]),
-			convert_screen_to_opengl(value[5])
+			convert_screen_to_opengl(value[0], layer),
+			convert_screen_to_opengl(value[1], layer),
+			convert_screen_to_opengl(value[2], layer),
+			convert_screen_to_opengl(value[3], layer),
+			convert_screen_to_opengl(value[4], layer),
+			convert_screen_to_opengl(value[5], layer)
 		};
 
 		uint32_t i = static_cast<uint32_t>(coord.x + coord.y * _size.x);
@@ -125,8 +129,8 @@ namespace jgl
 		draw_triangle_texture(points, uvs, p_alpha, 6);
 	}
 
-	void Sprite_sheet::draw_centred(const Vector2 coord, const Vector2 pos, const Vector2 size, const float p_alpha, const Viewport* viewport) const
+	void Sprite_sheet::draw_centred(const Vector2 coord, const Vector2 pos, const Vector2 size, const float p_alpha, const float layer, const Viewport* viewport) const
 	{
-		draw(coord, pos - size / 2, size, p_alpha, viewport); 
+		draw(coord, pos - size / 2, size, p_alpha, layer, viewport); 
 	}
 }

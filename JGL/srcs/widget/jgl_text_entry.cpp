@@ -9,7 +9,7 @@ namespace jgl
 
 		_select = false;
 		_next_input = 0;
-		_input_delay = 200;
+		_input_delay = 1;
 
 		set_geometry(-1, -1);
 		unselect();
@@ -24,11 +24,10 @@ namespace jgl
 
 	void Text_entry::set_geometry_imp(Vector2 p_anchor, Vector2 p_area)
 	{
-		_viewport->resize(p_anchor, p_area);
 		_box.set_area(p_area);
-		_box.set_anchor(p_anchor);
+		_box.set_anchor(0);
 		_entry.set_area(p_area - _box.border() * 4);
-		_entry.set_anchor(p_anchor + _box.border() * 2);
+		_entry.set_anchor(_box.border() * 2);
 		_entry.calc_text_size_height(_entry.area());
 		_entry.calc_text_to_draw();
 	}
@@ -37,8 +36,9 @@ namespace jgl
 	{
 		if (is_active() == false)
 			return;
-		_box.render(_viewport);
-		_entry.render(_viewport);
+		_viewport->use();
+		_box.render(_layer, _viewport);
+		_entry.render(_layer, _viewport);
 	}
 
 	bool Text_entry::handle_mouse()

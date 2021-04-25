@@ -19,8 +19,8 @@ namespace jgl
 	Image* get_char(const Glyph c, const uint32_t size = 16, const uint32_t outline = 0, const text_color color = text_color::black, const text_style style = text_style::normal);
 	int count_char_len(const char to_parse);
 	int create_char_unicode(char* result, const char* base, const uint32_t index);
-	int draw_text(const jgl::String text, const Vector2 coord, const uint32_t size = 16, const uint32_t outline = 0, const float alpha = 1.0f, const text_color color = text_color::black, const text_style style = text_style::normal, const Viewport* viewport = nullptr);
-	int draw_centred_text(const jgl::String text, const Vector2 coord, const uint32_t size = 16, const uint32_t outline = 0, const float alpha = 1.0f, const text_color color = text_color::black, const text_style style = text_style::normal, const Viewport* viewport = nullptr);
+	int draw_text(const jgl::String text, const Vector2 coord, const uint32_t size = 16, const uint32_t outline = 0, const float alpha = 1.0f, const text_color color = text_color::black, const text_style style = text_style::normal, const float layer = 0.0f, const Viewport* viewport = nullptr);
+	int draw_centred_text(const jgl::String text, const Vector2 coord, const uint32_t size = 16, const uint32_t outline = 0, const float alpha = 1.0f, const text_color color = text_color::black, const text_style style = text_style::normal, const float layer = 0.0f, const Viewport* viewport = nullptr);
 	int calc_text_len(const jgl::String text, const uint32_t size = 16);
 	int	max_char_in_box(const int space, const uint32_t size = 16);
 	void delete_loaded_char();

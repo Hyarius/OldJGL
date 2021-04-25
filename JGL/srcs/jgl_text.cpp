@@ -88,12 +88,12 @@ namespace jgl
 			if (font[size] == nullptr)
 				error_exit(1, "Can't load a font");
 		}
-
 		return (font[size]);
 	}
 
 	TTF_Font* get_font_outline(const uint32_t size)
 	{
+		g_application->take_context_control();
 		if (size < 2)
 			error_exit(1, "Can't load a font of size < 2");
 		if (g_application == nullptr || g_font_path == "")
@@ -108,7 +108,7 @@ namespace jgl
 			if (font_outline[size] == nullptr)
 				error_exit(1, "Can't load a font");
 		}
-
+		g_application->release_context_control();
 		return (font_outline[size]);
 	}
 
@@ -117,6 +117,7 @@ namespace jgl
 		const char* text;
 
 		TTF_Font* tmp = get_font(static_cast<uint32_t>(size));
+		g_application->take_context_control();
 		TTF_SetFontStyle(tmp, static_cast<int>(style));
 
 		std::string tmp_str = str.std();
@@ -146,31 +147,82 @@ namespace jgl
 
 		TTF_SetFontStyle(tmp, static_cast<int>(text_style::normal));
 
+		g_application->release_context_control();
+
 		if (surface == nullptr)
 		{
 			error_exit(1, "Can't create a text with the string : " + str);
-			return (nullptr);
 		}
-		return (new Image(surface));
+		Image* result = new Image(surface);
+		return (result);
+	}
+
+	Uint32 getpixel(SDL_Surface* surface, int x, int y)
+	{
+		int bpp = surface->format->BytesPerPixel;
+		/* Here p is the address to the pixel we want to retrieve */
+		Uint8* p = (Uint8*)surface->pixels + y * surface->pitch + x * bpp;
+
+		switch (bpp)
+		{
+		case 1:
+			return *p;
+			break;
+
+		case 2:
+			return *(Uint16*)p;
+			break;
+
+		case 3:
+			if (SDL_BYTEORDER == SDL_BIG_ENDIAN)
+				return p[0] << 16 | p[1] << 8 | p[2];
+			else
+				return p[0] | p[1] << 8 | p[2] << 16;
+			break;
+
+		case 4:
+			return *(Uint32*)p;
+			break;
+
+		default:
+			return 0;       /* shouldn't happen, but avoids warnings */
+		}
 	}
 
 	Image* get_char(const Glyph c, const uint32_t size, const uint32_t outline, const text_color color, const text_style style)
 	{
+		static std::mutex global_mutex;
 		const char *text;
 
+
 		if (size <= 0 || c == '\0')
+		{
 			return (nullptr);
+		}
+
+		global_mutex.lock();
 
 		if (char_list.size() <= size)
+		{
 			char_list.resize(size + 2);
+		}
 		if (char_list[size].size() <= static_cast<uint32_t>(style))
+		{
 			char_list[size].resize(static_cast<uint32_t>(style) + 2);
+		}
 		if (char_list[size][static_cast<uint32_t>(style)].size() <= static_cast<uint32_t>(color))
+		{
 			char_list[size][static_cast<uint32_t>(style)].resize(static_cast<uint32_t>(color) + 2);
+		}
 		if (char_list[size][static_cast<uint32_t>(style)][static_cast<uint32_t>(color)].size() <= outline)
+		{
 			char_list[size][static_cast<uint32_t>(style)][static_cast<uint32_t>(color)].resize(outline + 1);
+		}
+		global_mutex.unlock();
+
 		if (char_list[size][static_cast<uint32_t>(style)][static_cast<uint32_t>(color)][outline].count(c.value()) == 0)
 		{
+			g_application->take_context_control();
 			TTF_Font* tmp = get_font(static_cast<uint32_t>(size));
 			//
 			TTF_SetFontStyle(tmp, static_cast<int>(style));
@@ -180,14 +232,17 @@ namespace jgl
 			SDL_Surface* surface = TTF_RenderUTF8_Blended(tmp, text, get_color(static_cast<uint32_t>(color)));
 			if (outline > 0)
 			{
+
 				TTF_Font* tmp_outline = get_font_outline(static_cast<uint32_t>(size));
 				TTF_SetFontStyle(tmp_outline, static_cast<int>(style));
 				TTF_SetFontOutline(tmp_outline, outline);
+
 
 				SDL_Surface* outline_surface = TTF_RenderUTF8_Blended(tmp_outline, text, get_color(static_cast<uint32_t>(text_color::black)));
 				if (outline_surface == nullptr)
 					error_exit(1, "Error while creating the outline for char ");
 				SDL_Rect rect = { static_cast<int>(outline), static_cast<int>(outline), surface->w, surface->h };
+
 
 				SDL_SetSurfaceBlendMode(surface, SDL_BLENDMODE_BLEND);
 				SDL_BlitSurface(surface, NULL, outline_surface, &rect);
@@ -195,17 +250,41 @@ namespace jgl
 
 				surface = outline_surface;
 
+
 				TTF_SetFontStyle(tmp_outline, static_cast<int>(text_style::normal));
+
 			}
 
+			/*for (size_t j = 0; j < surface->h; j++)
+			{
+				for (size_t i = 0; i < surface->w; i++)
+				{
+					if ((getpixel(surface, i, j) & 2130706432) != 0)
+						std::cout << ".";
+					else
+						std::cout << " ";
+				}
+				std::cout << std::endl;
+			}*/
+
+			g_application->release_context_control();
 			if (surface != nullptr)
 			{
+
 				Image* tmp_image = new Image(surface);
+
 				char_direct_list.push_back(tmp_image);
+
+				global_mutex.lock();
+
 				char_list[size][static_cast<uint32_t>(style)][static_cast<uint32_t>(color)][outline][c.value()] = tmp_image;
+
+				global_mutex.unlock();
+
 			}
 			else
 				error_exit(1, "Error while creating the char");
+
 
 			TTF_SetFontStyle(tmp, static_cast<int>(text_style::normal));
 		}
@@ -263,7 +342,7 @@ namespace jgl
 		return (limit);
 	}
 
-	int				draw_text(const jgl::String text, const Vector2 coord, const uint32_t size, const uint32_t outline, const float alpha, const text_color color, const text_style style, const Viewport* viewport)
+	int				draw_text(const jgl::String text, const Vector2 coord, const uint32_t size, const uint32_t outline, const float alpha, const text_color color, const text_style style, const float layer, const Viewport* viewport)
 	{
 		Image* image;
 		uint32_t			i = 0;
@@ -281,7 +360,7 @@ namespace jgl
 			{
 				image = get_char(text[i], size, outline, color, style);
 
-				image->draw(rel_coord, image->size(), alpha, viewport);
+				image->draw(rel_coord, image->size(), alpha, layer, viewport);
 				delta += static_cast<int>(image->size().x);
 			}
 			i++;
@@ -324,15 +403,15 @@ namespace jgl
 		return (delta);
 	}
 
-	int				draw_centred_text(const jgl::String text, const Vector2 coord, const uint32_t size, const uint32_t outline, const float alpha, const text_color color, const text_style style, const Viewport* viewport)
+	int				draw_centred_text(const jgl::String text, const Vector2 coord, const uint32_t size, const uint32_t outline, const float alpha, const text_color color, const text_style style, const float layer, const Viewport* viewport)
 	{
 		if (size <= 2)
 			return 0;
-
 		int x = calc_text_len(text, size);
 		int y = static_cast<int>(get_char('M', size, 0, color, style)->size().y);
 
-		return (draw_text(text, Vector2(coord.x - x / 2, coord.y - y / 2), size, outline, alpha, color, style, viewport));
+		int result = draw_text(text, Vector2(coord.x - x / 2, coord.y - y / 2), size, outline, alpha, color, style, layer, viewport);
+		return (result);
 	}
 
 	void delete_loaded_char()

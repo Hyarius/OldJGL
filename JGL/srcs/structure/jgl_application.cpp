@@ -5,11 +5,13 @@ jgl::Perlin* g_perlin;
 
 namespace jgl
 {
-	Application::Application(jgl::String name, Vector2 p_size, Color p_color)
+	Application::Application(jgl::String name, Vector2 p_size, Color p_color, bool multithread) :
+		_opengl_control_mutex()
 	{
 		SDL_Init(SDL_INIT_EVERYTHING);
 		IMG_Init(IMG_INIT_JPG | IMG_INIT_PNG);
 
+		_multithread = multithread;
 		//check_sdl_error(__FILE__, __LINE__);
 
 		SDL_GL_SetAttribute(SDL_GL_CONTEXT_MAJOR_VERSION, 3);
@@ -60,8 +62,6 @@ namespace jgl
 
 		SDL_WarpMouseInWindow(_window, static_cast<int>(_size.x / 2), static_cast<int>(_size.y / 2));
 
-		_max_fps = 60;
-		_fps_ratio = 1.0f;
 		glewExperimental = true;
 		SDL_GL_MakeCurrent(_window, _context);
 		int err = glewInit();
@@ -71,6 +71,7 @@ namespace jgl
 			exit(1);
 		}
 
+		_background = p_color;
 
 		glClearColor((GLclampf)p_color.r, (GLclampf)p_color.g, (GLclampf)p_color.b, 1.0f);
 
@@ -167,6 +168,8 @@ namespace jgl
 		glGenBuffers(1, &_color_buffer);
 		glGenBuffers(1, &_texture_buffer);
 
+		_input_refresh = 2400;
+		_render_refresh = 1200;
 		
 		glBindBuffer(GL_ARRAY_BUFFER, _vertex_buffer);
 		glBufferData(GL_ARRAY_BUFFER, static_cast<GLuint>(sizeof(GLfloat) * _size.x * _size.y * 3), NULL, GL_STATIC_DRAW);
@@ -191,21 +194,44 @@ namespace jgl
 		_central_widget = new Window();
 		_central_widget->set_geometry(Vector2(0, 0), _size);
 		_central_widget->set_color(p_color);
+		_central_widget->set_layer(1);
 		_central_widget->activate();
 		//_viewport->use();
 		g_font_path = "";
 		start_jgl();
 
 		SDL_GL_SetSwapInterval(0);
+		
+		_main_thread = std::this_thread::get_id();
+		_active_opengl_thread_id = std::this_thread::get_id();
+	}
+
+	void Application::take_context_control()
+	{
+		_opengl_control_mutex.lock();
+		if (SDL_GL_MakeCurrent(_window, _context) != 0)
+		{
+			std::cout << "Error : " << SDL_GetError();
+		}
+	}
+
+	void Application::release_context_control()
+	{
+		if (SDL_GL_MakeCurrent(NULL, NULL) != 0)
+		{
+			std::cout << "Error : " << SDL_GetError();
+		}
+		_opengl_control_mutex.unlock();
 	}
 
 	void Application::resize(Vector2 p_size)
 	{
 		_size = p_size;
-
+		take_context_control();
 		SDL_SetWindowSize(_window, static_cast<int>(_size.x), static_cast<int>(_size.y));
 		_central_widget->set_geometry(Vector2(0, 0), _size);
 		SDL_SetWindowPosition(_window, SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED);
+		release_context_control();
 	}
 
 	void Application::set_background(Color p_color)
@@ -220,13 +246,17 @@ namespace jgl
 
 	void Application::clear()
 	{
-		glClearColor(0.1f, 0.1f, 0.1f, 1.0f);
+		take_context_control();
+		glClearColor(_background.r, _background.g, _background.b, 1.0f);
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+		release_context_control();
 	}
 
 	void Application::render()
 	{
+		take_context_control();
 		SDL_GL_SwapWindow(_window);
+		release_context_control();
 	}
 
 	void start_jgl()
@@ -285,42 +315,90 @@ namespace jgl
 		quit_jgl();
 	}
 
-	int Application::run()
+	void Application::handle_input()
+	{
+		if (_central_widget != nullptr)
+		{
+			_central_widget->handle_event();
+			_central_widget->update_children();
+		}
+
+		
+	}
+
+	void Application::handle_actualize()
+	{
+		take_context_control();
+		_time = SDL_GetTicks();
+
+		g_mouse->actualize();
+		g_keyboard->actualize();
+		release_context_control();
+	}
+
+	void Application::handle_render()
+	{
+		clear();
+
+		if (_central_widget != nullptr)
+			_central_widget->render_children();
+
+		render();
+	}
+
+	void Application::run_input()
 	{
 		_play = true;
 
 		while (_play == true)
 		{
-			g_mouse->actualize();
-			g_keyboard->actualize();
+			handle_actualize();
+			handle_input();
+		}
+	}
 
-			_time = SDL_GetTicks();
+	std::thread Application::spawn_input_thread()
+	{
+		return (std::thread([this] {this->run_input(); }));
+	}
 
-			clear();
+	void Application::read_input()
+	{
+		take_context_control();
+		_poll_ret = SDL_PollEvent(&_event);
+		release_context_control();
 
-			//_central_widget->render();
-
-			if (_central_widget != nullptr)
-				_central_widget->render_children();
-
-			if (_central_widget != nullptr)
-				_central_widget->handle_event();
-
-			if (_central_widget != nullptr)
-				_central_widget->update_children();
-
-			check_frame(true);
-
-			render();
-
-			//SDL_RenderSetViewport(_renderer, NULL);
-
-			_poll_ret = SDL_PollEvent(&_event);
-
-			if (_central_widget != nullptr && _poll_ret != 0)
+		if (_poll_ret != 0)
+		{
+			if (_event.type == SDL_QUIT)
 			{
-				if (_event.type == SDL_QUIT)
-					quit();
+				_play = false;
+			}
+		}
+	}
+
+	int Application::run()
+	{
+		if (_multithread == true)
+		{
+			std::thread input_thread = spawn_input_thread();
+
+			while (_play == true)
+			{
+				read_input();
+				handle_render();
+			}
+
+			input_thread.join();
+		}
+		else
+		{
+			while (_play == true)
+			{
+				read_input();
+				handle_actualize();
+				handle_input();
+				handle_render();
 			}
 		}
 

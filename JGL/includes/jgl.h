@@ -13,7 +13,7 @@
 	#include "dirent.h"
 #endif
 
-#define DEBUG_LINE std::cout<<__FILE__<<(char*)(" in ")<<__FUNCTION__<<(char *)(" at line ")<<__LINE__<<std::endl
+#define DEBUG_LINE() std::cout<<__FILE__<<(char*)(" in ")<<__FUNCTION__<<(char *)(" at line ")<<__LINE__<<std::endl
 #define LOG_LINE(text) std::cout<<"["<<__FILE__<<(char*)("] [")<<__FUNCTION__<<(char *)("] L[")<<__LINE__<< "] : " <<text<<std::endl
 
 #include "jgl_enum.h"
@@ -42,7 +42,6 @@
 #include "jgl_tileset.h"
 #include "jgl_mesh.h"
 #include "jgl_algorithm.h"
-#include "jgl_engine.h"
 #include "jgl_widgets.h"
 
 #include "jgl_contener.h"
@@ -59,7 +58,6 @@
 #include "jgl_vscrollable_bar.h"
 #include "jgl_hscrollable_bar.h"
 #include "jgl_image_label.h"
-#include "jgl_render_widget.h"
 #include "jgl_progressive_bar.h"
 
 #include "jgl_file_handler.h"

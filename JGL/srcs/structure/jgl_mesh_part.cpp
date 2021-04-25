@@ -9,12 +9,13 @@ namespace jgl
 
 	Mesh_part::Mesh_part(const jgl::String p_name)
 	{
-
 		_name = p_name.copy();
 
+		g_application->take_context_control();
 		glGenBuffers(1, &_vertex_buffer);
 		glGenBuffers(1, &_normale_buffer);
 		glGenBuffers(1, &_uv_buffer);
+		g_application->release_context_control();
 
 		_faces.clear();
 
@@ -106,6 +107,7 @@ namespace jgl
 		if (_baked_vertices.size() == 0)
 			return;
 
+		g_application->take_context_control();
 		glBindBuffer(GL_ARRAY_BUFFER, _vertex_buffer);
 		glBufferData(GL_ARRAY_BUFFER, _baked_vertices.size() * 3 * sizeof(float), static_cast<const float*>(&(tmp[0].x)), GL_STATIC_DRAW);
 
@@ -114,6 +116,7 @@ namespace jgl
 
 		glBindBuffer(GL_ARRAY_BUFFER, _normale_buffer);
 		glBufferData(GL_ARRAY_BUFFER, _baked_normales.size() * 3 * sizeof(float), static_cast<const float*>(&(tmp3[0].x)), GL_STATIC_DRAW);
+		g_application->release_context_control();
 	}
 
 	void Mesh_part::render_color(const Mesh* parent, const Camera* camera, Vector3 p_pos, const jgl::Viewport* viewport)
@@ -121,9 +124,11 @@ namespace jgl
 		if (_baked_vertices.size() == 0)
 			return;
 
+
 		if (viewport != nullptr)
 			viewport->use();
 
+		g_application->take_context_control();
 		glUseProgram(g_application->program_color_model());
 
 		glUniform3f(g_application->pos_colorID(), p_pos.x, p_pos.y, p_pos.z);
@@ -171,6 +176,7 @@ namespace jgl
 
 		glDisableVertexAttribArray(0);
 		glDisableVertexAttribArray(1);
+		g_application->release_context_control();
 	}
 
 	void Mesh_part::render_texture(const Mesh* parent, const Camera* camera, Vector3 p_pos, const jgl::Viewport* viewport)
@@ -180,6 +186,8 @@ namespace jgl
 
 		if (viewport != nullptr)
 			viewport->use();
+
+		g_application->take_context_control();
 
 		glUseProgram(g_application->program_texture_model());
 
@@ -250,6 +258,7 @@ namespace jgl
 		glDisableVertexAttribArray(0);
 		glDisableVertexAttribArray(1);
 		glDisableVertexAttribArray(2);
+		g_application->release_context_control();
 	}
 
 	void Mesh_part::render(const Mesh* parent, const Camera* camera, Vector3 p_pos, const jgl::Viewport* viewport)
@@ -268,6 +277,7 @@ namespace jgl
 
 		clear_baked();
 	}
+
 	void Mesh_part::clear_baked()
 	{
 		_faces.clear();

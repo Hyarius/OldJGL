@@ -14,10 +14,18 @@ namespace jgl
 		client
 	};
 
+	enum class Connexion_state
+	{
+		unknown = 0,
+		refused = -1,
+		accepted = 1
+	};
+
 	template<typename T>
 	class Connexion
 	{
 	protected:
+		Connexion_state _state;
 		asio::ip::tcp::socket _socket;
 		asio::io_context& _context;
 		jgl::Locked_queue<Message<T>> _output;
@@ -30,8 +38,21 @@ namespace jgl
 		Connexion(Connexion_owner parent, asio::io_context& p_context, asio::ip::tcp::socket p_socket, jgl::Locked_queue<jgl::Input_message<T>>* p_input)
 			: _context(p_context), _socket(std::move(p_socket)), _input(p_input), _tmp_message({})
 		{
+			_state = Connexion_state::unknown;
 			_id = 0;
 			_owner = parent;
+		}
+
+		Connexion_state state() {return (_state);}
+
+		void accepted_by_server()
+		{
+			_state = Connexion_state::accepted;
+		}
+
+		void refused_by_server()
+		{
+			_state = Connexion_state::refused;
 		}
 
 		virtual ~Connexion()

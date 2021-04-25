@@ -44,6 +44,11 @@ namespace jgl
 			return (false);
 		}
 
+		Message()
+		{
+			content.clear();
+		}
+
 		Message(T type)
 		{
 			header = Message_header(type);
@@ -134,7 +139,6 @@ namespace jgl
 			return (msg.type());
 		}
 
-		// Again, a friendly string maker
 		friend std::ostream& operator<<(std::ostream& os, const Input_message<T>& msg)
 		{
 			os << msg.msg;

@@ -292,7 +292,7 @@ namespace jgl
 	jgl::String itoa(const int x, const int d)
 	{
 		std::string result = std::to_string(x);
-		uint32_t i = result.size();
+		size_t i = result.size();
 
 		if (d > 0)
 		{
@@ -358,6 +358,13 @@ namespace jgl
 	bool is_middle(const jgl::Vector2 min, const jgl::Vector2 value, const jgl::Vector2 max)
 	{
 		if (is_middle(min.x, value.x, max.x) == true && is_middle(min.y, value.y, max.y) == true)
+			return (true);
+		return (false);
+	}
+
+	bool is_middle(const jgl::Vector3 min, const jgl::Vector3 value, const jgl::Vector3 max)
+	{
+		if (is_middle(min.x, value.x, max.x) == true && is_middle(min.y, value.y, max.y) == true && is_middle(min.z, value.z, max.z) == true)
 			return (true);
 		return (false);
 	}
@@ -440,13 +447,16 @@ namespace jgl
 		return (Vector2(x, y));
 	}
 
-	Vector3				convert_screen_to_opengl(const Vector2 source)
+	Vector3				convert_screen_to_opengl(const Vector2 source, float level)
 	{
 		if (g_application == nullptr)
 			error_exit(1, "jgl::Application not created");
 		float x = (source.x) / (g_application->active_viewport()->area().x / 2.0f) - 1.0f;
 		float y = -((source.y) / (g_application->active_viewport()->area().y / 2.0f) - 1.0f);
-		return (Vector3(x, y, 0.0f));
+		float ratio = 1;
+		if (level != 0)
+			ratio = 1.0f / level;
+		return (Vector3(x, y, ratio));
 	}
 
 	Vector2				convert_opengl_to_screen(const Vector2 source)
@@ -484,10 +494,14 @@ namespace jgl
 		amask = 0xff000000;
 #endif
 
+		
+
+		g_application->take_context_control();
 		surface = SDL_CreateRGBSurface(0, 1, 1, 32, rmask, gmask, bmask, amask);
 		SDL_FillRect(surface, NULL, SDL_MapRGBA(surface->format,
 			(Uint8)(p_color.r * 255), (Uint8)(p_color.g * 255),
 			(Uint8)(p_color.b * 255), (Uint8)(p_color.a * 255)));
+		g_application->release_context_control();
 
 		return (surface);
 	}

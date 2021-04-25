@@ -4,7 +4,7 @@
 #include "jgl_includes.h"
 
 #include "jgl_vector.h"
-
+#include "jgl_string.h"
 
 namespace jgl
 {
@@ -39,6 +39,7 @@ namespace jgl
 	jgl::String normalize_float(const float num, const int after_point, const jgl::Glyph c, const uint32_t size);
 	bool is_middle(const float min, const float value, const float max);
 	bool is_middle(const jgl::Vector2 min, const jgl::Vector2 value, const jgl::Vector2 max);
+	bool is_middle(const jgl::Vector3 min, const jgl::Vector3 value, const jgl::Vector3 max);
 	jgl::Array<jgl::Vector2> calc_line_2d(const float x1, const float y1, const float x2, const float y2);
 	int32_t generate_nbr_from_2D(const int64_t seed, const int32_t x, const int32_t y);
 	int32_t generate_nbr(const int32_t min, const int32_t max);
@@ -67,7 +68,7 @@ namespace jgl
 		return (src_map.count(value));
 	}
 	Vector2 convert_screenV2_to_opengl(const Vector2 source);
-	Vector3 convert_screen_to_opengl(const Vector2 source);
+	Vector3 convert_screen_to_opengl(const Vector2 source, float level = 0);
 	Vector2 convert_opengl_to_screen(const Vector3 source);
 	Vector2 convert_opengl_to_screen(const Vector2 source);
 	SDL_Surface* create_surface_color(const Color p_color);

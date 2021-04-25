@@ -90,9 +90,6 @@
     <ClCompile Include="srcs\structure\jgl_data.cpp">
       <Filter>Source Files\structure</Filter>
     </ClCompile>
-    <ClCompile Include="srcs\structure\jgl_engine.cpp">
-      <Filter>Source Files\structure</Filter>
-    </ClCompile>
     <ClCompile Include="srcs\structure\jgl_glyph.cpp">
       <Filter>Source Files\structure</Filter>
     </ClCompile>
@@ -165,9 +162,6 @@
     <ClCompile Include="srcs\widget\jgl_image_label.cpp">
       <Filter>Source Files\widget</Filter>
     </ClCompile>
-    <ClCompile Include="srcs\widget\jgl_render_widget.cpp">
-      <Filter>Source Files\widget</Filter>
-    </ClCompile>
     <ClCompile Include="srcs\widget\jgl_progressive_bar.cpp">
       <Filter>Source Files\widget</Filter>
     </ClCompile>
@@ -217,12 +211,6 @@
       <Filter>Source Files\widget componenet</Filter>
     </ClCompile>
     <ClCompile Include="srcs\widget_component\w_textual_component.cpp">
-      <Filter>Source Files\widget componenet</Filter>
-    </ClCompile>
-    <ClCompile Include="srcs\widget_component\w_value_component.cpp">
-      <Filter>Source Files\widget componenet</Filter>
-    </ClCompile>
-    <ClCompile Include="srcs\widget_component\w_value_entry_component.cpp">
       <Filter>Source Files\widget componenet</Filter>
     </ClCompile>
     <ClCompile Include="srcs\widget\jgl_hscrollable_bar.cpp">
@@ -291,9 +279,6 @@
       <Filter>Header Files\structure</Filter>
     </ClInclude>
     <ClInclude Include="includes\structure\jgl_data.h">
-      <Filter>Header Files\structure</Filter>
-    </ClInclude>
-    <ClInclude Include="includes\structure\jgl_engine.h">
       <Filter>Header Files\structure</Filter>
     </ClInclude>
     <ClInclude Include="includes\structure\jgl_geometry.h">
@@ -369,9 +354,6 @@
       <Filter>Header Files\widget</Filter>
     </ClInclude>
     <ClInclude Include="includes\widget\jgl_progressive_bar.h">
-      <Filter>Header Files\widget</Filter>
-    </ClInclude>
-    <ClInclude Include="includes\widget\jgl_render_widget.h">
       <Filter>Header Files\widget</Filter>
     </ClInclude>
     <ClInclude Include="includes\widget\jgl_sprite_label.h">

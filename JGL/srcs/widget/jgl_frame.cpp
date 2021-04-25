@@ -18,12 +18,13 @@ namespace jgl
 	void Frame::set_geometry_imp(Vector2 p_anchor, Vector2 p_area)
 	{
 		_box.set_area(p_area);
-		_box.set_anchor(p_anchor);
+		_box.set_anchor(0);
 	}
 
 	void Frame::render()
 	{
-		_box.render(_viewport);
+		_viewport->use();
+		_box.render(_layer, _viewport);
 	}
 
 	bool Frame::handle_mouse()

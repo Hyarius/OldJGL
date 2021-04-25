@@ -51,8 +51,10 @@ namespace jgl
 		tmp = (_owner != nullptr ? _owner->anchor() : 0);
 		pos = jgl::Vector2(tmp.x, g_application->size().y - _area.y - tmp.y);
 
+		g_application->take_context_control();
 		glViewport(static_cast<int>(pos.x), static_cast<int>(pos.y), static_cast<int>(size.x), static_cast<int>(size.y));
 		//glScissor(static_cast<int>(pos.x), static_cast<int>(pos.y), static_cast<int>(size.x), static_cast<int>(size.y));
+		g_application->release_context_control();
 	}
 
 	void Viewport::reset() const

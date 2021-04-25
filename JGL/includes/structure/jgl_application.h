@@ -22,9 +22,16 @@ namespace jgl
 	protected:
 		SDL_Window* _window;
 		SDL_GLContext _context;
+		std::thread::id _active_opengl_thread_id;
+		std::thread::id _main_thread;
 		Viewport* _viewport;
 		const Viewport* _active_viewport;
+		bool _multithread;
 		Vector2 _size;
+		Color _background;
+
+		float _input_refresh;
+		float _render_refresh;
 
 		GLuint _program_color;
 		GLuint _program_texture;
@@ -91,10 +98,6 @@ namespace jgl
 		GLuint _alphaID;
 		GLuint _color_simpleID;
 
-		uint32_t _max_fps;
-		Uint32 _fps_delta;
-		float _fps_ratio;
-
 		Perlin* _perlin;
 
 		class Window* _central_widget;
@@ -104,12 +107,16 @@ namespace jgl
 
 		Uint32 _time;
 
+		std::mutex _opengl_control_mutex;
+
 	public:
-		Application(const jgl::String name, const Vector2 p_size = Vector2(840, 680), const Color p_color = Color(50, 50, 50));
+		Application(const jgl::String name, const Vector2 p_size = Vector2(840, 680), const Color p_color = Color(50, 50, 50), bool multithread = false);
 
 		SDL_Window* window() { return (_window); }
 		SDL_GLContext* context() { return (&_context); }
 		const Viewport* viewport() { return (_viewport); }
+		void take_context_control();
+		void release_context_control();
 		const Viewport* active_viewport() const { return (_active_viewport); }
 		const Vector2 size() { return (_size); }
 		const GLuint add_custom_shader(const jgl::String p_vertex_content, const jgl::String p_fragment_content);
@@ -176,8 +183,6 @@ namespace jgl
 		const GLuint material_bump_texture_textureID() const { return (_material_bump_texture_textureID); }
 
 		const Uint32 time() { return (_time); }
-		const uint32_t max_fps() const { return (_max_fps); }
-		const float fps_ratio() const { return (_fps_ratio); }
 		const int poll_ret() const { return (_poll_ret); }
 		class Widget* central_widget() const { return ((Widget*)_central_widget); }
 		const bool play() const { return (_play); }
@@ -185,9 +190,7 @@ namespace jgl
 
 		void set_full_screen(bool state){ SDL_SetWindowFullscreen(_window, (state == true ? SDL_TRUE : SDL_FALSE)); }
 		void set_active_viewport(const class Viewport* p_active_viewport) { if (p_active_viewport == nullptr)_active_viewport = _viewport; else _active_viewport = p_active_viewport; }
-		void set_max_fps(const int p_max_fps) { _max_fps = p_max_fps; _fps_ratio = 60.0f / p_max_fps; _fps_delta = static_cast<Uint32>(1000.0 / static_cast<double>(_max_fps)); }
-		void set_fps_ratio(const float p_ratio) { _fps_ratio = p_ratio; }
-		void check_frame(const bool draw = false);
+		void check_frame(const bool draw = false) const;
 		void reset_viewport() { _active_viewport = _viewport; _viewport->use(); }
 		void quit();
 		void set_background(const Color p_color);
@@ -195,6 +198,13 @@ namespace jgl
 		void select();
 		void clear();
 		void render();
+
+		void read_input();
+		void handle_actualize();
+		void handle_input();
+		void handle_render();
+		void run_input();
+		std::thread spawn_input_thread();
 		int run();
 
 		void activate_vsync() { SDL_GL_SetSwapInterval(1); }

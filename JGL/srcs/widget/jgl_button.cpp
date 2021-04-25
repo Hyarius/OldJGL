@@ -28,11 +28,10 @@ namespace jgl
 
 	void Button::set_geometry_imp(Vector2 p_anchor, Vector2 p_area)
 	{
-		_viewport->resize(p_anchor, p_area);
 		_box.set_area(p_area);
-		_box.set_anchor(p_anchor);
+		_box.set_anchor(0);
 		_label.set_area(p_area - _box.border() * 2);
-		_label.set_anchor(p_anchor + _box.border());
+		_label.set_anchor(_box.border());
 		_label.calc_text_size(_label.area());
 	}
 
@@ -41,14 +40,18 @@ namespace jgl
 		if (is_active() == false)
 			return;
 
+		_viewport->use();
+		_box.render(_layer, _viewport);
+
+		_label.render(_layer, _viewport);
+	}
+
+	void Button::update()
+	{
 		if (_timer > 0 && _timer--)
 			_box.set_delta(Color(0, 0, 0, 150));
 		else
 			_box.set_delta(Color(0, 0, 0, 0));
-
-		_box.render(_viewport);
-
-		_label.render(_viewport);
 	}
 
 	bool Button::handle_mouse()

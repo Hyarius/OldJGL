@@ -79,6 +79,8 @@ namespace jgl
 
 		virtual void render();
 
+		virtual void update();
+
 		virtual bool handle_mouse();
 
 		virtual bool handle_keyboard();

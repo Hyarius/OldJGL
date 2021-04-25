@@ -23,6 +23,8 @@ namespace jgl
 				_format = GL_BGRA;
 		}
 
+		g_application->take_context_control();
+
 		glGenTextures(1, &_texture_id);
 		glBindTexture(GL_TEXTURE_2D, _texture_id);
 
@@ -36,12 +38,16 @@ namespace jgl
 			GL_UNSIGNED_BYTE, _surface->pixels);
 
 		glBindTexture(GL_TEXTURE_2D, 0);
+		g_application->release_context_control();
 	}
 
 	Image::Image(jgl::String path)
 	{
 		_path = path;
+		g_application->take_context_control();
 		_surface = IMG_Load(path.std().c_str());
+		g_application->release_context_control();
+
 		if (_surface == NULL)
 			error_exit(1, "Can't load an image from " + path + " file");
 		_size = Vector2(_surface->w, _surface->h);
@@ -72,12 +78,13 @@ namespace jgl
 	
 	Image::~Image()
 	{
+		g_application->take_context_control();
 		if (_surface != nullptr)
 		{
 			SDL_FreeSurface(_surface);
 			glDeleteTextures(1, &_texture_id);
 		}
-
+		g_application->release_context_control();
 	}
 
 	void Image::save(jgl::String file_path)
@@ -85,18 +92,20 @@ namespace jgl
 		// https://www.codeproject.com/Questions/655714/How-to-write-openGl-offscreen-data-in-to-JPG-image
 	}
 
-	void Image::draw(const Vector2 p_pos, const Vector2 p_size, const float p_alpha, const Viewport* viewport) const
+	void Image::draw(const Vector2 p_pos, const Vector2 p_size, const float p_alpha, float level, const Viewport* viewport) const
 	{
 		if (_surface != NULL)
 		{
+			g_application->take_context_control();
 			glActiveTexture(GL_TEXTURE0);
 			glBindTexture(GL_TEXTURE_2D, _texture_id);
-			draw_image(p_pos, p_size, p_alpha, viewport);
+			g_application->release_context_control();
+			draw_image(p_pos, p_size, p_alpha, level, viewport);
 		}
 		else
 		{
-			fill_rectangle(p_pos, p_size, Color(0.2f, 0.2f, 0.2f), viewport);
-			fill_rectangle(p_pos + 4, p_size - 8, Color(0.4f, 0.4f, 0.4f), viewport);
+			fill_rectangle(p_pos, p_size, Color(0.2f, 0.2f, 0.2f), level, viewport);
+			fill_rectangle(p_pos + 4, p_size - 8, Color(0.4f, 0.4f, 0.4f), level, viewport);
 		}
 	}
 }

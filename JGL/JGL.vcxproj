@@ -37,7 +37,6 @@
     <ClCompile Include="srcs\structure\jgl_camera.cpp" />
     <ClCompile Include="srcs\structure\jgl_color.cpp" />
     <ClCompile Include="srcs\structure\jgl_data.cpp" />
-    <ClCompile Include="srcs\structure\jgl_engine.cpp" />
     <ClCompile Include="srcs\structure\jgl_glyph.cpp" />
     <ClCompile Include="srcs\structure\jgl_image.cpp" />
     <ClCompile Include="srcs\structure\jgl_keyboard.cpp" />
@@ -65,7 +64,6 @@
     <ClCompile Include="srcs\widget\jgl_hscrollable_bar.cpp" />
     <ClCompile Include="srcs\widget\jgl_image_label.cpp" />
     <ClCompile Include="srcs\widget\jgl_progressive_bar.cpp" />
-    <ClCompile Include="srcs\widget\jgl_render_widget.cpp" />
     <ClCompile Include="srcs\widget\jgl_tab.cpp" />
     <ClCompile Include="srcs\widget\jgl_text_entry.cpp" />
     <ClCompile Include="srcs\widget\jgl_text_label.cpp" />
@@ -82,8 +80,6 @@
     <ClCompile Include="srcs\widget_component\w_textual_component.cpp" />
     <ClCompile Include="srcs\widget_component\w_text_component.cpp" />
     <ClCompile Include="srcs\widget_component\w_text_entry_component.cpp" />
-    <ClCompile Include="srcs\widget_component\w_value_component.cpp" />
-    <ClCompile Include="srcs\widget_component\w_value_entry_component.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="includes\jgl.h" />
@@ -106,7 +102,6 @@
     <ClInclude Include="includes\structure\jgl_camera.h" />
     <ClInclude Include="includes\structure\jgl_color.h" />
     <ClInclude Include="includes\structure\jgl_data.h" />
-    <ClInclude Include="includes\structure\jgl_engine.h" />
     <ClInclude Include="includes\structure\jgl_geometry.h" />
     <ClInclude Include="includes\structure\jgl_glyph.h" />
     <ClInclude Include="includes\structure\jgl_image.h" />
@@ -138,7 +133,6 @@
     <ClInclude Include="includes\widget\jgl_hscrollable_bar.h" />
     <ClInclude Include="includes\widget\jgl_image_label.h" />
     <ClInclude Include="includes\widget\jgl_progressive_bar.h" />
-    <ClInclude Include="includes\widget\jgl_render_widget.h" />
     <ClInclude Include="includes\widget\jgl_sprite_label.h" />
     <ClInclude Include="includes\widget\jgl_tab.h" />
     <ClInclude Include="includes\widget\jgl_text_entry.h" />
@@ -207,6 +201,7 @@
     <LinkIncremental>true</LinkIncremental>
     <ExecutablePath>$(ExecutablePath)</ExecutablePath>
     <IncludePath>includes;includes\widget_component;includes\widget;includes\structure;$(VC_IncludePath);$(WindowsSDK_IncludePath)</IncludePath>
+    <OutDir>C:\Developement\JGL\Debug\</OutDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>false</LinkIncremental>

@@ -312,7 +312,7 @@ namespace jgl
 		{
 			if (index >= _size)
 			{
-				DEBUG_LINE;
+				DEBUG_LINE();
 				std::cout << "Segfault in jgl::Array - Invalid acces to an array of type " << typeid(T).name() << " at index " << index << " with a size of " << _size << std::endl;
 				//exit(1);
 			}
@@ -324,7 +324,7 @@ namespace jgl
 		{
 			if (index >= _size + 1)
 			{
-				DEBUG_LINE;
+				DEBUG_LINE();
 				std::cout << "Segfault in jgl::Array - Invalid acces to an array of type " << typeid(T).name() << " at index " << index << " with a size of " << _size << std::endl;
 				exit(1);
 			}
@@ -345,7 +345,7 @@ namespace jgl
 		{
 			if (iter.index() >= _size + 1)
 			{
-				DEBUG_LINE;
+				DEBUG_LINE();
 				std::cout << "Segfault in jgl::Array - Invalid acces to an array of type " << typeid(T).name() << " at index " << iter.index() << " with a size of " << _size << std::endl;
 				//exit(1);
 			}

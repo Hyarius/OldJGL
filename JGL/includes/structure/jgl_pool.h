@@ -11,6 +11,7 @@ namespace jgl
 	class Pool
 	{
 	private:
+		std::mutex _mutex;
 		jgl::Array<T*>_content;
 	public:
 		Pool() {}
@@ -30,9 +31,11 @@ namespace jgl
 		const uint32_t size() const { return (_content.size()); }
 		T* obtain()
 		{
+			_mutex.lock();
 			if (_content.size() == 0)
 			{
 				T* new_element = new T();
+				_mutex.unlock();
 				return (new_element);
 			}
 			else
@@ -41,12 +44,16 @@ namespace jgl
 				auto tmp = _content.back();
 				T* result = _content[tmp.index()];
 				_content.pop_back();
+				_mutex.unlock();
 				return (result);
 			}
+			_mutex.unlock();
 		}
 		void release(T* object)
 		{
+			_mutex.lock();
 			_content.push_back(object);
+			_mutex.unlock();
 		}
 		T* operator[](uint32_t index)
 		{

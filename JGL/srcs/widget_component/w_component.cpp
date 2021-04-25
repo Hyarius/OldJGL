@@ -13,7 +13,7 @@ namespace jgl
 	{
 		Vector2 pos1, pos2;
 
-		pos1 = _anchor;
+		pos1 = _anchor + _owner->anchor();
 
 		pos2 = pos1 + _area;
 

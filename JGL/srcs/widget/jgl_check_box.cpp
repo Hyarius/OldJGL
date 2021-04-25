@@ -27,17 +27,17 @@ namespace jgl
 	{
 		_viewport->resize(p_anchor, p_area);
 		_box.set_area(p_area);
-		_box.set_anchor(p_anchor);
+		_box.set_anchor(0);
 
 		Vector2 check_area = p_area.y - _box.border() * 4;
-		Vector2 check_pos = p_anchor + _box.border() * 2;
+		Vector2 check_pos = _box.border() * 2;
 
 		Vector2 text_area;
 		text_area.x = p_area.x - check_area.x - _box.border() * 5;
 		text_area.y = p_area.y - _box.border() * 4;
 
 		_label.set_area(text_area);
-		_label.set_anchor(p_anchor + Vector2(check_area.x, 0.0f) + _box.border() * 3);
+		_label.set_anchor(Vector2(check_area.x, 0.0f) + _box.border() * 3);
 		_label.calc_text_size(_label.area());
 
 		_check.set_area(check_area);
@@ -49,9 +49,10 @@ namespace jgl
 	{
 		if (is_active() == false)
 			return;
-		_box.render(_viewport);
-		_label.render(_viewport);
-		_check.render(_viewport);
+		_viewport->use();
+		_box.render(_layer, _viewport);
+		_label.render(_layer, _viewport);
+		_check.render(_layer, _viewport);
 	}
 
 	bool Check_box::handle_mouse()

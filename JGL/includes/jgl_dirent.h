@@ -231,7 +231,7 @@ extern "C" {
         unsigned short d_reclen;
 
         /* Length of name without \0 */
-        uint32_t d_namlen;
+        size_t d_namlen;
 
         /* File type */
         int d_type;
@@ -271,7 +271,7 @@ extern "C" {
         unsigned short d_reclen;
 
         /* Length of name without \0 */
-        uint32_t d_namlen;
+        size_t d_namlen;
 
         /* File type */
         int d_type;
@@ -329,18 +329,18 @@ extern "C" {
     static WIN32_FIND_DATAW* dirent_next(_WDIR* dirp);
 
     static int dirent_mbstowcs_s(
-        uint32_t* pReturnValue,
+        size_t* pReturnValue,
         wchar_t* wcstr,
-        uint32_t sizeInWords,
+        size_t sizeInWords,
         const char* mbstr,
-        uint32_t count);
+        size_t count);
 
     static int dirent_wcstombs_s(
-        uint32_t* pReturnValue,
+        size_t* pReturnValue,
         char* mbstr,
-        uint32_t sizeInBytes,
+        size_t sizeInBytes,
         const wchar_t* wcstr,
-        uint32_t count);
+        size_t count);
 
     static void dirent_set_errno(int error);
 
@@ -484,7 +484,7 @@ extern "C" {
         /* Read next directory entry */
         datap = dirent_next(dirp);
         if (datap) {
-            uint32_t n;
+            size_t n;
             DWORD attr;
 
             /*
@@ -702,7 +702,7 @@ extern "C" {
         {
             int error;
             wchar_t wname[PATH_MAX + 1];
-            uint32_t n;
+            size_t n;
 
             /* Convert directory name to wide-character string */
             error = dirent_mbstowcs_s(
@@ -771,7 +771,7 @@ extern "C" {
         /* Read next directory entry */
         datap = dirent_next(dirp->wdirp);
         if (datap) {
-            uint32_t n;
+            size_t n;
             int error;
 
             /* Attempt to convert file name to multi-byte string */
@@ -900,13 +900,13 @@ extern "C" {
             int (*compare)(const struct dirent**, const struct dirent**))
     {
         struct dirent** files = NULL;
-        uint32_t size = 0;
-        uint32_t allocated = 0;
-        const uint32_t init_size = 1;
+        size_t size = 0;
+        size_t allocated = 0;
+        const size_t init_size = 1;
         DIR* dir = NULL;
         struct dirent* entry;
         struct dirent* tmp = NULL;
-        uint32_t i;
+        size_t i;
         int result = 0;
 
         /* Open directory stream */
@@ -919,7 +919,7 @@ extern "C" {
                 /* Enlarge pointer table to make room for another pointer */
                 if (size >= allocated) {
                     void* p;
-                    uint32_t num_entries;
+                    size_t num_entries;
 
                     /* Compute number of entries in the enlarged pointer table */
                     if (size < init_size) {
@@ -1054,11 +1054,11 @@ extern "C" {
     /* Convert multi-byte string to wide character string */
     static int
         dirent_mbstowcs_s(
-            uint32_t* pReturnValue,
+            size_t* pReturnValue,
             wchar_t* wcstr,
-            uint32_t sizeInWords,
+            size_t sizeInWords,
             const char* mbstr,
-            uint32_t count)
+            size_t count)
     {
         int error;
 
@@ -1070,7 +1070,7 @@ extern "C" {
 #else
 
         /* Older Visual Studio or non-Microsoft compiler */
-        uint32_t n;
+        size_t n;
 
         /* Convert to wide-character string (or count characters) */
         n = mbstowcs(wcstr, mbstr, sizeInWords);
@@ -1107,11 +1107,11 @@ extern "C" {
     /* Convert wide-character string to multi-byte string */
     static int
         dirent_wcstombs_s(
-            uint32_t* pReturnValue,
+            size_t* pReturnValue,
             char* mbstr,
-            uint32_t sizeInBytes, /* max size of mbstr */
+            size_t sizeInBytes, /* max size of mbstr */
             const wchar_t* wcstr,
-            uint32_t count)
+            size_t count)
     {
         int error;
 
@@ -1123,7 +1123,7 @@ extern "C" {
 #else
 
         /* Older Visual Studio or non-Microsoft compiler */
-        uint32_t n;
+        size_t n;
 
         /* Convert to multi-byte string (or count the number of bytes needed) */
         n = wcstombs(mbstr, wcstr, sizeInBytes);

@@ -17,7 +17,10 @@ namespace jgl
 		Vector4(int p_x, int p_y, int p_z, int p_w);
 		Vector4(uint32_t p_x, uint32_t p_y, uint32_t p_z, uint32_t p_w);
 		Vector4(double p_x, double p_y, double p_z, double p_w);
-
+		int ix() const { return (static_cast<int>(std::floor(x))); }
+		int iy() const { return (static_cast<int>(std::floor(y))); }
+		int iz() const { return (static_cast<int>(std::floor(z))); }
+		int iw() const { return (static_cast<int>(std::floor(w))); }
 		void operator = (int p_value);
 		void operator = (float p_value);
 
@@ -76,6 +79,10 @@ namespace jgl
 		Vector3(uint32_t p_x, uint32_t p_y, uint32_t p_z);
 		Vector3(double p_x, double p_y, double p_z);
 
+		int ix() const { return (static_cast<int>(std::floor(x))); }
+		int iy() const { return (static_cast<int>(std::floor(y))); }
+		int iz() const { return (static_cast<int>(std::floor(z))); }
+
 		void operator = (Vector4 p_other);
 		void operator = (int p_value);
 		void operator = (float  p_value);
@@ -128,6 +135,9 @@ namespace jgl
 		Vector2(int p_x, int p_y);
 		Vector2(uint32_t p_x, uint32_t p_y);
 		Vector2(double p_x, double p_y);
+
+		int ix() const { return (static_cast<int>(std::floor(x))); }
+		int iy() const { return (static_cast<int>(std::floor(y))); }
 
 		void operator = (int p_value);
 		void operator = (float  p_value);

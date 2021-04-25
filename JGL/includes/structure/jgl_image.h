@@ -27,7 +27,7 @@ namespace jgl
 
 		~Image();
 
-		void draw(const Vector2 p_pos, const Vector2 p_size, const float p_alpha = 1.0f, const Viewport* viewport = nullptr) const ;
+		void draw(const Vector2 p_pos, const Vector2 p_size, const float p_alpha = 1.0f, float level = 1.0f, const Viewport* viewport = nullptr) const ;
 		void upload_texture();
 		void save(jgl::String file_path);
 

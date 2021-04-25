@@ -16,7 +16,7 @@ namespace jgl
 
 	void Window::render()
 	{
-		fill_rectangle(0, _viewport->area(), back, _viewport);
+		//fill_rectangle(0, _viewport->area(), back, _layer, _viewport);
 	}
 
 	bool Window::handle_keyboard()

@@ -121,7 +121,6 @@ namespace jgl
 
 	void Hscroll_bar::set_geometry_imp(Vector2 p_anchor, Vector2 p_area)
 	{
-		_viewport->resize(p_anchor, p_area);
 		Vector2 button_size = Vector2(p_area.y, p_area.y);
 		Vector2 scroll_size = Vector2(p_area.x - button_size.x * 2, p_area.y);
 		Vector2 anchor[3] = {

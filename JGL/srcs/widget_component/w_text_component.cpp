@@ -20,12 +20,13 @@ namespace jgl
 	{
 		set_anchor(p_anchor);
 		set_area(p_area);
-		calc_text_size(_area);
 	}
 
-	void w_text_component::render(Viewport* viewport)
+	void w_text_component::render(const float layer, Viewport* viewport)
 	{
 		Vector2 pos;
+
+		viewport->use();
 
 		if (_h_align == Horizontal_alignment::left)
 		{
@@ -55,8 +56,8 @@ namespace jgl
 
 		pos += _anchor;
 		if (_masked == true)
-			draw_centred_text(jgl::normalize_string("", jgl::Glyph('*'), _text.size()), pos, _size, _outline, 1.0f, _color, _style);
+			draw_centred_text(jgl::normalize_string("", jgl::Glyph('*'), _text.size()), pos, _size, _outline, 1.0f, _color, _style, layer, viewport);
 		else
-			draw_centred_text(_text, pos, _size, _outline, 1.0f, _color, _style);
+			draw_centred_text(_text, pos, _size, _outline, 1.0f, _color, _style, layer, viewport);
 	}
 }

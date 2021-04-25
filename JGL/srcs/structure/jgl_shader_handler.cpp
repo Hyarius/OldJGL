@@ -58,6 +58,8 @@ namespace jgl
 		GLuint	fragment_shader_id;
 		GLuint	program_id;
 
+		
+
 		program_id = glCreateProgram();
 		fragment_shader_id = glCreateShader(GL_FRAGMENT_SHADER);
 		vertex_shader_id = glCreateShader(GL_VERTEX_SHADER);

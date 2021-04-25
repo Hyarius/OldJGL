@@ -4,6 +4,7 @@ namespace jgl
 {
 	void			draw_pixel_color(const Vector3 points, const Color color, const uint32_t nb)
 	{
+		g_application->take_context_control();
 		GLfloat* g_vertex_buffer_data = (float*)(&points);
 
 		glBindVertexArray(g_application->vertex_array());
@@ -24,10 +25,12 @@ namespace jgl
 		glUniform4f(g_application->alphaID(), color.r, color.g, color.b, color.a);
 
 		glDrawArrays(GL_LINES, 0, static_cast<GLsizei>(nb));
+		g_application->release_context_control();
 	}
 
 	void			draw_line_color(const Vector3* points, const Color color, const uint32_t nb)
 	{
+		g_application->take_context_control();
 		GLfloat* g_vertex_buffer_data = (float*)(points);
 
 		glBindVertexArray(g_application->vertex_array());
@@ -48,10 +51,12 @@ namespace jgl
 		glUniform4f(g_application->alphaID(), color.r, color.g, color.b, color.a);
 
 		glDrawArrays(GL_LINES, 0, static_cast<GLsizei>(nb));
+		g_application->release_context_control();
 	}
 
 	void			draw_line_color(const GLuint points_buffer, const Color color, const uint32_t nb)
 	{
+		g_application->take_context_control();
 		glDisableVertexAttribArray(0);
 		glDisableVertexAttribArray(1);
 		glDisableVertexAttribArray(2);
@@ -65,10 +70,12 @@ namespace jgl
 		glUniform4f(g_application->alphaID(), color.r, color.g, color.b, color.a);
 
 		glDrawArrays(GL_LINES, 0, static_cast<GLsizei>(nb));
+		g_application->release_context_control();
 	}
 
 	void			draw_triangle_color(const Vector3* points, const Color color, const uint32_t nb)
 	{
+		g_application->take_context_control();
 		GLfloat* g_vertex_buffer_data = (float*)(points);
 
 		glBindVertexArray(g_application->vertex_array());
@@ -90,10 +97,12 @@ namespace jgl
 
 		glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
 		glDrawArrays(GL_TRIANGLES, 0, static_cast<GLsizei>(nb));
+		g_application->release_context_control();
 	}
 
 	void			draw_triangle_color(const GLuint points_buffer, const Color color, const uint32_t nb)
 	{
+		g_application->take_context_control();
 		glDisableVertexAttribArray(0);
 		glDisableVertexAttribArray(1);
 		glDisableVertexAttribArray(2);
@@ -108,10 +117,12 @@ namespace jgl
 
 		glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
 		glDrawArrays(GL_TRIANGLES, 0, static_cast<GLsizei>(nb));
+		g_application->release_context_control();
 	}
 
 	void			fill_triangle_color(const Vector3* points, const Color color, const uint32_t nb)
 	{
+		g_application->take_context_control();
 		GLfloat* g_vertex_buffer_data = (float*)(points);
 
 		glBindVertexArray(g_application->vertex_array());
@@ -133,10 +144,12 @@ namespace jgl
 
 		glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
 		glDrawArrays(GL_TRIANGLES, 0, static_cast<GLsizei>(nb));
+		g_application->release_context_control();
 	}
 
 	void			fill_triangle_color(const GLuint points_buffer, const Color color, const uint32_t nb)
 	{
+		g_application->take_context_control();
 		glDisableVertexAttribArray(0);
 		glDisableVertexAttribArray(1);
 		glDisableVertexAttribArray(2);
@@ -151,10 +164,12 @@ namespace jgl
 
 		glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
 		glDrawArrays(GL_TRIANGLES, 0, static_cast<GLsizei>(nb));
+		g_application->release_context_control();
 	}
 
 	void			draw_triangle_texture(const Vector3* points, const Vector2* uvs, const float alpha, const uint32_t nb)
 	{
+		g_application->take_context_control();
 		GLfloat* g_vertex_buffer_data = (float*)(points);
 
 		GLfloat* g_uv_buffer_data = (float*)(uvs);
@@ -184,10 +199,12 @@ namespace jgl
 
 		glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
 		glDrawArrays(GL_TRIANGLES, 0, static_cast<GLsizei>(nb));
+		g_application->release_context_control();
 	}
 
 	void			draw_triangle_texture(const GLuint points_buffer, const GLuint uvs_buffer, const float alpha, const uint32_t nb)
 	{
+		g_application->take_context_control();
 		glDisableVertexAttribArray(0);
 		glDisableVertexAttribArray(1);
 
@@ -205,5 +222,6 @@ namespace jgl
 
 		glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
 		glDrawArrays(GL_TRIANGLES, 0, static_cast<GLsizei>(nb));
+		g_application->release_context_control();
 	}
 }

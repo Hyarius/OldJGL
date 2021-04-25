@@ -13,10 +13,12 @@ namespace jgl
 		_front = Color(195, 195, 195, 255);
 	}
 
-	void w_box_component::render(Viewport* viewport)
+	void w_box_component::render(const float layer, Viewport* viewport)
 	{
 		if (_owner == nullptr)
 			return;
+
+		//viewport->use();
 
 		if (_tileset != nullptr && _tileset->image() != nullptr && _tileset->size() == Vector2(6, 3))
 		{
@@ -70,9 +72,9 @@ namespace jgl
 						tmp_size = h_middle_size;
 					}
 					if (_delta.a != 0.0f)
-						_tileset->draw(sprite + jgl::Vector2(3, 0), pos, tmp_size, 1.0f);
+						_tileset->draw(sprite + jgl::Vector2(3, 0), pos, tmp_size, 1.0f, layer, viewport);
 					else
-						_tileset->draw(sprite, pos, tmp_size, 1.0f);
+						_tileset->draw(sprite, pos, tmp_size, 1.0f, layer, viewport);
 					pos.x += tmp_size.x;
 				}
 				pos.y += (j == 0 || j == nb_sub_y + 1 ? corner_size : v_middle_size.y);
@@ -80,13 +82,13 @@ namespace jgl
 		}
 		else
 		{
-			fill_rectangle(_anchor, _area, _back + _delta);
-			fill_rectangle(_anchor + _border, _area - _border * 2, _front + _delta);
+			fill_rectangle(_anchor, _area, _back + _delta, layer, viewport);
+			fill_rectangle(_anchor + _border, _area - _border * 2, _front + _delta, layer, viewport);
 		}
 		if (_image != nullptr && _image->image() != nullptr && _sprite != -1)
 		{
-			_image->draw(_sprite, _anchor, _area, 1.0f);
-			fill_rectangle(_anchor, _area, _delta);
+			_image->draw(_sprite, _anchor, _area, 1.0f, layer, viewport);
+			fill_rectangle(_anchor, _area, _delta, layer, viewport);
 		}
 	}
 }

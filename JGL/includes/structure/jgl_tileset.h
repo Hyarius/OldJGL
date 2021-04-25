@@ -47,11 +47,11 @@ namespace jgl
 			return (sprite(static_cast<uint32_t>(coord.x + (_size.x * coord.y))));
 		}
 
-		void draw(const int id, const Vector2 pos, const Vector2 size, const float p_alpha = 1.0f, const Viewport* viewport = nullptr) const;
-		void draw_centred(const int id, const Vector2 pos, const Vector2 size, const float p_alpha = 1.0f, const Viewport* viewport = nullptr) const;
+		void draw(const int id, const Vector2 pos, const Vector2 size, const float p_alpha = 1.0f, const float layer = 0.0f, const Viewport* viewport = nullptr) const;
+		void draw_centred(const int id, const Vector2 pos, const Vector2 size, const float p_alpha = 1.0f, const float layer = 0.0f, const Viewport* viewport = nullptr) const;
 
-		void draw(const Vector2 sprite, const Vector2 pos, const Vector2 size, const float p_alpha = 1.0f, const Viewport* viewport = nullptr) const;
-		void draw_centred(const Vector2 sprite, const Vector2 pos, const Vector2 size, const float p_alpha = 1.0f, const Viewport* viewport = nullptr) const;
+		void draw(const Vector2 sprite, const Vector2 pos, const Vector2 size, const float p_alpha = 1.0f, const float layer = 0.0f, const Viewport* viewport = nullptr) const;
+		void draw_centred(const Vector2 sprite, const Vector2 pos, const Vector2 size, const float p_alpha = 1.0f, const float layer = 0.0f, const Viewport* viewport = nullptr) const;
 	};
 }
 #endif

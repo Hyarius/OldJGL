@@ -25,7 +25,7 @@ namespace jgl
 
 		bool is_pointed(const Vector2 point) const;
 
-		virtual void render(Viewport* viewport = nullptr) = 0;
+		virtual void render(const float layer, Viewport* viewport = nullptr) = 0;
 	};
 
 	class w_graphical_component
@@ -77,7 +77,7 @@ namespace jgl
 	public:
 		w_textual_component();
 
-		void 		set_text(jgl::String p_text) { _text = p_text;}
+		void 		set_text(jgl::String p_text) { _text = p_text; }
 		void 		set_horizontal_alignment(Horizontal_alignment p_align) { _h_align = p_align; }
 		void 		set_vertical_alignment(Vertical_alignment p_align) { _v_align = p_align; }
 		void 		set_size(int p_size) { _size = p_size; }
@@ -124,7 +124,7 @@ namespace jgl
 
 		void 		resize(Vector2 p_anchor, Vector2 p_area)
 		{
-			set_anchor(p_anchor); set_area(p_area); calc_text_size_height(_area);
+			set_anchor(p_anchor); set_area(p_area); calc_text_size(p_area);
 		}
 		void 		calc_text_to_draw();
 		void 		move_cursor(int delta);
@@ -133,7 +133,7 @@ namespace jgl
 		void 		remove_text();
 		void 		supp_text();
 
-		void 		render(Viewport* viewport = nullptr);
+		void 		render(const float layer, Viewport* viewport = nullptr);
 	};
 
 	class w_text_component : public w_component, public w_graphical_component, public w_textual_component
@@ -144,10 +144,10 @@ namespace jgl
 		w_text_component(jgl::String p_text = "", class Widget* p_owner = nullptr);
 
 		void set_masked(bool state) { _masked = state; }
-		void set_text(jgl::String text) { _text = text; calc_text_size(_area); }
+		void set_text(jgl::String text) { _text = text; calc_text_size(area()); }
 		void resize(Vector2 p_anchor, Vector2 p_area);
 
-		void render(Viewport* viewport = nullptr);
+		void render(const float layer, Viewport* viewport = nullptr);
 	};
 
 	class w_check_component : public w_component, public w_graphical_component
@@ -179,7 +179,7 @@ namespace jgl
 
 		bool check(Vector2 point);
 
-		void render(Viewport* viewport = nullptr);
+		void render(const float layer, Viewport* viewport = nullptr);
 
 	};
 
@@ -198,7 +198,7 @@ namespace jgl
 		//Getter
 		Color delta() const { return (_delta); }
 
-		void render(Viewport* viewport = nullptr);
+		void render(const float layer, Viewport* viewport = nullptr);
 	};
 
 	class w_text_entry_component : public w_entry_component
@@ -264,7 +264,7 @@ namespace jgl
 		T			value() const { if (_value_ptr != nullptr)return (*_value_ptr); return (_value); }
 		int			precision() const { return (_precision); }
 
-		void render(Viewport* viewport = nullptr)
+		void render(const float layer, Viewport* viewport = nullptr)
 		{
 			Vector2 pos;
 
@@ -296,7 +296,7 @@ namespace jgl
 			{
 				pos.y = _area.y - (_size / 2);
 			}
-			draw_centred_text(_text, pos + _anchor, _size, 0, 1.0f, _color, _style, viewport);
+			draw_centred_text(_text, pos + _anchor, _size, 0, 1.0f, _color, _style, layer, viewport);
 		}
 	};
 
@@ -354,12 +354,15 @@ namespace jgl
 		uint32_t		cursor() const { return (_cursor); }
 		bool		selected() const { return (_selected); }
 
-		void render(Viewport* viewport = nullptr)
+		void update()
 		{
-			Vector2 pos;
-
 			if (_value_ptr != nullptr && *_value_ptr != _value)
 				set_value(*_value_ptr);
+		}
+
+		void render(const float layer, Viewport* viewport = nullptr)
+		{
+			Vector2 pos;
 
 			if (_h_align == Horizontal_alignment::left)
 			{
@@ -386,7 +389,7 @@ namespace jgl
 			{
 				pos.y = _area.y - (_size / 2);
 			}
-			draw_centred_text(_text, pos + _anchor, _size, 0, 1.0f, _color, _style, viewport);
+			draw_centred_text(_text, pos + _anchor, _size, 0, 1.0f, _color, _style, layer, viewport);
 		}
 	};
 }
