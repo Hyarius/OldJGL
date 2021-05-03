@@ -54,7 +54,7 @@ namespace jgl
 			_abstract_version_key_number = abstract_version;
 		}
 
-		int64_t compute_magic_number(int16_t value)
+		int64_t compute_magic_number(int32_t value)
 		{
 			return (((_major_version_key_number << 48) ^ value) + ((_medium_version_key_number << 32) & value) + ((_minor_version_key_number << 16) | value) + (_abstract_version_key_number));
 		}
@@ -148,23 +148,28 @@ namespace jgl
 			{
 				if (_input.empty() == false)
 				{
+					std::cout << "Validation process begin : message received" << std::endl;
 					auto msg = _input.pop_front().msg;
 					
-					if (msg.size() == sizeof(int64_t))
+					if (msg.size() == sizeof(int32_t))
 					{
-						int64_t key;
+						std::cout << "Validation process begin : magic number message" << std::endl;
+						int32_t key;
 						int64_t result;
 
 						msg >> key;
 
 						msg.clear();
+						std::cout << "Key received : " << key << " of size " << sizeof(key) << std::endl;
 						result = compute_magic_number(key);
+						std::cout << "Awsner : " << result << " of size " << sizeof(result) << std::endl;
 						msg << result;
 						msg << key;
 						send(msg);
 					}
 					else if (msg.size() == sizeof(bool))
 					{
+						std::cout << "Validation process begin : confirmation type" << std::endl;
 						bool accepted;
 
 						msg >> accepted;
@@ -172,6 +177,11 @@ namespace jgl
 							_connexion->accepted_by_server();
 						else
 							_connexion->refused_by_server();
+					}
+					else
+					{
+
+						std::cout << "Validation process begin : unknow type" << std::endl;
 					}
 				}
 			}

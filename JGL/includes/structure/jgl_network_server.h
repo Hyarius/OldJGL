@@ -22,7 +22,7 @@ namespace jgl
 		logout_funct_ptr _logout_funct = nullptr;
 		jgl::Data _logout_param;
 
-		int64_t _key = 0;
+		int32_t _key = 0;
 		int64_t _major_version_key_number = 0;
 		int64_t _medium_version_key_number = 0;
 		int64_t _minor_version_key_number = 0;
@@ -72,7 +72,7 @@ namespace jgl
 			_logout_param = param;
 		}
 
-		void set_key(int64_t p_key)
+		void set_key(int32_t p_key)
 		{
 			_key = p_key;
 		}
@@ -85,7 +85,7 @@ namespace jgl
 			_abstract_version_key_number = abstract_version;
 		}
 
-		int64_t compute_magic_number(int64_t value)
+		int64_t compute_magic_number(int32_t value)
 		{
 			return (((_major_version_key_number << 48) ^ value) + ((_medium_version_key_number << 32) & value) + ((_minor_version_key_number << 16) | value) + (_abstract_version_key_number));
 		}
@@ -239,14 +239,17 @@ namespace jgl
 		bool valid_client_connect(jgl::Connexion<T>* client, jgl::Message<T>& msg)
 		{
 			std::cout << "Validation connection from a client [" << client->id() << "]" << std::endl;
-			int64_t key;
+			int32_t key;
 			int64_t presumed_result;
 			int64_t real_result;
 
 			msg >> key;
 			msg >> presumed_result;
 
+
+			std::cout << "Key received : " << key << " of size " << sizeof(key) << std::endl;
 			real_result = compute_magic_number(key);
+			std::cout << "Awsner : " << real_result << " of size " << sizeof(real_result) << std::endl;
 			std::cout << "Magic number send : " << key << " -> result proposed : " << presumed_result << " vs espected " << real_result << std::endl;
 			if (real_result == presumed_result)
 			{

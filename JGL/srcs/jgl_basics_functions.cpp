@@ -246,10 +246,7 @@ namespace jgl
 	void error_exit(const int num, const char* str)
 	{
 		std::cout << str << std::endl;
-		if (g_application != nullptr)
-			g_application->quit();
-		else
-			jgl::quit_jgl();
+		getchar();
 		exit(num);
 	}
 
@@ -346,6 +343,15 @@ namespace jgl
 		return (text->compose_only("0123456789."));
 	}
 
+	bool is_middle(const int min, const int value, const int max)
+	{
+		if (value < min)
+			return (false);
+		if (value >= max)
+			return (false);
+		return (true);
+	}
+
 	bool is_middle(const float min, const float value, const float max)
 	{
 		if (value < min)
@@ -438,7 +444,7 @@ namespace jgl
 		return((rand() % (max - min)) + min);
 	}
 
-	Vector2				convert_screenV2_to_opengl(const Vector2 source)
+	Vector2				convert_screenV2_to_opengl(const Vector2 source, float level)
 	{
 		if (g_application == nullptr)
 			error_exit(1, "jgl::Application not created");

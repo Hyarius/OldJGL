@@ -37,6 +37,7 @@ namespace jgl
 	int stoi(const jgl::String text);
 	jgl::String normalize_string(const jgl::String str, const jgl::Glyph c, const uint32_t size);
 	jgl::String normalize_float(const float num, const int after_point, const jgl::Glyph c, const uint32_t size);
+	bool is_middle(const int min, const int value, const int max);
 	bool is_middle(const float min, const float value, const float max);
 	bool is_middle(const jgl::Vector2 min, const jgl::Vector2 value, const jgl::Vector2 max);
 	bool is_middle(const jgl::Vector3 min, const jgl::Vector3 value, const jgl::Vector3 max);
